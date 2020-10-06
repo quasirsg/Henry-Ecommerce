@@ -1,9 +1,12 @@
 import React from 'react';
 
+import ProductDetail from './components/productDetail'
 
 function App() {
   return (
-    <div></div>
+    <div>
+      <ProductDetail />
+    </div>
   );
 }
 
