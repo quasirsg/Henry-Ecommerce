@@ -1,0 +1,26 @@
+/* ======= Container ======== */
+
+.catalogo {
+	align-items: center;
+	text-align: center;
+	padding: 0px;
+	width: 100%;
+	margin-top: 2rem;
+}
+
+
+/* ======== ProductCard ======= */
+
+/* .productCard{
+        max-width: 70px;
+        display: inline-flex;
+        flex-direction: column;
+        text-align: center;
+        padding: 0px;
+        list-style-type: none;
+        margin-top: 50px; /* Esta es la altura de la serchbar que no la detecta por position fixed*/
+/* } */
+ 
+
+
+/* ======== Category ========== */
