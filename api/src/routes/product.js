@@ -9,4 +9,16 @@ server.get('/', (req, res, next) => {
 		.catch(next);
 });
 
+server.get('/:id', (req, res, next) => {
+	var productId = req.params.id;
+
+	Product.findOne({
+		id:productId
+	})
+		.then(product => {
+			res.send(product);
+		})
+		.catch(next);
+});
+
 module.exports = server;
