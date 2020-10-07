@@ -13,6 +13,10 @@ server.get('/', (req, res, next) => {
 
 server.post('/', (req, res) =>{
 	const {name, stock, description, price, enter_date, image} = req.body;
+
+	if (!name || !description || !price || !image)
+		return res.status(400).send('a parameter is missing');
+
 	Product.create({
 		name: name,
 		stock: stock,
