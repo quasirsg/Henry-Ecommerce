@@ -5,7 +5,7 @@ const { DataTypes } = require("sequelize");
 module.exports = (sequelize) => {
   // defino el modelo
 
-  const Product = sequelize.define("product", {
+ sequelize.define("product", {
     name: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -29,10 +29,4 @@ module.exports = (sequelize) => {
       allowNull: false,
     },
   });
-
-  Product.associate = function(models) {
-    //
-  }
-
-  return Product;
 };
