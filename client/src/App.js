@@ -1,5 +1,5 @@
 import React from 'react';
-import Example from './components/produto';
+import Product from './components/produto';
 
 
 
@@ -7,7 +7,7 @@ import Example from './components/produto';
 function App() {
   return (
     <div>
-      <Example />
+      <Product />
     </div>
   );
 }

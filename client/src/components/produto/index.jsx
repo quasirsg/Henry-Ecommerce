@@ -5,7 +5,7 @@ import {
     CarouselItem,
     CarouselControl,
     CarouselIndicators,
-    CarouselCaption
+    CarouselCaption,
 } from 'reactstrap';
 import './Producto.css'
 
@@ -110,6 +110,7 @@ const Product = ({ title, description, price, stock, enter_date, img }) => {
                 </div>
                 <div className='button-container'>
                     <button className='button'>Add To Cart</button>
+            
                 </div>
 
             </div>
