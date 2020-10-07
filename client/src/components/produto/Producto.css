@@ -50,7 +50,7 @@
 }
 
 .productTitle {
-  font-family: 'Proxima Nova Semibold y regular';
+  font-family: 'Roboto', sans-serif;
   padding-top: 2rem;
 	color: black;
 	font-size: 225%;
@@ -58,13 +58,13 @@
 }
 
 .infoCardDescription {
-  font-family: 'Proxima Nova Semibold y regular';
+  font-family: 'Roboto', sans-serif;
   font-size: 1.2em;
   padding: 2rem 0rem;
   border-bottom: 1px solid#8763FC;
 }
 .inforPrice {
-  font-family: 'Proxima Nova Semibold y regular';
+  font-family: 'Roboto', sans-serif;
   padding-top: 1rem;
   font-size: 1.2em;
 }
@@ -85,7 +85,7 @@
 }
 
 .rating-reviews p {
-  font-family: 'Proxima Nova Semibold y regular';
+  font-family: 'Roboto', sans-serif;
   padding-top: 2.5rem;
 }
 
@@ -107,7 +107,7 @@
 	padding:11px 30px;
 	text-decoration:none;
   text-shadow:0px 2px 0px #8763fc;
-  font-family: 'Proxima Nova Semibold y regular';
+  font-family: 'Roboto', sans-serif;
 }
 
 textarea:focus, .button:focus{
