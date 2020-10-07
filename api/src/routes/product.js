@@ -19,7 +19,7 @@ server.get("/:id", (req, res, next) => {
     .then((products) => {
 	  // console.log(products);
 	  if (products === null) {
-		  return res.status(404).send({message:'El proyecto no existe'});
+		  return res.status(404).send({message:'El producto no existe'});
 	  }
       return res.status(200).send({ products });
     })
