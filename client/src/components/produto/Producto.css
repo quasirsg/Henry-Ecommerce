@@ -1,0 +1,123 @@
+/*========== Container ========== */
+
+.productContainer {
+  max-width: 20rem;
+  min-width: 60rem;
+  margin: auto;
+  margin-top: 50px;
+  display: flex;
+  flex-direction: flex;
+  justify-content: center;
+  border-radius: 3rem;
+  /* box-shadow: inset 0 0 27px 3px #6b83fc5b; */
+  box-shadow:  0 0 27px 3px #6b83fc5b;
+}
+
+
+
+/* ======== carousel ====== */
+.productImg {
+  margin:10px auto;
+  border-radius:10px;
+  border: 0;
+  padding:13px;
+  width:50rem;
+  height:30rem;
+}
+
+.carousel-item > img { 
+    width: 90%;
+    text-align: center; 
+    border-radius:50px;
+}
+
+
+.carousel-item, .carousel-item.active {
+    align-items:center;
+}
+
+ .carousel-control-prev,.carousel-control-next {
+    cursor:pointer;
+    color: black;
+}
+
+/* ======== PRODUCT INFO: title, description, price, rating, reviews, button ========= */
+
+.productInfo {
+    padding: 15px;
+	border-radius: 0 0 30px 30px;
+
+}
+
+.productTitle {
+  font-family: 'Proxima Nova Semibold y regular';
+  padding-top: 2rem;
+	color: black;
+	font-size: 225%;
+	text-shadow: 0 0 5px #6B83FC;
+}
+
+.infoCardDescription {
+  font-family: 'Proxima Nova Semibold y regular';
+  font-size: 1.2em;
+  padding: 2rem 0rem;
+  border-bottom: 1px solid#8763FC;
+}
+.inforPrice {
+  font-family: 'Proxima Nova Semibold y regular';
+  padding-top: 1rem;
+  font-size: 1.2em;
+}
+
+.title-price{
+  border-bottom: 1px solid #8763FC;
+}
+.star-container {
+  padding: 2rem;
+}
+
+.with-svg .star {
+  width: 20px;
+}
+
+.rating-reviews {
+  display: flex;
+}
+
+.rating-reviews p {
+  font-family: 'Proxima Nova Semibold y regular';
+  padding-top: 2.5rem;
+}
+
+.button-container {
+  text-align: center;
+}
+
+.button{
+  box-shadow: 1px 0px 6px 1px #6b83fc;
+	background:linear-gradient(to bottom, #8763fc 5%, #6b83fc 100%);
+	background-color:#8763fc;
+  border-radius:42px;
+  border:0;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:17px;
+	padding:11px 30px;
+	text-decoration:none;
+  text-shadow:0px 2px 0px #8763fc;
+  font-family: 'Proxima Nova Semibold y regular';
+}
+
+textarea:focus, .button:focus{
+  outline: none;
+}
+.button:hover {
+  background:linear-gradient(to bottom, #6b83fc 5%, #8763fc 100%);
+	background-color:#6b83fc;
+}
+.button:active {
+	position:relative;
+	top:1px;
+}
