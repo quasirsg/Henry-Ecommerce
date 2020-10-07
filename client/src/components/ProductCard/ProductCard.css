@@ -1,0 +1,41 @@
+/* Estilos para componentes */
+p {
+  font-size: 1.2rem;
+}
+/* Estilos para Clases de reactstrap y clases propias */
+.card {
+  font-family: "Roboto";
+  height: 600px;
+  width: 600px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-items: center;
+  padding: 30px;
+  margin: 10px;
+}
+
+.product-img {
+  height: 380px;
+  width: 180px;
+}
+
+.btn-add-cart {
+  border-radius: 42px !important;
+  background: linear-gradient(to right, #8763fc, #6b83fc, #39bdfb);
+  width: 150px;
+}
+
+.btn-add-cart:hover {
+  background: linear-gradient(to right, #39bdfb, #6b83fc, #8763fc);
+}
+
+.card-title {
+  font-weight: bold;
+  font-size: 2rem;
+}
+
+.card-subtitle {
+  font-size: 1.5rem;
+  padding-bottom: 10px;
+}
