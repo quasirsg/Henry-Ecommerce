@@ -1,17 +1,20 @@
-import React from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import React from 'react';
+import {
+  Switch,
+  Route,
+} from "react-router-dom";
+import Product from "./components/produto";
 
 function App() {
-  // TODO: linkear los componentes cuando esten listos
+  // TODO:Hacer las routes con react-router
   return (
-    <Router>
-      <Switch>
-        <Route path="/" exact>
+    <Switch>
+    <Route path="/" exact>
           Inicio
           {/* <Catalogo/> */}
         </Route>
-      </Switch>
-    </Router>
+      <Route exact path="/producto/:id" component={Product} />
+    </Switch>
   );
 }
 
