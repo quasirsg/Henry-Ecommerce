@@ -3,7 +3,7 @@ import { Button, Card, CardImg, CardTitle, CardSubtitle } from "reactstrap";
 import "./ProductCard.css";
 import StarRatings from "react-star-ratings";
 
-const productCard = () => {
+const ProductCard = ({ product }) => {
   return (
     // TODO:Create State and link it to the component
     <Card>
@@ -11,22 +11,22 @@ const productCard = () => {
         className="product-img"
         top
         width="100%"
-        src="https://cdn.shopify.com/s/files/1/1618/2767/products/SportSeries_CombatProtein_2lb_ChocolateMilk_view1_650x.jpg?v=1559580836"
+        src="{product.img}"
         alt="Product Card Img"
       />
-      <CardTitle>Product Name</CardTitle>
+      <CardTitle>{product.name}</CardTitle>
       <StarRatings
-        rating={2.403}
+        rating={product.rating}
         starRatedColor="#6B83FC"
-        starDimension="40px"
-        starSpacing="15px"
+        starDimension="25px"
+        starSpacing="6px"
       />
-      <p>Reviews: 3</p>
-      <CardSubtitle>Precio: 60$</CardSubtitle>
+      <p>Reviews: {product.review}</p>
+      <CardSubtitle>Precio: {product.price}</CardSubtitle>
       <Button className="btn-add-cart" size="sm">
         Agregar a Carrito
       </Button>
     </Card>
   );
 };
-export default productCard;
+export default ProductCard;
