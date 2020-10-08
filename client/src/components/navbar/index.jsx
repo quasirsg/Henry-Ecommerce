@@ -8,15 +8,13 @@ import GroupIcons from '../groupIcons'
 
 const Navbar = ({ }) => {
     return (
-        <Container>
-            <Col lg='12'>
-                <Link to="/">
-                    <h3>Grupo 12</h3>
-                </Link>
-                <SearchBar />
-                <GroupIcons />
-            </Col>
-        </Container>
+        <div className="navbar">
+            <Link to="/">
+                <h3 style={{ color: '424242', margin: '0' }}>Grupo 12</h3>
+            </Link>
+            <SearchBar />
+            <GroupIcons />
+        </div>
     );
 }
 
