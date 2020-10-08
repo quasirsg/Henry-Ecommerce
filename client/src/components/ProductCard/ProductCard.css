@@ -22,13 +22,41 @@ p {
 
 .btn-add-cart {
   border-radius: 42px !important;
-  background: linear-gradient(to right, #8763fc, #6b83fc, #39bdfb);
+  background-image: linear-gradient(
+    to right,
+    #8763fc,
+    #806afd,
+    #7a70fd,
+    #7576fd,
+    #707cfd,
+    #6385ff,
+    #578dff,
+    #4d94ff,
+    #39a0ff,
+    #2caaff,
+    #2cb4fe,
+    #39bdfb
+  );
   width: 150px;
   margin-bottom: 2rem;
 }
 
 .btn-add-cart:hover {
-  background: linear-gradient(to right, #39bdfb, #6b83fc, #8763fc);
+  background: linear-gradient(
+    to right,
+    #39bdfb,
+    #2cb4fe,
+    #2caaff,
+    #39a0ff,
+    #4d94ff,
+    #578dff,
+    #6385ff,
+    #707cfd,
+    #7576fd,
+    #7a70fd,
+    #806afd,
+    #8763fc
+  );
 }
 
 .card-title {

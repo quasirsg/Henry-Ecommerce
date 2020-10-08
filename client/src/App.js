@@ -3,19 +3,21 @@ import Product from "./components/produto";
 import ProductDetail from "./components/productDetail/";
 import Catalogue from "./components/catalogo";
 import {
-  BrowserRouter as Router,
   Switch,
   Route,
-  NavLink,
-  Link,
 } from "react-router-dom";
-import ProductCard from "./components/ProductCard/ProductCard";
+import Product from "./components/produto";
 
 function App() {
+  // TODO:Hacer las routes con react-router
   return (
-    <div>
-      <Catalogue />
-    </div>
+    <Switch>
+    <Route path="/" exact>
+          Inicio
+          {/* <Catalogo/> */}
+        </Route>
+      <Route exact path="/producto/:id" component={Product} />
+    </Switch>
   );
 }
 
