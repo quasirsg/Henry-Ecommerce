@@ -18,8 +18,8 @@ const ProductCard = ({ product }) => {
       <StarRatings
         rating={product.rating}
         starRatedColor="#6B83FC"
-        starDimension="40px"
-        starSpacing="15px"
+        starDimension="25px"
+        starSpacing="6px"
       />
       <p>Reviews: {product.review}</p>
       <CardSubtitle>Precio: {product.price}</CardSubtitle>

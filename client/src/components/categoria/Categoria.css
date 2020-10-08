@@ -1,0 +1,9 @@
+.sidebar {
+  position: fixed;
+  transform: translateX(-30rem);
+  width: 30rem;
+}
+
+.sidebar.open {
+  transform: translateX(0);
+}

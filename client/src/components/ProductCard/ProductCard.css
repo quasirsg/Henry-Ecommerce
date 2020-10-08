@@ -1,3 +1,5 @@
+/* ==== Estilos modificados ==== */
+
 /* Estilos para componentes */
 p {
   font-size: 1.2rem;
@@ -5,19 +7,17 @@ p {
 /* Estilos para Clases de reactstrap y clases propias */
 .card {
   font-family: "Roboto";
-  height: 600px;
-  width: 600px;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  align-items: center;
-  padding: 30px;
-  margin: 10px;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 16.66rem;
+  margin: 0 0.5rem 2.3rem 0.5rem;
 }
 
 .product-img {
-  height: 380px;
-  width: 180px;
+  height: 14rem;
+  margin-bottom: 1rem;
+  margin-top: 1rem;
 }
 
 .btn-add-cart {
@@ -38,6 +38,7 @@ p {
     #39bdfb
   );
   width: 150px;
+  margin-bottom: 2rem;
 }
 
 .btn-add-cart:hover {
@@ -59,11 +60,31 @@ p {
 }
 
 .card-title {
-  font-weight: bold;
-  font-size: 2rem;
+  /* margin-bottom: 0.5rem; */
+  text-align: center;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.rev-price {
+  display: flex;
+  /* flex-direction: column; */
+  justify-content: center;
+  text-align: center;
 }
 
 .card-subtitle {
-  font-size: 1.5rem;
-  padding-bottom: 10px;
+  padding: 1rem;
+  font-size: 1rem;
+  /* line-height: 1rem; */
+}
+
+.review {
+  padding: 1rem;
+  font-size: 0.88rem;
+  line-height: 1rem;
+}
+
+.but-cont {
+  text-align: center;
 }
