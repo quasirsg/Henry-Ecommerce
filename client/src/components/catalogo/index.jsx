@@ -1,33 +1,22 @@
 import React, { useEffect, useState } from "react";
 import Category from "../categoria";
-import ProductCard from "../ProductCard/ProductCard";
 import "./Catalogo.css";
-import axios from "axios";
+// import { Link } from "react-router-dom";
+// import axios from "axios";
 
-const Catalogue = (props) => {
-  const [data, setData] = useState([]);
-
-  useEffect(() => {
-    axios
-      .get("http://localhost:3001/products/")
-      .then((res) => {
-        console.log(res.data.products);
-        return setData(res.data.products);
-      })
-      .catch((err) => {
-        return err;
-      });
-  }, []);
-
+const Catalogue = ({ props }) => {
+  // console.log(props);
   //TODO: cuadrar responsive
   return (
     <div className="container">
       <Category />
 
       <div className="catalogo">
-        {data.map((fit) => {
-          return <ProductCard business={fit} key={fit.id} />;
-        })}
+        <ul>
+          {props.map((fit) => {
+            return <li key={fit.id}>{/* <ProductCard product={fit} /> */}</li>;
+          })}
+        </ul>
       </div>
     </div>
   );
