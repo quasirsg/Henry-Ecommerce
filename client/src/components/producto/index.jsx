@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from "react";
+import Axios from "axios";
 import StarRatings from "react-star-ratings";
+import { useParams } from 'react-router-dom'
+
 // import {
 //   Carousel,
 //   CarouselItem,
@@ -45,45 +48,17 @@ const Product = (props) => {
     });
   };
 
-  // /* ======== Slide image ======== */
-  // const next = () => {
-  //   if (animating) return;
-  //   const nextIndex =
-  //     activeIndex === props.img.length - 1 ? 0 : activeIndex + 1;
-  //   setActiveIndex(nextIndex);
-  // };
-
-  // const previous = () => {
-  //   if (animating) return;
-  //   const nextIndex =
-  //     activeIndex === 0 ? props.img.length - 1 : activeIndex - 1;
-  //   setActiveIndex(nextIndex);
-  // };
-
-  // const goToIndex = (newIndex) => {
-  //   if (animating) return;
-  //   setActiveIndex(newIndex);
-  // };
-
-  // const slides = props.img.map((item) => {
-  //   return (
-  //     <CarouselItem
-  //       onExiting={() => setAnimating(true)}
-  //       onExited={() => setAnimating(false)}
-  //       key={item.src}
-  //     >
-  //       <img src={item.src} alt={item.altText} />
-  //       <CarouselCaption
-  //         captionText={item.caption}
-  //         captionHeader={item.caption}
-  //       />
-  //     </CarouselItem>
-  //   );
-  // });
-  console.log(props);
+  let { id } = useParams();
+  useEffect(() => {
+    Axios.get('http://localhost:3000/products/' + id).
+      then(res => {
+        console.log(res);
+      })
+  }, [])
 
   return (
     <div className="productContainer">
+      <h1>{id}</h1>
       {/* <Carousel
         className="productImg"
         activeIndex={activeIndex}
