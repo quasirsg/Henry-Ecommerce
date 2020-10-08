@@ -2,6 +2,7 @@ import React from "react";
 import Product from "./components/produto";
 import ProductDetail from "./components/productDetail/";
 import Catalogue from "./components/catalogo";
+import FormProduct from './components/product'  
 import {
   Switch,
   Route,
@@ -17,6 +18,11 @@ function App() {
           {/* <Catalogo/> */}
         </Route>
       <Route exact path="/producto/:id" component={Product} />
+    //TODO: agregar las rutas que faltan para que el formulario funcione al actualizar o eliminar. 
+      <Route 
+       exact path='/admin/product' 
+       render={() => <FormProduct action='post' icon='success' message='Se agregó producto:' />}
+       />
     </Switch>
   );
 }
