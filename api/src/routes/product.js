@@ -11,7 +11,8 @@ server.get('/', (req, res, next) => {
 });
 
 
-server.post('/', (req, res) =>{
+
+server.post('/', (req, res, next) =>{
 	const {name, stock, description, price, enter_date, image} = req.body;
 
 	if (!name || !description || !price || !image)
@@ -25,33 +26,44 @@ server.post('/', (req, res) =>{
 		enter_date: enter_date,
 		image: image
 	}).then( product=> {
-		res.send(product)
-	})
+		return res.status(200).send(product)
+	}).catch(next)
 });
 
 
-server.put('/:id', (req, res)=>{
+server.put('/:id', (req, res, next)=>{
 	let productId = req.params.id
 	let update= req.body
 
 	Product.findOne({where: {id: productId}})
 		.then(product=> {
+			if (product === null) {
+				return res.status(404).send({message:'Product doesnt exist'});
+			}
 			product.update(update)
 			.then(productUpdate =>{
-				res.json(productUpdate)
+				return res.status(200).json(productUpdate)
 			})
 		})
+		.catch(next)
 		
 });
 
 
-server.delete('/:id', (req,res)=>{
+server.delete('/:id', (req,res,next)=>{
 	let productId = req.params.id
 	
-		Product.destroy({where:{id: productId}}).then(()=>{
-			res.send('Product deleted')
-		});
-
-});
+	Product.findOne({where:{id: productId}})
+		.then(product=> {
+			if (product === null) {
+				return res.status(404).send({message:'Product doesnt exist'})
+			}
+			product.destroy(product)
+			.then(()=>{
+				return res.status(200).send('Product deleted')
+			});
+		
+		}).catch(next)
+ });
 
 module.exports = server;
