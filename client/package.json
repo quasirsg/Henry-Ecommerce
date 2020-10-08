@@ -8,6 +8,7 @@
     "@testing-library/user-event": "^7.1.2",
     "axios": "^0.20.0",
     "bootstrap": "^4.5.2",
+    "formik": "^2.1.7",
     "react": "^16.13.1",
     "react-bootstrap-icons": "^1.0.0",
     "react-dom": "^16.13.1",
@@ -17,7 +18,8 @@
     "react-star-ratings": "^2.3.0",
     "reactstrap": "^8.6.0",
     "redux": "^4.0.5",
-    "sweetalert2": "^10.3.5"
+    "sweetalert2": "^10.3.5",
+    "yup": "^0.29.3"
   },
   "scripts": {
     "start": "react-scripts start",
