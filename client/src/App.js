@@ -1,39 +1,26 @@
-import React, { useState, useEffect } from "react";
-import ProductDetail from "./components/productDetail";
-import Catalogue from './components/catalogo'
-import { Switch, Route } from "react-router-dom";
-import axios from "axios";
+import React from "react";
+import Product from "./components/produto";
+import ProductDetail from "./components/productDetail/";
+import Catalogue from "./components/catalogo";
 import FormProduct from './components/product'
-import SearchBar from './components/SearchBar'
+import {
+  Switch,
+  Route,
+} from "react-router-dom";
 
+import Product from "./components/produto";
+import SearchBar from './components/SearchBar'
 
 function App() {
   // TODO:Hacer las routes con react-router
-  const [product, setProduct] = useState([]);
-  /* ===== Axios Product =====*/
-
-  // let productId = null;
-
-  useEffect(() => {
-    axios
-      .get(`http://localhost:3001/products/`)
-      .then((res) => {
-        return setProduct(res.data.products);
-      })
-      .catch((err) => {
-        return;
-      });
-  }, []);
-
   return (
-    <Switch>
-      <Route path="/" exact>
-        <Catalogue props={product} />
-      </Route>
-      <Route path="/product/:id" >
-        <ProductDetail props={product}/>
-      </Route>
-     <Route
+    <div>
+      <SearchBar />
+      <Switch>
+        <Route exact path="/producto/:id" component={Product} />
+        <Route path="/" exact> Inicio {/* <Catalogo/> */} </Route>
+        //TODO: agregar las rutas que faltan para que el formulario funcione al actualizar o eliminar.
+        <Route
           exact path='/admin/product'
           render={() => {
             <FormProduct
@@ -42,9 +29,9 @@ function App() {
               message='Se agregó producto:'
             />
           }}
-       />
-      
-    </Switch>
+        />
+      </Switch>
+    </div>
   );
 }
 
