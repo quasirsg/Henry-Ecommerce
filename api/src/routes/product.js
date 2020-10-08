@@ -1,5 +1,4 @@
 const server = require('express').Router();
-const express = require('express');
 const { Product } = require('../db.js');
 
 server.get('/', (req, res, next) => {
@@ -26,19 +25,19 @@ server.post('/', (req, res, next) =>{
 		enter_date: enter_date,
 		image: image
 	}).then( product=> {
-		return res.status(200).send(product)
+		return res.status(200).json(product)
 	}).catch(next)
 });
 
 
 server.put('/:id', (req, res, next)=>{
-	let productId = req.params.id
+	let { id } = req.params
 	let update= req.body
 
-	Product.findOne({where: {id: productId}})
+	Product.findOne({where: { id }})
 		.then(product=> {
-			if (product === null) {
-				return res.status(404).send({message:'Product doesnt exist'});
+			if (!product) {
+				return res.status(404).json({message:'Product doesnt exist'});
 			}
 			product.update(update)
 			.then(productUpdate =>{
@@ -51,16 +50,16 @@ server.put('/:id', (req, res, next)=>{
 
 
 server.delete('/:id', (req,res,next)=>{
-	let productId = req.params.id
+	let { id } = req.params
 	
-	Product.findOne({where:{id: productId}})
+	Product.findOne({where:{ id }})
 		.then(product=> {
-			if (product === null) {
-				return res.status(404).send({message:'Product doesnt exist'})
+			if (!product) {
+				return res.status(404).json({message:'Product doesnt exist'})
 			}
 			product.destroy(product)
 			.then(()=>{
-				return res.status(200).send('Product deleted')
+				return res.status(200).json('Product deleted')
 			});
 		
 		}).catch(next)
