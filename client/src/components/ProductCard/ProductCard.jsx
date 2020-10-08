@@ -2,8 +2,11 @@ import React from "react";
 import { Button, Card, CardImg, CardTitle, CardSubtitle } from "reactstrap";
 import "./ProductCard.css";
 import StarRatings from "react-star-ratings";
+import { Link } from "react-router-dom";
 
 const ProductCard = ({ product }) => {
+  // console.log(product);
+
   return (
     // TODO:Create State and link it to the component
     <Card>
@@ -16,16 +19,18 @@ const ProductCard = ({ product }) => {
       />
       <CardTitle>{product.name}</CardTitle>
       <StarRatings
-        rating={product.rating}
+        rating={4}
         starRatedColor="#6B83FC"
         starDimension="25px"
         starSpacing="6px"
       />
       <p>Reviews: {product.review}</p>
       <CardSubtitle>Precio: {product.price}</CardSubtitle>
-      <Button className="btn-add-cart" size="sm">
-        Agregar a Carrito
-      </Button>
+      <Link to={`/product/${product.id}`}>
+        <Button className="btn-add-cart" size="sm">
+          Agregar a Carrito
+        </Button>
+      </Link>
     </Card>
   );
 };

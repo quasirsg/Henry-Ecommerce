@@ -12,15 +12,15 @@ server.get("/", (req, res, next) => {
 
 server.get("/:id", (req, res, next) => {
   var productId = req.params.id;
-  
+
   Product.findOne({
     where: { id: productId },
   })
     .then((products) => {
-	  // console.log(products);
-	  if (products === null) {
-		  return res.status(404).send({message:'El producto no existe'});
-	  }
+      // console.log(products);
+      if (products === null) {
+        return res.status(404).send({ message: "El producto no existe" });
+      }
       return res.status(200).send({ products });
     })
     .catch(next);
