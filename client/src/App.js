@@ -1,34 +1,18 @@
-import React from 'react';
-<<<<<<< HEAD
-import Product from './components/produto';
-import ProductDetail from './components/productDetail/';
-
-
+import React from "react";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 function App() {
+  // TODO: linkear los componentes cuando esten listos
   return (
-    <div>
-      
-      <Product />
-
-    </div>
-=======
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  NavLink,
-  Link,
-} from "react-router-dom";
-import ProductCard from "./components/ProductCard/ProductCard";
-
-function App() {
-  // TODO:Hacer las routes con react-router
-  return <div>Esta Corriendo la App</div>;
-
->>>>>>> master
+    <Router>
+      <Switch>
+        <Route path="/" exact>
+          Inicio
+          {/* <Catalogo/> */}
+        </Route>
+      </Switch>
+    </Router>
   );
-
 }
 
 export default App;
