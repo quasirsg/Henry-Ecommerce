@@ -1,0 +1,39 @@
+/* ======= Container ======== */
+
+.container {
+  display: inline-flex;
+}
+
+.catalogo {
+  /* display: flex;
+    flex-wrap: wrap;
+	text-align: center;
+    padding: 0px; */
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  margin: 4.4rem 10%;
+}
+
+/* ======== ProductCard ======= */
+
+.products {
+  max-width: 100px;
+  display: inline-flex;
+  text-align: center;
+  padding: 0.5rem;
+  margin-top: 10px;
+}
+
+.list {
+  display: flex;
+}
+
+.listItem {
+  display: inline-block;
+  margin: 0px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+/* ======== Category ========== */

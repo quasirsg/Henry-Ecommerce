@@ -1,27 +1,29 @@
-import React from 'react';
-import { Container, Row, Col } from 'reactstrap';
-
-import FormProduct from './components/product'
+import React from "react";
+import Product from "./components/produto";
+import ProductDetail from "./components/productDetail/";
+import Catalogue from "./components/catalogo";
+import FormProduct from './components/product'  
+import {
+  Switch,
+  Route,
+} from "react-router-dom";
+import Product from "./components/produto";
 
 function App() {
-  const product = {
-    name: 'Zapatillas',
-    stock: 20,
-    description: 'Nuevas zapatillas que generaron una revolucion en los jovenes de hoy en dia y no se que mas poner',
-    price: 50,
-    category: 'Hombre',
-    enter_date: '2020-10-10',
-    image: 'localhost:3000'
-  }
-
+  // TODO:Hacer las routes con react-router
   return (
-    <Container>
-      <Row>
-        <Col lg='8' md='10' sm='12' xs='12' className='mx-auto'>
-          <FormProduct {...product} action='put' icon='warning' message='Se actualizó producto:' />
-        </Col>
-      </Row>
-    </Container>
+    <Switch>
+    <Route path="/" exact>
+          Inicio
+          {/* <Catalogo/> */}
+        </Route>
+      <Route exact path="/producto/:id" component={Product} />
+    //TODO: agregar las rutas que faltan para que el formulario funcione al actualizar o eliminar. 
+      <Route 
+       exact path='/admin/product' 
+       render={() => <FormProduct action='post' icon='success' message='Se agregó producto:' />}
+       />
+    </Switch>
   );
 }
 
