@@ -18,14 +18,18 @@ const productCard = () => {
       <StarRatings
         rating={2.403}
         starRatedColor="#6B83FC"
-        starDimension="40px"
-        starSpacing="15px"
+        starDimension="25px"
+        starSpacing="6px"
       />
-      <p>Reviews: 3</p>
-      <CardSubtitle>Precio: 60$</CardSubtitle>
-      <Button className="btn-add-cart" size="sm">
-        Agregar a Carrito
-      </Button>
+      <div className="rev-price">
+        <p className="review">Reviews: 3</p>
+        <CardSubtitle>Precio: 60$</CardSubtitle>
+      </div>
+      <div className="but-cont">
+        <Button className="btn-add-cart" size="sm">
+          Agregar a Carrito
+        </Button>
+      </div>
     </Card>
   );
 };

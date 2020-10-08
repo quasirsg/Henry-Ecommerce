@@ -1,26 +1,39 @@
 /* ======= Container ======== */
 
-.catalogo {
-	align-items: center;
-	text-align: center;
-	padding: 0px;
-	width: 100%;
-	margin-top: 2rem;
+.container {
+  display: inline-flex;
 }
 
+.catalogo {
+  /* display: flex;
+    flex-wrap: wrap;
+	text-align: center;
+    padding: 0px; */
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  margin: 4.4rem 10%;
+}
 
 /* ======== ProductCard ======= */
 
-/* .productCard{
-        max-width: 70px;
-        display: inline-flex;
-        flex-direction: column;
-        text-align: center;
-        padding: 0px;
-        list-style-type: none;
-        margin-top: 50px; /* Esta es la altura de la serchbar que no la detecta por position fixed*/
-/* } */
- 
+.products {
+  max-width: 100px;
+  display: inline-flex;
+  text-align: center;
+  padding: 0.5rem;
+  margin-top: 10px;
+}
 
+.list {
+  display: flex;
+}
+
+.listItem {
+  display: inline-block;
+  margin: 0px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
 
 /* ======== Category ========== */
