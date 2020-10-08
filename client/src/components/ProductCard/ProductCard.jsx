@@ -26,7 +26,7 @@ const ProductCard = ({ product }) => {
       />
       <p>Reviews: {product.review}</p>
       <CardSubtitle>Precio: {product.price}</CardSubtitle>
-      <Link to={`/products/${product.id}`}>
+      <Link to={`/product/${product.id}`}>
         <Button className="btn-add-cart" size="sm">
           Agregar a Carrito
         </Button>

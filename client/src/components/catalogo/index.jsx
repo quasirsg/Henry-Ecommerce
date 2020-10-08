@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Category from "../categoria";
-import ProductCard from "../ProductCard/ProductCard";
+import ProductCard from "../productCard/ProductCard";
 import "./Catalogo.css";
 // import { Link } from "react-router-dom";
 // import axios from "axios";
@@ -17,7 +17,7 @@ const Catalogue = ({ props }) => {
           {props.map((fit) => {
             return (
               <li key={fit.id}>
-                <ProductCard product={fit} />;
+                <ProductCard product={fit} />
               </li>
             );
           })}

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import Product from "./components/productDetail";
-import {Catalogue} from './components/catalogo'
+import ProductDetail from "./components/productDetail";
+import Catalogue from './components/catalogo'
 import { Switch, Route } from "react-router-dom";
-import Axios from "axios";
+import axios from "axios";
 
 function App() {
   // TODO:Hacer las routes con react-router
@@ -27,7 +27,10 @@ function App() {
       <Route path="/" exact>
         <Catalogue props={product} />
       </Route>
-      <Route path="/product/:id" component={Product} />
+      <Route path="/product/:id" >
+        <ProductDetail props={product}/>
+      </Route>
+      
     </Switch>
   );
 }

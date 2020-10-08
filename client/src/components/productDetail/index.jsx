@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Axios from "axios";
 import StarRatings from "react-star-ratings";
-import { useParams } from 'react-router-dom'
+import { useParams } from "react-router-dom";
 
 // import {
 //   Carousel,
@@ -37,9 +37,13 @@ import "./Producto.css";
 // };
 
 const Product = (props) => {
+  //Hooks
   const [activeIndex, setActiveIndex] = useState(0);
   const [animating, setAnimating] = useState(false);
   const [rating, setRating] = useState(0);
+  const [product, setProduct] = useState([]);
+
+  let { id } = useParams();
 
   /* ======== Star Rating Handle ======== */
   const changeRating = (newRating, name) => {
@@ -48,17 +52,20 @@ const Product = (props) => {
     });
   };
 
-  let { id } = useParams();
   useEffect(() => {
-    Axios.get('http://localhost:3000/products/' + id).
-      then(res => {
+    Axios.get("http://localhost:3001/products/" + id)
+      .then((res) => {
         console.log(res);
+        return setProduct(res.data.products);
       })
-  }, [])
+      .catch((err) => {
+        return;
+      });
+  }, []);
 
   return (
     <div className="productContainer">
-      <h1>{id}</h1>
+      {/* <h1>{id}</h1> */}
       {/* <Carousel
         className="productImg"
         activeIndex={activeIndex}
@@ -84,12 +91,12 @@ const Product = (props) => {
       </Carousel> */}
       <div className="productInfo">
         <div className="title-price">
-          <h2 className="productTitle">{props.title}</h2>
-          <p className="inforPrice">{props.price}</p>
+          <h2 className="productTitle">{product.name}</h2>
+          <p className="inforPrice">${product.price}</p>
         </div>
 
         <div className="desc-rating">
-          <p className="infoCardDescription">{props.description}</p>
+          <p className="infoCardDescription">{product.description}</p>
           <div className="rating-reviews">
             <StarRatings
               rating={rating}
@@ -100,7 +107,7 @@ const Product = (props) => {
               numberOfStars={5}
               name="rating"
             />
-            <p>{props.reviews} reviews</p>
+            <p>{product.reviews} reviews</p>
           </div>
         </div>
         <div className="button-container">
