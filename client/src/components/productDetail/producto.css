@@ -1,7 +1,3 @@
-img {
-  height: 400px;
-  width: 400px;
-}
 /*========== Container ========== */
 
 .productContainer {
@@ -11,7 +7,7 @@ img {
   margin-top: 50px;
   display: flex;
   flex-direction: flex;
-  justify-content: center;
+  justify-content: space-around;
   border-radius: 3rem;
   /* box-shadow: inset 0 0 27px 3px #6b83fc5b; */
   box-shadow: 0 0 27px 3px #6b83fc5b;
@@ -44,8 +40,15 @@ img {
   color: black;
 }
 
-/* ======== PRODUCT INFO: title, description, price, rating, reviews, button ========= */
+/* ====== Imagen ========== */
+.prod-img img {
+  height: 400px;
+  width: 400px;
+  border-radius: 42px;
+  margin-top: 12px;
+}
 
+/* ======== PRODUCT INFO: title, description, price, rating, reviews, button ========= */
 .productInfo {
   padding: 15px;
   border-radius: 0 0 30px 30px;
@@ -53,6 +56,7 @@ img {
 
 .productTitle {
   font-family: "Proxima Nova Semibold y regular";
+  text-align: center;
   padding-top: 2rem;
   color: black;
   font-size: 225%;
@@ -61,9 +65,9 @@ img {
 
 .infoCardDescription {
   font-family: "Proxima Nova Semibold y regular";
-  font-size: 1.2em;
-  padding: 2rem 0rem;
-  border-bottom: 1px solid#8763FC;
+  font-size: 1em;
+  padding: 1rem 0rem;
+  border-bottom: 1px solid#8763fc79;
 }
 .inforPrice {
   font-family: "Proxima Nova Semibold y regular";
@@ -72,7 +76,7 @@ img {
 }
 
 .title-price {
-  border-bottom: 1px solid #8763fc;
+  border-bottom: 1px solid #8763fc79;
 }
 .star-container {
   padding: 2rem;

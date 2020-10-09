@@ -11,7 +11,7 @@ p {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 16.66rem;
+  width: 14rem;
   margin: 0 0.5rem 2.3rem 0.5rem;
 }
 
@@ -75,8 +75,10 @@ p {
 }
 
 .card-subtitle {
+  font-weight: bold;
   padding: 1rem;
   font-size: 1rem;
+  color: #6b83fc;
   /* line-height: 1rem; */
 }
 

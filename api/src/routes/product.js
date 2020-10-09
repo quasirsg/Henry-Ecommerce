@@ -1,5 +1,5 @@
 const server = require("express").Router();
-const { Product } = require("../db.js");
+const { Product, Category } = require("../db.js");
 
 server.get("/", (req, res, next) => {
 	Product.findAll({})
@@ -73,11 +73,5 @@ server.delete('/:id', (req, res, next) => {
 
 		}).catch(next)
 });
-
-server.get('/categoria/:nombreCat', (req, res) => {
-	const { nombreCat } = req.params;
-
-	
-})
 
 module.exports = server;
