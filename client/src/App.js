@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Switch, Route } from "react-router-dom";
 import axios from "axios";
+
+//Components
 import Navbar from './components/navbar'
 import ProductDetail from "./components/productDetail";
 import Catalogue from "./components/catalogo";
@@ -34,6 +36,7 @@ function App() {
   }, []);
 
   return (
+    //No modifique ni elimine las rutas existentes
     <div className="col-lg-12">
       <Navbar />
       <Switch>
