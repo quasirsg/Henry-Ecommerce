@@ -39,7 +39,7 @@ const FormCategory= ({id, name='', description='', action, icon, message})=> {
               })}
             onSubmit={(values, { setSubmitting, resetForm }) => {
                 
-                const url = `admin/category/${id ? id : ''}`;
+                const url = `/category/${id ? id : ''}`;
                 const data= action === 'delete' ? null : values;
       
                 
