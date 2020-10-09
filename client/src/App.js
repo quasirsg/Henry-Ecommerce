@@ -6,7 +6,7 @@ import { Switch, Route } from "react-router-dom";
 import axios from "axios";
 import Navbar from './components/navbar'
 import ProductDetail from "./components/productDetail";
-import Catalogue from "./components/Catalogo";
+import Catalogue from "./components/catalogo";
 import FormProduct from "./components/productForm";
 import FormCategory from './components/categories';
 

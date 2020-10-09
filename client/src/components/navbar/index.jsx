@@ -3,8 +3,8 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { Container, Col } from 'reactstrap'
 
-import SearchBar from '../searchBar'
-import GroupIcons from '../groupIcons'
+import SearchBar from './SearchBar'
+import GroupIcons from './groupIcons'
 
 const Navbar = ({ }) => {
     return (
