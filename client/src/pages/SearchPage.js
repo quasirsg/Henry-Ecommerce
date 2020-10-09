@@ -12,6 +12,7 @@ const SearchPage = ({ }) => {
     useEffect(() => {
         Axios.get('http://localhost:3001/search/q/' + searchTerm)
             .then(res => {
+                console.log(res)
                 setProductos(res.data.results);
             });
     }, []);
@@ -19,7 +20,14 @@ const SearchPage = ({ }) => {
     return (
         <Catalogo
             products={products}
-            category={['Fitness']}
+            category={[{
+                id: 1,
+                name: 'Vitaminas'
+            },
+            {
+                id: 2,
+                name: 'suplementos'
+            }]}
         />
     );
 }

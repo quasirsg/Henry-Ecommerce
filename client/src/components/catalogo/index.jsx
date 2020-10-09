@@ -10,6 +10,9 @@ const Catalogue = ({ products, category }) => {
     <div className="container-ppal">
       <div className="container">
         <div className="category">
+          <Category
+            category={category}
+          />
         </div>
         <div className="cat-ppal">
           <div className="catalogo">

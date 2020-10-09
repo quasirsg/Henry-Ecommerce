@@ -40,7 +40,7 @@ function App() {
     <div className="col-lg-12">
       <Navbar />
       <Switch>
-        <Route path="/search" component={SearchPage} />
+        <Route path="/search/q/:searchTerm" component={SearchPage} />
         <Route exact path="/products">
           <Catalogue
             products={product}
