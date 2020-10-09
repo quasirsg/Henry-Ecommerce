@@ -8,7 +8,7 @@ const CustomInput = ({ label, ...props }) => {
   return (
     <FormGroup>
       <Label for={props.name}>{label}</Label>
-      <Input {...field} {...props} className='' />
+      <Input {...field} {...props} />
       {
         meta.touched && meta.error ? (
           <p className='text-danger small'>{meta.error}</p>
