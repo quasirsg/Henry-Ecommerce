@@ -19,7 +19,7 @@ const Toast = Swal.mixin({
   }
 });
 
-const FormProduct = ({ id, name = '', stock = 0, description = '', price = 0, category = '', image = '', action, icon, message }) => {
+const FormProduct = ({ id, name = '', stock = 0, description = '', price = 0, category , image = '', action, icon, message }) => {
   return (
     <Col lg='6' sm='10' xs='10' className='card shadow pl-3 pr-3 pb-4 pt-2 mt-3 mb-3 mx-auto'>
       <Formik
@@ -92,10 +92,12 @@ const FormProduct = ({ id, name = '', stock = 0, description = '', price = 0, ca
               </Col>
               <Col>
                 <CustomInput label='Categoría' name='category' type='select' >
-                  <option value=''>Seleccionar categoría</option>
-                  <option value='Hombre'>Hombre</option>
-                  <option value='Mujer'>Mujer</option>
-                  <option value='Niños'>Niño</option>
+                  <option value=''>Seleccionar categoría</option> 
+                  {category.map((item)=>{
+                    return <option value={item.name}>{item.name}</option>
+                  })
+
+                  }
                 </CustomInput>
               </Col>
             </Row>
