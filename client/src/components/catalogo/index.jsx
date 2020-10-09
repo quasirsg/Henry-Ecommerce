@@ -6,14 +6,14 @@ import SearchBar from "../SearchBar";
 // import { Link } from "react-router-dom";
 // import axios from "axios";
 
-const Catalogue = ({ props }) => {
+const Catalogue = ({ props, category }) => {
   // console.log(props);
   //TODO: cuadrar responsive
   return (
     <div className="container-ppal">
       <div className="container">
         <div className="category">
-          <Category />
+          <Category category={category} />
         </div>
         <div className="cat-ppal">
           <div className="catalogo">

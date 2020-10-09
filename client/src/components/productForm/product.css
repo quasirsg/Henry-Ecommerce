@@ -6,3 +6,12 @@
   -webkit-box-shadow: 1px 5px 15px 0px rgba(118,114,255,0.55); 
   box-shadow: 1px 5px 15px 0px rgba(118,114,255,0.55);
 }
+
+img.icon-litle-width{
+  width: 70px;
+  height: 70px;
+}
+
+h2.center{
+  text-align: center!important;
+}

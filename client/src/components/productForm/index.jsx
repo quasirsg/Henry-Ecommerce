@@ -1,6 +1,6 @@
 import React from 'react';
 import './product.css';
-import { Button, Card, Row, Col, Container } from 'reactstrap';
+import { Button, Row, Col } from 'reactstrap';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import Swal from 'sweetalert2';
@@ -19,9 +19,9 @@ const Toast = Swal.mixin({
   }
 });
 
-const FormProduct = ({ id, name = '', stock = 0, description = '', price = 0, category = '', enter_date = '', image = '', action, icon, message }) => {
+const FormProduct = ({ id, name = '', stock = 0, description = '', price = 0, category = '', image = '', action, icon, message }) => {
   return (
-    <Card className='shadow pl-3 pr-3 pb-4 pt-2 mt-2 mb-3'>
+    <Col lg='6' sm='10' xs='10' className='card shadow pl-3 pr-3 pb-4 pt-2 mt-3 mb-3 mx-auto'>
       <Formik
         initialValues={{
           name,
@@ -29,7 +29,6 @@ const FormProduct = ({ id, name = '', stock = 0, description = '', price = 0, ca
           description,
           price,
           category,
-          enter_date,
           image
         }}
         validationSchema={Yup.object({
@@ -51,8 +50,6 @@ const FormProduct = ({ id, name = '', stock = 0, description = '', price = 0, ca
           category: Yup.string()
             .oneOf(['Hombre', 'Mujer', 'Niños'], 'Categoría invalida') //Las categorias debe traerlas de la bd
             .required('Debes seleccionar una categoría'),
-          enter_date: Yup.date()
-            .required('Debes completar este campo'),
           image: Yup.string()
             .required('Debes completar este campo')
         })}
@@ -84,10 +81,10 @@ const FormProduct = ({ id, name = '', stock = 0, description = '', price = 0, ca
 
         {({ isSubmitting }) => (
           <Form>
-            <Container className='text-center rounded-lg'>
-              <img style={{ width: '4rem' }} src='./gym.png' />
-              <h2 className='text-center'>Productos</h2>
-            </Container>
+            <Col className='rounded-lg text-center'>
+              <img className='icon-litle-width' src='../gym.png' />
+              <h2>Productos</h2>
+            </Col>
             <hr className='mt-0 mb-3' />
             <Row>
               <Col>
@@ -105,23 +102,16 @@ const FormProduct = ({ id, name = '', stock = 0, description = '', price = 0, ca
             <Row>
               <Col>
                 <Row>
-                  <Col lg='6' xs='12'>
+                  <Col lg='6' xs='6'>
                     <CustomInput label='Stock' name='stock' type='number' />
                   </Col>
-                  <Col>
+                  <Col xs='6'>
                     <CustomInput label='Precio' name='price' type='number' />
                   </Col>
                 </Row>
               </Col>
-              <Col>
-                <Row>
-                  <Col lg='6' xs='12'>
-                    <CustomInput label='Fecha ingreso' name='enter_date' type='date' />
-                  </Col>
-                  <Col>
-                    <CustomInput label='Imagen' name='image' type='text' placeholder='Url' />
-                  </Col>
-                </Row>
+              <Col xs='12' lg='6'>
+                <CustomInput label='Imagen' name='image' type='text' placeholder='Url' />
               </Col>
             </Row>
             <Row>
@@ -139,7 +129,7 @@ const FormProduct = ({ id, name = '', stock = 0, description = '', price = 0, ca
         )}
 
       </Formik>
-    </Card>
+    </Col>
   )
 }
 
