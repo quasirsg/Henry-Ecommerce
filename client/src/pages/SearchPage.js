@@ -14,11 +14,12 @@ const SearchPage = ({ }) => {
             .then(res => {
                 setProductos(res.data.results);
             });
-    });
+    }, []);
 
     return (
         <Catalogo
-            props={products}
+            products={products}
+            category={['Fitness']}
         />
     );
 }

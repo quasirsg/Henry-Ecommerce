@@ -1,21 +1,7 @@
 import React from "react";
-// import { useParams } from "react-router-dom";
 
 const Category = ({ category }) => {
-  // let { id } = useParams();
 
-  // useEffect(() => {
-  //   Axios.get("http://localhost:3001/category/" + id)
-  //     .then((res) => {
-  //       console.log(res);
-  //       return setProduct(res.data.products);
-  //     })
-  //     .catch((err) => {
-  //       return;
-  //     });
-  // }, []);
-
-  console.log(category);
   return (
     <div className="sidebar">
       <aside className="">

@@ -7,16 +7,12 @@ import Catalogue from "./components/catalogo";
 import FormProduct from "./components/productForm";
 import FormCategory from './components/categories';
 
-
 //Pages
 import SearchPage from './pages/SearchPage';
 
 function App() {
   const [product, setProduct] = useState([]);
   const [category, setCategory] = useState([]);
-  /* ===== Axios Product =====*/
-
-  // let productId = null;
 
   useEffect(() => {
     axios
@@ -30,7 +26,6 @@ function App() {
     axios
       .get(`http://localhost:3001/category/`)
       .then((res) => {
-        console.log(res);
         return setCategory(res.data.category);
       })
       .catch((err) => {
@@ -42,42 +37,41 @@ function App() {
     <div className="col-lg-12">
       <Navbar />
       <Switch>
-        <Route path="/products" exact>
-          <Catalogue props={product} category={category} />
+        <Route path="/search" component={SearchPage} />
+        <Route exact path="/products">
+          <Catalogue
+            products={product}
+            category={category}
+          />
         </Route>
         <Route exact path="/product/:id">
-          <ProductDetail props={product} />
+          <ProductDetail
+            props={product}
+          />
         </Route>
-        <Route
-          exact
-          path="/admin/product"
-          render={() => (
-            <FormProduct
-              action="post"
-              icon="success"
-              message="Se agregó producto:"
-            />
-          )}
+        <Route exact path="/admin/product" render={() => (
+          <FormProduct
+            action="post"
+            icon="success"
+            message="Se agregó producto:"
+          />
+        )}
         />
-        <Route
-          exact path='/admin/category'
-          render={() =>
-            <FormCategory
-              action='post'
-              icon='success'
-              message='La categoria fue creada:'
-            />
-          }
+        <Route exact path='/admin/category' render={() =>
+          <FormCategory
+            action='post'
+            icon='success'
+            message='La categoria fue creada:'
+          />
+        }
         />
-        <Route
-          exact path='/admin/category'
-          render={() =>
-            <FormCategory
-              action='post'
-              icon='success'
-              message='La categoria fue creada:'
-            />
-          }
+        <Route exact path='/admin/category' render={() =>
+          <FormCategory
+            action='post'
+            icon='success'
+            message='La categoria fue creada:'
+          />
+        }
         />
       </Switch>
     </div>

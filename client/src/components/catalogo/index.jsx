@@ -3,22 +3,23 @@ import Category from "../categoria";
 import "./catalogo.css";
 import ProductCard from "../productCard/ProductCard";
 
-const Catalogue = ({ props, category }) => {
+const Catalogue = ({ products, category }) => {
   // console.log(props);
   //TODO: cuadrar responsive
   return (
     <div className="container-ppal">
       <div className="container">
         <div className="category">
-          <Category category={category} />
         </div>
         <div className="cat-ppal">
           <div className="catalogo">
-            {props.map((fit) => {
+            {products.map((fit) => {
               return (
                 <li key={fit.id}>
                   {" "}
-                  <ProductCard product={fit} />{" "}
+                  <ProductCard
+                    product={fit}
+                  />{" "}
                 </li>
               );
             })}
