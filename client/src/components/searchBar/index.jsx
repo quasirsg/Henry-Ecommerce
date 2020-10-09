@@ -15,26 +15,24 @@ const SearchBar = () => {
         //SearchTerm send
     }
     return (
-        <div className="searchBar">
-            <form
-                className="searchBar__form"
-                onSubmit={handleOnSubmit}
+        <form
+            className="searchBar__form"
+            onSubmit={handleOnSubmit}
+        >
+            <input
+                className="searchBar__input"
+                type="text"
+                name="search"
+                onChange={handleOnChange}
+                placeholder='Que estas buscando?'
+            />
+            <button
+                className="searchBar__button"
+                type="submit"
             >
-                <input
-                    className="searchBar__input"
-                    type="text"
-                    name="search"
-                    onChange={handleOnChange}
-                    placeholder='Que estas buscando?'
-                />
-                <button
-                    className="searchBar__button"
-                    type="submit"
-                >
-                    <Search />
-                </button>
-            </form>
-        </div>
+                <Search />
+            </button>
+        </form>
     );
 }
 

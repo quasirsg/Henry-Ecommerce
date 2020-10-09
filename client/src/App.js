@@ -19,7 +19,6 @@ function App() {
       <Switch>
         
         <Route exact path="/producto/:id" component={Product} />
-        <Route path="/" exact> Inicio {/* <Catalogo/> */} </Route>
         //TODO: agregar las rutas que faltan para que el formulario funcione al actualizar o eliminar.
         <Route
           exact path='/admin/product'
