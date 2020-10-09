@@ -26,7 +26,7 @@ function App() {
   return (
     <Switch>
       {/* <SearchBar /> */}
-      <Route path="/" exact>
+      <Route path="/products" exact>
         <Catalogue props={product} />
       </Route>
       <Route exact path="/product/:id">

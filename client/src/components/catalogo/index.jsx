@@ -11,7 +11,6 @@ const Catalogue = ({ props }) => {
   //TODO: cuadrar responsive
   return (
     <div className="container-ppal">
-      <SearchBar />
       <div className="container">
         <div className="category">
           <Category />
