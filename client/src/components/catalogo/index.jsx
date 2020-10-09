@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Category from "../categoria";
 import "./catalogo.css";
-import ProductCard from "../productCard/ProductCard";
-import SearchBar from "../SearchBar";
+import ProductCard from "../ProductCard/ProductCard";
+import SearchBar from "../searchBar";
 // import { Link } from "react-router-dom";
 // import axios from "axios";
 
