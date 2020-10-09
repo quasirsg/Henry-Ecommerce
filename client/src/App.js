@@ -6,6 +6,9 @@ import Catalogue from "./components/catalogo";
 import FormProduct from "./components/productForm";
 import SearchBar from "./components/SearchBar";
 
+//Pages
+import SearchPage from './pages/SearchPage';
+
 function App() {
   const [product, setProduct] = useState([]);
   /* ===== Axios Product =====*/
@@ -24,26 +27,29 @@ function App() {
   }, []);
 
   return (
-    <Switch>
-      {/* <SearchBar /> */}
-      <Route path="/products" exact>
-        <Catalogue props={product} />
-      </Route>
-      <Route exact path="/product/:id">
-        <ProductDetail props={product} />
-      </Route>
-      <Route
-        exact
-        path="/admin/product"
-        render={() => (
-          <FormProduct
-            action="post"
-            icon="success"
-            message="Se agregó producto:"
-          />
-        )}
-      />
-    </Switch>
+    <div>
+      <SearchBar />
+      <Switch>
+        <Route path="/products" exact>
+          <Catalogue props={product} />
+        </Route>
+        <Route exact path="/product/:id">
+          <ProductDetail props={product} />
+        </Route>
+        <Route exact path="/search/q/:searchTerm" component={SearchPage} />
+        <Route
+          exact
+          path="/admin/product"
+          render={() => (
+            <FormProduct
+              action="post"
+              icon="success"
+              message="Se agregó producto:"
+            />
+          )}
+        />
+      </Switch>
+    </div>
   );
 }
 

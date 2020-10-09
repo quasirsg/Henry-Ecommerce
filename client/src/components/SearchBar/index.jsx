@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Search } from 'react-bootstrap-icons'
+import { Link } from 'react-router-dom'
 
 import './SearchBar.css'
 
@@ -11,14 +12,10 @@ const SearchBar = () => {
         setSearchTerm(event.target.value);
     }
 
-    const handleOnSubmit = () => {
-        //SearchTerm send
-    }
     return (
         <div className="searchBar">
             <form
                 className="searchBar__form"
-                onSubmit={handleOnSubmit}
             >
                 <input
                     className="searchBar__input"
@@ -27,12 +24,12 @@ const SearchBar = () => {
                     onChange={handleOnChange}
                     placeholder='Que estas buscando?'
                 />
-                <button
+                <Link
+                    to={'/search/q/' + searchTerm}
                     className="searchBar__button"
-                    type="submit"
                 >
                     <Search />
-                </button>
+                </Link>
             </form>
         </div>
     );
