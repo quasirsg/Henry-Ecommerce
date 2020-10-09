@@ -1,36 +1,64 @@
-import React from "react";
 
-import {
-  Switch,
-  Route,
-} from "react-router-dom";
 
-import Navbar from './components/navbar'
-import Product from "./components/producto";
-//import Catalogue from "./components/catalogo";
-import FormProduct from './components/product';
+
+import React, { useState, useEffect } from "react";
+import { Switch, Route } from "react-router-dom";
+import axios from "axios";
+import ProductDetail from "./components/productDetail";
+import Catalogue from "./components/Catalogo";
+import FormProduct from "./components/productForm";
+import SearchBar from "./components/searchBar";
 import FormCategory from './components/categories';
 
+
 function App() {
-  // TODO:Hacer las routes con react-router
+  const [product, setProduct] = useState([]);
+  /* ===== Axios Product =====*/
+
+  // let productId = null;
+
+  useEffect(() => {
+    axios
+      .get(`http://localhost:3001/products/`)
+      .then((res) => {
+        return setProduct(res.data.products);
+      })
+      .catch((err) => {
+        return;
+      });
+  }, []);
+
   return (
-    <div>
-      <Navbar />
-      <Switch>
-        
-        <Route exact path="/producto/:id" component={Product} />
-        //TODO: agregar las rutas que faltan para que el formulario funcione al actualizar o eliminar.
-        <Route
-          exact path='/admin/product'
+    <Switch>
+      <SearchBar />
+      <Route path="/products" exact>
+        <Catalogue props={product} />
+      </Route>
+      <Route exact path="/product/:id">
+        <ProductDetail props={product} />
+      </Route>
+      <Route
+        exact
+        path="/admin/product"
+        render={() => (
+          <FormProduct
+            action="post"
+            icon="success"
+            message="Se agregó producto:"
+          />
+        )}
+      />
+      <Route
+          exact path='/admin/category'
           render={() =>
-            <FormProduct
+            <FormCategory
               action='post'
               icon='success'
-              message='Se agregó producto:'
+              message='La categoria fue creada:'
             />
-          }
-        />
-         <Route
+           }
+      />
+      <Route
           exact path='/admin/category'
           render={() =>
             <FormCategory
@@ -40,8 +68,7 @@ function App() {
             />
           }
         />
-      </Switch>
-    </div>
+    </Switch>
   );
 }
 
