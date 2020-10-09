@@ -1,0 +1,72 @@
+/* ====== elements ======== */
+li {
+  list-style-type: none;
+}
+
+/* ====== Ppal container ======= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+#root {
+  flex-wrap: wrap;
+  display: flex;
+  justify-content: space-between;
+  margin: 0px 0px 0px 10px;
+}
+
+/* ======= Container ======== */
+div.container-ppal {
+  margin: 0%;
+  margin-left: 0%;
+  min-width: 100%;
+  align-items: right;
+}
+div.container {
+  width: 100%;
+  display: flex;
+  margin: 0px 0px 0px 10px;
+  min-width: 100%;
+  padding: 0px;
+}
+
+/* ======== Category ========== */
+.category {
+  padding: 10px;
+  margin: 0px;
+}
+
+/* ======== Catalogo ========== */
+
+/* .cat-ppal {
+} */
+
+.catalogo {
+  display: flex;
+  flex-wrap: wrap;
+  text-align: center;
+  padding: 0.5rem 0rem 0rem 3rem;
+}
+
+/* ======== ProductCard ======= */
+
+.products {
+  max-width: 100px;
+  display: inline-flex;
+  text-align: center;
+  padding: 0.5rem;
+  margin-top: 10px;
+}
+
+.list {
+  display: flex;
+}
+
+.listItem {
+  display: inline-block;
+  margin: 0px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
