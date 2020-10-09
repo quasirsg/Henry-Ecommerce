@@ -1,3 +1,7 @@
+img {
+  height: 400px;
+  width: 400px;
+}
 /*========== Container ========== */
 
 .productContainer {
@@ -40,10 +44,6 @@
   color: black;
 }
 
-img {
-  height: 400px;
-  width: 400px;
-}
 /* ======== PRODUCT INFO: title, description, price, rating, reviews, button ========= */
 
 .productInfo {
