@@ -1,6 +1,3 @@
-
-
-
 import React, { useState, useEffect } from "react";
 import { Switch, Route } from "react-router-dom";
 import axios from "axios";
@@ -42,7 +39,7 @@ function App() {
   }, []);
 
   return (
-    <div>
+    <div className="col-lg-12">
       <Navbar />
       <Switch>
         <Route path="/products" exact>

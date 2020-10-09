@@ -1,9 +1,8 @@
 import React from 'react'
 
 import { Link } from 'react-router-dom'
-import { Container, Col } from 'reactstrap'
 
-import SearchBar from './SearchBar'
+import SearchBar from './searchBar'
 import GroupIcons from './groupIcons'
 
 const Navbar = ({ }) => {

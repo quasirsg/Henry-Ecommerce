@@ -13,25 +13,23 @@ const SearchBar = () => {
     }
 
     return (
-        <div className="searchBar">
-            <form
-                className="searchBar__form"
+        <form
+            className="searchBar__form"
+        >
+            <input
+                className="searchBar__input"
+                type="text"
+                name="search"
+                onChange={handleOnChange}
+                placeholder='Que estas buscando?'
+            />
+            <Link
+                to={'/search/q/' + searchTerm}
+                className="searchBar__button"
             >
-                <input
-                    className="searchBar__input"
-                    type="text"
-                    name="search"
-                    onChange={handleOnChange}
-                    placeholder='Que estas buscando?'
-                />
-                <Link
-                    to={'/search/q/' + searchTerm}
-                    className="searchBar__button"
-                >
-                    <Search />
-                </Link>
-            </form>
-        </div>
+                <Search />
+            </Link>
+        </form>
     );
 }
 
