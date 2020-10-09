@@ -8,6 +8,7 @@ import SearchBar from "./components/SearchBar";
 
 function App() {
   const [product, setProduct] = useState([]);
+  const [category, setCategory] = useState([]);
   /* ===== Axios Product =====*/
 
   // let productId = null;
@@ -21,13 +22,22 @@ function App() {
       .catch((err) => {
         return;
       });
+    axios
+      .get(`http://localhost:3001/category/`)
+      .then((res) => {
+        console.log(res);
+        return setCategory(res.data.category);
+      })
+      .catch((err) => {
+        return;
+      });
   }, []);
 
   return (
     <Switch>
       {/* <SearchBar /> */}
       <Route path="/products" exact>
-        <Catalogue props={product} />
+        <Catalogue props={product} category={category} />
       </Route>
       <Route exact path="/product/:id">
         <ProductDetail props={product} />
