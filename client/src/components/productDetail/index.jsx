@@ -89,6 +89,9 @@ const Product = (props) => {
           onClickHandler={next}
         />
       </Carousel> */}
+      <div className="prod-img">
+        <img src={product.image} alt="" />
+      </div>
       <div className="productInfo">
         <div className="title-price">
           <h2 className="productTitle">{product.name}</h2>

@@ -4,6 +4,7 @@ import axios from "axios";
 import ProductDetail from "./components/productDetail";
 import Catalogue from "./components/catalogo";
 import FormProduct from "./components/productForm";
+import SearchBar from "./components/SearchBar";
 
 function App() {
   const [product, setProduct] = useState([]);
@@ -24,6 +25,7 @@ function App() {
 
   return (
     <Switch>
+      {/* <SearchBar /> */}
       <Route path="/" exact>
         <Catalogue props={product} />
       </Route>

@@ -1,3 +1,7 @@
+/* elements */
+li {
+  list-style-type: none;
+}
 /* ======= Container ======== */
 
 .container {

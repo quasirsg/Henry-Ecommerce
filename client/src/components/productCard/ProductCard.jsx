@@ -13,11 +13,10 @@ const ProductCard = ({ product }) => {
         className="product-img"
         top
         width="100%"
-        src="{product.img}"
+        src={product.image}
         alt="Product Card Img"
       />
       <CardTitle>{product.name}</CardTitle>
-      <p>Reviews: {product.review}</p>
       <CardSubtitle>Precio: {product.price}</CardSubtitle>
       <Link to={`/product/${product.id}`}>
         <Button className="btn-add-cart" size="sm">

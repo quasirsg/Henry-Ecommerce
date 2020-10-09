@@ -13,11 +13,14 @@ const Catalogue = ({ props }) => {
       <Category />
 
       <div className="catalogo">
-        <ul>
-          {props.map((fit) => {
-            return <li key={fit.id}> <ProductCard product={fit} /> </li>;
-          })}
-        </ul>
+        {props.map((fit) => {
+          return (
+            <li key={fit.id}>
+              {" "}
+              <ProductCard product={fit} />{" "}
+            </li>
+          );
+        })}
       </div>
     </div>
   );
