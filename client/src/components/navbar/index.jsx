@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 import SearchBar from './searchBar'
 import GroupIcons from './groupIcons'
 
-const Navbar = ({ }) => {
+const Navbar = () => {
     return (
         <div className="navbar">
             <Link to="/">

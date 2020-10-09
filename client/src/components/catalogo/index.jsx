@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React from 'react';
 import Category from "../categoria";
-import "./catalogo.css";
 import ProductCard from "../productCard/ProductCard";
 
+import "./catalogo.css";
+
 const Catalogue = ({ products, category }) => {
-  // console.log(props);
-  //TODO: cuadrar responsive
+  //TODO: No modificar este componente
   return (
     <div className="container-ppal">
       <div className="container">

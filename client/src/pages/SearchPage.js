@@ -4,7 +4,7 @@ import Axios from 'axios'
 
 import Catalogo from '../components/catalogo';
 
-const SearchPage = ({ }) => {
+const SearchPage = () => {
     let { searchTerm } = useParams();
 
     const [products, setProductos] = useState([]);
