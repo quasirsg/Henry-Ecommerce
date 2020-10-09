@@ -20,9 +20,9 @@ const Toast = Swal.mixin({
   });
 
 
-const FormCategory= ({name='', description=''})=> {
+const FormCategory= ({id, name='', description='', action, icon, message})=> {
     return (
-        <card>
+        <Card>
             <Formik
             initialValues={{name, description}}
             validationSchema={Yup.object({
@@ -38,11 +38,11 @@ const FormCategory= ({name='', description=''})=> {
                 
               })}
             onSubmit={(values, { setSubmitting, resetForm }) => {
-                //Validar url
-                const url = `/category/${id ? id : ''}`;
-                const data = action === 'delete' ? null : values;
+                
+                const url = `admin/category/${id ? id : ''}`;
+                const data= action === 'delete' ? null : values;
       
-                //Request al backend
+                
                 apiCall(url, data, null, action)
                   .then(response => {
                     resetForm();
@@ -64,14 +64,14 @@ const FormCategory= ({name='', description=''})=> {
             >
         {({ isSubmitting }) => (
           <Form>
-            <Container className='text-center rounded-lg'>
-              <img style={{ width: '4rem' }} src='./gym.png' />
+            <Container className='text-center rounded-lg mt-5 mb-5'>
+              {/* <img style={{ width: '4rem' }} src='./gym.png' /> */}
               <h2 className='text-center'>Categorias</h2>
             </Container>
             <hr className='mt-0 mb-3' />
             <Row>
               <Col>
-                <CustomInput label='Nombre' name='name' type='text' placeholder='Remeras' />
+                <CustomInput label='Nombre' name='name' type='text' placeholder='Nombre de categoria' />
               </Col>
               <Col>
                 <CustomInput label='Descripcion' name='description' type='text' />
@@ -89,7 +89,7 @@ const FormCategory= ({name='', description=''})=> {
           </Form>
         )}
             </Formik>
-        </card>
+        </Card>
     )
 }
 

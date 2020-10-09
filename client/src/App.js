@@ -7,7 +7,7 @@ import {
 
 import Navbar from './components/navbar'
 import Product from "./components/producto";
-import Catalogue from "./components/catalogo";
+//import Catalogue from "./components/catalogo";
 import FormProduct from './components/product';
 import FormCategory from './components/categories';
 
@@ -34,9 +34,9 @@ function App() {
           exact path='/admin/category'
           render={() =>
             <FormCategory
-              action='delete'
+              action='post'
               icon='success'
-              message='La categoria fue eliminada:'
+              message='La categoria fue creada:'
             />
           }
         />
