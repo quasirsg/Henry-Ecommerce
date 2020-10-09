@@ -1,7 +1,7 @@
 import React from "react";
 import { Button, Card, CardImg, CardTitle, CardSubtitle } from "reactstrap";
 import { Link } from "react-router-dom";
-import "./ProductCard.css";
+import "./productCard.css";
 
 const ProductCard = ({ product }) => {
   console.log(product);

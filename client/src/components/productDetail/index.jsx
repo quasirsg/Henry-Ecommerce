@@ -10,16 +10,10 @@ import { useParams } from "react-router-dom";
 //   CarouselIndicators,
 //   CarouselCaption,
 // } from "reactstrap";
-import "./Producto.css";
+import "./producto.css";
 
-/* ======= Props provisorio ====== */
+/* ======= Imagen si usamos carousel ====== */
 
-// const props = {
-//   title: "SHORT FIT COMBINADO",
-//   description:
-//     "Short set de poliester. Negro con recorte de color en la base de la pierna. Talles: S, M, L, XL.",
-//   price: "$1200",
-//   enter_date: "06/10/2020",
 //   img: [
 //     {
 //       src: "https://mirfitness.com.ar/wp-content/uploads/DSC_9928.jpg",
@@ -32,12 +26,9 @@ import "./Producto.css";
 //       altext: "Image",
 //     },
 //   ],
-//   rating: 0,
-//   reviews: 0,
-// };
 
 const Product = (props) => {
-  //Hooks
+  /* ====== Hooks ======= */
   const [activeIndex, setActiveIndex] = useState(0);
   const [animating, setAnimating] = useState(false);
   const [rating, setRating] = useState(0);
@@ -51,7 +42,7 @@ const Product = (props) => {
       rating: newRating,
     });
   };
-
+  /* ========= Axios-get ========== */
   useEffect(() => {
     Axios.get("http://localhost:3001/products/" + id)
       .then((res) => {
