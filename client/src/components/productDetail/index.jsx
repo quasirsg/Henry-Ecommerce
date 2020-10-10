@@ -42,7 +42,7 @@ const Product = (props) => {
   };
   /* ========= Axios-get ========== */
   useEffect(() => {
-    Axios.get("http://localhost:3001/products/" + id)
+    Axios.get(`http://localhost:3001/products/${id}`)
       .then((res) => {
         return setProduct(res.data.products);
       })

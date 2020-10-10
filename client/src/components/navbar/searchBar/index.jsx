@@ -25,7 +25,6 @@ const SearchBar = () => {
             className="searchBar__form"
             onSubmit={event => {
                 event.preventDefault();
-                console.log(event)
             }}
         >
             <input

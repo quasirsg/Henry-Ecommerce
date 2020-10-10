@@ -52,7 +52,7 @@ function App() {
             props={product}
           />
         </Route>
-        <Route exact path="/admin/product" render={() => (
+        <Route exact path="/admin/product/add" render={() => (
           <FormProduct
             action="post"
             icon="success"
@@ -61,7 +61,16 @@ function App() {
           />
         )}
         />
-        <Route exact path='/admin/category' render={() =>
+        <Route exact path="/admin/product/edit/:productId" render={() => (
+          <FormProduct
+            action="post"
+            icon="success"
+            message="Se edito el producto:"
+            category={category}
+          />
+        )}
+        />
+        <Route exact path='/admin/category/add' render={() =>
           <FormCategory
             action='post'
             icon='success'
@@ -69,11 +78,11 @@ function App() {
           />
         }
         />
-        <Route exact path='/admin/category' render={() =>
+        <Route exact path='/admin/category/edit/:categoryId' render={() =>
           <FormCategory
             action='post'
             icon='success'
-            message='La categoria fue creada:'
+            message='La categoria fue editada:'
           />
         }
         />
