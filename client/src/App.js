@@ -35,8 +35,9 @@ function App() {
   }, []);
 
   return (
-    <Switch>
+    < >
       {/* <SearchBar /> */}
+    <Switch>
       <Route path="/products" exact>
         <Catalogue props={product} category={category} />
       </Route>
@@ -56,28 +57,19 @@ function App() {
         )}
       />
       <Route
-        exact
-        path="/admin/category"
-        render={() => (
-          <FormCategory
-            action="post"
-            icon="success"
-            message="La categoria fue creada:"
-          />
-        )}
-      />
-      <Route
-        exact
-        path="/admin/category"
-        render={() => (
-          <FormCategory
-            action="post"
-            icon="success"
-            message="La categoria fue creada:"
-          />
-        )}
+          exact path='/admin/category'
+          render={() =>
+            <FormCategory
+              // id={1}
+              // name='hello'
+              action='post'
+              icon='success'
+              message='La categoria fue creada:'
+            />
+           }
       />
     </Switch>
+    </>
   );
 }
 
