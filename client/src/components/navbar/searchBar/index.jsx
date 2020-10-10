@@ -1,8 +1,6 @@
 import React, { useState } from 'react'
 import { Search } from 'react-bootstrap-icons'
 import { useHistory } from 'react-router-dom'
-import { Button } from 'reactstrap'
-import SearchPage from '../../../pages/SearchPage'
 
 import './SearchBar.css'
 
