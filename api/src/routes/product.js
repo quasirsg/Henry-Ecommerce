@@ -74,4 +74,21 @@ server.delete('/:id', (req, res, next) => {
 		}).catch(next)
 });
 
+server.get('/category/:nameCategory', (req, res, next) => {
+	const { nameCategory } = req.params;
+
+	Product.findAll({
+		include: {
+			attributes: ['name'],
+			model: Category,
+			as: 'categories',
+			through: {
+				attributes: ['category_id']
+			}
+		}
+	})
+		.then(data => res.json(data))
+		.catch(error => next(error.message))
+});
+
 module.exports = server;
