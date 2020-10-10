@@ -1,15 +1,11 @@
-
-
-
 import React, { useState, useEffect } from "react";
 import { Switch, Route } from "react-router-dom";
 import axios from "axios";
 import ProductDetail from "./components/productDetail";
-import Catalogue from "./components/Catalogo";
+import Catalogue from "./components/catalogo";
 import FormProduct from "./components/productForm";
 import SearchBar from "./components/searchBar";
-import FormCategory from './components/categories';
-
+import FormCategory from "./components/categories";
 
 function App() {
   const [product, setProduct] = useState([]);
@@ -56,6 +52,7 @@ function App() {
             action="post"
             icon="success"
             message="Se agregó producto:"
+            category={category}
           />
         )}
       />
