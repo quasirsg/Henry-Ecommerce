@@ -1,12 +1,11 @@
 import React from 'react'
 
 import { Link } from 'react-router-dom'
-import { Container, Col } from 'reactstrap'
 
-import SearchBar from '../searchBar'
-import GroupIcons from '../groupIcons'
+import SearchBar from './searchBar'
+import GroupIcons from './groupIcons'
 
-const Navbar = ({ }) => {
+const Navbar = () => {
     return (
         <div className="navbar">
             <Link to="/">

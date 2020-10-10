@@ -88,7 +88,7 @@ const FormProduct = ({ id, name = '', stock = 0, description = '', price = 0, ca
         {({ isSubmitting }) => (
           <Form>
             <Col className='rounded-lg text-center'>
-              <img className='icon-litle-width' src='../gym.png' />
+              <img className='icon-litle-width' src='../gym.png' alt="generic" />
               <h2>Productos</h2>
             </Col>
             <hr className='mt-0 mb-3' />

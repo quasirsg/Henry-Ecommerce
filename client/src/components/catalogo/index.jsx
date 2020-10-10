@@ -1,27 +1,28 @@
-import React, { useEffect, useState } from "react";
+import React from 'react';
 import Category from "../categoria";
-import "./catalogo.css";
 import ProductCard from "../productCard/ProductCard";
-import SearchBar from "../searchBar";
-// import { Link } from "react-router-dom";
-// import axios from "axios";
 
-const Catalogue = ({ props, category }) => {
-  // console.log(props);
-  //TODO: cuadrar responsive
+import "./catalogo.css";
+
+const Catalogue = ({ products, category }) => {
+  //TODO: No modificar este componente
   return (
     <div className="container-ppal">
       <div className="container">
         <div className="category">
-          <Category category={category} />
+          <Category
+            category={category}
+          />
         </div>
         <div className="cat-ppal">
           <div className="catalogo">
-            {props.map((fit) => {
+            {products.map((fit) => {
               return (
                 <li key={fit.id}>
                   {" "}
-                  <ProductCard product={fit} />{" "}
+                  <ProductCard
+                    product={fit}
+                  />{" "}
                 </li>
               );
             })}
