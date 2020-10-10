@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Axios from "axios";
 import StarRatings from "react-star-ratings";
 import { useParams } from "react-router-dom";
+import axios from "axios";
 
 // import {
 //   Carousel,
@@ -29,10 +30,13 @@ import "./producto.css";
 
 const Product = (props) => {
   /* ====== Hooks ======= */
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [animating, setAnimating] = useState(false);
   const [rating, setRating] = useState(0);
   const [product, setProduct] = useState([]);
 
   let { id } = useParams();
+
 
   /* ======== Star Rating Handle ======== */
   const changeRating = (newRating, name) => {
@@ -42,8 +46,9 @@ const Product = (props) => {
   };
   /* ========= Axios-get ========== */
   useEffect(() => {
-    Axios.get(`http://localhost:3001/products/${id}`)
+    Axios.get("http://localhost:3001/products/" + id)
       .then((res) => {
+        console.log(res);
         return setProduct(res.data.products);
       })
       .catch((err) => {
