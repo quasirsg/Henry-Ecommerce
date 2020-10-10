@@ -55,6 +55,7 @@ function App() {
             action="post"
             icon="success"
             message="Se agregó producto:"
+            category={category}
           />
         )}
       />
