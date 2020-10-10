@@ -19,7 +19,13 @@ const Toast = Swal.mixin({
   }
 });
 
-const FormProduct = ({ id, name = '', stock = 0, description = '', price = 0, category = '', image = '', action, icon, message }) => {
+const FormProduct = ({ id, name = '', stock = 0, description = '', price = 0, category , image = '', action, icon, message }) => {
+  const categoria = [] 
+  const categorias = ()=>{
+    return category.map((item)=> categoria.push(item.name))
+  }
+  console.log(categorias())
+  console.log(categoria)
   return (
     <Col lg='6' sm='10' xs='10' className='card shadow pl-3 pr-3 pb-4 pt-2 mt-3 mb-3 mx-auto'>
       <Formik
@@ -48,7 +54,7 @@ const FormProduct = ({ id, name = '', stock = 0, description = '', price = 0, ca
             .min(1, 'Debe tener un precio mayor a $1')
             .required('Debes completar este campo'),
           category: Yup.string()
-            .oneOf(['Hombre', 'Mujer', 'Niños'], 'Categoría invalida') //Las categorias debe traerlas de la bd
+            .oneOf(categoria, 'Categoría invalida') //Las categorias debe traerlas de la bd
             .required('Debes seleccionar una categoría'),
           image: Yup.string()
             .required('Debes completar este campo')
@@ -92,10 +98,12 @@ const FormProduct = ({ id, name = '', stock = 0, description = '', price = 0, ca
               </Col>
               <Col>
                 <CustomInput label='Categoría' name='category' type='select' >
-                  <option value=''>Seleccionar categoría</option>
-                  <option value='Hombre'>Hombre</option>
-                  <option value='Mujer'>Mujer</option>
-                  <option value='Niños'>Niño</option>
+                  <option value=''>Seleccionar categoría</option> 
+                  {category.map((item)=>{
+                    return <option value={item.name} key={item.id}>{item.name}</option>
+                  })
+
+                  }
                 </CustomInput>
               </Col>
             </Row>

@@ -32,7 +32,7 @@ const FormCategory= ({id, name='', description='', action, icon, message})=> {
                   .required('Debes completar este campo'),
                 
                 description: Yup.string()
-                  .min(10, 'Debe tener al menos 10 caracteres')
+                  .min(4, 'Debe tener al menos 4 caracteres')
                   .max(500, 'Debe tener 400 caracteres o menos')
                   .required('Debes completar este campo'),
                 
@@ -82,7 +82,7 @@ const FormCategory= ({id, name='', description='', action, icon, message})=> {
             
             <Button block className='bg-color-primary shadow-primary rounded-pill border-0' type='submit'>
               {isSubmitting ? 'Cargando...' :
-                action === 'put' ? 'Actualizar categoria' :
+                action === 'PUT' ? 'Actualizar categoria' :
                   action === 'delete' ? 'Eliminar categoria' :
                     action === 'post' ? 'Agregar categoria' : null}
             </Button>
