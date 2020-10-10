@@ -1,0 +1,51 @@
+#roundButton {
+  transition: all 0.2s cubic-bezier(0, 1.26, 0.8, 1.28);
+  margin: 1rem;
+  padding: 1rem;
+}
+
+#roundButton:active {
+  border-color: #6b83fc;
+  background-color: #fff;
+}
+
+.hamburger {
+  min-height: 30px;
+  max-width: 50px;
+}
+.hamburger-inner,
+.hamburger-inner:after,
+.hamburger-inner:before {
+  background-color: #6b83fc;
+  position: absolute;
+  width: 40px;
+  height: 4px;
+  border-radius: 5px;
+  content: "";
+  transition-timing-function: ease;
+  transition-duration: 0.2s;
+  /* transition-property: transform, opacity; */
+}
+.hamburger-inner:before {
+  top: 10px;
+}
+.hamburger-inner:after {
+  top: 20px;
+}
+
+.hamburger:hover {
+  cursor: pointer;
+  transform: scale(1.2, 1.2);
+}
+
+.hamburger.open .hamburger-inner:after {
+  top: 0;
+  transform: translate3d(-10px, -9px, 0) rotate(-45deg) scale(0.7, 1);
+  transition-timing-function: cubic-bezier(1, 0.46, 0.48, 1.68);
+}
+
+.hamburger.open .hamburger-inner:before {
+  bottom: 0;
+  /* transform: translate3d(-9px, 20px, 0) rotate(45deg) scale(0.7, 1); */
+  transition-timing-function: cubic-bezier(1, 0.46, 0.48, 1.68);
+}

@@ -1,13 +1,40 @@
-import React from "react";
+import React, { useState } from "react";
+import CloseButton from "./button/buttonClose.jsx";
+import "./categoria.css";
 
-const Category = ({ category }) => {
+const Category = ({ category, handleMouseDown, menuVisibility }) => {
+  const [show, setShow] = useState(false);
+  let visibility = "hide";
+
+  const toggleMenu = () => {
+    setShow(true);
+  };
+
+  const handleClose = (e) => {
+    toggleMenu();
+    e.stopPropagation();
+    setShow(false);
+  };
+
+  if (menuVisibility && show === false) {
+    visibility = "show";
+  } else {
+    visibility = "hide";
+  }
 
   return (
-    <div className="sidebar">
-      <aside className="">
+    <div
+      id="flyoutMenu"
+      onMouseDown={() => handleMouseDown}
+      className={visibility}
+    >
+      <div className="closeB" onClick={handleClose}>
+        <CloseButton handleMouseDown={handleMouseDown} />
+      </div>
+      <aside className="aside">
         <h2>Categorias</h2>
         <ul>
-          {category.map((cat) => {
+          {category.map((cat, i) => {
             return (
               <li key={cat.id}>
                 <div class="custom-control custom-checkbox">
@@ -24,10 +51,10 @@ const Category = ({ category }) => {
             );
           })}
         </ul>
+        <div className="button-cont ">
+          <button className="button">Mostrar Todos</button>
+        </div>
       </aside>
-      <div>
-        <button>Mostrar Todos</button>
-      </div>
     </div>
   );
 };
