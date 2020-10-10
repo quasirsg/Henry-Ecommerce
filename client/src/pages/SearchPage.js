@@ -10,9 +10,8 @@ const SearchPage = () => {
     const [products, setProductos] = useState([]);
 
     useEffect(() => {
-        Axios.get('http://localhost:3001/search/q/' + searchTerm)
+        Axios.get(`http://localhost:3001/search/q/${searchTerm}`)
             .then(res => {
-                console.log(res)
                 setProductos(res.data.results);
             });
     }, []);
