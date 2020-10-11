@@ -1,5 +1,5 @@
 const server = require("express").Router();
-const { Product, Category } = require("../db.js");
+const { Product, Category, product_category } = require("../db.js");
 
 server.get("/", (req, res, next) => {
 	Product.findAll({})
@@ -89,6 +89,38 @@ server.get('/category/:nameCategory', (req, res, next) => {
 	})
 		.then(data => res.json(data))
 		.catch(error => next(error.message))
+});
+
+// ================== Agregar y quitar categorias de un producto================
+
+server.post('/:idProducto/category/:idCategoria', (req, res, next) => {
+	
+	const { idProducto }= req.params;
+	const { idCategoria } = req.params;
+	
+	product_category.create({
+		product_id : idProducto,
+		category_id : idCategoria
+	})
+	.then(()=>{
+		return  res.status(200).json({message: 'Categoria se asigno correctamente a producto'})
+	})
+	.catch(error => next(error.message));		
+});
+
+server.delete('/:idProducto/category/:idCategoria', (req, res, next) => {
+	
+	const { idProducto }= req.params;
+	const { idCategoria } = req.params;
+	
+	product_category.destroy({ where: {
+		product_id : idProducto,
+		category_id : idCategoria
+	}})
+	.then(()=>{
+		return  res.status(200).json({message: 'Categoria se elimino correctamente de producto'})
+	})
+	.catch(error => next(error.message));		
 });
 
 module.exports = server;

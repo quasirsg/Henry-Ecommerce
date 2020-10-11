@@ -1,6 +1,6 @@
 import React from 'react';
 import Category from "../categoria";
-import ProductCard from "../productCard/ProductCard";
+import ProductCard from "../ProductCard/ProductCard";
 
 import "./catalogo.css";
 
