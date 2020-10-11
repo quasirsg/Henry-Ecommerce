@@ -37,7 +37,6 @@ const Product = (props) => {
 
   let { id } = useParams();
 
-
   /* ======== Star Rating Handle ======== */
   const changeRating = (newRating, name) => {
     setRating({
