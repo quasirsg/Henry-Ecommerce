@@ -1,0 +1,8 @@
+.style svg {
+  color: rgb(255, 255, 255);
+}
+
+.style svg:hover {
+  cursor: pointer;
+  transform: scale(1.2, 1.2);
+}

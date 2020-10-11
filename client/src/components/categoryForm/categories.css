@@ -1,3 +1,16 @@
+.categoryForm {
+  display: flex;
+  justify-content: center;
+}
+
+.categoryForm__form {
+  width: 50%;
+  margin: 2rem 0;
+  padding: 2rem;
+  border: 1px solid #CED4DA;
+  border-radius: 10px;
+}
+
 .bg-color-primary {
     background-image: linear-gradient(to right, #8763fc, #806afd, #7a70fd, #7576fd, #707cfd, #6385ff, #578dff, #4d94ff, #39a0ff, #2caaff, #2cb4fe, #39bdfb);
   }
