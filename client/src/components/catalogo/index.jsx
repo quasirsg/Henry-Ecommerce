@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import Category from "../categoria";
+import ProductCard from "../ProductCard/ProductCard";
+
 import "./catalogo.css";
 import ProductCard from "../productCard/ProductCard";
 import MenuButton from "./button/button.jsx";

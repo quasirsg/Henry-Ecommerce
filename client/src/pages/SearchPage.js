@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import Axios from 'axios'
 
-import Catalogo from '../components/catalogo';
+import Catalogo from '../components/Catalogo';
 
 const SearchPage = () => {
     let { searchTerm } = useParams();
