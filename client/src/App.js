@@ -5,12 +5,13 @@ import axios from "axios";
 //Components
 import Navbar from './components/navbar'
 import ProductDetail from "./components/productDetail";
-import Catalogue from "./components/Catalogo";
+import Catalogue from "./components/catalogo";
 import FormProduct from "./components/productForm";
 import FormCategory from './components/categoryForm';
 
 //Pages
 import SearchPage from './pages/SearchPage';
+import Cart from './pages/Cart'
 
 function App() {
   const [product, setProduct] = useState([]);
@@ -52,6 +53,7 @@ function App() {
             props={product}
           />
         </Route>
+        <Route exact path="/cart" component={Cart} />
         <Route exact path="/admin/product/add" render={() => (
           <FormProduct
             action="post"
