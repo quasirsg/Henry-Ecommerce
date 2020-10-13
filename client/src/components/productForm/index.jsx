@@ -88,7 +88,6 @@ const FormProduct = ({ id, name = '', stock = 0, description = '', price = 0, al
               apiCall(`/products/${id}/category/${values.category}`, null, null, 'post')
                 .then(response => {
                   resetForm();
-                  set
                   setSubmitting(false);
                   Toast.fire({
                     icon,
