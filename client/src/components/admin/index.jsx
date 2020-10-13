@@ -8,14 +8,15 @@ import Catalogue from '../catalogo';
 import ProductCard from '../productCard/ProductCard';
 import InventoryTable from './tools/inventoryTable';
 
-const AdminMenu = ({ products, categories }) => {
+const AdminMenu = ({ products, allCategories }) => {
+  console.log(products)
+  console.log(allCategories)
   const [collapsed, setCollapsed] = useState(true);
   const toggleNavbar = () => setCollapsed(!collapsed);
 
   const findProduct = () => {
 
   }
-
 
   return (
     <>
@@ -63,7 +64,7 @@ const AdminMenu = ({ products, categories }) => {
             </Col>
             <Col md={9} lg={10}>
               <Route exact path='/admin/product'>
-                <FormProduct categories={categories} action='post' icon='success' message='Se agregó producto:' />
+                <FormProduct allCategories={allCategories} action='post' icon='success' message='Se agregó producto:' />
               </Route>
               <Route
                 exact
@@ -73,8 +74,12 @@ const AdminMenu = ({ products, categories }) => {
                   action='put'
                   icon='info'
                   message='Se actualizo producto:'
-                  {...products.find(item => item.id === parseInt(match.params.id))}
-                  categories={categories}
+                  {...products.find(item => {
+                    item.categories = item.categories.map(cat => cat.product_category.category_id);
+                    return item.id === parseInt(match.params.id)
+                  })
+                  }
+                  allCategories={allCategories}
                 />
                 }
               />
@@ -82,7 +87,7 @@ const AdminMenu = ({ products, categories }) => {
                 <FormCategory action='post' icon='success' message='Se agregó categoría:' />
               </Route>
               <Route exact path='/admin/products'>
-                <InventoryTable data={products} />
+                <InventoryTable />
               </Route>
             </Col>
           </Router>

@@ -12,12 +12,16 @@ const CustomInput = ({ label, ...props }) => {
 
   const fileInput = createRef();
 
-  const handleChange = (e) => {
+  const handleChangeFile = (e) => {
     setFile({
       ok: true,
       name: e.target.files[0].name
     })
     props.setFieldValue('image', e.target.files[0]);
+  }
+
+  const handleChange = (e) => {
+    if (field.name === 'category') props.setFieldValue(e.target.name, [...Array.from(e.target.selectedOptions, (item) => item.value)])
   }
 
   return (
@@ -30,15 +34,14 @@ const CustomInput = ({ label, ...props }) => {
               type='file'
               name='image'
               style={{ display: "none" }}
-              onChange={handleChange}
+              onChange={handleChangeFile}
               ref={fileInput}
             />
             <Button block color='default' className='d-block border text-secondary' type="button" onClick={() => fileInput.current.click()}>
               <FileImage className='mr-1' size={20} />
               {uploadFile.ok ? '1 Archivo seleccionado' : 'Seleccionar archivo'}
             </Button>
-          </> :
-          <Input {...field} {...props} className='small' />
+          </> : <Input {...field} {...props} />
       }
       {
         meta.touched && meta.error ? (

@@ -54,7 +54,9 @@ function App() {
           />
         </Route>
         <Route exact path='/admin'>
-          <AdminMenu products={product} categories={category} />
+          <AdminMenu
+            products={product}
+            allCategories={category} />
         </Route>
 
         <Route exact path='/admin/category/add' render={() =>

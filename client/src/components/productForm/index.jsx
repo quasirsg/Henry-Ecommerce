@@ -1,7 +1,7 @@
-import React, { useState, createRef } from 'react';
+import React from 'react';
 import './product.css';
 import { ClipboardPlus, ArrowLeftCircle } from 'react-bootstrap-icons';
-import { Button, Row, Col, CustomInput as InputFile, Label, Input } from 'reactstrap';
+import { Button, Row, Col } from 'reactstrap';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import Swal from 'sweetalert2';
@@ -20,15 +20,9 @@ const Toast = Swal.mixin({
   }
 });
 
-const FormProduct = ({ id, name = '', stock = 0, description = '', price = 0, category = [], categories = [], image = '', action, icon, message, history }) => {
-  console.log(id, name, description);
-
-  const categoria = [];
-  const categorias = () => {
-    return categories.map((item) => categoria.push(item.name))
-  }
-  console.log(categorias())
-  console.log(categoria)
+const FormProduct = ({ id, name = '', stock = 0, description = '', price = 0, allCategories = [], categories = [], image = '', action, icon, message, history }) => {
+  const categoriesSelect = allCategories.map(item => item.id);
+  const categoryProduct = categories.length ? categories : [];
 
   const convertBase64 = (file) => {
     return new Promise((resolve, reject) => {
@@ -46,14 +40,14 @@ const FormProduct = ({ id, name = '', stock = 0, description = '', price = 0, ca
   };
 
   return (
-    <Col lg='7' sm='10' xs='10' className='card shadow pl-3 pr-3 pb-4 pt-2 mb-3 mx-auto'>
+    <Col lg='6' sm='10' xs='10' className='card shadow pl-3 pr-3 pb-4 pt-2 mb-3 mx-auto'>
       <Formik
         initialValues={{
           name,
           stock,
           description,
           price,
-          category,
+          category: 0,
           image
         }}
         validationSchema={Yup.object({
@@ -72,8 +66,8 @@ const FormProduct = ({ id, name = '', stock = 0, description = '', price = 0, ca
           price: Yup.number()
             .min(1, 'Debe tener un precio mayor a $1')
             .required('Debes completar este campo'),
-          category: Yup.string()
-            .min(1, 'Categoría invalida') //Las categorias debe traerlas de la bd
+          category: Yup.number()
+            .oneOf(categoriesSelect, 'Categoría invalida') //Las categorias debe traerlas de la bd
             .required('Debes seleccionar una categoría'),
           image: Yup.string()
             .required('Debes cargar una imagen')
@@ -86,17 +80,21 @@ const FormProduct = ({ id, name = '', stock = 0, description = '', price = 0, ca
           const imgBase64 = await convertBase64(values.image)
           const product = { ...values, image: imgBase64 };
           const data = action === 'delete' ? null : product;
-
           //Request al backend
           apiCall(url, data, null, action)
             .then(response => {
-              resetForm();
-              setSubmitting(false);
-              Toast.fire({
-                icon,
-                title: `${message} ${values.name}`
-              });
-
+              //Una vez agregado el producto , le asigna una categoria
+              const id = response.data.id;
+              apiCall(`/products/${id}/category/${values.category}`, null, null, 'post')
+                .then(response => {
+                  resetForm();
+                  set
+                  setSubmitting(false);
+                  Toast.fire({
+                    icon,
+                    title: `${message} ${values.name}`
+                  });
+                })
             })
             .catch(error => {
               setSubmitting(false);
@@ -139,13 +137,11 @@ const FormProduct = ({ id, name = '', stock = 0, description = '', price = 0, ca
                   <CustomInput label='Descripción' name='description' type='textarea' placeholder='Una remera deportiva nueva' />
                 </Col>
                 <Col xs='12' lg='6'>
-                  <CustomInput label='Categoría' name='category' value={category} type='select' multiple >
+                  <CustomInput label='Categoría' defaultValue={categoryProduct} name='category' type='select' >
                     <option value=''>Seleccionar categoría</option>
-                    {categories.map((item) => (
+                    {allCategories.map((item) => (
                       <option
-                        key={item.name}
                         value={item.id}
-
                       >{item.name}</option>))}
                   </CustomInput>
                 </Col>

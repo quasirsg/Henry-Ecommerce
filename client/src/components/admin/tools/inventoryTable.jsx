@@ -1,11 +1,20 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Container, Table } from 'reactstrap';
 import { GearFill, Trash, Tools } from 'react-bootstrap-icons';
 import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import apiCall from '../../../redux/api';
 
-const InventoryTable = ({ data }) => {
+const InventoryTable = () => {
+
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    apiCall('/products', null, null, 'get')
+      .then(response => setData(response.data.products))
+  }, [])
+
+  console.log(data.length)
 
   const handleClick = (e, id, name) => {
     e.preventDefault();
@@ -27,8 +36,8 @@ const InventoryTable = ({ data }) => {
         apiCall(`/products/${id}`, null, null, 'delete')
           .then(response => {
             Swal.fire(
-              'Deleted!',
-              'Your file has been deleted.',
+              'Eliminado!',
+              'El registro fue eliminado.',
               'success'
             );
           })
@@ -41,10 +50,10 @@ const InventoryTable = ({ data }) => {
       <Table hover responsive className='table-sm'>
         <thead>
           <tr>
-            {Object.keys(data[0])
+            {data.length ? Object.keys(data[0])
               .map((item, index) => (
                 <th key={index}>{item}</th>
-              ))}
+              )) : ''}
             <th>
               <GearFill size={17} className='mr-2' />
               Acciones
@@ -61,7 +70,7 @@ const InventoryTable = ({ data }) => {
                 <td>{item.description.slice(0, 15) + '..'}</td>
                 <td>{item.price}</td>
                 <td><img src={item.image} style={{ width: '3rem', height: '3rem' }} /></td>
-                <td>{item.categories}</td>
+                <td>{item.categories.map(item => item.name).join(' , ')}</td>
                 <td className='p-2'>
                   <Link to={`/admin/product/${item.id}`} className='btn btn-default border btn-sm mr-3'><Tools size={17} /></Link>
                   <Button color='default' onClick={(e) => handleClick(e, item.id, item.name)} className='border btn-sm'><Trash data-name={item.name} id={item.id} size={17} /></Button>
