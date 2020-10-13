@@ -12,7 +12,6 @@ const SearchPage = () => {
   useEffect(() => {
     Axios.get(`http://localhost:3001/search/q/${searchTerm}`)
       .then(res => {
-        console.log(res);
         setProductos(res.data.results);
       });
   }, []);

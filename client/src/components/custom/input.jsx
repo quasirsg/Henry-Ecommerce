@@ -1,6 +1,6 @@
-import React, { useRef, useState, createRef } from 'react';
+import React, { useState, createRef } from 'react';
 import { FileImage } from 'react-bootstrap-icons';
-import { FormGroup, Label, Input, CustomInput as InputFile, Button, InputGroupAddon, InputGroup, InputGroupText } from 'reactstrap';
+import { FormGroup, Label, Input, Button } from 'reactstrap';
 import { useField } from 'formik';
 
 const CustomInput = ({ label, ...props }) => {
@@ -20,10 +20,11 @@ const CustomInput = ({ label, ...props }) => {
     props.setFieldValue('image', e.target.files[0]);
   }
 
+  /*
   const handleChange = (e) => {
     if (field.name === 'category') props.setFieldValue(e.target.name, [...Array.from(e.target.selectedOptions, (item) => item.value)])
   }
-
+  */
   return (
     <FormGroup>
       <Label for={props.name}>{label}</Label>

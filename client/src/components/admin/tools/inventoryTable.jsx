@@ -69,7 +69,7 @@ const InventoryTable = () => {
                 <td>{item.stock}</td>
                 <td>{item.description.slice(0, 15) + '..'}</td>
                 <td>{item.price}</td>
-                <td><img src={item.image} style={{ width: '3rem', height: '3rem' }} /></td>
+                <td><img src={item.image} style={{ width: '3rem', height: '3rem' }} alt={item.name} /></td>
                 <td>{item.categories.map(item => item.name).join(' , ')}</td>
                 <td className='p-2'>
                   <Link to={`/admin/product/${item.id}`} className='btn btn-default border btn-sm mr-3'><Tools size={17} /></Link>

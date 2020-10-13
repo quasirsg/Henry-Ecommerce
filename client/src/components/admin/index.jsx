@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Link, Route } from 'react-router-dom';
-import { Container, Row, Col, Navbar, NavItem, NavLink, NavbarBrand, Nav, NavbarToggler, Collapse } from 'reactstrap';
-import { GearFill, FileEarmarkPlus, Server, Files, CaretDown } from 'react-bootstrap-icons';
+import { Container, Row, Col, Navbar, NavItem, NavLink, Nav, NavbarToggler, Collapse } from 'reactstrap';
+import { FileEarmarkPlus, Server, Files, CaretDown } from 'react-bootstrap-icons';
 import FormProduct from '../productForm';
 import FormCategory from '../categoryForm';
-import Catalogue from '../catalogo';
-import ProductCard from '../productCard/ProductCard';
+//import Catalogue from '../catalogo';
+//import ProductCard from '../productCard/ProductCard';
 import InventoryTable from './tools/inventoryTable';
 
 const AdminMenu = ({ products, allCategories }) => {
@@ -14,9 +14,11 @@ const AdminMenu = ({ products, allCategories }) => {
   const [collapsed, setCollapsed] = useState(true);
   const toggleNavbar = () => setCollapsed(!collapsed);
 
+  /*
   const findProduct = () => {
 
   }
+  */
 
   return (
     <>
