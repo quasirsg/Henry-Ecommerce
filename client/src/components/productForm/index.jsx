@@ -1,5 +1,6 @@
 import React from 'react';
 import './product.css';
+import { ClipboardPlus, ArrowLeftCircle } from 'react-bootstrap-icons';
 import { Button, Row, Col } from 'reactstrap';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
@@ -19,22 +20,34 @@ const Toast = Swal.mixin({
   }
 });
 
-const FormProduct = ({ id, name = '', stock = 0, description = '', price = 0, category , image = '', action, icon, message }) => {
-  const categoria = [] 
-  const categorias = ()=>{
-    return category.map((item)=> categoria.push(item.name))
-  }
-  console.log(categorias())
-  console.log(categoria)
+const FormProduct = ({ id, name = '', stock = 0, description = '', price = 0, allCategories = [], categories = [], image = '', action, icon, message, history }) => {
+  const categoriesSelect = allCategories.map(item => item.id);
+  const categoryProduct = categories.length ? categories : [];
+
+  const convertBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const fileReader = new FileReader();
+      fileReader.readAsDataURL(file);
+
+      fileReader.onload = () => {
+        resolve(fileReader.result)
+      }
+
+      fileReader.onerror = (error) => {
+        reject(error);
+      }
+    })
+  };
+
   return (
-    <Col lg='6' sm='10' xs='10' className='card shadow pl-3 pr-3 pb-4 pt-2 mt-3 mb-3 mx-auto'>
+    <Col lg='6' sm='10' xs='10' className='card shadow pl-3 pr-3 pb-4 pt-2 mb-3 mx-auto'>
       <Formik
         initialValues={{
           name,
           stock,
           description,
           price,
-          category,
+          category: 0,
           image
         }}
         validationSchema={Yup.object({
@@ -43,7 +56,7 @@ const FormProduct = ({ id, name = '', stock = 0, description = '', price = 0, ca
             .max(50, 'Debe tener 50 caracteres o menos')
             .required('Debes completar este campo'),
           stock: Yup.number()
-            .min(1, 'Debe tener al menos un producto en stock')
+            .min(1, 'Debe tener un producto en stock')
             .max(1000, 'Debe tener 1000 productos o menos')
             .required('Debes completar este campo'),
           description: Yup.string()
@@ -53,26 +66,35 @@ const FormProduct = ({ id, name = '', stock = 0, description = '', price = 0, ca
           price: Yup.number()
             .min(1, 'Debe tener un precio mayor a $1')
             .required('Debes completar este campo'),
-          category: Yup.string()
-            .oneOf(categoria, 'Categoría invalida') //Las categorias debe traerlas de la bd
+          category: Yup.number()
+            .oneOf(categoriesSelect, 'Categoría invalida') //Las categorias debe traerlas de la bd
             .required('Debes seleccionar una categoría'),
           image: Yup.string()
-            .required('Debes completar este campo')
+            .required('Debes cargar una imagen')
         })}
-        onSubmit={(values, { setSubmitting, resetForm }) => {
+        onSubmit={async (values, { setSubmitting, resetForm }) => {
           //Validar url
           const url = `/products/${id ? id : ''}`;
-          const data = action === 'delete' ? null : values;
-
+          console.log()
+          //Convertir imagen en base64
+          const imgBase64 = await convertBase64(values.image)
+          const product = { ...values, image: imgBase64 };
+          const data = action === 'delete' ? null : product;
           //Request al backend
           apiCall(url, data, null, action)
             .then(response => {
-              resetForm();
-              setSubmitting(false);
-              Toast.fire({
-                icon,
-                title: `${message} ${values.name}`
-              });
+              //Una vez agregado el producto , le asigna una categoria
+              const id = response.data.id;
+              apiCall(`/products/${id}/category/${values.category}`, null, null, 'post')
+                .then(response => {
+                  resetForm();
+                  set
+                  setSubmitting(false);
+                  Toast.fire({
+                    icon,
+                    title: `${message} ${values.name}`
+                  });
+                })
             })
             .catch(error => {
               setSubmitting(false);
@@ -81,60 +103,70 @@ const FormProduct = ({ id, name = '', stock = 0, description = '', price = 0, ca
                 title: 'Error: vuelve a intentarlo'
               });
             })
+        }}>
 
-        }}
-      >
+        {({ isSubmitting, setFieldValue }) => {
 
-        {({ isSubmitting }) => (
-          <Form>
-            <Col className='rounded-lg text-center'>
-              <img className='icon-litle-width' src='../gym.png' alt="generic" />
-              <h2>Productos</h2>
-            </Col>
-            <hr className='mt-0 mb-3' />
-            <Row>
-              <Col>
-                <CustomInput label='Nombre' name='name' type='text' placeholder='Remera deportiva' />
-              </Col>
-              <Col>
-                <CustomInput label='Categoría' name='category' type='select' >
-                  <option value=''>Seleccionar categoría</option> 
-                  {category.map((item)=>{
-                    return <option value={item.name} key={item.id}>{item.name}</option>
-                  })
+          return (
+            <Form>
+              <Col className='rounded-lg text-center'>
+                {action === 'put' ?
+                  <Row>
+                    <Button className='btn btn-light text-secondary btn-sm float-left'
+                      onClick={() => history.push('/admin/products')}>
+                      <ArrowLeftCircle size={20} />
+                    </Button>
+                  </Row> : ''}
 
-                  }
-                </CustomInput>
-              </Col>
-            </Row>
-            <Row>
-              <Col>
-                <Row>
-                  <Col lg='6' xs='6'>
-                    <CustomInput label='Stock' name='stock' type='number' />
-                  </Col>
-                  <Col xs='6'>
-                    <CustomInput label='Precio' name='price' type='number' />
-                  </Col>
+                <Row className='d-block'>
+                  <ClipboardPlus className='mb-1 mr-2' size={40} />
+                  <h2>Productos</h2>
                 </Row>
               </Col>
-              <Col xs='12' lg='6'>
-                <CustomInput label='Imagen' name='image' type='text' placeholder='Url' />
-              </Col>
-            </Row>
-            <Row>
-              <Col>
-                <CustomInput label='Descripción' name='description' type='textarea' placeholder='Una remera deportiva nueva' />
-              </Col>
-            </Row>
-            <Button block className='bg-color-primary shadow-primary rounded-pill border-0' type='submit'>
-              {isSubmitting ? 'Cargando...' :
-                action === 'put' ? 'Actualizar producto' :
-                  action === 'delete' ? 'Eliminar producto' :
-                    action === 'post' ? 'Agregar producto' : null}
-            </Button>
-          </Form>
-        )}
+              <hr className='mt-0 mb-3' />
+              <Row>
+                <Col>
+                  <CustomInput label='Nombre' name='name' type='text' placeholder='Remera deportiva' />
+                </Col>
+                <Col>
+                  <CustomInput label='Imagen' name='image' type='file' setFieldValue={setFieldValue} />
+                </Col>
+              </Row>
+              <Row>
+                <Col>
+                  <CustomInput label='Descripción' name='description' type='textarea' placeholder='Una remera deportiva nueva' />
+                </Col>
+                <Col xs='12' lg='6'>
+                  <CustomInput label='Categoría' defaultValue={categoryProduct} name='category' type='select' >
+                    <option value=''>Seleccionar categoría</option>
+                    {allCategories.map((item) => (
+                      <option
+                        value={item.id}
+                      >{item.name}</option>))}
+                  </CustomInput>
+                </Col>
+              </Row>
+              <Row>
+                <Col>
+                  <Row>
+                    <Col lg='6' xs='6'>
+                      <CustomInput label='Stock' name='stock' type='number' />
+                    </Col>
+                    <Col xs='6'>
+                      <CustomInput label='Precio' name='price' type='number' />
+                    </Col>
+                  </Row>
+                </Col>
+              </Row>
+              <Button block className='bg-color-primary shadow-primary rounded-pill border-0' type='submit'>
+                {isSubmitting ? 'Cargando...' :
+                  action === 'put' ? 'Actualizar producto' :
+                    action === 'delete' ? 'Eliminar producto' :
+                      action === 'post' ? 'Agregar producto' : null}
+              </Button>
+            </Form>
+          )
+        }}
 
       </Formik>
     </Col>

@@ -10,7 +10,8 @@ import FormProduct from "./components/productForm";
 import FormCategory from "./components/categoryForm";
 
 //Pages
-import SearchPage from "./pages/SearchPage";
+import SearchPage from './pages/SearchPage';
+import AdminMenu from "./components/admin";
 
 function App() {
   const [product, setProduct] = useState([]);
@@ -41,46 +42,29 @@ function App() {
       <Navbar />
       <Switch>
         <Route path="/search/q/:searchTerm" component={SearchPage} />
+
         <Route exact path="/products">
           <Catalogue products={product} category={category} />
         </Route>
+
         <Route exact path="/product/:id">
           <ProductDetail props={product} />
         </Route>
-        <Route
-          exact
-          path="/admin/product/add"
-          render={() => (
-            <FormProduct
-              action="post"
-              icon="success"
-              message="Se agregó producto:"
-              category={category}
-            />
-          )}
-        />
-        <Route
-          exact
-          path="/admin/product/edit/:productId"
-          render={() => (
-            <FormProduct
-              action="post"
-              icon="success"
-              message="Se edito el producto:"
-              category={category}
-            />
-          )}
-        />
-        <Route
-          exact
-          path="/admin/category/add"
-          render={() => (
-            <FormCategory
-              action="post"
-              icon="success"
-              message="La categoria fue creada:"
-            />
-          )}
+
+        <Route exact path='/admin'>
+          <AdminMenu
+            products={product}
+            allCategories={category}
+          />
+        </Route>
+
+        <Route exact path='/admin/category/add' render={() =>
+          <FormCategory
+            action='post'
+            icon='success'
+            message='La categoria fue creada:'
+          />
+        }
         />
         <Route
           exact

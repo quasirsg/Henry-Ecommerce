@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import Axios from "axios";
 
-import Catalogo from "../components/catalogo";
+import Catalogo from '../components/catalogo';
 
 const SearchPage = () => {
   let { searchTerm } = useParams();
@@ -10,10 +10,11 @@ const SearchPage = () => {
   const [products, setProductos] = useState([]);
 
   useEffect(() => {
-    Axios.get(`http://localhost:3001/search/q/${searchTerm}`).then((res) => {
-      setProductos(res.data.results);
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    Axios.get(`http://localhost:3001/search/q/${searchTerm}`)
+      .then(res => {
+        console.log(res);
+        setProductos(res.data.results);
+      });
   }, []);
 
   return (
