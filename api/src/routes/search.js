@@ -5,7 +5,14 @@ server.get('/q/:searchTerm', (req, res, next) => {
     const searchTerm = req.params.searchTerm;
     Product.findAll({})
         .then(result => {
-            const results = result.filter(product => product.name.toLowerCase().includes(searchTerm.toLowerCase()));
+            const results = result.filter(product => {
+                if (product.name.toLowerCase().includes(searchTerm.toLowerCase())) {
+                    return true;
+                } else {
+                    return product.description.toLowerCase().includes(searchTerm.toLowerCase());
+                }
+            });
+
             return res.status(200).send({ results });
         })
         .catch(next);
