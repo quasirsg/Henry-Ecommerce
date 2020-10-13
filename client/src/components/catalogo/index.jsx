@@ -34,10 +34,10 @@ const Catalogue = ({ products, category }) => {
                   className="cont"
                   whileHover={{ scale: 1.1, rotate: 5 }}
                   whileTap={{ scale: 1, rotate: -5 }}
+                  key={fit.id}
                 >
                   <li key={fit.id}>
-                    {" "}
-                    <ProductCard product={fit} />{" "}
+                    <ProductCard product={fit} />
                   </li>
                 </motion.div>
               );

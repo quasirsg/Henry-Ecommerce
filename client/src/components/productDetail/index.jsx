@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import Axios from "axios";
 import StarRatings from "react-star-ratings";
 import { useParams } from "react-router-dom";
-import axios from "axios";
 
 // import {
 //   Carousel,
@@ -30,8 +29,8 @@ import "./producto.css";
 
 const Product = (props) => {
   /* ====== Hooks ======= */
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [animating, setAnimating] = useState(false);
+  // const [activeIndex, setActiveIndex] = useState(0);
+  // const [animating, setAnimating] = useState(false);
   const [rating, setRating] = useState(0);
   const [product, setProduct] = useState([]);
 
@@ -54,6 +53,7 @@ const Product = (props) => {
       .catch((err) => {
         return;
       });
+      // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
