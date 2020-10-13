@@ -11,6 +11,7 @@ import FormCategory from './components/categoryForm';
 
 //Pages
 import SearchPage from './pages/SearchPage';
+import AdminMenu from "./components/admin";
 
 function App() {
   const [product, setProduct] = useState([]);
@@ -52,24 +53,10 @@ function App() {
             props={product}
           />
         </Route>
-        <Route exact path="/admin/product/add" render={() => (
-          <FormProduct
-            action="post"
-            icon="success"
-            message="Se agregó producto:"
-            category={category}
-          />
-        )}
-        />
-        <Route exact path="/admin/product/edit/:productId" render={() => (
-          <FormProduct
-            action="post"
-            icon="success"
-            message="Se edito el producto:"
-            category={category}
-          />
-        )}
-        />
+        <Route exact path='/admin'>
+          <AdminMenu products={product} categories={category} />
+        </Route>
+
         <Route exact path='/admin/category/add' render={() =>
           <FormCategory
             action='post'

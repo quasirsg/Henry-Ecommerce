@@ -2,7 +2,17 @@ const server = require("express").Router();
 const { Product, Category } = require("../db.js");
 
 server.get("/", (req, res, next) => {
-	Product.findAll({})
+	Product.findAll({
+		attributes: ['id', 'name', 'stock', 'description', 'price', 'image'],
+		include: {
+			attributes: ['name'],
+			model: Category,
+			as: 'categories',
+			through: {
+				attributes: ['category_id']
+			}
+		}
+	})
 		.then((products) => {
 			return res.status(200).json({ products });
 		})
@@ -84,6 +94,9 @@ server.get('/category/:nameCategory', (req, res, next) => {
 			as: 'categories',
 			through: {
 				attributes: ['category_id']
+			},
+			where: {
+				name: nameCategory
 			}
 		}
 	})

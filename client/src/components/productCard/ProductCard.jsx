@@ -17,7 +17,7 @@ const ProductCard = ({ product }) => {
         />
       </Link>
       <CardTitle>{product.name}</CardTitle>
-      <CardSubtitle>{product.price}$</CardSubtitle>
+      <CardSubtitle>$ {product.price}</CardSubtitle>
       {/* <Link to={`/product/${product.id}`}>
         <Button className="btn-add-cart" size="sm">
           Agregar a Carrito
