@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Backspace } from "react-bootstrap-icons";
 import "./closeButton.css";
 

@@ -1,14 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Category from "../categoria";
 import ProductCard from "../productCard/ProductCard";
-
 import "./catalogo.css";
 import MenuButton from "./button/button.jsx";
+import apiCall from '../../redux/api';
 import { motion } from "framer-motion";
 
-const Catalogue = ({ products, category }) => {
+const Catalogue = ({ products = [], category = [] }) => {
   const [drop, setDrop] = useState(false);
-
+  const [listProducts, setProducts] = useState(products);
   const toggleMenu = () => {
     setDrop(!drop);
   };
@@ -17,6 +17,13 @@ const Catalogue = ({ products, category }) => {
     toggleMenu();
     e.stopPropagation();
   };
+
+  useEffect(() => {
+    apiCall('/products', null, null, 'get')
+      .then(response => {
+        setProducts(response.data.products)
+      })
+  }, []);
 
   return (
     <div className="container-ppal">
@@ -29,16 +36,17 @@ const Catalogue = ({ products, category }) => {
       <div className="container">
         <div className="cat-ppal">
           <div className="catalogo">
-            {products.map((fit) => {
+            {listProducts.map((fit, index) => {
               return (
                 <motion.div
+                  key={index}
                   className="cont"
                   whileHover={{ scale: 1.1, rotate: 5 }}
                   whileTap={{ scale: 1, rotate: -5 }}
+                  key={fit.id}
                 >
                   <li key={fit.id}>
-                    {" "}
-                    <ProductCard product={fit} />{" "}
+                    <ProductCard product={fit} />
                   </li>
                 </motion.div>
               );

@@ -1,22 +1,27 @@
-import React from 'react'
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { Person, List, PersonSquare, Cart3, Toggle2On, Collection } from 'react-bootstrap-icons';
+import { Col, CustomInput } from 'reactstrap';
 
-import { Person, Cart3, Toggle2On } from 'react-bootstrap-icons'
-import { Col } from 'reactstrap'
-import { Link } from 'react-router-dom'
 const groupIcons = () => {
     return (
         <Col lg='2' style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <Person
-                size={20}
-            />
-            <Link to="/cart">
+            <Link to={'/products'} className='text-dark'>
+                <Collection
+                    size={20}
+                />
+            </Link>
+            <Link to={'/'} className='text-dark'>
                 <Cart3
                     size={20}
                 />
             </Link>
-            <Toggle2On
-                size={20}
-            />
+            <Link to={'/admin'} className='text-dark '>
+                <PersonSquare
+                    size={20}
+                />
+            </Link>
+            <CustomInput className='pl-0 pt-1 text-dark' type='switch' id='exampleCustomCheckbox' />
         </Col>
     );
 }

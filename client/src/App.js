@@ -3,15 +3,15 @@ import { Switch, Route } from "react-router-dom";
 import axios from "axios";
 
 //Components
-import Navbar from './components/navbar'
+import Navbar from "./components/navbar";
 import ProductDetail from "./components/productDetail";
 import Catalogue from "./components/catalogo";
 import FormProduct from "./components/productForm";
-import FormCategory from './components/categoryForm';
+import FormCategory from "./components/categoryForm";
 
 //Pages
 import SearchPage from './pages/SearchPage';
-import Cart from './pages/Cart'
+import AdminMenu from "./components/admin";
 
 function App() {
   const [product, setProduct] = useState([]);
@@ -42,36 +42,22 @@ function App() {
       <Navbar />
       <Switch>
         <Route path="/search/q/:searchTerm" component={SearchPage} />
+
         <Route exact path="/products">
-          <Catalogue
-            products={product}
-            category={category}
-          />
+          <Catalogue products={product} category={category} />
         </Route>
+
         <Route exact path="/product/:id">
-          <ProductDetail
-            props={product}
+          <ProductDetail props={product} />
+        </Route>
+
+        <Route exact path='/admin'>
+          <AdminMenu
+            products={product}
+            allCategories={category}
           />
         </Route>
-        <Route exact path="/cart" component={Cart} />
-        <Route exact path="/admin/product/add" render={() => (
-          <FormProduct
-            action="post"
-            icon="success"
-            message="Se agregó producto:"
-            category={category}
-          />
-        )}
-        />
-        <Route exact path="/admin/product/edit/:productId" render={() => (
-          <FormProduct
-            action="post"
-            icon="success"
-            message="Se edito el producto:"
-            category={category}
-          />
-        )}
-        />
+
         <Route exact path='/admin/category/add' render={() =>
           <FormCategory
             action='post'
@@ -80,13 +66,16 @@ function App() {
           />
         }
         />
-        <Route exact path='/admin/category/edit/:categoryId' render={() =>
-          <FormCategory
-            action='post'
-            icon='success'
-            message='La categoria fue editada:'
-          />
-        }
+        <Route
+          exact
+          path="/admin/category/edit/:categoryId"
+          render={() => (
+            <FormCategory
+              action="post"
+              icon="success"
+              message="La categoria fue editada:"
+            />
+          )}
         />
       </Switch>
     </div>
