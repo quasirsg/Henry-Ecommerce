@@ -6,7 +6,7 @@ import MenuButton from "./button/button.jsx";
 import apiCall from '../../redux/api';
 import { motion } from "framer-motion";
 
-const Catalogue = ({ products = [], category = [] }) => {
+const Catalogue = ({ products, categorys }) => {
   const [drop, setDrop] = useState(false);
   const [listProducts, setProducts] = useState(products);
   const toggleMenu = () => {
@@ -29,9 +29,7 @@ const Catalogue = ({ products = [], category = [] }) => {
     <div className="container-ppal">
       <MenuButton handleMouseDown={handleMouseDown} menuVisibility={drop} />
       <Category
-        category={category}
-        handleMouseDown={handleMouseDown}
-        menuVisibility={drop}
+        categorys={categorys}
       />
       <div className="container">
         <div className="cat-ppal">

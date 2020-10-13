@@ -44,7 +44,7 @@ function App() {
         <Route path="/search/q/:searchTerm" component={SearchPage} />
 
         <Route exact path="/products">
-          <Catalogue products={product} category={category} />
+          <Catalogue products={product} categorys={category} />
         </Route>
 
         <Route exact path="/product/:id">
