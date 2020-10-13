@@ -13,6 +13,7 @@ const SearchPage = () => {
     Axios.get(`http://localhost:3001/search/q/${searchTerm}`).then((res) => {
       setProductos(res.data.results);
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

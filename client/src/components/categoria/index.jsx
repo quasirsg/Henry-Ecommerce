@@ -37,13 +37,13 @@ const Category = ({ category, handleMouseDown, menuVisibility }) => {
           {category.map((cat, i) => {
             return (
               <li key={cat.id}>
-                <div class="custom-control custom-checkbox">
+                <div className="custom-control custom-checkbox">
                   <input
                     type="checkbox"
-                    class="custom-control-input"
+                    className="custom-control-input"
                     id={cat.id}
                   />
-                  <label class="custom-control-label" for={cat.id}>
+                  <label className="custom-control-label" htmlFor={cat.id}>
                     {cat.name}
                   </label>
                 </div>
