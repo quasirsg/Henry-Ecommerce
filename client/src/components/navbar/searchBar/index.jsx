@@ -1,47 +1,43 @@
-import React, { useState } from 'react'
-import { Search } from 'react-bootstrap-icons'
-import { useHistory } from 'react-router-dom'
+import React, { useState } from "react";
+import { Search } from "react-bootstrap-icons";
+import { useHistory } from "react-router-dom";
 
-import './SearchBar.css'
+import "./SearchBar.css";
 
 const SearchBar = () => {
+  const [searchTerm, setSearchTerm] = useState("");
 
-    const [searchTerm, setSearchTerm] = useState('');
+  const handleOnChange = (event) => {
+    setSearchTerm(event.target.value);
+  };
 
-    const handleOnChange = (event) => {
-        setSearchTerm(event.target.value);
-    }
+  const history = useHistory();
 
-    const history = useHistory();
+  const routeChange = () => {
+    let path = `/search/q/${searchTerm}`;
+    history.push(path);
+    history.go(0);
+  };
 
-    const routeChange = () => {
-        let path = `/search/q/${searchTerm}`;
-        history.push(path);
-        history.go(0);
-    }
-
-    return (
-        <form
-            className="searchBar__form"
-            onSubmit={event => {
-                event.preventDefault();
-            }}
-        >
-            <input
-                className="searchBar__input"
-                type="text"
-                name="search"
-                onChange={handleOnChange}
-                placeholder='Que estas buscando?'
-            />
-            <button
-                onClick={routeChange}
-                className="searchBar__button"
-            >
-                <Search />
-            </button>
-        </form>
-    );
-}
+  return (
+    <form
+      className="searchBar__form"
+      onSubmit={(event) => {
+        event.preventDefault();
+      }}
+    >
+      <input
+        className="searchBar__input"
+        type="text"
+        name="search"
+        onChange={handleOnChange}
+        placeholder="Que estas buscando?"
+      />
+      <button onClick={routeChange} className="searchBar__button">
+        <Search />
+      </button>
+    </form>
+  );
+};
 
 export default SearchBar;

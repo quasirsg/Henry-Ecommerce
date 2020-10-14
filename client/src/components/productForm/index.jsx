@@ -64,6 +64,9 @@ const FormProduct = ({
     });
   };
 
+  console.log(allCategories);
+  console.log(categories);
+
   return (
     <Col
       lg="6"
