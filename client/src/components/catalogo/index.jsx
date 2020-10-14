@@ -6,7 +6,7 @@ import MenuButton from "./button/button.jsx";
 import apiCall from '../../redux/api';
 import { motion } from "framer-motion";
 
-const Catalogue = ({ products, category }) => {
+const Catalogue = ({ products, categorys }) => {
   const [drop, setDrop] = useState(false);
   const [listProducts, setProducts] = useState(products);
   const toggleMenu = () => {
