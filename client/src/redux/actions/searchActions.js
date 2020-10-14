@@ -14,7 +14,6 @@ export const searchByQuery = query => (dispatch) => {
 export const searchByCategory = name => dispatch => {
     axios.get('http://localhost:3001/products/category/' + name)
         .then(res => {
-            console.log(res)
             dispatch({
                 type: SEARCH_BY_CATEGORY,
                 results: res.data
