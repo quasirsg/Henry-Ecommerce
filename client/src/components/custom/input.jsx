@@ -42,7 +42,7 @@ const CustomInput = ({ label, ...props }) => {
               <FileImage className='mr-1' size={20} />
               {uploadFile.ok ? '1 Archivo seleccionado' : 'Seleccionar archivo'}
             </Button>
-          </> : <Input {...field} {...props} />
+          </> : <Input {...field} {...props} style={{maxHeight: '4rem'}}/>
       }
       {
         meta.touched && meta.error ? (

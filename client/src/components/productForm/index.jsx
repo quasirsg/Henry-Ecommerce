@@ -77,7 +77,7 @@ const FormProduct = ({
           stock,
           description,
           price,
-          category: 0,
+          categories,
           image,
         }}
         validationSchema={Yup.object({
@@ -104,15 +104,12 @@ const FormProduct = ({
         onSubmit={async (values, { setSubmitting, resetForm }) => {
           //Validar url
           const url = `/products/${id ? id : ""}`;
-
           // Convertir imagen en base64
           const imgBase64 = await convertBase64(values.image);
-
           //Request al backend
           let product = { ...values, image: imgBase64 };
           const data = action === "delete" ? null : product;
 
-          console.log(values);
           apiCall(url, data, null, action)
             .then((response) => {
               //Una vez agregado el producto , le asigna una categoria
@@ -154,8 +151,8 @@ const FormProduct = ({
                     </Button>
                   </Row>
                 ) : (
-                  ""
-                )}
+                    ""
+                  )}
 
                 <Row className="d-block">
                   <ClipboardPlus className="mb-1 mr-2" size={40} />
@@ -191,36 +188,22 @@ const FormProduct = ({
                   />
                 </Col>
                 <Col xs="12" lg="6">
-                  <div role="group" aria-labelledby="checkbox-group">
-                    {" "}
-                    {
-                      <ButtonDropdown isOpen={dropdownOpen} toggle={toggle}>
-                        <DropdownToggle caret>Categorias</DropdownToggle>
-                        <DropdownMenu>
-                          {allCategories.map((item) => {
-                            return (
-                              <label key={item.id}>
-                                <Field
-                                  label="Categoria"
-                                  type="checkbox"
-                                  id={item.id}
-                                  value={categoryProduct}
-                                />
-                                {item.name}
-                              </label>
-                            );
-                          })}
-                        </DropdownMenu>
-                      </ButtonDropdown>
-                    }
-                  </div>
-
-                  {/* <CustomInput
+                  <CustomInput
                     label="Categoría"
                     defaultValue={categoryProduct}
                     name="category"
-                    type="checkbox"
-                  ></CustomInput> */}
+                    type="select"
+                    multiple
+                  >
+                    <option value='0'>Seleccionar categoría</option>
+                    {
+                      allCategories.map((item) => (
+                        <option
+                          key={item.name}
+                          value={item.id}
+                        >{item.name}</option>))
+                    }
+                  </CustomInput>
                 </Col>
               </Row>
               <Row>
@@ -243,12 +226,12 @@ const FormProduct = ({
                 {isSubmitting
                   ? "Cargando..."
                   : action === "put"
-                  ? "Actualizar producto"
-                  : action === "delete"
-                  ? "Eliminar producto"
-                  : action === "post"
-                  ? "Agregar producto"
-                  : null}
+                    ? "Actualizar producto"
+                    : action === "delete"
+                      ? "Eliminar producto"
+                      : action === "post"
+                        ? "Agregar producto"
+                        : null}
               </Button>
             </Form>
           );
