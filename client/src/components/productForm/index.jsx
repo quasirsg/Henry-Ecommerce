@@ -1,12 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import "./product.css";
 import { ClipboardPlus, ArrowLeftCircle } from "react-bootstrap-icons";
 import { Button, Row, Col } from "reactstrap";
-import { Formik, Form } from "formik";
+import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import Swal from "sweetalert2";
 import CustomInput from "../custom/input";
 import apiCall from "../../redux/api";
+
+import {
+  ButtonDropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem,
+} from "reactstrap";
 
 const Toast = Swal.mixin({
   toast: true,
@@ -37,7 +44,9 @@ const FormProduct = ({
   const categoriesSelect = allCategories.map((item) => item.id);
   const categoryProduct = categories.length ? categories : [];
 
-  console.log(id);
+  const [dropdownOpen, setOpen] = useState(false);
+
+  const toggle = () => setOpen(!dropdownOpen);
 
   const convertBase64 = (file) => {
     if (typeof file === "string") return file;
@@ -182,17 +191,36 @@ const FormProduct = ({
                   />
                 </Col>
                 <Col xs="12" lg="6">
-                  <CustomInput
+                  <div role="group" aria-labelledby="checkbox-group">
+                    {" "}
+                    {
+                      <ButtonDropdown isOpen={dropdownOpen} toggle={toggle}>
+                        <DropdownToggle caret>Categorias</DropdownToggle>
+                        <DropdownMenu>
+                          {allCategories.map((item) => {
+                            return (
+                              <label key={item.id}>
+                                <Field
+                                  label="Categoria"
+                                  type="checkbox"
+                                  id={item.id}
+                                  value={categoryProduct}
+                                />
+                                {item.name}
+                              </label>
+                            );
+                          })}
+                        </DropdownMenu>
+                      </ButtonDropdown>
+                    }
+                  </div>
+
+                  {/* <CustomInput
                     label="Categoría"
                     defaultValue={categoryProduct}
                     name="category"
-                    type="select"
-                  >
-                    <option value="">Seleccionar categoría</option>
-                    {allCategories.map((item) => (
-                      <option value={item.id}>{item.name}</option>
-                    ))}
-                  </CustomInput>
+                    type="checkbox"
+                  ></CustomInput> */}
                 </Col>
               </Row>
               <Row>
