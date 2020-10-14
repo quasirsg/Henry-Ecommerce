@@ -1,17 +1,25 @@
 import React from "react";
-import { Container, Col, Row } from 'reactstrap'
-
+import { Col, Row } from 'reactstrap'
+import { useDispatch } from 'react-redux'
 import CategoryItem from './categoriaItem'
 import "./categoria.css";
 
 const Category = ({ categorys }) => {
+  const dispatch = useDispatch();
+
   return (
     <Col lg="2">
       <div className="categoria__title">
         Categorias
         </div>
       <Row>
-        {categorys.map(item => <CategoryItem categoria={item} />)}
+        {categorys.map(item =>
+          <CategoryItem
+            dispatch={dispatch}
+            key={item.id}
+            categoria={item}
+          />
+        )}
       </Row>
     </Col>
   );

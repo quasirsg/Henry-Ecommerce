@@ -1,13 +1,21 @@
 import React from 'react'
-import { Col, Row } from 'reactstrap'
+import { useDispatch } from 'react-redux'
 import { Files } from 'react-bootstrap-icons'
 import { Link } from 'react-router-dom'
+import { searchByCategory } from '../../../redux/actions/searchActions'
 import './categoryItem.css'
 
-const categoriaItem = ({ categoria }) => {
+
+const categoriaItem = ({ categoria, dispatch }) => {
+
+    const handleOnClick = () => {
+        dispatch(searchByCategory(categoria.name));
+    }
+
     return (
         <Link
             to={`/search/category/${categoria.id}`}
+            onClick={handleOnClick}
             className="categoryItem"
         >
             <div className="d-flex flex-row">

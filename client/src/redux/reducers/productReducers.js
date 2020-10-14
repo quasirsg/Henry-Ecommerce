@@ -1,19 +1,18 @@
 import { GET_PRODUCTS } from "../actions/actionTypes";
 
-const initialState={
+const initialState = {
     products: []
 }
 
-
-function productReducers(state=initialState, action){
+function productReducers(state = initialState, action) {
     switch (action.type) {
         case GET_PRODUCTS:
-        return {
-            ...state,
-            products: state.products.concat(action.products)
-        }
+            return {
+                ...state,
+                products: action.products
+            }
         default:
-      return state
+            return state
     }
 }
 

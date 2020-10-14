@@ -1,13 +1,13 @@
-initialState = {
-
+const initialState = {
+    products: []
 }
 
 function cartReducers(state = initialState, action) {
     switch (action.type) {
-        case GET_CATEGORY:
+        case 'ALL':
             return {
                 ...state,
-                category: state.category.concat(action.category)
+                products: []
             }
         default:
             return state;

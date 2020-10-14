@@ -1,15 +1,15 @@
 import axios from 'axios';
-import * as actionTypes from './actionTypes';
+import { GET_CATEGORY } from './actionTypes';
 
-const url='http://localhost:3001/category';
+const url = 'http://localhost:3001/category';
 
-export const getCategory =()=>(dispatch)=>{
+export const getCategory = () => (dispatch) => {
     axios.get(url)
-        .then((res)=>{
+        .then((res) => {
+            console.log(res);
             dispatch({
-                type:actionTypes.GET_CATEGORY,
+                type: GET_CATEGORY,
                 category: res.data.category
             })
-    
-        }).catch((err)=> console.log(err))
+        }).catch((err) => console.log(err))
 };

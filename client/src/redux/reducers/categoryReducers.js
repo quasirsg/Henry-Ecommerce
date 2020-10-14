@@ -1,18 +1,18 @@
-import {GET_CATEGORY} from '../actions/actionTypes';
+import { GET_CATEGORY } from '../actions/actionTypes';
 
-const initialState={
-    category:[]
+const initialState = {
+    category: []
 }
 
-function categoryReducers(state=initialState, action) {
-    switch(action.type) {
+function categoryReducers(state = initialState, action) {
+    switch (action.type) {
         case GET_CATEGORY:
             return {
                 ...state,
-                category: state.category.concat(action.category)
+                category: action.category
             }
-            default:
-                return state;
+        default:
+            return state;
     }
 }
 

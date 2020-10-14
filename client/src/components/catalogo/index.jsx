@@ -1,40 +1,16 @@
-import React, { useState, useEffect } from "react";
-import Category from "../categoria";
+import React from "react";
 import ProductCard from "../productCard/ProductCard";
 import "./catalogo.css";
-import MenuButton from "./button/button.jsx";
-import apiCall from '../../redux/api';
 import { motion } from "framer-motion";
 
-const Catalogue = ({ products, categorys }) => {
-  const [drop, setDrop] = useState(false);
-  const [listProducts, setProducts] = useState(products);
-  const toggleMenu = () => {
-    setDrop(!drop);
-  };
-
-  const handleMouseDown = (e) => {
-    toggleMenu();
-    e.stopPropagation();
-  };
-
-  useEffect(() => {
-    apiCall('/products', null, null, 'get')
-      .then(response => {
-        setProducts(response.data.products)
-      })
-  }, []);
+const Catalogue = ({ products }) => {
 
   return (
-    <div className="container-ppal">
-      <MenuButton handleMouseDown={handleMouseDown} menuVisibility={drop} />
-      <Category
-        categorys={categorys}
-      />
+    <div className="col-lg-10 mt-4">
       <div className="container">
         <div className="cat-ppal">
           <div className="catalogo">
-            {listProducts.map((fit, index) => {
+            {products.map(fit => {
               return (
                 <motion.div
                   key={fit.id}

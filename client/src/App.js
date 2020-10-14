@@ -11,7 +11,7 @@ import FormCategory from "./components/categoryForm";
 //Pages
 import SearchPage from './pages/SearchPage';
 import AdminMenu from "./components/admin";
-
+import HomePage from './pages/HomePage';
 
 function App() {
   const [product, setProduct] = useState([]);
@@ -39,15 +39,13 @@ function App() {
   return (
     //No modifique ni elimine las rutas existentes
     <div className="col-lg-12">
-  
       <Navbar />
       <Switch>
-        <Route path="/search/q/:searchTerm" component={SearchPage} />
-        <Route path="/search/category/:categoryId" component={SearchPage} />
-        <Route exact path="/products">
-          <Catalogue products={product} categorys={category} />
-        </Route>
-
+        <Route exact path="/" component={HomePage} />
+        <Route path="/home" component={HomePage} />
+        <Route path="/search/q/" component={SearchPage} />
+        <Route path="/search/category/" component={SearchPage} />
+        <Route exact path="/products" component={HomePage} />
         <Route exact path="/product/:id">
           <ProductDetail props={product} />
         </Route>

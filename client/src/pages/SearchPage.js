@@ -1,36 +1,25 @@
-import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import Axios from "axios";
-
+import React from "react";
+import { Container, Row } from 'reactstrap'
+import { useSelector } from 'react-redux'
 import Catalogo from '../components/catalogo';
+import Categoria from '../components/categoria'
 
 const SearchPage = () => {
-  let { searchTerm } = useParams();
-  let { categoryId } = useParams();
 
-  const [products, setProductos] = useState([]);
-
-  useEffect(() => {
-    Axios.get(`http://localhost:3001/products/category/image`)
-      .then(res => {
-        setProductos(res.data.results);
-      });
-  }, []);
+  const categorias = useSelector(state => state.category.category);
+  const searchResults = useSelector(state => state.search.results);
 
   return (
-    <Catalogo
-      products={products}
-      category={[
-        {
-          id: 1,
-          name: "Vitaminas",
-        },
-        {
-          id: 2,
-          name: "suplementos",
-        },
-      ]}
-    />
+    <Container fluid={true}>
+      <Row>
+        <Categoria
+          categorys={categorias}
+        />
+        <Catalogo
+          products={searchResults}
+        />
+      </Row>
+    </Container>
   );
 };
 
