@@ -13,12 +13,13 @@ server.get('/', (req, res, next) => {
 });
 
 server.post('/', (req, res, next) => {
-	const { name } = req.body;
+	const { name, description } = req.body;
 
-	if (!name) return res.status(400).json({ message: 'A parameter is missing' });
+	if (!name || !description) return res.status(400).json({ message: 'A parameter is missing' });
 
 	Category.create({
 		name: name,
+		description: description,
 	})
 		.then((category) => {
 			return res.status(200).json(category);
