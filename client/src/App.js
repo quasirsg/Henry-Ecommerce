@@ -70,7 +70,7 @@ function App() {
           path="/admin/category/edit/:categoryId"
           render={() => (
             <FormCategory
-              action="post"
+              action="put"
               icon="success"
               message="La categoria fue editada:"
             />
