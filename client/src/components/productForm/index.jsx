@@ -64,6 +64,9 @@ const FormProduct = ({
     });
   };
 
+  console.log(allCategories);
+  console.log(categories);
+
   return (
     <Col
       lg="6"
@@ -191,36 +194,17 @@ const FormProduct = ({
                   />
                 </Col>
                 <Col xs="12" lg="6">
-                  <div role="group" aria-labelledby="checkbox-group">
-                    {" "}
-                    {
-                      <ButtonDropdown isOpen={dropdownOpen} toggle={toggle}>
-                        <DropdownToggle caret>Categorias</DropdownToggle>
-                        <DropdownMenu>
-                          {allCategories.map((item) => {
-                            return (
-                              <label key={item.id}>
-                                <Field
-                                  label="Categoria"
-                                  type="checkbox"
-                                  id={item.id}
-                                  value={categoryProduct}
-                                />
-                                {item.name}
-                              </label>
-                            );
-                          })}
-                        </DropdownMenu>
-                      </ButtonDropdown>
-                    }
-                  </div>
-
-                  {/* <CustomInput
+                  <CustomInput
                     label="Categoría"
                     defaultValue={categoryProduct}
                     name="category"
-                    type="checkbox"
-                  ></CustomInput> */}
+                    type="select"
+                  >
+                    <option>Categorias</option>
+                    {allCategories.map((item) => {
+                      return <option value={item.id}>{item.name}</option>;
+                    })}
+                  </CustomInput>
                 </Col>
               </Row>
               <Row>

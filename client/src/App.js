@@ -12,6 +12,7 @@ import FormCategory from "./components/categoryForm";
 import SearchPage from './pages/SearchPage';
 import AdminMenu from "./components/admin";
 
+
 function App() {
   const [product, setProduct] = useState([]);
   const [category, setCategory] = useState([]);
@@ -38,6 +39,7 @@ function App() {
   return (
     //No modifique ni elimine las rutas existentes
     <div className="col-lg-12">
+  
       <Navbar />
       <Switch>
         <Route path="/search/q/:searchTerm" component={SearchPage} />

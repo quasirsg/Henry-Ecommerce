@@ -3,7 +3,8 @@ const { Product, Category } = require("../db.js");
 
 server.get('/q/:searchTerm', (req, res, next) => {
     const searchTerm = req.params.searchTerm;
-    Product.findAll({})
+    console.log(searchTerm)
+    Product.findAll()
         .then(result => {
             const results = result.filter(product => {
                 if (product.name.toLowerCase().includes(searchTerm.toLowerCase())) {

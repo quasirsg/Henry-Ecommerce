@@ -24,6 +24,7 @@ import FormCategory from "../categoryForm";
 import Catalogue from "../catalogo";
 import ProductCard from "../productCard/ProductCard";
 import InventoryTable from "./tools/inventoryTable";
+import InventoryTableCategory from "./tools/inventoryTableCategory";
 
 const AdminMenu = ({ products, allCategories }) => {
   const [collapsed, setCollapsed] = useState(true);
@@ -69,7 +70,7 @@ const AdminMenu = ({ products, allCategories }) => {
                       </NavLink>
                     </NavItem>
                     <NavItem>
-                      <NavLink tag={Link} to="/admin">
+                      <NavLink tag={Link} to="/admin/categories">
                         <Files size={17} className="mr-1" />
                         Categorias
                       </NavLink>
@@ -119,6 +120,24 @@ const AdminMenu = ({ products, allCategories }) => {
               <Route exact path="/admin/products">
                 <InventoryTable />
               </Route>
+              <Route exact path="/admin/categories">
+                <InventoryTableCategory />
+              </Route>
+              <Route
+                exact
+                path="/admin/category/:id"
+                render={({ match, history }) => (
+                  <FormCategory
+                    history={history}
+                    action="put"
+                    icon="success"
+                    message="Se edito categoría:"
+                    {...allCategories.find(
+                      (item) => item.id === parseInt(match.params.id)
+                    )}
+                  />
+                )}
+              />
             </Col>
           </Router>
         </Row>
