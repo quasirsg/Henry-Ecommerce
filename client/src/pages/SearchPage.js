@@ -6,11 +6,12 @@ import Catalogo from '../components/catalogo';
 
 const SearchPage = () => {
   let { searchTerm } = useParams();
+  let { categoryId } = useParams();
 
   const [products, setProductos] = useState([]);
 
   useEffect(() => {
-    Axios.get(`http://localhost:3001/search/q/${searchTerm}`)
+    Axios.get(`http://localhost:3001/products/category/image`)
       .then(res => {
         console.log(res);
         setProductos(res.data.results);

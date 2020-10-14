@@ -42,7 +42,7 @@ function App() {
       <Navbar />
       <Switch>
         <Route path="/search/q/:searchTerm" component={SearchPage} />
-
+        <Route path="/search/category/:categoryId" component={SearchPage} />
         <Route exact path="/products">
           <Catalogue products={product} categorys={category} />
         </Route>
