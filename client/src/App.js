@@ -6,7 +6,6 @@ import axios from "axios";
 import Navbar from "./components/navbar";
 import ProductDetail from "./components/productDetail";
 import Catalogue from "./components/catalogo";
-import FormProduct from "./components/productForm";
 import FormCategory from "./components/categoryForm";
 
 //Pages
@@ -71,7 +70,7 @@ function App() {
           path="/admin/category/edit/:categoryId"
           render={() => (
             <FormCategory
-              action="post"
+              action="put"
               icon="success"
               message="La categoria fue editada:"
             />

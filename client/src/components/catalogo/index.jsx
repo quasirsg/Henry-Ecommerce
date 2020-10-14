@@ -6,7 +6,7 @@ import MenuButton from "./button/button.jsx";
 import apiCall from '../../redux/api';
 import { motion } from "framer-motion";
 
-const Catalogue = ({ products, categorys }) => {
+const Catalogue = ({ products, category }) => {
   const [drop, setDrop] = useState(false);
   const [listProducts, setProducts] = useState(products);
   const toggleMenu = () => {
@@ -37,11 +37,10 @@ const Catalogue = ({ products, categorys }) => {
             {listProducts.map((fit, index) => {
               return (
                 <motion.div
-                  key={index}
+                  key={fit.id}
                   className="cont"
                   whileHover={{ scale: 1.1, rotate: 5 }}
                   whileTap={{ scale: 1, rotate: -5 }}
-                  key={fit.id}
                 >
                   <li key={fit.id}>
                     <ProductCard product={fit} />

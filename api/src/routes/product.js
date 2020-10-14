@@ -35,7 +35,7 @@ server.get("/:id", (req, res, next) => {
 server.post('/', (req, res, next) => {
 	const { name, stock, description, price, image } = req.body;
 
-	if (!name || !description || !price || !image)
+	if (!name || !description || !price || !image )
 		return res.status(400).json({ message: 'A parameter is missing' });
 
 	Product.create({

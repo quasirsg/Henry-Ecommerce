@@ -13,7 +13,6 @@ const SearchPage = () => {
   useEffect(() => {
     Axios.get(`http://localhost:3001/products/category/image`)
       .then(res => {
-        console.log(res);
         setProductos(res.data.results);
       });
   }, []);

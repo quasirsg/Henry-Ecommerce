@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Person, List, PersonSquare, Cart3, Toggle2On, Collection } from 'react-bootstrap-icons';
+import { PersonSquare, Cart3, Collection } from 'react-bootstrap-icons';
 import { Col, CustomInput } from 'reactstrap';
 
 const groupIcons = () => {
