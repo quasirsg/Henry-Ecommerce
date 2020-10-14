@@ -30,7 +30,7 @@ const AdminMenu = ({ products, allCategories }) => {
   const [collapsed, setCollapsed] = useState(true);
   const toggleNavbar = () => setCollapsed(!collapsed);
 
-  const findProduct = () => {};
+  const findProduct = () => { };
 
   return (
     <>
@@ -39,10 +39,7 @@ const AdminMenu = ({ products, allCategories }) => {
           <Router>
             <Col md={3} lg={2} className="p-0">
               <Navbar light className="rounded-lg">
-                <NavbarToggler
-                  onClick={toggleNavbar}
-                  className="mr-2 border-0"
-                />
+                <NavbarToggler onClick={toggleNavbar} className="mr-2 border-0" />
                 <h5 className="mr-auto">Menu</h5>
                 <Collapse isOpen={!collapsed} navbar>
                   <Nav navbar>
@@ -102,8 +99,8 @@ const AdminMenu = ({ products, allCategories }) => {
                         typeof item.categories[0] === "number"
                           ? item.categories
                           : item.categories.map(
-                              (cat) => cat.product_category.category_id
-                            );
+                            (cat) => cat.product_category.category_id
+                          );
                       return item.id === parseInt(match.params.id);
                     })}
                     allCategories={allCategories}

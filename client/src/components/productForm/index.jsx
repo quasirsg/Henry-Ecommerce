@@ -44,10 +44,6 @@ const FormProduct = ({
   const categoriesSelect = allCategories.map((item) => item.id);
   const categoryProduct = categories.length ? categories : [];
 
-  const [dropdownOpen, setOpen] = useState(false);
-
-  const toggle = () => setOpen(!dropdownOpen);
-
   const convertBase64 = (file) => {
     if (typeof file === "string") return file;
     return new Promise((resolve, reject) => {
@@ -64,9 +60,6 @@ const FormProduct = ({
     });
   };
 
-  console.log(allCategories);
-  console.log(categories);
-
   return (
     <Col
       lg="6"
@@ -80,7 +73,7 @@ const FormProduct = ({
           stock,
           description,
           price,
-          categories,
+          category: categories,
           image,
         }}
         validationSchema={Yup.object({
@@ -117,19 +110,30 @@ const FormProduct = ({
             .then((response) => {
               //Una vez agregado el producto , le asigna una categoria
               const id = response.data.id;
-              apiCall(
-                `/products/${id}/category/${values.category}`,
-                null,
-                null,
-                "post"
-              ).then((response) => {
-                resetForm();
-                setSubmitting(false);
-                Toast.fire({
-                  icon,
-                  title: `${message} ${values.name}`,
-                });
+
+              console.log('Categorias producto: ', categories);
+              console.log('Nueva categoria: ', values.category);
+
+              //verificar si las categorias viejas fueron cambiadas, eliminarlas
+              categories.forEach(item => {
+                if (!values.category.some(cat => parseInt(cat) === item)) {
+                  apiCall(`/products/${id}/category/${item}`, null, null, 'delete')
+                    .then(response => console.log(response.data))
+                }
+              })
+
+              values.category.forEach(item => {
+                apiCall(`/products/${id}/category/${item}`, null, null, "post")
+                  .then((response) => console.log(response.data))
+              })
+
+              resetForm();
+              setSubmitting(false);
+              Toast.fire({
+                icon,
+                title: `${message} ${values.name}`,
               });
+
             })
             .catch((error) => {
               setSubmitting(false);
@@ -137,7 +141,7 @@ const FormProduct = ({
                 icon: "error",
                 title: "Error: vuelve a intentarlo",
               });
-            });
+            })
         }}
       >
         {({ isSubmitting, setFieldValue }) => {
@@ -200,11 +204,7 @@ const FormProduct = ({
                   >
                     <option value='0'>Seleccionar categoría</option>
                     {
-                      allCategories.map((item) => (
-                        <option
-                          key={item.name}
-                          value={item.id}
-                        >{item.name}</option>))
+                      allCategories.map((item) => (<option key={item.name} value={item.id}>{item.name}</option>))
                     }
                   </CustomInput>
                 </Col>
@@ -230,11 +230,7 @@ const FormProduct = ({
                   ? "Cargando..."
                   : action === "put"
                     ? "Actualizar producto"
-                    : action === "delete"
-                      ? "Eliminar producto"
-                      : action === "post"
-                        ? "Agregar producto"
-                        : null}
+                    : "Agregar producto"}
               </Button>
             </Form>
           );

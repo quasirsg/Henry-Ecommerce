@@ -35,7 +35,7 @@ server.get("/:id", (req, res, next) => {
 server.post('/', (req, res, next) => {
 	const { name, stock, description, price, image } = req.body;
 
-	if (!name || !description || !price || !image )
+	if (!name || !description || !price || !image)
 		return res.status(400).json({ message: 'A parameter is missing' });
 
 	Product.create({
@@ -108,8 +108,7 @@ server.get('/category/:nameCategory', (req, res, next) => {
 
 server.post('/:idProducto/category/:idCategoria', (req, res, next) => {
 
-	const { idProducto } = req.params;
-	const { idCategoria } = req.params;
+	const { idProducto, idCategoria } = req.params;
 
 	product_category.findOrCreate({
 		where: {
@@ -125,8 +124,7 @@ server.post('/:idProducto/category/:idCategoria', (req, res, next) => {
 
 server.delete('/:idProducto/category/:idCategoria', (req, res, next) => {
 
-	const { idProducto } = req.params;
-	const { idCategoria } = req.params;
+	const { idProducto, idCategoria } = req.params;
 
 	product_category.destroy({
 		where: {
