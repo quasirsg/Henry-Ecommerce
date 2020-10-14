@@ -2,7 +2,7 @@ import axios from 'axios';
 import { SEARCH_BY_QUERY, SEARCH_ALL, SEARCH_BY_CATEGORY } from './actionTypes';
 
 export const searchByQuery = query => (dispatch) => {
-    axios.get('http://localhost:3001/search/q' + query)
+    axios.get('http://localhost:3001/search/q/' + query)
         .then((res) => {
             dispatch({
                 type: SEARCH_BY_QUERY,

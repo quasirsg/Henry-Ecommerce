@@ -5,7 +5,6 @@ import axios from "axios";
 //Components
 import Navbar from "./components/navbar";
 import ProductDetail from "./components/productDetail";
-import Catalogue from "./components/catalogo";
 import FormCategory from "./components/categoryForm";
 
 //Pages

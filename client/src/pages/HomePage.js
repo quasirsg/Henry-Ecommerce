@@ -17,7 +17,7 @@ const HomePage = () => {
     }, [])
 
     return (
-        <Container fluid={true}>
+        <Container fluid={true} className="mt-4">
             <Row>
                 <Categoria
                     categorys={categorias}
