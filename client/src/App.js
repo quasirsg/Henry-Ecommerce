@@ -6,11 +6,12 @@ import axios from "axios";
 import Navbar from "./components/navbar";
 import ProductDetail from "./components/productDetail";
 import FormCategory from "./components/categoryForm";
+import ShoppingCart from "./components/shoppingCart";
 
 //Pages
 import SearchPage from "./pages/SearchPage";
 import AdminMenu from "./components/admin";
-import HomePage from './pages/HomePage';
+import HomePage from "./pages/HomePage";
 
 function App() {
   return (
@@ -26,7 +27,7 @@ function App() {
         <Route exact path="/product/:id">
           <ProductDetail />
         </Route>
-
+        <Route exact path="/cart" component={ShoppingCart} />
         <Route exact path="/admin">
           <AdminMenu />
         </Route>

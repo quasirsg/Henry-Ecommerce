@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import StarRatings from "react-star-ratings";
 import { useParams } from "react-router-dom";
-
+import { addProductCart } from "../../redux/actions/cartActions";
 // import {
 //   Carousel,
 //   CarouselItem,
@@ -29,9 +29,6 @@ import allActions from "../../redux/actions/allActions";
 //   ],
 
 const Product = (props) => {
-  /* ====== Hooks ======= */
-  // const [activeIndex, setActiveIndex] = useState(0);
-  // const [animating, setAnimating] = useState(false);
   const [rating, setRating] = useState(0);
 
   let { id } = useParams();
@@ -48,7 +45,17 @@ const Product = (props) => {
   useEffect(() => {
     dispatch(allActions.getOneProduct(id));
   }, []);
-
+  console.log(product);
+  const handleOnClick = () => {
+    dispatch(
+      addProductCart({
+        id: product.id,
+        name: product.name,
+        image: product.image,
+        quantity: 2,
+      })
+    );
+  };
   return (
     <div className="productContainer">
       {/* <h1>{id}</h1> */}
@@ -100,7 +107,9 @@ const Product = (props) => {
           </div>
         </div>
         <div className="button-container">
-          <button className="button">Add To Cart</button>
+          <button onClick={handleOnClick} className="button">
+            Add To Cart
+          </button>
         </div>
       </div>
     </div>
