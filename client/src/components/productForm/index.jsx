@@ -174,8 +174,8 @@ const FormProduct = ({
                     </Button>
                   </Row>
                 ) : (
-                  ""
-                )}
+                    ""
+                  )}
 
                 <Row className="d-block">
                   <ClipboardPlus className="mb-1 mr-2" size={40} />

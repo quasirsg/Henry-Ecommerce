@@ -5,12 +5,12 @@ import axios from "axios";
 //Components
 import Navbar from "./components/navbar";
 import ProductDetail from "./components/productDetail";
-import Catalogue from "./components/catalogo";
 import FormCategory from "./components/categoryForm";
 
 //Pages
 import SearchPage from "./pages/SearchPage";
 import AdminMenu from "./components/admin";
+import HomePage from './pages/HomePage';
 
 function App() {
   return (
@@ -18,12 +18,11 @@ function App() {
     <div className="col-lg-12">
       <Navbar />
       <Switch>
-        <Route path="/search/q/:searchTerm" component={SearchPage} />
-
-        <Route exact path="/products">
-          <Catalogue />
-        </Route>
-
+        <Route exact path="/" component={HomePage} />
+        <Route path="/home" component={HomePage} />
+        <Route path="/search/q/" component={SearchPage} />
+        <Route path="/search/category/" component={SearchPage} />
+        <Route exact path="/products" component={HomePage} />
         <Route exact path="/product/:id">
           <ProductDetail />
         </Route>

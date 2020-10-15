@@ -19,13 +19,4 @@ server.get('/q/:searchTerm', (req, res, next) => {
         .catch(next);
 });
 
-server.get('/category/:id', (req, res, next) => {
-    Category.findByPk(req.params.id)
-        .then(products => {
-            console.log(products);
-            
-        })
-
-});
-
 module.exports = server;
