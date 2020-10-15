@@ -7,7 +7,7 @@ const allActions = {
   editProduct,
   getCategory,
   editCategory,
-  deleteProdCategory,
+  //deleteProdCategory,
 };
 
 export default allActions;
