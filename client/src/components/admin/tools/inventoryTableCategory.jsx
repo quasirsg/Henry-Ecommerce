@@ -7,13 +7,13 @@ import apiCall from "../../../redux/api";
 import { useSelector, useDispatch } from "react-redux";
 import allActions from "../../../redux/actions/allActions";
 
-const InventoryTable = () => {
+const InventoryTableCategory = () => {
   /* Redux */
-  const data = useSelector((state) => state.products.products);
+  const data = useSelector((state) => state.category.category);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(allActions.getProducts());
+    dispatch(allActions.getCategory());
   }, []);
 
   const handleClick = (e, id, name) => {
@@ -33,7 +33,7 @@ const InventoryTable = () => {
       confirmButtonText: "Si, eliminar!",
     }).then((result) => {
       if (result.isConfirmed) {
-        apiCall(`/products/${id}`, null, null, "delete").then((response) => {
+        apiCall(`/category/${id}`, null, null, "delete").then((response) => {
           Swal.fire("Eliminado!", "El registro fue eliminado.", "success");
         });
       }
@@ -46,9 +46,12 @@ const InventoryTable = () => {
         <thead>
           <tr>
             {data.length
-              ? Object.keys(data[0]).map((item, index) => (
-                  <th key={index}>{item}</th>
-                ))
+              ? Object.keys(data[0])
+                  .filter(
+                    (item) =>
+                      item === "id" || item === "name" || item === "description"
+                  )
+                  .map((item, index) => <th key={index}>{item}</th>)
               : ""}
             <th>
               <GearFill size={17} className="mr-2" />
@@ -61,20 +64,10 @@ const InventoryTable = () => {
             <tr className="my-auto" key={index}>
               <th>{item.id}</th>
               <td>{item.name.slice(0, 15) + ".."}</td>
-              <td>{item.stock}</td>
               <td>{item.description.slice(0, 15) + ".."}</td>
-              <td>{item.price}</td>
-              <td>
-                <img
-                  src={item.image}
-                  style={{ width: "3rem", height: "3rem" }}
-                  alt={item.name}
-                />
-              </td>
-              <td>{item.categories.map((item) => item.name).join(" , ")}</td>
               <td className="p-2">
                 <Link
-                  to={`/admin/product/${item.id}`}
+                  to={`/admin/category/${item.id}`}
                   className="btn btn-default border btn-sm mr-3"
                 >
                   <Tools size={17} />
@@ -95,4 +88,4 @@ const InventoryTable = () => {
   );
 };
 
-export default InventoryTable;
+export default InventoryTableCategory;

@@ -1,37 +1,41 @@
-import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import Axios from "axios";
-
+import React from "react";
+import { Container, Row, Col } from 'reactstrap'
+import { useSelector } from 'react-redux'
 import Catalogo from '../components/catalogo';
+import Categoria from '../components/categoria'
 
 const SearchPage = () => {
-  let { searchTerm } = useParams();
 
-  const [products, setProductos] = useState([]);
+  const categorias = useSelector(state => state.category.category);
+  const searchResults = useSelector(state => state.search.results);
 
-  useEffect(() => {
-    Axios.get(`http://localhost:3001/search/q/${searchTerm}`)
-      .then(res => {
-        console.log(res);
-        setProductos(res.data.results);
-      });
-  }, []);
-
-  return (
-    <Catalogo
-      products={products}
-      category={[
-        {
-          id: 1,
-          name: "Vitaminas",
-        },
-        {
-          id: 2,
-          name: "suplementos",
-        },
-      ]}
-    />
-  );
+  if (searchResults.length === 0) {
+    return (
+      <Container fluid={true} className="mt-4">
+        <Row>
+          <Categoria
+            categorys={categorias}
+          />
+          <Col lg="10">
+            Lo sentimos no pudimos encontrar lo que buscas
+          </Col>
+        </Row>
+      </Container>
+    );
+  } else {
+    return (
+      <Container fluid={true}>
+        <Row>
+          <Categoria
+            categorys={categorias}
+          />
+          <Catalogo
+            products={searchResults}
+          />
+        </Row>
+      </Container>
+    );
+  }
 };
 
 export default SearchPage;

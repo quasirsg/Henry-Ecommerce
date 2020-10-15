@@ -108,8 +108,7 @@ server.get('/category/:nameCategory', (req, res, next) => {
 
 server.post('/:idProducto/category/:idCategoria', (req, res, next) => {
 
-	const { idProducto } = req.params;
-	const { idCategoria } = req.params;
+	const { idProducto, idCategoria } = req.params;
 
 	product_category.findOrCreate({
 		where: {
@@ -125,8 +124,7 @@ server.post('/:idProducto/category/:idCategoria', (req, res, next) => {
 
 server.delete('/:idProducto/category/:idCategoria', (req, res, next) => {
 
-	const { idProducto } = req.params;
-	const { idCategoria } = req.params;
+	const { idProducto, idCategoria } = req.params;
 
 	product_category.destroy({
 		where: {

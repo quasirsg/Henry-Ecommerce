@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Axios from "axios";
+import { useSelector, useDispatch } from "react-redux";
 import StarRatings from "react-star-ratings";
 import { useParams } from "react-router-dom";
 
@@ -11,6 +11,7 @@ import { useParams } from "react-router-dom";
 //   CarouselCaption,
 // } from "reactstrap";
 import "./producto.css";
+import allActions from "../../redux/actions/allActions";
 
 /* ======= Imagen si usamos carousel ====== */
 
@@ -32,10 +33,8 @@ const Product = (props) => {
   // const [activeIndex, setActiveIndex] = useState(0);
   // const [animating, setAnimating] = useState(false);
   const [rating, setRating] = useState(0);
-  const [product, setProduct] = useState([]);
 
   let { id } = useParams();
-
 
   /* ======== Star Rating Handle ======== */
   const changeRating = (newRating, name) => {
@@ -43,17 +42,11 @@ const Product = (props) => {
       rating: newRating,
     });
   };
-  /* ========= Axios-get ========== */
+  /* ========= Redux========== */
+  const product = useSelector((state) => state.products.productDetail);
+  const dispatch = useDispatch();
   useEffect(() => {
-    Axios.get("http://localhost:3001/products/" + id)
-      .then((res) => {
-        console.log(res);
-        return setProduct(res.data.products);
-      })
-      .catch((err) => {
-        return;
-      });
-      // eslint-disable-next-line react-hooks/exhaustive-deps
+    dispatch(allActions.getOneProduct(id));
   }, []);
 
   return (

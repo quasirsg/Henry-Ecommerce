@@ -1,49 +1,22 @@
-import React, { useState, useEffect } from "react";
-import Category from "../categoria";
+import React from "react";
 import ProductCard from "../productCard/ProductCard";
 import "./catalogo.css";
-import MenuButton from "./button/button.jsx";
-import apiCall from '../../redux/api';
 import { motion } from "framer-motion";
 
-const Catalogue = ({ products = [], category = [] }) => {
-  const [drop, setDrop] = useState(false);
-  const [listProducts, setProducts] = useState(products);
-  const toggleMenu = () => {
-    setDrop(!drop);
-  };
-
-  const handleMouseDown = (e) => {
-    toggleMenu();
-    e.stopPropagation();
-  };
-
-  useEffect(() => {
-    apiCall('/products', null, null, 'get')
-      .then(response => {
-        setProducts(response.data.products)
-      })
-  }, []);
+const Catalogue = ({ products }) => {
 
   return (
-    <div className="container-ppal">
-      <MenuButton handleMouseDown={handleMouseDown} menuVisibility={drop} />
-      <Category
-        category={category}
-        handleMouseDown={handleMouseDown}
-        menuVisibility={drop}
-      />
+    <div className="col-lg-10 mt-4">
       <div className="container">
         <div className="cat-ppal">
           <div className="catalogo">
-            {listProducts.map((fit, index) => {
+            {products.map(fit => {
               return (
                 <motion.div
-                  key={index}
+                  key={fit.id}
                   className="cont"
                   whileHover={{ scale: 1.1, rotate: 5 }}
                   whileTap={{ scale: 1, rotate: -5 }}
-                  key={fit.id}
                 >
                   <li key={fit.id}>
                     <ProductCard product={fit} />
