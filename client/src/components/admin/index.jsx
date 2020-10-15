@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { BrowserRouter as Router, Link, Route } from "react-router-dom";
 import {
   Container,
@@ -25,12 +26,23 @@ import Catalogue from "../catalogo";
 import ProductCard from "../productCard/ProductCard";
 import InventoryTable from "./tools/inventoryTable";
 import InventoryTableCategory from "./tools/inventoryTableCategory";
+import allActions from "../../redux/actions/allActions";
 
-const AdminMenu = ({ products, allCategories }) => {
+const AdminMenu = () => {
   const [collapsed, setCollapsed] = useState(true);
   const toggleNavbar = () => setCollapsed(!collapsed);
 
-  const findProduct = () => { };
+  /*=======Redux ================ */
+  const products = useSelector((state) => state.products.products);
+  const allCategories = useSelector((state) => state.category.category);
+  const dispatch = useDispatch();
+
+  console.log(products);
+
+  useEffect(() => {
+    dispatch(allActions.getProducts());
+    dispatch(allActions.getCategory());
+  }, []);
 
   return (
     <>
@@ -39,7 +51,10 @@ const AdminMenu = ({ products, allCategories }) => {
           <Router>
             <Col md={3} lg={2} className="p-0">
               <Navbar light className="rounded-lg">
-                <NavbarToggler onClick={toggleNavbar} className="mr-2 border-0" />
+                <NavbarToggler
+                  onClick={toggleNavbar}
+                  className="mr-2 border-0"
+                />
                 <h5 className="mr-auto">Menu</h5>
                 <Collapse isOpen={!collapsed} navbar>
                   <Nav navbar>
@@ -99,8 +114,8 @@ const AdminMenu = ({ products, allCategories }) => {
                         typeof item.categories[0] === "number"
                           ? item.categories
                           : item.categories.map(
-                            (cat) => cat.product_category.category_id
-                          );
+                              (cat) => cat.product_category.category_id
+                            );
                       return item.id === parseInt(match.params.id);
                     })}
                     allCategories={allCategories}

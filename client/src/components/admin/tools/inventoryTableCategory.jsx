@@ -4,17 +4,17 @@ import { GearFill, Trash, Tools } from "react-bootstrap-icons";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import apiCall from "../../../redux/api";
+import { useSelector, useDispatch } from "react-redux";
+import allActions from "../../../redux/actions/allActions";
 
 const InventoryTableCategory = () => {
-  const [data, setData] = useState([]);
+  /* Redux */
+  const data = useSelector((state) => state.category.category);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    apiCall("/category", null, null, "get").then((response) =>
-      setData(response.data.category)
-    );
+    dispatch(allActions.getCategory());
   }, []);
-
-  console.log(data);
 
   const handleClick = (e, id, name) => {
     e.preventDefault();

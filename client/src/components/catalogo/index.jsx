@@ -3,12 +3,17 @@ import Category from "../categoria";
 import ProductCard from "../productCard/ProductCard";
 import "./catalogo.css";
 import MenuButton from "./button/button.jsx";
-import apiCall from '../../redux/api';
+import apiCall from "../../redux/api";
 import { motion } from "framer-motion";
+import { useSelector, useDispatch } from "react-redux";
+import allActions from "../../redux/actions/allActions";
 
-const Catalogue = ({ products, category }) => {
+const Catalogue = () => {
+  const listProducts = useSelector((state) => state.products.products);
+  const category = useSelector((state) => state.category.category);
+  const dispatch = useDispatch();
+
   const [drop, setDrop] = useState(false);
-  const [listProducts, setProducts] = useState(products);
   const toggleMenu = () => {
     setDrop(!drop);
   };
@@ -19,10 +24,8 @@ const Catalogue = ({ products, category }) => {
   };
 
   useEffect(() => {
-    apiCall('/products', null, null, 'get')
-      .then(response => {
-        setProducts(response.data.products)
-      })
+    dispatch(allActions.getCategory());
+    dispatch(allActions.getProducts());
   }, []);
 
   return (

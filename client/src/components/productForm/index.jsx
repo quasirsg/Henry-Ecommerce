@@ -7,6 +7,7 @@ import * as Yup from "yup";
 import Swal from "sweetalert2";
 import CustomInput from "../custom/input";
 import apiCall from "../../redux/api";
+import { useDispatch } from "react-redux";
 
 import {
   ButtonDropdown,
@@ -14,6 +15,7 @@ import {
   DropdownMenu,
   DropdownItem,
 } from "reactstrap";
+import allActions from "../../redux/actions/allActions";
 
 const Toast = Swal.mixin({
   toast: true,
@@ -43,6 +45,8 @@ const FormProduct = ({
 }) => {
   const categoriesSelect = allCategories.map((item) => item.id);
   const categoryProduct = categories.length ? categories : [];
+
+  const dispatch = useDispatch();
 
   const convertBase64 = (file) => {
     if (typeof file === "string") return file;
@@ -106,26 +110,39 @@ const FormProduct = ({
           let product = { ...values, image: imgBase64 };
           const data = action === "delete" ? null : product;
 
-          apiCall(url, data, null, action)
+          console.log(product);
+          // apiCall(url, data, null, action);
+          dispatch(allActions.editProduct(id, action, values))
             .then((response) => {
               //Una vez agregado el producto , le asigna una categoria
               const id = response.data.id;
 
-              console.log('Categorias producto: ', categories);
-              console.log('Nueva categoria: ', values.category);
+              console.log("Categorias producto: ", categories);
+              console.log("Nueva categoria: ", values.category);
 
               //verificar si las categorias viejas fueron cambiadas, eliminarlas
-              categories.forEach(item => {
-                if (!values.category.some(cat => parseInt(cat) === item)) {
-                  apiCall(`/products/${id}/category/${item}`, null, null, 'delete')
-                    .then(response => console.log(response.data))
-                }
-              })
+              categories.forEach((item) => {
+                if (!values.category.some((cat) => parseInt(cat) === item)) {
+                  let idC = item.id;
+                  // dispatch(allActions.deleteProdCategory());
 
-              values.category.forEach(item => {
-                apiCall(`/products/${id}/category/${item}`, null, null, "post")
-                  .then((response) => console.log(response.data))
-              })
+                  apiCall(
+                    `/products/${id}/category/${item}`,
+                    null,
+                    null,
+                    "delete"
+                  ).then((response) => console.log(response.data));
+                }
+              });
+
+              values.category.forEach((item) => {
+                apiCall(
+                  `/products/${id}/category/${item}`,
+                  null,
+                  null,
+                  "post"
+                ).then((response) => console.log(response.data));
+              });
 
               resetForm();
               setSubmitting(false);
@@ -133,7 +150,6 @@ const FormProduct = ({
                 icon,
                 title: `${message} ${values.name}`,
               });
-
             })
             .catch((error) => {
               setSubmitting(false);
@@ -141,7 +157,7 @@ const FormProduct = ({
                 icon: "error",
                 title: "Error: vuelve a intentarlo",
               });
-            })
+            });
         }}
       >
         {({ isSubmitting, setFieldValue }) => {
@@ -158,8 +174,8 @@ const FormProduct = ({
                     </Button>
                   </Row>
                 ) : (
-                    ""
-                  )}
+                  ""
+                )}
 
                 <Row className="d-block">
                   <ClipboardPlus className="mb-1 mr-2" size={40} />
@@ -202,10 +218,12 @@ const FormProduct = ({
                     type="select"
                     multiple
                   >
-                    <option value='0'>Seleccionar categoría</option>
-                    {
-                      allCategories.map((item) => (<option key={item.name} value={item.id}>{item.name}</option>))
-                    }
+                    <option value="0">Seleccionar categoría</option>
+                    {allCategories.map((item) => (
+                      <option key={item.name} value={item.id}>
+                        {item.name}
+                      </option>
+                    ))}
                   </CustomInput>
                 </Col>
               </Row>
@@ -229,8 +247,8 @@ const FormProduct = ({
                 {isSubmitting
                   ? "Cargando..."
                   : action === "put"
-                    ? "Actualizar producto"
-                    : "Agregar producto"}
+                  ? "Actualizar producto"
+                  : "Agregar producto"}
               </Button>
             </Form>
           );

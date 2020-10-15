@@ -6,6 +6,8 @@ import * as Yup from "yup";
 import Swal from "sweetalert2";
 import CustomInput from "../custom/input";
 import apiCall from "../../redux/api";
+import { useDispatch } from "react-redux";
+import allActions from "../../redux/actions/allActions";
 
 const Toast = Swal.mixin({
   toast: true,
@@ -27,6 +29,7 @@ const FormCategory = ({
   icon,
   message,
 }) => {
+  const dispatch = useDispatch();
   return (
     <div className="categoryForm">
       <Formik
@@ -43,10 +46,10 @@ const FormCategory = ({
             .required("Debes completar este campo"),
         })}
         onSubmit={(values, { setSubmitting, resetForm }) => {
-          const url = `/category/${id ? id : ""}`;
-          const data = action === "delete" ? null : values;
+          // const url = `/category/${id ? id : ""}`;
+          // const data = action === "delete" ? null : values;
 
-          apiCall(url, data, null, action)
+          dispatch(allActions.editCategory(id, action, values))
             .then((response) => {
               resetForm();
               setSubmitting(false);
