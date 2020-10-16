@@ -13,21 +13,26 @@ module.exports = (sequelize) => {
       validate: {
         isEmail: true,
       },
+      noUpdate: true
+
     },
     password: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    img: {
-      type: DataTypes.STRING,
+    image: {
+      type: DataTypes.TEXT,
+
     },
     location_id: {
       type: DataTypes.INTEGER,
     },
-    // rol:{
-    //     type: DataTypes.BOOLEAN,
-    //     defaultValue: 'Client',
-    //     allowNull: false
-    // },
+    
+    rol: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      noUpdate:true
+    },
+
   });
 };
