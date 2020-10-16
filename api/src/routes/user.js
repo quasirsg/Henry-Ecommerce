@@ -20,16 +20,16 @@ server.get("/", (req, res, next) => {
 });
 
 server.post("/", (req, res, next) => {
-  const { name, email, password, img, location_id, rol } = req.body;
+  const { name, email, password, image, location_id, rol } = req.body;
 
-  if (!name || !email || !password || !img || !location_id || !rol)
+  if (!name || !email || !password || !image || !location_id || !rol)
     return res.status(400).json({ message: "A parameter is missing" });
 
   User.create({
     name,
     email,
     password,
-    img,
+    image,
     location_id,
     rol,
   })

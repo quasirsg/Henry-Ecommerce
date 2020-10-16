@@ -7,7 +7,7 @@ import Navbar from "./components/navbar";
 import ProductDetail from "./components/productDetail";
 import Catalogue from "./components/catalogo";
 import FormCategory from "./components/categoryForm";
-
+import FormUser from "./components/userForm"
 //Pages
 import SearchPage from "./pages/SearchPage";
 import AdminMenu from "./components/admin";

@@ -11,3 +11,11 @@ export const DELETE_PRODUCT = "DELETE_PRODUCT";
 export const POST_PRODUCT = "POST_PRODUCT";
 
 export const DELETE_PRODUCT_CATEGORY = "DELETE_PRODUCT_CATEGORY";
+
+
+//Users
+
+
+export const PUT_USER = "PUT_USER";
+export const DELETE_USER = "DELETE_USER";
+export const POST_USER= "POST_USER";
