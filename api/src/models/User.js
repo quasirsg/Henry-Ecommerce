@@ -42,10 +42,5 @@ module.exports = (sequelize) => {
     location_id: {
       type: DataTypes.INTEGER,
     },
-    // rol:{
-    //     type: DataTypes.BOOLEAN,
-    //     defaultValue: 'Client',
-    //     allowNull: false
-    // },
   });
 };

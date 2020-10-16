@@ -16,9 +16,12 @@ server.get('/:id', (req, res) => {
         })
 });
 
+//Retorna todas las ordenes
+//Retonar todas las ordenes por status ["shopping_cart", "created", "processing", "canceled", "completed"]
 server.get('/', (req, res) => {
-    if (!req.query.status) {
-        Order.findAll({ include: [{ model: User }, { model: Product, through: Orderline }] })
+    const status = req.query.status;
+    if (!status) {
+        Order.findAll({ include: [{ model: User }, { model: Product, through: Linea_Order }] })
             .then(orders => {
                 return res.send({ data: orders });
             })
@@ -26,17 +29,9 @@ server.get('/', (req, res) => {
                 return res.status(500)
             });
     } else {
-
-
-        const query = req.query.status;
-        const st = ["shopping_cart", "created", "processing", "canceled", "completed"];
-        const inn = st.indexOf(query);
-        if (inn === -1)
-            return res.send({ errors: [{ message: 'Status inválido' }], status: 422 }).status(422);
-
         Order.findAll({
             where: {
-                status: query
+                status: status
             }
         }).then((orders) => {
             res.send({ data: orders })
@@ -46,160 +41,124 @@ server.get('/', (req, res) => {
     }
 })
 
-server.delete('/:id', verifyToken, (req, res) => {
-    const { id } = req.params;
-    Order.findByPk(id * 1).then(async order => {
-        if (!order) return res.sendStatus(404);
-        await order.destroy();
-        res.sendStatus(204);
-    }).catch((err) => {
-        console.log(err);
-        res.sendStatus(500);
-    });
+server.delete('/:id', (req, res) => {
+    const id = req.params.id;
+    Order.findByPk(id)
+        .then(async order => {
+            if (!order) {
+                return res.sendStatus(404);
+            }
+            await order.destroy();
+            res.sendStatus(204);
+        })
+        .catch(err => {
+            res.sendStatus(500);
+        });
 });
 
-server.put('/:id', verifyToken, (req, res) => {
+server.put('/:id', (req, res) => {
     const id = req.params.id;
-    if (!Number.isInteger(id * 1)) {//multiplicar * 1 es muy IMPORTANTE (cositas de javascript xd)!
-        return res.send({ errors: [{ message: 'La id de la orden no es valida.' }], status: 422 }).status(422);
-    }
-
     const { status } = req.body
 
-
-    Order.findByPk(id).then(order => {
-        if (!order) {
-            return res.send({ errors: [{ message: 'Orden no encontrada' }], status: 404 }).status(404);
-        }
-        order.status = status;
-        order.save().then(() => {
-            return res.send({ data: order }).status(200);
+    Order.findByPk(id)
+        .then(order => {
+            if (!order) {
+                return res.sendStatus(404);
+            }
+            order.status = status;
+            order.save()
+                .then(() => {
+                    return res.send({ data: order }).status(200);
+                }).catch(err => {
+                    return res.sendStatus(500);
+                });
         }).catch(err => {
-            var status = 500;
-            if (err.name === 'SequelizeValidationError') status = 422;
-            return res.send({ errors: err.errors, status }).status(status);
+            return res.sendStatus(500);
         });
-    }).catch(err => {
-        return res.sendStatus(500);
-    });
 });
 
+server.post('/:userId', (req, res) => {
 
-/////****************** CREA ORDEN VACIA NUEVA PARA EL USUARIO SI NO EXISTE Y EL STATUS ES COMPLETADO O CANCELADO ************/
-server.post('/:idUser', (req, res) => {
-
-    const idUser = req.params.idUser;
+    const userId = req.params.userId;
     const status = req.body.status;
 
-
-    if (status == "shopping_cart") {
-
+    if (status === "shopping_cart") {
         Order.findOne({
             where: {
-                userId: idUser,
+                userId: userId,
                 status: "shopping_cart",
             }
         }).then((e) => {
-
-            if (e && (e.dataValues.status == "shopping_cart")) {
-                res.send("este usuario ya tiene un status shopping_cart");
-                return;
-            }
-
-            User.findByPk(idUser).then((user) => {
-                if (!user) {
-                    res.send({ errors: { messages: ['Usuario no encontrado'], status: 404 } }).status(404);
-                    return;
-                }
-                Order.create(() => {
-                }).then((order) => {
-                    user.addOrder(order).then(() => {
-                        return res.sendStatus(201);
-                    });
-                })
-            }).catch(err => {
-                return res.sendStatus(500);
-            });
+            User.findByPk(userId)
+                .then(user => {
+                    if (!user) {
+                        return res.sendStatus(404);
+                    }
+                    Order.create(() => {
+                    })
+                        .then(order => {
+                            user.addOrder(order)
+                                .then(() => res.sendStatus(201));
+                        })
+                }).catch(err => {
+                    return res.sendStatus(500);
+                });
 
         }).catch(err => {
             return res.sendStatus(500);
         });
-    }
-
-    else if (status == "created") {
-
+    } else if (status === "created") {
         Order.findOne({
             where: {
-                userId: idUser,
+                userId: userId,
                 status: "shopping_cart",
             }
         }).then((order) => {
-
-            if (order) {
-                order.status = "created"
-                order.save().then((order) => {
-                    res.send(order);
-                    return;
-                }).catch(err => {
+            order.status = "created"
+            order.save()
+                .then(order => {
+                    return res.send(order);
+                })
+                .catch(err => {
                     return res.sendStatus(500);
                 })
-            } else {
-                res.send("Error orden no encontrada");
-                return;
-            }
 
         }).catch(err => {
             return res.sendStatus(500);
         });
-    }
-
-    else if (status == "processing") {
-
+    } else if (status === "processing") {
         Order.findOne({
             where: {
-                userId: idUser,
+                userId: userId,
                 status: "created",
             }
         }).then((order) => {
-
-            if (order) {
-                order.status = "processing"
-                order.save().then((order) => {
-                    res.send(order);
-                    return;
-                }).catch(err => {
+            order.status = "processing"
+            order.save()
+                .then((order) => {
+                    return res.send(order);
+                })
+                .catch(err => {
                     return res.sendStatus(500);
                 })
-            } else {
-                res.send("Error orden no encontrada");
-                return;
-            }
         }).catch(err => {
             return res.sendStatus(500);
         });
-    }
-
-    else if (status == "completed") {
-
+    } else if (status === "completed") {
         Order.findOne({
             where: {
-                userId: idUser,
+                userId: userId,
                 status: "processing",
             }
         }).then((order) => {
-
-            if (order) {
-                order.status = "completed"
-                order.save().then((order) => {
-                    res.send(order);
-                    return;
-                }).catch(err => {
+            order.status = "completed"
+            order.save()
+                .then((order) => {
+                    return res.send(order);
+                })
+                .catch(err => {
                     return res.sendStatus(500);
                 })
-            } else {
-                res.send("Error orden no encontrada");
-                return;
-            }
         }).catch(err => {
             return res.sendStatus(500);
         });
