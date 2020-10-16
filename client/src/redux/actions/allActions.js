@@ -10,6 +10,8 @@ const allActions = {
   editCategory,
   deleteProdCategory,
   editUser,
+  //deleteProdCategory,
+
 };
 
 export default allActions;

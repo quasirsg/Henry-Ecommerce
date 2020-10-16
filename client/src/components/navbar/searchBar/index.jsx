@@ -1,22 +1,24 @@
 import React, { useState } from "react";
 import { Search } from "react-bootstrap-icons";
 import { useHistory } from "react-router-dom";
-
+import { useDispatch } from 'react-redux';
+import { searchByQuery, searchAll } from '../../../redux/actions/searchActions';
 import "./SearchBar.css";
 
 const SearchBar = () => {
+
+  const dispatch = useDispatch();
+  const history = useHistory();
+
   const [searchTerm, setSearchTerm] = useState("");
 
   const handleOnChange = (event) => {
     setSearchTerm(event.target.value);
   };
 
-  const history = useHistory();
-
   const routeChange = () => {
     let path = `/search/q/${searchTerm}`;
     history.push(path);
-    history.go(0);
   };
 
   return (
@@ -24,6 +26,12 @@ const SearchBar = () => {
       className="searchBar__form"
       onSubmit={(event) => {
         event.preventDefault();
+        if (searchTerm === "") {
+          dispatch(searchAll());
+        } else {
+          dispatch(searchByQuery(searchTerm));
+        }
+        routeChange();
       }}
     >
       <input
@@ -33,7 +41,7 @@ const SearchBar = () => {
         onChange={handleOnChange}
         placeholder="Que estas buscando?"
       />
-      <button onClick={routeChange} className="searchBar__button">
+      <button type="submit" className="searchBar__button">
         <Search />
       </button>
     </form>

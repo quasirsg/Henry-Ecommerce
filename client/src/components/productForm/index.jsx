@@ -112,7 +112,7 @@ const FormProduct = ({
 
           console.log(product);
           // apiCall(url, data, null, action);
-          dispatch(allActions.editProduct(id, action, values))
+          dispatch(allActions.editProduct(id, action, product))
             .then((response) => {
               //Una vez agregado el producto , le asigna una categoria
               const id = response.data.id;
@@ -174,8 +174,8 @@ const FormProduct = ({
                     </Button>
                   </Row>
                 ) : (
-                  ""
-                )}
+                    ""
+                  )}
 
                 <Row className="d-block">
                   <ClipboardPlus className="mb-1 mr-2" size={40} />
@@ -247,8 +247,17 @@ const FormProduct = ({
                 {isSubmitting
                   ? "Cargando..."
                   : action === "put"
+<<<<<<< HEAD
                   ? "Actualizar producto"
                   : "Agregar producto"}
+=======
+                    ? "Actualizar producto"
+                    : action === "delete"
+                      ? "Eliminar producto"
+                      : action === "post"
+                        ? "Agregar producto"
+                        : null}
+>>>>>>> origin/S18-T50
               </Button>
             </Form>
           );
