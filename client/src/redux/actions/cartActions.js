@@ -38,15 +38,27 @@ export const deleteProductCart = ({ id }) => {
 };
 
 export const getCartProducts = () => (dispatch) => {
-  axios
-    .get(url + "//")
-    .then((res) => {
-      dispatch({
-        type: GET_CART_PRODUCTS,
-        products: res.data.products,
-      });
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+
+  return {
+    type: GET_CART_PRODUCTS,
+    products: [{
+      id: 1,
+      name: 'Producto 1',
+      description: 'descripcion 1',
+      
+
+    }]
+  }
+
+  // axios
+  //   .get(url + "//")
+  //   .then((res) => {
+  //     dispatch({
+  //       type: GET_CART_PRODUCTS,
+  //       products: res.data.products,
+  //     });
+  //   })
+  //   .catch((err) => {
+  //     console.log(err);
+  //   });
 };

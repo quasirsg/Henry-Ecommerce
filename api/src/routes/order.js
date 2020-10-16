@@ -122,7 +122,6 @@ server.post('/:userId', (req, res) => {
                 .catch(err => {
                     return res.sendStatus(500);
                 })
-
         }).catch(err => {
             return res.sendStatus(500);
         });

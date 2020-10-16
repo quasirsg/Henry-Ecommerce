@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 
 const ShoppingCart = ({ items = [] }) => {
   const store = useSelector((state) => console.log(state));
+
   return (
     <Col lg="12">
       <h6>Item(s)</h6>
