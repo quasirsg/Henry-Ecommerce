@@ -11,6 +11,15 @@ export const PUT_PRODUCT = "PUT_PRODUCT";
 export const DELETE_PRODUCT = "DELETE_PRODUCT";
 export const POST_PRODUCT = "POST_PRODUCT";
 
+
+export const DELETE_PRODUCT_CATEGORY = "DELETE_PRODUCT_CATEGORY";
+
+
+//Users
+export const PUT_USER = "PUT_USER";
+export const DELETE_USER = "DELETE_USER";
+export const POST_USER= "POST_USER";
+
 //Search constants
 export const SEARCH_BY_QUERY = "SEARCH_BY_QUERY"
 export const SEARCH_BY_CATEGORY = "SEARCH_BY_CATEGORY"
@@ -22,3 +31,4 @@ export const ADD_PRODUCT_CART = "ADD_PRODUCT_CART";
 export const DELETE_PRODUCT_CART = "DELETE_PRODUCT_CART";
 export const ADD_AMOUNT = "ADD_AMOUNT";
 export const SUBTRACT_AMOUNT = "SUBTRACT_AMOUNT";
+
