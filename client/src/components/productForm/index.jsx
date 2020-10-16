@@ -247,17 +247,8 @@ const FormProduct = ({
                 {isSubmitting
                   ? "Cargando..."
                   : action === "put"
-<<<<<<< HEAD
                   ? "Actualizar producto"
                   : "Agregar producto"}
-=======
-                    ? "Actualizar producto"
-                    : action === "delete"
-                      ? "Eliminar producto"
-                      : action === "post"
-                        ? "Agregar producto"
-                        : null}
->>>>>>> origin/S18-T50
               </Button>
             </Form>
           );

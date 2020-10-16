@@ -8,9 +8,9 @@ const allActions = {
   editProduct,
   getCategory,
   editCategory,
-  deleteProdCategory,
+  // deleteProdCategory,
   editUser,
-  //deleteProdCategory,
+
 
 };
 
