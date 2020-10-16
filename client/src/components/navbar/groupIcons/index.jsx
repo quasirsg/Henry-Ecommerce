@@ -9,7 +9,7 @@ const groupIcons = () => {
       <Link to={"/products"} className="text-dark">
         <Collection size={20} />
       </Link>
-      <Link to={"/"} className="text-dark">
+      <Link to={"/cart"} className="text-dark">
         <Cart3 size={20} />
       </Link>
       <Link to={"/admin"} className="text-dark ">

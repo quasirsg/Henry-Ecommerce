@@ -14,6 +14,7 @@ module.exports = (sequelize) => {
         isEmail: true,
       },
       noUpdate: true
+
     },
     password: {
       type: DataTypes.STRING,
@@ -21,14 +22,17 @@ module.exports = (sequelize) => {
     },
     image: {
       type: DataTypes.TEXT,
+
     },
     location_id: {
       type: DataTypes.INTEGER,
     },
+    
     rol: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
       noUpdate:true
     },
+
   });
 };

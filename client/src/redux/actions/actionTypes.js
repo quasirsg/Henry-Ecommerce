@@ -21,14 +21,15 @@ export const DELETE_USER = "DELETE_USER";
 export const POST_USER= "POST_USER";
 
 //Search constants
-export const SEARCH_BY_QUERY = "SEARCH_BY_QUERY"
-export const SEARCH_BY_CATEGORY = "SEARCH_BY_CATEGORY"
-export const SEARCH_ALL = "SEARCH_ALL"
+export const SEARCH_BY_QUERY = "SEARCH_BY_QUERY";
+export const SEARCH_BY_CATEGORY = "SEARCH_BY_CATEGORY";
+export const SEARCH_ALL = "SEARCH_ALL";
 
 //Cart Constants
 export const GET_CART_PRODUCTS = "GET_CART_PRODUCTS";
 export const ADD_PRODUCT_CART = "ADD_PRODUCT_CART";
-export const DELETE_PRODUCT_CART = "DELETE_PRODUCT_CART";
+export const DELETE_PRODUCTS_CART = "DELETE_PRODUCT_CART";
 export const ADD_AMOUNT = "ADD_AMOUNT";
 export const SUBTRACT_AMOUNT = "SUBTRACT_AMOUNT";
+
 
