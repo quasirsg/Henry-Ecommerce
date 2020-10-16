@@ -1,12 +1,13 @@
 const server = require('express').Router();
-const { Order, User, Product, Orderline } = require('../db.js');
+const { Order, User, Product, Linea_Order } = require('../db.js');
 
+//order por id
 server.get('/:id', (req, res) => {
 
     Order.findByPk(req.params.id)
         .then(order => {
             if (!order) {
-                return res.send({ errors: { messages: ['Orden no encontrada'], status: 404 } }).status(404);
+                return res.send({ message: 'Order not found' }).status(404);
             }
             res.send({ data: order });
         })
@@ -14,9 +15,6 @@ server.get('/:id', (req, res) => {
             return res.sendStatus(500);
         })
 });
-
-// GET /orders esta ruta obtiene todas las ordenes
-// GET /orders?status=tipo_status  Esta ruta puede recibir el query string status y deberá devolver sólo las ordenes con ese status."
 
 server.get('/', (req, res) => {
     if (!req.query.status) {
