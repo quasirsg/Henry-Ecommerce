@@ -38,7 +38,7 @@ sequelize.models = Object.fromEntries(capsEntries);
 
 // En sequelize.models están todos los modelos importados como propiedades
 // Para relacionarlos hacemos un destructuring
-const { Product, Category, Order, Linea_order,User } = sequelize.models;
+const { Product, Category, Order, Linea_order, User } = sequelize.models;
 
 //Hooks
  //User
@@ -90,6 +90,18 @@ Order.belongsToMany(Product, {
   through: Linea_order,
   foreignKey: "product_id",
 });
+
+/* ==== Tabla Order "pedidos"==== */
+/* 
+  user_id -> Relación User-Order
+  order_id -> Order
+  products -> ?
+  status -> Order
+ */
+
+Linea_order.belongsTo(User) //usuario-carrito-> agrega usario_id a tabla order(carrito)
+User.hasMany(Linea_order)
+
 
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');

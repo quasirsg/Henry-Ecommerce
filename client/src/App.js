@@ -14,6 +14,9 @@ import SearchPage from "./pages/SearchPage";
 import AdminMenu from "./components/admin";
 import HomePage from "./pages/HomePage";
 
+// Componente Orden-> probando
+import Orden from "./components/Orden/orden.jsx";
+
 function App() {
   return (
     //No modifique ni elimine las rutas existentes
@@ -25,6 +28,7 @@ function App() {
         <Route path="/search/q/" component={SearchPage} />
         <Route path="/search/category/" component={SearchPage} />
         <Route exact path="/products" component={HomePage} />
+        <Route exact path= "/orden" component={Orden}/> 
         <Route exact path="/product/:id">
           <ProductDetail />
         </Route>

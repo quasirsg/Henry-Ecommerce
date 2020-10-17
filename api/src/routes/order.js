@@ -2,15 +2,16 @@ const server = require("express").Router();
 const { Order } = require("../db.js");
 
 server.post("/", (req, res, next) => {
-  const { order_total, order_state, order_date } = req.body;
-
-  if (!order_total || !order_state || !order_date)
+  const { id , status } = req.body;
+console.log(req.body)
+  if ( !id, !status)
     return res.status(400).json({ message: "incomplete order" });
 
   Order.create({
-    order_total: order_total,
-    order_state: order_state,
-    order_date: order_date,
+    order_id: id,
+    order_status: status.values,
+    // producto? de linea order
+    //user_id viene de relacion
   })
     .then((order) => {
       return res.status(200).json(order);
