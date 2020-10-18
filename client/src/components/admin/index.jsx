@@ -21,6 +21,7 @@ import {
   CaretDown,
 } from "react-bootstrap-icons";
 import FormProduct from "../productForm";
+import FormUser from "../userForm";
 import FormCategory from "../categoryForm";
 import Catalogue from "../catalogo";
 import ProductCard from "../productCard/ProductCard";
@@ -35,6 +36,7 @@ const AdminMenu = () => {
   /*=======Redux ================ */
   const products = useSelector((state) => state.products.products);
   const allCategories = useSelector((state) => state.category.category);
+  const users = useSelector((state) => state.category.category);
   const dispatch = useDispatch();
 
   console.log(products);
@@ -70,6 +72,12 @@ const AdminMenu = () => {
                         Nueva Categoría
                       </NavLink>
                     </NavItem>
+                    <NavItem className="pb-2 border-bottom">
+                      <NavLink tag={Link} to="/admin/users">
+                        <FileEarmarkPlus size={17} className="mr-1" />
+                        Crear Cuenta
+                      </NavLink>
+                    </NavItem>
                     <p className="text-secondary m-0">
                       <Server size={17} className="mr-1" />
                       Inventario
@@ -98,6 +106,13 @@ const AdminMenu = () => {
                   action="post"
                   icon="success"
                   message="Se agregó producto:"
+                />
+              </Route>
+              <Route exact path="/admin/users">
+                <FormUser
+                  action="post"
+                  icon="success"
+                  message="Se agregó usuario:"
                 />
               </Route>
               <Route

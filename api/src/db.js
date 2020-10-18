@@ -3,6 +3,7 @@ const { Sequelize } = require("sequelize");
 const fs = require("fs");
 const path = require("path");
 const { DB_USER, DB_PASSWORD, DB_HOST } = process.env;
+const bcrypt = require('bcrypt');
 
 const sequelize = new Sequelize(
   `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/development`,
@@ -38,6 +39,30 @@ sequelize.models = Object.fromEntries(capsEntries);
 // En sequelize.models están todos los modelos importados como propiedades
 // Para relacionarlos hacemos un destructuring
 const { Product, Category, Order, Linea_order, User } = sequelize.models;
+
+//Hooks
+//User
+User.beforeCreate((user, options) => {
+
+  return bcrypt.hash(user.password, 10)
+    .then(hash => {
+      user.password = hash;
+    })
+    .catch(err => {
+      throw new Error();
+    });
+});
+
+User.beforeUpdate((user, options) => {
+
+  return bcrypt.hash(user.password, 10)
+    .then(hash => {
+      user.password = hash;
+    })
+    .catch(err => {
+      throw new Error();
+    });
+});
 
 // Aca vendrian las relaciones
 // Product.hasMany(Reviews);

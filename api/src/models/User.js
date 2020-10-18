@@ -18,6 +18,8 @@ module.exports = (sequelize) => {
       validate: {
         isEmail: true,
       },
+      noUpdate: true
+
     },
     address: {
       type: DataTypes.STRING,
@@ -36,8 +38,9 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    img: {
-      type: DataTypes.STRING,
+    image: {
+      type: DataTypes.TEXT,
+
     },
     location_id: {
       type: DataTypes.INTEGER,

@@ -21,32 +21,6 @@ server.get("/", (req, res) => {
         });
 });
 
-server.post("/", async (req, res) => {
-    const {
-        name,
-        email,
-        address,
-        role,
-        phoneNumber,
-        password,
-    } = req.body;
-    //falta encriptar la contraseña
-    User.create({
-        name,
-        email,
-        address,
-        role,
-        phoneNumber,
-        password: password
-    })
-        .then((user) => {
-            return res.send({ data: user }).status(201);
-        })
-        .catch((err) => {
-            return res.sendStatus(500);
-        });
-});
-
 server.get("/:id/orders", (req, res) => {
     const id = req.params.id;
 
@@ -58,46 +32,6 @@ server.get("/:id/orders", (req, res) => {
     })
         .then((user) => {
             return res.send({ data: user.orders }).status(200);
-        })
-        .catch((err) => {
-            return res.sendStatus(500);
-        });
-});
-
-server.put("/:id", (req, res) => {
-    const id = req.params.id;
-    const {
-        name,
-        email,
-        address,
-        role,
-        phoneNumber,
-        password
-    } = req.body;
-
-    User.findByPk(id)
-        .then((user) => {
-            if (!user) {
-                return res.sendStatus(404);
-            }
-            let emailIsChanged = user.email !== email ? true : false;
-            if (emailIsChanged) {
-                user.email = email;
-            }
-            user.name = name;
-            if (password) {
-                user.password = password;
-            }
-            user.role = role;
-            user.address = address;
-            user.phoneNumber = phoneNumber;
-            user.save()
-                .then(() => {
-                    return res.sendStatus(201);
-                })
-                .catch((err) => {
-                    return res.sendStatus(500);
-                });
         })
         .catch((err) => {
             return res.sendStatus(500);
@@ -160,6 +94,56 @@ server.get("/orders", (req, res) => {
         .catch((err) => {
             return res.sendStatus(500);
         });
+});
+
+server.post("/", (req, res, next) => {
+    const { name, email, password, image, location_id, rol } = req.body;
+
+    if (!name || !email || !password || !image || !location_id || !rol)
+        return res.status(400).json({ message: "A parameter is missing" });
+
+    User.create({
+        name,
+        email,
+        password,
+        image,
+        location_id,
+        rol,
+    })
+        .then((user) => {
+            return res.status(200).json(user);
+        })
+        .catch(next);
+});
+
+server.put("/:id", (req, res, next) => {
+    let { id } = req.params;
+    let update = req.body;
+
+    User.findOne({ where: { id } })
+        .then((user) => {
+            if (!user) return res.status(404).json({ message: "User doesnt exist" });
+
+            user.update(update).then((userUpdate) => {
+                return res.status(200).json(userUpdate);
+            });
+        })
+        .catch(next);
+});
+
+server.delete("/:id", (req, res, next) => {
+    let { id } = req.params;
+
+    User.findOne({ where: { id } })
+        .then((user) => {
+            if (!user)
+                return res.status(404).json({ message: "User doesnt exist" });
+
+            user.destroy(user).then(() => {
+                return res.status(200).json({ message: "User deleted" });
+            });
+        })
+        .catch(next);
 });
 
 module.exports = server;
