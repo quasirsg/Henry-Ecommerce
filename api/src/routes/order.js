@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 const server = require('express').Router();
 const { Order, User, Product, Linea_Order } = require('../db.js');
 
