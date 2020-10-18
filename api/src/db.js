@@ -67,12 +67,10 @@ User.beforeUpdate((user, options) => {
 // Aca vendrian las relaciones
 // Product.hasMany(Reviews);
 Product.belongsToMany(Category, {
-  as: "categories",
   through: "product_category",
   foreignKey: "product_id",
 });
 Category.belongsToMany(Product, {
-  as: "products",
   through: "product_category",
   foreignKey: "category_id",
 });

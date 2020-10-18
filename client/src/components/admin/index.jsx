@@ -8,13 +8,12 @@ import {
   Navbar,
   NavItem,
   NavLink,
-  NavbarBrand,
   Nav,
   NavbarToggler,
-  Collapse,
+  Collapse, Jumbotron
 } from "reactstrap";
 import {
-  GearFill,
+  PersonBadge,
   FileEarmarkPlus,
   Server,
   Files,
@@ -27,23 +26,21 @@ import Catalogue from "../catalogo";
 import ProductCard from "../productCard/ProductCard";
 import InventoryTable from "./tools/inventoryTable";
 import InventoryTableCategory from "./tools/inventoryTableCategory";
-import allActions from "../../redux/actions/allActions";
+import { getCategory } from "../../redux/actions/categoryActions";
+import { getProducts } from "../../redux/actions/productActions";
 
 const AdminMenu = () => {
   const [collapsed, setCollapsed] = useState(true);
   const toggleNavbar = () => setCollapsed(!collapsed);
-
-  /*=======Redux ================ */
-  const products = useSelector((state) => state.products.products);
-  const allCategories = useSelector((state) => state.category.category);
-  const users = useSelector((state) => state.category.category);
   const dispatch = useDispatch();
+  const products = useSelector((state) => state.products.allProducts);
+  const allCategories = useSelector((state) => state.category.category);
 
-  console.log(products);
+  console.log('Cambio el estado de redux')
 
   useEffect(() => {
-    dispatch(allActions.getProducts());
-    dispatch(allActions.getCategory());
+    dispatch(getProducts());
+    dispatch(getCategory());
   }, []);
 
   return (
@@ -100,20 +97,19 @@ const AdminMenu = () => {
               </Navbar>
             </Col>
             <Col md={9} lg={10}>
-              <Route exact path="/admin/product">
-                <FormProduct
-                  allCategories={allCategories}
-                  action="post"
-                  icon="success"
-                  message="Se agregó producto:"
-                />
+
+              <Route exact path="/admin">
+                <div className='col-10 mx-auto'>
+                  <Jumbotron>
+                    <h2 className="display-3"><PersonBadge /> ¡Bienvenido Admin!</h2>
+                    <hr className="my-2" />
+                    <p>Este es el panel del usuario administrador donde podrá controlar todo el inventario.</p>
+                  </Jumbotron>
+                </div>
               </Route>
-              <Route exact path="/admin/users">
-                <FormUser
-                  action="post"
-                  icon="success"
-                  message="Se agregó usuario:"
-                />
+
+              <Route exact path="/admin/product">
+                <FormProduct action="post" />
               </Route>
               <Route
                 exact
@@ -121,22 +117,12 @@ const AdminMenu = () => {
                 render={({ match, history }) => (
                   <FormProduct
                     history={history}
+                    id={match.params.id}
                     action="put"
-                    icon="info"
-                    message="Se actualizo producto:"
-                    {...products.find((item) => {
-                      item.categories =
-                        typeof item.categories[0] === "number"
-                          ? item.categories
-                          : item.categories.map(
-                              (cat) => cat.product_category.category_id
-                            );
-                      return item.id === parseInt(match.params.id);
-                    })}
-                    allCategories={allCategories}
                   />
                 )}
               />
+
               <Route exact path="/admin/category">
                 <FormCategory
                   action="post"
@@ -144,12 +130,15 @@ const AdminMenu = () => {
                   message="Se agregó categoría:"
                 />
               </Route>
+
               <Route exact path="/admin/products">
                 <InventoryTable />
               </Route>
+
               <Route exact path="/admin/categories">
                 <InventoryTableCategory />
               </Route>
+
               <Route
                 exact
                 path="/admin/category/:id"
@@ -165,6 +154,7 @@ const AdminMenu = () => {
                   />
                 )}
               />
+
             </Col>
           </Router>
         </Row>

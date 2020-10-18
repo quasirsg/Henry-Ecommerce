@@ -2,7 +2,9 @@ const server = require("express").Router();
 const { Category } = require("../db.js");
 
 server.get('/', (req, res, next) => {
-	Category.findAll()
+	Category.findAll({
+		attributes: ['id', 'name']
+	})
 		.then((category) => {
 			if (category === null)
 				return res.status(404).json({ message: 'No hay categorias' });
