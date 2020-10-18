@@ -5,11 +5,10 @@ server.get("/", (req, res, next) => {
 	Product.findAll({
 		attributes: ['id', 'name', 'stock', 'description', 'price', 'image'],
 		include: {
-			attributes: ['name'],
+			attributes: ['id', 'name'],
 			model: Category,
-			as: 'categories',
 			through: {
-				attributes: ['category_id']
+				attributes: []
 			}
 		}
 	})
@@ -22,9 +21,18 @@ server.get("/", (req, res, next) => {
 server.get("/:id", (req, res, next) => {
 	var { id } = req.params;
 
-	Product.findOne({ where: { id } })
+	Product.findOne({
+		where: { id },
+		attributes: ['id', 'name', 'stock', 'description', 'price', 'image'],
+		include: {
+			attributes: ['id', 'name'],
+			model: Category,
+			through: {
+				attributes: []
+			}
+		}
+	})
 		.then((products) => {
-
 			if (!products) return res.status(404).json({ message: 'El producto no existe' });
 
 			return res.status(200).json({ products });
@@ -32,37 +40,51 @@ server.get("/:id", (req, res, next) => {
 		.catch(next);
 });
 
-server.post('/', (req, res, next) => {
-	const { name, stock, description, price, image } = req.body;
-
+server.post('/', async (req, res, next) => {
+	const { name, stock, description, price, image, category } = req.body;
+	//Validar campos
 	if (!name || !description || !price || !image)
 		return res.status(400).json({ message: 'A parameter is missing' });
 
-	Product.create({
-		name,
-		stock,
-		description,
-		price,
-		image
-	})
-		.then(product => {
-			return res.status(200).json(product)
-		})
-		.catch(next)
+	try {
+		//Agregar el producto
+		const product = await Product.create({ name, stock, description, price, image });
+		//Asignar categorias al producto
+		await product.setCategories(category);
+		//Devolver el producto con sus categorias
+		const newProduct = await Product.findOne({
+			where: { id: product.id },
+			attributes: ['id', 'name', 'stock', 'description', 'price', 'image'],
+			include: {
+				attributes: ['id', 'name'],
+				model: Category,
+				through: { attributes: [] }
+			}
+		});
+		return res.status(201).json(newProduct);
+	} catch (error) {
+		next(error);
+	}
+
 });
 
 server.put('/:id', (req, res, next) => {
 	let { id } = req.params;
-	let update = req.body;
+	let dataProduct = req.body;
 
-	Product.findOne({ where: { id } })
-		.then(product => {
-
-			if (!product) return res.status(404).json({ message: 'Product doesnt exist' });
-
-			product.update(update)
-				.then(productUpdate => {
-					return res.status(200).json(productUpdate)
+	Product.update(dataProduct, { where: { id } })
+		.then(response => {
+			Product.findOne({
+				where: { id },
+				attributes: ['id', 'name', 'stock', 'description', 'price', 'image'],
+				include: {
+					attributes: ['id', 'name'],
+					model: Category,
+					through: { attributes: [] }
+				}
+			})
+				.then(product => {
+					return res.status(200).json(product)
 				})
 		})
 		.catch(next)
@@ -91,9 +113,8 @@ server.get('/category/:nameCategory', (req, res, next) => {
 		include: {
 			attributes: ['name'],
 			model: Category,
-			as: 'categories',
 			through: {
-				attributes: ['category_id']
+				attributes: []
 			},
 			where: {
 				name: nameCategory
@@ -107,7 +128,6 @@ server.get('/category/:nameCategory', (req, res, next) => {
 // ================== Agregar y quitar categorias de un producto================
 
 server.post('/:idProducto/category/:idCategoria', (req, res, next) => {
-
 	const { idProducto, idCategoria } = req.params;
 
 	product_category.findOrCreate({
@@ -123,7 +143,6 @@ server.post('/:idProducto/category/:idCategoria', (req, res, next) => {
 });
 
 server.delete('/:idProducto/category/:idCategoria', (req, res, next) => {
-
 	const { idProducto, idCategoria } = req.params;
 
 	product_category.destroy({

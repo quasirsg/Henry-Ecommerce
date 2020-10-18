@@ -1,43 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Button, Container, Table } from "reactstrap";
 import { GearFill, Trash, Tools } from "react-bootstrap-icons";
 import { Link } from "react-router-dom";
-import Swal from "sweetalert2";
-import apiCall from "../../../redux/api";
 import { useSelector, useDispatch } from "react-redux";
-import allActions from "../../../redux/actions/allActions";
+import { deleteProduct } from '../../../redux/actions/productActions';
 
 const InventoryTable = () => {
-  /* Redux */
-  const data = useSelector((state) => state.products.products);
+  const data = useSelector((state) => state.products.allProducts);
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(allActions.getProducts());
-  }, []);
 
   const handleClick = (e, id, name) => {
     e.preventDefault();
-    Swal.fire({
-      html: `<h5>¿Desea eliminar ${name}?<h5/>`,
-      width: "30%",
-      text: "No podrás revertir esta cambio!",
-      icon: "warning",
-      showCancelButton: true,
-      customClass: {
-        icon: "w-25",
-        confirmButton: "btn btn-sm btn-primary",
-        cancelButton: "btn btn-sm btn-default border",
-      },
-      cancelButtonText: "Cancelar",
-      confirmButtonText: "Si, eliminar!",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        apiCall(`/products/${id}`, null, null, "delete").then((response) => {
-          Swal.fire("Eliminado!", "El registro fue eliminado.", "success");
-        });
-      }
-    });
+    dispatch(deleteProduct(id, name));
   };
 
   return (
@@ -45,11 +19,13 @@ const InventoryTable = () => {
       <Table hover responsive className="table-sm">
         <thead>
           <tr>
-            {data.length
-              ? Object.keys(data[0]).map((item, index) => (
-                  <th key={index}>{item}</th>
-                ))
-              : ""}
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Stock</th>
+            <th>Descripción</th>
+            <th>Precio</th>
+            <th>Imagen</th>
+            <th>Categorias</th>
             <th>
               <GearFill size={17} className="mr-2" />
               Acciones
@@ -61,9 +37,9 @@ const InventoryTable = () => {
             <tr className="my-auto" key={index}>
               <th>{item.id}</th>
               <td>{item.name.slice(0, 15) + ".."}</td>
-              <td>{item.stock}</td>
+              <td>{item.stock} uds.</td>
               <td>{item.description.slice(0, 15) + ".."}</td>
-              <td>{item.price}</td>
+              <td>$ {item.price}</td>
               <td>
                 <img
                   src={item.image}
