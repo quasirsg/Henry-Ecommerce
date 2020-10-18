@@ -3,8 +3,10 @@ import React from 'react'
 import { Container, Col, Row } from 'reactstrap'
 import ShoppingCart from '../components/shoppingCart'
 import ButtonBlock from '../components/custom/ButtonBlock'
-
+import { useSelector } from 'react-redux'
 const Cart = () => {
+
+    const productsCarts = useSelector(state => console.log(state));
     return (
         <Container
             fluid={true}
