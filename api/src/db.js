@@ -3,7 +3,7 @@ const { Sequelize } = require("sequelize");
 const fs = require("fs");
 const path = require("path");
 const { DB_USER, DB_PASSWORD, DB_HOST } = process.env;
-const bcrypt = require('bcrypt');
+const bcrypt = require("bcrypt");
 
 const sequelize = new Sequelize(
   `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/development`,
@@ -41,27 +41,27 @@ sequelize.models = Object.fromEntries(capsEntries);
 const { Product, Category, Order, Linea_order, User } = sequelize.models;
 
 //Hooks
- //User
+//User
 User.beforeCreate((user, options) => {
-
-  return bcrypt.hash(user.password, 10)
-      .then(hash => {
-          user.password = hash;
-      })
-      .catch(err => { 
-          throw new Error(); 
-      });
+  return bcrypt
+    .hash(user.password, 10)
+    .then((hash) => {
+      user.password = hash;
+    })
+    .catch((err) => {
+      throw new Error();
+    });
 });
 
 User.beforeUpdate((user, options) => {
-
-  return bcrypt.hash(user.password, 10)
-      .then(hash => {
-          user.password = hash;
-      })
-      .catch(err => { 
-          throw new Error(); 
-      });
+  return bcrypt
+    .hash(user.password, 10)
+    .then((hash) => {
+      user.password = hash;
+    })
+    .catch((err) => {
+      throw new Error();
+    });
 });
 
 // Aca vendrian las relaciones
@@ -99,9 +99,8 @@ Order.belongsToMany(Product, {
   status -> Order
  */
 
-Linea_order.belongsTo(User) //usuario-carrito-> agrega usario_id a tabla order(carrito)
-User.hasMany(Linea_order)
-
+Linea_order.hasOne(User); //usuario-linea_order: agraga usuario_id a linea order
+User.hasMany(Linea_order);
 
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');

@@ -10,10 +10,16 @@ module.exports = (sequelize) => {
     },
     status: {
       type: DataTypes.ENUM({
-        values:[ "shopping_cart", "created", "processing", "canceled", "completed"]
+        values: [
+          "shopping_cart",
+          "created",
+          "processing",
+          "canceled",
+          "completed",
+        ],
       }),
       allowNull: false,
-      defaultValue: "shopping_cart",     
+      defaultValue: "shopping_cart",
     },
   });
 };

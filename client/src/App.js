@@ -7,7 +7,7 @@ import Navbar from "./components/navbar";
 import ProductDetail from "./components/productDetail";
 import FormCategory from "./components/categoryForm";
 import ShoppingCart from "./components/shoppingCart";
-import FormUser from "./components/userForm"
+import FormUser from "./components/userForm";
 
 //Pages
 import SearchPage from "./pages/SearchPage";
@@ -28,7 +28,7 @@ function App() {
         <Route path="/search/q/" component={SearchPage} />
         <Route path="/search/category/" component={SearchPage} />
         <Route exact path="/products" component={HomePage} />
-        <Route exact path= "/orden" component={Orden}/> 
+        <Route exact path="/order" component={Orden} />
         <Route exact path="/product/:id">
           <ProductDetail />
         </Route>

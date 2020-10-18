@@ -52,7 +52,7 @@ const Product = (props) => {
         id: product.id,
         name: product.name,
         image: product.image,
-        quantity: product.quantity,
+        quantity: 1,
       })
     );
   };
