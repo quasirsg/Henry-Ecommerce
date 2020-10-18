@@ -1,10 +1,8 @@
 import React from "react";
 import { Col, Row } from "reactstrap";
 import ItemCart from "./itemCart";
-import { useSelector } from "react-redux";
 
-const ShoppingCart = ({ items = [] }) => {
-  const store = useSelector((state) => console.log(state));
+const ShoppingCart = ({ items }) => {
 
   return (
     <Col lg="12">

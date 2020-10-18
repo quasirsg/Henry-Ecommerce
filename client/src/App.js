@@ -1,18 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Switch, Route } from "react-router-dom";
-import axios from "axios";
 
 //Components
 import Navbar from "./components/navbar";
 import ProductDetail from "./components/productDetail";
 import FormCategory from "./components/categoryForm";
-import ShoppingCart from "./components/shoppingCart";
-import FormUser from "./components/userForm"
 
 //Pages
 import SearchPage from "./pages/SearchPage";
 import AdminMenu from "./components/admin";
 import HomePage from "./pages/HomePage";
+import CartPage from "./pages/CartPage";
 
 function App() {
   return (
@@ -28,7 +26,7 @@ function App() {
         <Route exact path="/product/:id">
           <ProductDetail />
         </Route>
-        <Route exact path="/cart" component={ShoppingCart} />
+        <Route exact path="/cart" component={CartPage} />
         <Route exact path="/admin">
           <AdminMenu />
         </Route>
