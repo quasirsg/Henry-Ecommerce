@@ -3,7 +3,7 @@ const { Sequelize } = require("sequelize");
 const fs = require("fs");
 const path = require("path");
 const { DB_USER, DB_PASSWORD, DB_HOST } = process.env;
-const bcrypt = require('bcrypt');
+const bcrypt = require("bcrypt");
 
 const sequelize = new Sequelize(
   `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/development`,
@@ -87,6 +87,17 @@ Order.belongsToMany(Product, { through: { model: Linea_order }, foreignKey: "ord
 User.hasMany(Order, { foreignKey: 'userId' });
 User.hasMany(Linea_order, { foreignKey: 'userId' });
 Linea_order.belongsTo(Order, { foreignKey: 'orderId' });
+
+/* ==== Tabla Order "pedidos"==== */
+/* 
+  user_id -> Relación User-Order
+  order_id -> Order
+  products -> ?
+  status -> Order
+ */
+
+Linea_order.hasOne(User); //usuario-linea_order: agraga usuario_id a linea order
+User.hasMany(Linea_order);
 
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');

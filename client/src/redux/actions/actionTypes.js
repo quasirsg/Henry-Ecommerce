@@ -29,4 +29,11 @@ export const DELETE_PRODUCTS_CART = "DELETE_PRODUCT_CART";
 export const ADD_AMOUNT = "ADD_AMOUNT";
 export const SUBTRACT_AMOUNT = "SUBTRACT_AMOUNT";
 
-
+//order constants
+export const GET_ORDER = 'GET_ORDER';
+export const POST_ORDER = 'POST_ORDER';
+//export const PUT_ORDER_CART = 'PUT_ORDER_CART';
+export const DELETE_ORDER= 'DELETE_ORDER';
+export const DELETE_PRODUCT_ORDER = "DELETE_PRODUCT_ORDER";
+export const ADD_AMOUNT_ORDER = "ADD_AMOUNT_ORDER";
+export const SUBTRACT_AMOUNT_ORDER = "SUBTRACT_AMOUNT_ORDER";
