@@ -7,7 +7,7 @@ import Navbar from "./components/navbar";
 import ProductDetail from "./components/productDetail";
 import FormCategory from "./components/categoryForm";
 import ShoppingCart from "./components/shoppingCart";
-import FormUser from "./components/userForm"
+import FormUser from "./components/userForm";
 
 //Pages
 import SearchPage from "./pages/SearchPage";
@@ -55,6 +55,7 @@ function App() {
             />
           )}
         />
+
       </Switch>
     </div>
   );

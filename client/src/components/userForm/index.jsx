@@ -97,15 +97,16 @@ const FormUser = ({
         })}
         onSubmit={async (values, { setSubmitting, resetForm }) => {
           //Validar url
-          const url = `/products/${id ? id : ""}`;
+          const url = `/users/${id ? id : ""}`;
           // Convertir imagen en base64
           const imgBase64 = await convertBase64(values.image);
           //Request al backend
           let user = { ...values, image: imgBase64 };
           const data = action === "delete" ? null : user;
 
+          // console.log(user);
           // apiCall(url, data, null, action);
-          dispatch(allActions.editUser(id, action, values))
+          dispatch(allActions.editUser(id, action, user))
             .then((response) => {
               //Una vez agregado el producto , le asigna una categoria
               const id = response.data.id;
@@ -184,7 +185,8 @@ const FormUser = ({
                   <CustomInput
                     label="Imagen"
                     name="image"
-                    type="text"
+                    type="file"
+                    setFieldValue={setFieldValue}
                   />
                 </Col>
               </Row>

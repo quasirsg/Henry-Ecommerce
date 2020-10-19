@@ -15,7 +15,6 @@ function userReducers(state = initialState, action) {
         users: state.concat(action.userDetail),
       };
     case PUT_USER:
-      console.log(state);
       return {
         ...state,
         users: state.users.map((item) => {

@@ -108,6 +108,8 @@ const AdminMenu = () => {
                   message="Se agregó producto:"
                 />
               </Route>
+
+
               <Route exact path="/admin/users">
                 <FormUser
                   action="post"
@@ -115,6 +117,7 @@ const AdminMenu = () => {
                   message="Se agregó usuario:"
                 />
               </Route>
+              
               <Route
                 exact
                 path="/admin/product/:id"
