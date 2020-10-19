@@ -132,6 +132,14 @@ const AdminMenu = () => {
                 />
               </Route>
 
+              <Route exact path="/admin/products">
+                <InventoryTable />
+              </Route>
+
+              <Route exact path="/admin/categories">
+                <InventoryTableCategory />
+              </Route>
+              
               <Route
                 exact
                 path="/admin/category/:id"
