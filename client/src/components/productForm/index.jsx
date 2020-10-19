@@ -104,7 +104,6 @@ const FormProduct = ({ action, history, id = 0 }) => {
                     </Button>
                   </Row>
                 ) : ("")}
-
                 <Row className="d-block">
                   <ClipboardPlus className="mb-1 mr-2" size={40} />
                   <h2>Productos</h2>
@@ -153,6 +152,7 @@ const FormProduct = ({ action, history, id = 0 }) => {
               >
                 {isSubmitting ? "Cargando..." : action === "put" ?
                   "Actualizar producto" : "Agregar producto"}
+
               </Button>
             </Form>
           );
