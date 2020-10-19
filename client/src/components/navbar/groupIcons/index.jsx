@@ -18,11 +18,11 @@ const groupIcons = () => {
 
       <Guest/>
 
-      <CustomInput
+      {/* <CustomInput
         className="pl-0 pt-1 text-dark"
         type="switch"
         id="exampleCustomCheckbox"
-      />
+      /> */}
     </Col>
   );
 };
