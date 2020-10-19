@@ -3,7 +3,19 @@ import * as actionTypes from "./actionTypes";
 
 const url = `http://localhost:3001`;
 
-
+export const getUsers = () => (dispatch) => {
+  axios
+    .get(url + "/users/")
+    .then((res) => {
+      dispatch({
+        type: actionTypes.GET_USERS,
+        users: res.data.users,
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
 
 export const editUser = (id, action, values) => (dispatch) => {
   if (action === "post") {
@@ -15,7 +27,11 @@ export const editUser = (id, action, values) => (dispatch) => {
           userDetail: res.data,
         });
       })
-      .catch((err) => console.log(err));
+      .catch((err) =>{
+        dispatch({
+          error: err
+        });
+      });
   } else if (action === "put") {
     return axios
       .put(url + `/users/${id}`, values)

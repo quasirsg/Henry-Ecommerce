@@ -1,7 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { PersonSquare, Cart3, Collection } from "react-bootstrap-icons";
+import {Cart3, Collection } from "react-bootstrap-icons";
 import { Col, CustomInput } from "reactstrap";
+
+//Components
+import Guest from "../../guestOptions";
 
 const groupIcons = () => {
   return (
@@ -12,9 +15,9 @@ const groupIcons = () => {
       <Link to={"/cart"} className="text-dark">
         <Cart3 size={20} />
       </Link>
-      <Link to={"/admin"} className="text-dark ">
-        <PersonSquare size={20} />
-      </Link>
+
+      <Guest/>
+
       <CustomInput
         className="pl-0 pt-1 text-dark"
         type="switch"

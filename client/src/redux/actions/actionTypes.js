@@ -16,6 +16,7 @@ export const DELETE_PRODUCT_CATEGORY = "DELETE_PRODUCT_CATEGORY";
 
 
 //Users
+export const GET_USERS = "GET_USERS";
 export const PUT_USER = "PUT_USER";
 export const DELETE_USER = "DELETE_USER";
 export const POST_USER= "POST_USER";

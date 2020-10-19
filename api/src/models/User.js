@@ -12,8 +12,7 @@ module.exports = (sequelize) => {
       unique: true,
       validate: {
         isEmail: true,
-      },
-      noUpdate: true
+      }
 
     },
     password: {
@@ -30,8 +29,7 @@ module.exports = (sequelize) => {
     
     rol: {
       type: DataTypes.BOOLEAN,
-      allowNull: false,
-      noUpdate:true
+      allowNull: false
     },
 
   });

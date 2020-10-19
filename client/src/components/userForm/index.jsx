@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect,useState } from "react";
 import "./userForm.css";
 import { ClipboardPlus, ArrowLeftCircle } from "react-bootstrap-icons";
 import { Button, Row, Col } from "reactstrap";
@@ -37,13 +37,14 @@ const FormUser = ({
   image = "",
   location_id = 1,
   rol = true,
+  passwordConfirmation = "",
   action,
   icon,
   message,
   history,
 }) => {
   const dispatch = useDispatch();
-
+  
   const convertBase64 = (file) => {
     if (typeof file === "string") return file;
     return new Promise((resolve, reject) => {
@@ -75,6 +76,7 @@ const FormUser = ({
           image,
           location_id,
           rol,
+          passwordConfirmation,
         }}
         validationSchema={Yup.object({
           name: Yup.string()
@@ -90,14 +92,17 @@ const FormUser = ({
               /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
               "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character"
             ),
-          img: Yup.string(),
+          passwordConfirmation: Yup.string().oneOf(
+            [Yup.ref("password"), null],
+            "La contraseña no coincide",
+          )
+          .required("Password confirm is required"),
+          image: Yup.string().required("Debes cargar una imagen"),
           location_id: Yup.number()
             .min(1, "Debe ser mayor a 1")
             .required("Debes seleccionar una localidad"),
         })}
         onSubmit={async (values, { setSubmitting, resetForm }) => {
-          //Validar url
-          const url = `/users/${id ? id : ""}`;
           // Convertir imagen en base64
           const imgBase64 = await convertBase64(values.image);
           //Request al backend
@@ -107,18 +112,17 @@ const FormUser = ({
           // console.log(user);
           // apiCall(url, data, null, action);
           dispatch(allActions.editUser(id, action, user))
-            .then((response) => {
-              //Una vez agregado el producto , le asigna una categoria
-              const id = response.data.id;
-
+            .then((res) => {
+              // console.log(res);
               resetForm();
               setSubmitting(false);
               Toast.fire({
-                icon,
-                title: `${message} ${values.name}`,
+                icon: "success",
+                title: `hola ${values.name}`,
               });
             })
             .catch((error) => {
+              console.log(error);
               setSubmitting(false);
               Toast.fire({
                 icon: "error",
@@ -135,7 +139,7 @@ const FormUser = ({
                   <Row>
                     <Button
                       className="btn btn-light text-secondary btn-sm float-left"
-                      onClick={() => history.push("/admin/users")}
+                      onClick={() => history.push("/user/register")}
                     >
                       <ArrowLeftCircle size={20} />
                     </Button>
@@ -171,16 +175,24 @@ const FormUser = ({
               </Row>
 
               <Row>
-                <Col>
-                  <Col lg="6" xs="6">
-                    <CustomInput
-                      label="Password"
-                      name="password"
-                      type="password"
-                    />
-                  </Col>
+                <Col lg="6" xs="6">
+                  <CustomInput
+                    label="Password"
+                    name="password"
+                    type="password"
+                  />
                 </Col>
 
+                <Col lg="6" xs="6">
+                  <CustomInput
+                    label="Confirm Password"
+                    name="passwordConfirmation"
+                    type="password"
+                  />
+                </Col>
+              </Row>
+
+              <Row>
                 <Col>
                   <CustomInput
                     label="Imagen"

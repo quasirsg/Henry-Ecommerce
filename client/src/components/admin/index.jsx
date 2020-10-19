@@ -72,12 +72,6 @@ const AdminMenu = () => {
                         Nueva Categoría
                       </NavLink>
                     </NavItem>
-                    <NavItem className="pb-2 border-bottom">
-                      <NavLink tag={Link} to="/admin/users">
-                        <FileEarmarkPlus size={17} className="mr-1" />
-                        Crear Cuenta
-                      </NavLink>
-                    </NavItem>
                     <p className="text-secondary m-0">
                       <Server size={17} className="mr-1" />
                       Inventario
@@ -106,15 +100,6 @@ const AdminMenu = () => {
                   action="post"
                   icon="success"
                   message="Se agregó producto:"
-                />
-              </Route>
-
-
-              <Route exact path="/admin/users">
-                <FormUser
-                  action="post"
-                  icon="success"
-                  message="Se agregó usuario:"
                 />
               </Route>
               

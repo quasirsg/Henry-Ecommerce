@@ -3,7 +3,7 @@ const { User } = require("../db.js");
 
 server.get("/", (req, res, next) => {
   User.findAll({
-    attributes: ["id", "name", "email", "img", "rol"]
+    attributes: ["id", "name", "email", "rol"]
     // include: {
     //   attributes: ["name"],
     //   model: Category,
@@ -36,7 +36,9 @@ server.post("/", (req, res, next) => {
     .then((user) => {
       return res.status(200).json(user);
     })
-    .catch(next);
+    .catch((error)=>{
+    return res.status(500).send(error);
+    });
 });
 
 server.put("/:id", (req, res, next) => {
