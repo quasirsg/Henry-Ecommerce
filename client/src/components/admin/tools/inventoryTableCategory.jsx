@@ -40,6 +40,8 @@ const InventoryTableCategory = () => {
     });
   };
 
+  console.log(data);
+
   return (
     <Container>
       <Table hover responsive className="table-sm">

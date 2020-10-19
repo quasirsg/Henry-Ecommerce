@@ -9,7 +9,7 @@ const HomePage = () => {
 
     const dispatch = useDispatch();
     const categorias = useSelector(state => state.category.category);
-    const productos = useSelector(state => state.products.products);
+    const productos = useSelector(state => state.products.allProducts);
 
     useEffect(() => {
         dispatch(getCategory());

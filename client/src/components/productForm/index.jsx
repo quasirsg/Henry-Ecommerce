@@ -1,52 +1,38 @@
 import React, { useState } from "react";
+import { useSelector } from 'react-redux';
 import "./product.css";
 import { ClipboardPlus, ArrowLeftCircle } from "react-bootstrap-icons";
-import { Button, Row, Col } from "reactstrap";
-import { Formik, Form, Field } from "formik";
+import { Button, Row, Col, Spinner } from "reactstrap";
+import { Formik, Form } from "formik";
 import * as Yup from "yup";
-import Swal from "sweetalert2";
 import CustomInput from "../custom/input";
-import apiCall from "../../redux/api";
 import { useDispatch } from "react-redux";
+import { addNewProduct, updateProduct } from "../../redux/actions/productActions";
 
-import {
-  ButtonDropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
-} from "reactstrap";
-import allActions from "../../redux/actions/allActions";
+const useSelectorProduct = (id) => {
+  return useSelector(state => {
+    const products = state.products.allProducts;
+    if (!id) return {};
+    return products.find((item) => item.id === parseInt(id));
+  });
+}
 
-const Toast = Swal.mixin({
-  toast: true,
-  position: "top-end",
-  showConfirmButton: false,
-  timer: 3000,
-  timerProgressBar: true,
-  didOpen: (toast) => {
-    toast.addEventListener("mouseenter", Swal.stopTimer);
-    toast.addEventListener("mouseleave", Swal.resumeTimer);
-  },
-});
-
-const FormProduct = ({
-  id,
-  name = "",
-  stock = 0,
-  description = "",
-  price = 0,
-  allCategories = [],
-  categories = [],
-  image = "",
-  action,
-  icon,
-  message,
-  history,
-}) => {
-  const categoriesSelect = allCategories.map((item) => item.id);
-  const categoryProduct = categories.length ? categories : [];
-
+const FormProduct = ({ action, history, id = 0 }) => {
   const dispatch = useDispatch();
+  const allCategories = useSelector(state => state.category.category);
+  const product = useSelectorProduct(id);
+  // Filtrar categorias con ID
+  const categoriesSelect = allCategories.map(item => item.id);
+  const categoryProduct = action === 'put' ? product.categories.map(item => item.id) : [];
+  // Form inputs values
+  let initialValuesForm = {
+    name: action === 'put' ? product.name : '',
+    stock: action === 'put' ? product.stock : '',
+    description: action === 'put' ? product.description : '',
+    price: action === 'put' ? product.price : '',
+    category: action === 'put' ? categoryProduct : [],
+    image: action === 'put' ? product.name : '',
+  };
 
   const convertBase64 = (file) => {
     if (typeof file === "string") return file;
@@ -65,21 +51,10 @@ const FormProduct = ({
   };
 
   return (
-    <Col
-      lg="6"
-      sm="10"
-      xs="10"
-      className="card shadow pl-3 pr-3 pb-4 pt-2 mb-3 mx-auto"
-    >
+    <Col lg="6" sm="10" xs="10" className="card shadow pl-3 pr-3 pb-4 pt-2 mb-3 mx-auto">
       <Formik
-        initialValues={{
-          name,
-          stock,
-          description,
-          price,
-          category: categories,
-          image,
-        }}
+        enableReinitialize={true}
+        initialValues={initialValuesForm}
         validationSchema={Yup.object({
           name: Yup.string()
             .min(4, "Debe tener al menos 4 caracteres")
@@ -102,62 +77,17 @@ const FormProduct = ({
           image: Yup.string().required("Debes cargar una imagen"),
         })}
         onSubmit={async (values, { setSubmitting, resetForm }) => {
-          //Validar url
-          const url = `/products/${id ? id : ""}`;
           // Convertir imagen en base64
           const imgBase64 = await convertBase64(values.image);
-          //Request al backend
+          //Agregar img64 al obj producto
           let product = { ...values, image: imgBase64 };
-          const data = action === "delete" ? null : product;
-
-          console.log(product);
-          // apiCall(url, data, null, action);
-          dispatch(allActions.editProduct(id, action, product))
-            .then((response) => {
-              //Una vez agregado el producto , le asigna una categoria
-              const id = response.data.id;
-
-              console.log("Categorias producto: ", categories);
-              console.log("Nueva categoria: ", values.category);
-
-              //verificar si las categorias viejas fueron cambiadas, eliminarlas
-              categories.forEach((item) => {
-                if (!values.category.some((cat) => parseInt(cat) === item)) {
-                  let idC = item.id;
-                  // dispatch(allActions.deleteProdCategory());
-
-                  apiCall(
-                    `/products/${id}/category/${item}`,
-                    null,
-                    null,
-                    "delete"
-                  ).then((response) => console.log(response.data));
-                }
-              });
-
-              values.category.forEach((item) => {
-                apiCall(
-                  `/products/${id}/category/${item}`,
-                  null,
-                  null,
-                  "post"
-                ).then((response) => console.log(response.data));
-              });
-
-              resetForm();
-              setSubmitting(false);
-              Toast.fire({
-                icon,
-                title: `${message} ${values.name}`,
-              });
-            })
-            .catch((error) => {
-              setSubmitting(false);
-              Toast.fire({
-                icon: "error",
-                title: "Error: vuelve a intentarlo",
-              });
-            });
+          // Verificar tipo de accion enviada
+          action === 'post' && dispatch(addNewProduct(product));
+          action === 'put' && dispatch(updateProduct(id, product, categoryProduct));
+          // Resetear o no , el formulari dependiendo la accion
+          if (action === 'put') initialValuesForm = product;
+          action === 'post' && resetForm();
+          setSubmitting(false);
         }}
       >
         {({ isSubmitting, setFieldValue }) => {
@@ -173,10 +103,7 @@ const FormProduct = ({
                       <ArrowLeftCircle size={20} />
                     </Button>
                   </Row>
-                ) : (
-                  ""
-                )}
-
+                ) : ("")}
                 <Row className="d-block">
                   <ClipboardPlus className="mb-1 mr-2" size={40} />
                   <h2>Productos</h2>
@@ -185,39 +112,18 @@ const FormProduct = ({
               <hr className="mt-0 mb-3" />
               <Row>
                 <Col>
-                  <CustomInput
-                    label="Nombre"
-                    name="name"
-                    type="text"
-                    placeholder="Remera deportiva"
-                  />
+                  <CustomInput label="Nombre" name="name" type="text" placeholder="Remera deportiva" />
                 </Col>
                 <Col>
-                  <CustomInput
-                    label="Imagen"
-                    name="image"
-                    type="file"
-                    setFieldValue={setFieldValue}
-                  />
+                  <CustomInput label="Imagen" name="image" type="file" setFieldValue={setFieldValue} />
                 </Col>
               </Row>
               <Row>
                 <Col>
-                  <CustomInput
-                    label="Descripción"
-                    name="description"
-                    type="textarea"
-                    placeholder="Una remera deportiva nueva"
-                  />
+                  <CustomInput label="Descripción" name="description" type="textarea" placeholder="Una remera deportiva nueva" />
                 </Col>
                 <Col xs="12" lg="6">
-                  <CustomInput
-                    label="Categoría"
-                    defaultValue={categoryProduct}
-                    name="category"
-                    type="select"
-                    multiple
-                  >
+                  <CustomInput label="Categoría" name="category" type="select" multiple>
                     <option value="0">Seleccionar categoría</option>
                     {allCategories.map((item) => (
                       <option key={item.name} value={item.id}>
@@ -244,17 +150,15 @@ const FormProduct = ({
                 className="bg-color-primary shadow-primary rounded-pill border-0"
                 type="submit"
               >
-                {isSubmitting
-                  ? "Cargando..."
-                  : action === "put"
-                  ? "Actualizar producto"
-                  : "Agregar producto"}
+                {isSubmitting ? "Cargando..." : action === "put" ?
+                  "Actualizar producto" : "Agregar producto"}
+
               </Button>
             </Form>
           );
         }}
       </Formik>
-    </Col>
+    </Col >
   );
 };
 
