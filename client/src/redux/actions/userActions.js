@@ -23,7 +23,7 @@ export const editUser = (id, action, values) => (dispatch) => {
       .post(PathBase + `/users/${id ? id : ""}`, values)
       .then((res) => {
         dispatch({
-          type: POST_USER,
+          type: actionTypes.POST_USER,
           userDetail: res.data,
         });
       })
@@ -37,7 +37,7 @@ export const editUser = (id, action, values) => (dispatch) => {
       .put(PathBase + `/users/${id}`, values)
       .then((res) => {
         dispatch({
-          type: PUT_USER,
+          type: actionTypes.PUT_USER,
           userDetail: res.data,
         });
       })
@@ -47,7 +47,7 @@ export const editUser = (id, action, values) => (dispatch) => {
       .delete(PathBase + `/users/${id}`)
       .then((res) => {
         dispatch({
-          type: DELETE_USER,
+          type: actionTypes.DELETE_USER,
           userDetail: id,
         });
       })
@@ -80,51 +80,51 @@ export const editUser = (id, action, values) => (dispatch) => {
 //   .catch(err=>console.log(err))
 // }
 
-export const addAmount = ({ id }) => {
-  return {
-    type: ADD_AMOUNT,
-    productId: id,
-  };
-};
+// export const addAmount = ({ id }) => {
+//   return {
+//     type: ADD_AMOUNT,
+//     productId: id,
+//   };
+// };
 
-export const subtractAmount = ({ id }) => {
-  return {
-    type: SUBTRACT_AMOUNT,
-    productId: id,
-  };
-};
+// export const subtractAmount = ({ id }) => {
+//   return {
+//     type: SUBTRACT_AMOUNT,
+//     productId: id,
+//   };
+// };
 
-export const addProductCart = (productId, quantity) => dispatch => {
-  axios
-    .post(PathBase + '/users/' + 1 + '/cart',
-      {
-        productId: productId,
-        quantity: quantity
-      })
-    .then(res => {
-      console.log(res);
-      dispatch({
-        type: ADD_PRODUCT_CART,
-        data: "null"
-      })
-    })
-};
+// export const addProductCart = (productId, quantity) => dispatch => {
+//   axios
+//     .post(PathBase + '/users/' + 1 + '/cart',
+//       {
+//         productId: productId,
+//         quantity: quantity
+//       })
+//     .then(res => {
+//       console.log(res);
+//       dispatch({
+//         type: ADD_PRODUCT_CART,
+//         data: "null"
+//       })
+//     })
+// };
 
-export const deleteProductCart = ({ id }) => {
-  return {
-    type: DELETE_PRODUCTS_CART,
-    productId: id,
-  };
-};
+// export const deleteProductCart = ({ id }) => {
+//   return {
+//     type: DELETE_PRODUCTS_CART,
+//     productId: id,
+//   };
+// };
 
-export const getCartProducts = () => (dispatch) => {
-  axios
-    .get(PathBase + '/users/' + 2 + '/cart')
-    .then(res => {
-      console.log('get_cart_products' + res);
-      dispatch({
-        type: GET_CART_PRODUCTS,
-        data: res
-      })
-    })
-};
+// export const getCartProducts = () => (dispatch) => {
+//   axios
+//     .get(PathBase + '/users/' + 2 + '/cart')
+//     .then(res => {
+//       console.log('get_cart_products' + res);
+//       dispatch({
+//         type: GET_CART_PRODUCTS,
+//         data: res
+//       })
+//     })
+// };

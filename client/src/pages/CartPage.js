@@ -6,7 +6,7 @@ import ButtonBlock from '../components/custom/ButtonBlock'
 import { useSelector } from 'react-redux'
 const Cart = () => {
 
-    const productsCarts = useSelector(state => console.log(state));
+    const productsCarts = useSelector(state => state.cart.products);
     return (
         <Container
             fluid={true}
@@ -15,7 +15,7 @@ const Cart = () => {
             <Row>
                 <Col lg="8">
                     <ShoppingCart
-                        items={[]}
+                        items={productsCarts}
                     />
                 </Col>
                 <Col lg="4">

@@ -28,7 +28,7 @@ const Product = (props) => {
   }, []);
 
   const handleOnClick = () => {
-    dispatch(addProductCart(product.id, 2));
+    dispatch(addProductCart(product, 1));
   };
   return (
     <div className="productContainer">
