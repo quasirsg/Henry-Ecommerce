@@ -7,7 +7,7 @@ import {
   DELETE_PRODUCTS_CART,
   POST_USER,
   PUT_USER,
-  DELETE_USER,
+  DELETE_USER
 } from "./actionTypes";
 
 const PathBase = `http://localhost:3001`;
@@ -110,5 +110,12 @@ export const deleteProductCart = ({ id }) => {
 
 export const getCartProducts = () => (dispatch) => {
   axios
-    .get(PathBase + '/users')
+    .get(PathBase + '/users/' + 2 + '/cart')
+    .then(res => {
+      console.log('get_cart_products' + res);
+      dispatch({
+        type: GET_CART_PRODUCTS,
+        data: res
+      })
+    })
 };
