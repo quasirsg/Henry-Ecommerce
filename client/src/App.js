@@ -35,6 +35,14 @@ function App() {
           <AdminMenu />
         </Route>
 
+        <Route exact path="/user/register">
+          <FormUser
+            action="post"
+            icon="success"
+            message="Usuario agregado"
+          />
+        </Route>
+
         <Route
           exact
           path="/admin/category/add"

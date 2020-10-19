@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./userForm.css";
 import { ClipboardPlus, ArrowLeftCircle } from "react-bootstrap-icons";
 import { Button, Row, Col } from "reactstrap";
@@ -6,15 +6,11 @@ import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import Swal from "sweetalert2";
 import CustomInput from "../custom/input";
-import apiCall from "../../redux/api";
-import { useDispatch } from "react-redux";
 
-import {
-  ButtonDropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
-} from "reactstrap";
+import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
+
+
 import allActions from "../../redux/actions/allActions";
 
 const Toast = Swal.mixin({
@@ -34,9 +30,10 @@ const FormUser = ({
   name = "",
   email = "",
   password = "",
-  image = "",
+  image,
   location_id = 1,
-  rol = true,
+  rol = "f",
+  passwordConfirmation = "",
   action,
   icon,
   message,
@@ -75,6 +72,7 @@ const FormUser = ({
           image,
           location_id,
           rol,
+          passwordConfirmation,
         }}
         validationSchema={Yup.object({
           name: Yup.string()
@@ -90,34 +88,36 @@ const FormUser = ({
               /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
               "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character"
             ),
-          img: Yup.string(),
+          passwordConfirmation: Yup.string()
+            .oneOf([Yup.ref("password"), null], "La contraseña no coincide")
+            .required("Password confirm is required"),
+
           location_id: Yup.number()
             .min(1, "Debe ser mayor a 1")
             .required("Debes seleccionar una localidad"),
         })}
         onSubmit={async (values, { setSubmitting, resetForm }) => {
-          //Validar url
-          const url = `/products/${id ? id : ""}`;
           // Convertir imagen en base64
           const imgBase64 = await convertBase64(values.image);
           //Request al backend
           let user = { ...values, image: imgBase64 };
+
           const data = action === "delete" ? null : user;
+          //To lower case
+          user.email = user.email.toLowerCase();
 
-          // apiCall(url, data, null, action);
-          dispatch(allActions.editUser(id, action, values))
-            .then((response) => {
-              //Una vez agregado el producto , le asigna una categoria
-              const id = response.data.id;
-
+          dispatch(allActions.editUser(id, action, user))
+            .then((res) => {
+              // console.log(res);
               resetForm();
               setSubmitting(false);
               Toast.fire({
                 icon,
-                title: `${message} ${values.name}`,
+                title: `${message} Bienvenido ${values.name}`,
               });
             })
             .catch((error) => {
+              console.log(error);
               setSubmitting(false);
               Toast.fire({
                 icon: "error",
@@ -134,7 +134,7 @@ const FormUser = ({
                   <Row>
                     <Button
                       className="btn btn-light text-secondary btn-sm float-left"
-                      onClick={() => history.push("/admin/users")}
+                      onClick={() => history.push("/user/register")}
                     >
                       <ArrowLeftCircle size={20} />
                     </Button>
@@ -170,57 +170,49 @@ const FormUser = ({
               </Row>
 
               <Row>
-                <Col>
-                  <Col lg="6" xs="6">
-                    <CustomInput
-                      label="Password"
-                      name="password"
-                      type="password"
-                    />
-                  </Col>
+                <Col lg="6" xs="6">
+                  <CustomInput
+                    label="Password"
+                    name="password"
+                    type="password"
+                  />
                 </Col>
 
-                <Col>
+                <Col lg="6" xs="6">
                   <CustomInput
-                    label="Imagen"
-                    name="image"
-                    type="text"
+                    label="Confirm Password"
+                    name="passwordConfirmation"
+                    type="password"
                   />
                 </Col>
               </Row>
 
               <Row>
                 <Col>
-                  <CustomInput label="Rol" name="rol" value={true} />
-                </Col>
-                <Col>
-                  <Row>
-                    <Col lg="6" xs="6">
-                      <CustomInput
-                        label="Localización"
-                        name="location_id"
-                        type="number"
-                      />
-                    </Col>
-                  </Row>
+                  <CustomInput
+                    label="Imagen"
+                    name="image"
+                    type="file"
+                    setFieldValue={setFieldValue}
+                  />
                 </Col>
               </Row>
-
-              <Button
-                block
-                className="bg-color-primary shadow-primary rounded-pill border-0"
-                type="submit"
-              >
-                {isSubmitting
-                  ? "Cargando..."
-                  : action === "put"
-                  ? "Actualizar usuario"
-                  : action === "delete"
-                  ? "Eliminar usuario"
-                  : action === "post"
-                  ? "Agregar usuario"
-                  : null}
-              </Button>
+                <Button
+                  block
+                  className="bg-color-primary shadow-primary rounded-pill border-0"
+                  type="submit"
+                  disabled={name}
+                >
+                  {isSubmitting
+                    ? "Cargando..."
+                    : action === "put"
+                    ? "Actualizar usuario"
+                    : action === "delete"
+                    ? "Eliminar usuario"
+                    : action === "post"
+                    ? "Agregar usuario"
+                    : null}
+                </Button>
             </Form>
           );
         }}

@@ -32,9 +32,15 @@ import { getProducts } from "../../redux/actions/productActions";
 const AdminMenu = () => {
   const [collapsed, setCollapsed] = useState(true);
   const toggleNavbar = () => setCollapsed(!collapsed);
+
+  /*=======Redux ================ */
   const dispatch = useDispatch();
-  const products = useSelector((state) => state.products.allProducts);
+  const products = useSelector((state) => state.products.products);
   const allCategories = useSelector((state) => state.category.category);
+  const users = useSelector((state) => state.category.category);
+
+
+
 
   console.log('Cambio el estado de redux')
 
@@ -67,12 +73,6 @@ const AdminMenu = () => {
                       <NavLink tag={Link} to="/admin/category">
                         <FileEarmarkPlus size={17} className="mr-1" />
                         Nueva Categoría
-                      </NavLink>
-                    </NavItem>
-                    <NavItem className="pb-2 border-bottom">
-                      <NavLink tag={Link} to="/admin/users">
-                        <FileEarmarkPlus size={17} className="mr-1" />
-                        Crear Cuenta
                       </NavLink>
                     </NavItem>
                     <p className="text-secondary m-0">

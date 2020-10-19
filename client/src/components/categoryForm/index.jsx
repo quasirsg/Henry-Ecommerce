@@ -48,6 +48,7 @@ const FormCategory = ({
           // const url = `/category/${id ? id : ""}`;
           // const data = action === "delete" ? null : values;
 
+          console.log(values);
           dispatch(allActions.editCategory(id, action, values))
             .then((response) => {
               resetForm();

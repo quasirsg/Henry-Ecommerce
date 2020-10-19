@@ -17,8 +17,7 @@ module.exports = (sequelize) => {
       unique: true,
       validate: {
         isEmail: true,
-      },
-      noUpdate: true
+      }
 
     },
     address: {
