@@ -1,5 +1,5 @@
 const server = require("express").Router();
-const { User, Order, Product, Linea_Order } = require("../db.js");
+const { User, Order, Product, Linea_order } = require("../db.js");
 
 //Agregar un usuario
 server.post("/", (req, res, next) => {
@@ -77,10 +77,14 @@ server.get("/", (req, res) => {
 });
 
 //obtener todas las ordenes de un usuario en especifico
-server.get("/:id/orders", (req, res) => {
+server.get("/:id/order/get", (req, res, next) => {
     const id = req.params.id;
 
-    User.findByPk(id, {
+    User.findOne({
+        where: {
+            id
+        }
+    }, {
         include: {
             model: Order,
             through: { attributes: ["total", "quantity"] },
@@ -90,7 +94,7 @@ server.get("/:id/orders", (req, res) => {
             return res.send({ data: user.orders }).status(200);
         })
         .catch((err) => {
-            return res.sendStatus(500);
+            next(err.message);
         });
 });
 
@@ -98,7 +102,7 @@ server.get("/:id/orders", (req, res) => {
 server.get("/orders", (req, res) => {
     const userId = req.userId;
     Order.findAll({
-        include: [User, { model: Product, through: Linea_Order }],
+        include: [User, { model: Product, through: Linea_order }],
         where: {
             userId: userId,
             status: {
@@ -115,7 +119,7 @@ server.get("/orders", (req, res) => {
 });
 
 //agregar un producto al carrito
-server.post("/userId/cart", (req, res) => {
+server.post("/:userId/cart/add", (req, res, next) => {
     const userId = req.params.userId;
     const { productId, quantity } = req.body;
 
@@ -137,28 +141,28 @@ server.post("/userId/cart", (req, res) => {
                     if (quantity > product.stock) {
                         return res.send("Invalid Operation");
                     }
-                    Linea_Order.create({
+                    Linea_order.create({
                         quantity: quantity,
                         total: product.price,
-                        productId: productId,
+                        product_id: productId,
                         orderId: orderId,
                         userId: userId,
                     })
                         .then((orderCreated) => {
-                            return res.send(orderCreated).sendStatus(201);
+                            return res.status(201).json(orderCreated);
                         })
-                        .catch((err) => {
-                            return res.sendStatus(500);
-                        });
                 });
+        })
+        .catch((err) => {
+            next;
         });
 });
 
 //Obtenes todos los productos que estan en el carrito de un usuario en especifico
-server.get("/userId/cart", (req, res) => {
+server.get("/:userId/cart", (req, res) => {
     const idUser = req.params.userId;
     Order.findOne({
-        include: [User, { model: Product, through: Linea_Order }],
+        include: [User, { model: Product, through: Linea_order }],
         where: {
             userId: idUser,
             status: "shopping_cart",
@@ -176,7 +180,7 @@ server.get("/userId/cart", (req, res) => {
 });
 
 //modificamos la cantidad de un producto en especifico, que se encuentre en el carrito
-server.put("/userId/cart/:productId", async (req, res) => {
+server.put("/:userId/cart/:productId", async (req, res) => {
     const userId = req.params.userId;
     const productId = req.params.productId;
     const quantity = req.body.quantity;
@@ -209,11 +213,11 @@ server.put("/userId/cart/:productId", async (req, res) => {
 });
 
 //Eliminar un producto del carrito de un usuario en especifico
-server.delete("/userId/cart/:productId", (req, res) => {
+server.delete("/:userId/cart/:productId", (req, res) => {
     const userId = req.params.userId;
     const productId = req.params.productId;
 
-    Linea_Order.findOne({
+    Linea_order.findOne({
         include: [
             {
                 model: Order,
@@ -222,7 +226,7 @@ server.delete("/userId/cart/:productId", (req, res) => {
         where: {
             "$order.userId$": userId,
             "$order.status$": "shopping_cart",
-            productId: productId,
+            product_id: productId,
         },
     })
         .then(async (orderline) => {
@@ -232,7 +236,7 @@ server.delete("/userId/cart/:productId", (req, res) => {
 
             await orderline.destroy();
 
-            let _orderline = await Linea_Order.findOne({
+            let _orderline = await Linea_order.findOne({
                 where: {
                     orderId: orderline.orderId,
                 },
@@ -246,8 +250,10 @@ server.delete("/userId/cart/:productId", (req, res) => {
 
             return res.sendStatus(204);
         })
-        .catch((err) => {
-            return res.sendStatus(500);
+        .catch((error) => {
+            return res.status(500).json({
+                error: error.message
+            });
         });
 });
 
@@ -276,7 +282,7 @@ server.get("/:idUser/cart", (req, res) => {
     const idUser = req.params.idUser;
 
     Order.findOne({
-        include: [User, { model: Product, through: Linea_Order }],
+        include: [User, { model: Product, through: Linea_order }],
         where: {
             userId: idUser,
             status: "shopping_cart",
