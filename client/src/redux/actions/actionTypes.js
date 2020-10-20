@@ -33,11 +33,6 @@ export const SEARCH_BY_QUERY = "SEARCH_BY_QUERY";
 export const SEARCH_BY_CATEGORY = "SEARCH_BY_CATEGORY";
 export const SEARCH_ALL = "SEARCH_ALL";
 
-//Users COnstants
-export const DELETE_USER = "DELETE_USER";
-export const POST_USER = "POST_USER";
-export const PUT_USER = "PUT_USER";
-
 //Cart Constants
 export const GET_CART_PRODUCTS = "GET_CART_PRODUCTS";
 export const ADD_PRODUCT_CART = "ADD_PRODUCT_CART";

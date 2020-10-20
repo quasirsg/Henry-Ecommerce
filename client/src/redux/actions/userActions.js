@@ -20,7 +20,7 @@ export const getUsers = () => (dispatch) => {
 export const editUser = (id, action, values) => (dispatch) => {
   if (action === "post") {
     return axios
-      .post(PathBase + `/users/${id ? id : ""}`, values)
+      .post(url + `/users/${id ? id : ""}`, values)
       .then((res) => {
         dispatch({
           type: actionTypes.POST_USER,
@@ -34,7 +34,7 @@ export const editUser = (id, action, values) => (dispatch) => {
       });
   } else if (action === "put") {
     return axios
-      .put(PathBase + `/users/${id}`, values)
+      .put(url + `/users/${id}`, values)
       .then((res) => {
         dispatch({
           type: actionTypes.PUT_USER,
@@ -44,7 +44,7 @@ export const editUser = (id, action, values) => (dispatch) => {
       .catch((err) => console.log(err));
   } else if (action === "delete") {
     return axios
-      .delete(PathBase + `/users/${id}`)
+      .delete(url + `/users/${id}`)
       .then((res) => {
         dispatch({
           type: actionTypes.DELETE_USER,

@@ -5,6 +5,7 @@ import { Switch, Route } from "react-router-dom";
 import Navbar from "./components/navbar";
 import ProductDetail from "./components/productDetail";
 import FormCategory from "./components/categoryForm";
+import FormUser from './components/userForm';
 
 //Pages
 import SearchPage from "./pages/SearchPage";

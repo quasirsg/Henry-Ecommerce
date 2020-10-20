@@ -7,7 +7,9 @@ import ButtonCircle from "../../custom/ButtonCircle";
 import "./itemCart.css";
 const ItemCart = ({ product, quantity }) => {
 
-  const handleOnClick() =>
+  const handleOnClick = () => {
+    console.log(product);
+  }
   return (
     <Col lg="12">
       <div className="itemCart">
@@ -37,6 +39,6 @@ const ItemCart = ({ product, quantity }) => {
       </div>
     </Col>
   );
-  };
+};
 
-  export default ItemCart;
+export default ItemCart;
