@@ -1,0 +1,14 @@
+
+.orden-cont {
+    margin: 2rem;
+}
+
+div.container {
+    margin: 5%
+}
+
+.orden-cont .table-responsive {
+    width: 80%;
+    text-align: center;
+    
+}

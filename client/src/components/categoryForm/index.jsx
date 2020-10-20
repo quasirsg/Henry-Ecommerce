@@ -5,7 +5,6 @@ import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import Swal from "sweetalert2";
 import CustomInput from "../custom/input";
-import apiCall from "../../redux/api";
 import { useDispatch } from "react-redux";
 import allActions from "../../redux/actions/allActions";
 
@@ -100,12 +99,12 @@ const FormCategory = ({
               {isSubmitting
                 ? "Cargando..."
                 : action === "put"
-                ? "Actualizar categoria"
-                : action === "delete"
-                ? "Eliminar categoria"
-                : action === "post"
-                ? "Agregar categoria"
-                : null}
+                  ? "Actualizar categoria"
+                  : action === "delete"
+                    ? "Eliminar categoria"
+                    : action === "post"
+                      ? "Agregar categoria"
+                      : null}
             </Button>
           </Form>
         )}

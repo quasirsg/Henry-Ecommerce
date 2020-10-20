@@ -27,9 +27,9 @@ export const editUser = (id, action, values) => (dispatch) => {
           userDetail: res.data,
         });
       })
-      .catch((err) =>{
+      .catch((err) => {
         dispatch({
-          error: err
+          error: err,
         });
       });
   } else if (action === "put") {
@@ -57,7 +57,7 @@ export const editUser = (id, action, values) => (dispatch) => {
 
 // export const putProduct=(id, action, values)=>(dispatch)=>{
 //   return axios
-//     .put(url+`/products/${id}`)
+//     .put(url+`/products/${id}`)ñ
 //     .then(res=>{
 //       console.log(res)
 //       dispatch({
@@ -79,3 +79,52 @@ export const editUser = (id, action, values) => (dispatch) => {
 //   })
 //   .catch(err=>console.log(err))
 // }
+
+// export const addAmount = ({ id }) => {
+//   return {
+//     type: ADD_AMOUNT,
+//     productId: id,
+//   };
+// };
+
+// export const subtractAmount = ({ id }) => {
+//   return {
+//     type: SUBTRACT_AMOUNT,
+//     productId: id,
+//   };
+// };
+
+// export const addProductCart = (productId, quantity) => dispatch => {
+//   axios
+//     .post(PathBase + '/users/' + 1 + '/cart',
+//       {
+//         productId: productId,
+//         quantity: quantity
+//       })
+//     .then(res => {
+//       console.log(res);
+//       dispatch({
+//         type: ADD_PRODUCT_CART,
+//         data: "null"
+//       })
+//     })
+// };
+
+// export const deleteProductCart = ({ id }) => {
+//   return {
+//     type: DELETE_PRODUCTS_CART,
+//     productId: id,
+//   };
+// };
+
+// export const getCartProducts = () => (dispatch) => {
+//   axios
+//     .get(PathBase + '/users/' + 2 + '/cart')
+//     .then(res => {
+//       console.log('get_cart_products' + res);
+//       dispatch({
+//         type: GET_CART_PRODUCTS,
+//         data: res
+//       })
+//     })
+// };

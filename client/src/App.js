@@ -1,18 +1,21 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Switch, Route } from "react-router-dom";
-import axios from "axios";
 
 //Components
 import Navbar from "./components/navbar";
 import ProductDetail from "./components/productDetail";
 import FormCategory from "./components/categoryForm";
-import ShoppingCart from "./components/shoppingCart";
-import FormUser from "./components/userForm";
+import FormUser from './components/userForm';
 
 //Pages
 import SearchPage from "./pages/SearchPage";
 import AdminMenu from "./components/admin";
 import HomePage from "./pages/HomePage";
+import CartPage from "./pages/CartPage";
+
+// Componente Orden-> probando
+import Orden from "./components/Orden/orden.jsx";
+import FormUser from "./components/userForm";
 
 function App() {
   return (
@@ -25,20 +28,17 @@ function App() {
         <Route path="/search/q/" component={SearchPage} />
         <Route path="/search/category/" component={SearchPage} />
         <Route exact path="/products" component={HomePage} />
+        <Route exact path="/order" component={Orden} />
         <Route exact path="/product/:id">
           <ProductDetail />
         </Route>
-        <Route exact path="/cart" component={ShoppingCart} />
+        <Route exact path="/cart" component={CartPage} />
         <Route exact path="/admin">
           <AdminMenu />
         </Route>
 
         <Route exact path="/user/register">
-          <FormUser 
-            action="post" 
-            icon="success"
-            message="Usuario agregado"
-          />
+          <FormUser action="post" icon="success" message="Usuario agregado" />
         </Route>
 
         <Route

@@ -1,20 +1,24 @@
 const { DataTypes } = require("sequelize");
 
 module.exports = (sequelize) => {
-  //Definir Modelo
-
   sequelize.define("order", {
-    order_total: {
-      type: DataTypes.DOUBLE,
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+    },
+    status: {
+      type: DataTypes.ENUM({
+        values: [
+          "shopping_cart",
+          "created",
+          "processing",
+          "canceled",
+          "completed",
+        ],
+      }),
       allowNull: false,
-    },
-    order_state: {
-      type: DataTypes.BOOLEAN,
-      allorNull: false,
-    },
-    order_date: {
-      type: DataTypes.DATE,
-      allorNull: false,
+      defaultValue: "shopping_cart",
     },
   });
 };

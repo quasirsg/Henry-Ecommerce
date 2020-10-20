@@ -2,6 +2,11 @@ const { DataTypes } = require("sequelize");
 
 module.exports = (sequelize) => {
   sequelize.define("user", {
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true
+    },
     name: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -15,6 +20,18 @@ module.exports = (sequelize) => {
       }
 
     },
+    address: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    role: {
+      type: DataTypes.ENUM('admin', 'client'),
+      allowNull: false,
+      defaultValue: 'client'
+    },
+    phoneNumber: {
+      type: DataTypes.STRING,
+    },
     password: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -26,11 +43,5 @@ module.exports = (sequelize) => {
     location_id: {
       type: DataTypes.INTEGER,
     },
-    
-    rol: {
-      type: DataTypes.BOOLEAN,
-      allowNull: false
-    },
-
   });
 };

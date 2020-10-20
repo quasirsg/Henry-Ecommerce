@@ -6,6 +6,7 @@ import ButtonCircle from "../../custom/ButtonCircle";
 
 import "./itemCart.css";
 const ItemCart = ({ product, quantity }) => {
+  const handleOnClick = () => { };
   return (
     <Col lg="12">
       <div className="itemCart">
@@ -23,7 +24,9 @@ const ItemCart = ({ product, quantity }) => {
           </Col>
           <Col lg="6">
             <div className="d-flex flex-row-reverse">
-              <button className="itemCart-delete">Remover</button>
+              <button onClick={handleOnClick} className="itemCart-delete">
+                Remover
+              </button>
             </div>
             <div className="d-flex flex-row-reverse">
               <ButtonCircle children={"+"} />

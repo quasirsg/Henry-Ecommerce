@@ -32,15 +32,15 @@ import { getProducts } from "../../redux/actions/productActions";
 const AdminMenu = () => {
   const [collapsed, setCollapsed] = useState(true);
   const toggleNavbar = () => setCollapsed(!collapsed);
-  
+
   /*=======Redux ================ */
   const dispatch = useDispatch();
   const products = useSelector((state) => state.products.products);
   const allCategories = useSelector((state) => state.category.category);
   const users = useSelector((state) => state.category.category);
 
-  
-  
+
+
 
   console.log('Cambio el estado de redux')
 
@@ -111,7 +111,6 @@ const AdminMenu = () => {
               <Route exact path="/admin/product">
                 <FormProduct action="post" />
               </Route>
-
               <Route
                 exact
                 path="/admin/product/:id"
@@ -139,7 +138,7 @@ const AdminMenu = () => {
               <Route exact path="/admin/categories">
                 <InventoryTableCategory />
               </Route>
-              
+
               <Route
                 exact
                 path="/admin/category/:id"

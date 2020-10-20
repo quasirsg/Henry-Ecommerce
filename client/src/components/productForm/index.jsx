@@ -152,7 +152,6 @@ const FormProduct = ({ action, history, id = 0 }) => {
               >
                 {isSubmitting ? "Cargando..." : action === "put" ?
                   "Actualizar producto" : "Agregar producto"}
-
               </Button>
             </Form>
           );
