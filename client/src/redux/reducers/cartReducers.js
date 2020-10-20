@@ -16,7 +16,7 @@ function cartReducers(state = initialState, action) {
     case ADD_PRODUCT_CART:
       return {
         ...state,
-        products: products.push(action.product)
+        products: products.concat(action.product),
       };
     case DELETE_PRODUCTS_CART:
       return {

@@ -29,7 +29,7 @@ export const editUser = (id, action, values) => (dispatch) => {
       })
       .catch((err) => {
         dispatch({
-          error: err
+          error: err,
         });
       });
   } else if (action === "put") {
