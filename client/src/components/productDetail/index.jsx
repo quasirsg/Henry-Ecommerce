@@ -2,12 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import StarRatings from "react-star-ratings";
 import { useParams } from "react-router-dom";
-import {
-  addProductCart,
-  getUsers,
-  getOneUser,
-} from "../../redux/actions/userActions";
-
+import { addProductCart } from "../../redux/actions/userActions";
 import "./producto.css";
 import allActions from "../../redux/actions/allActions";
 
@@ -24,18 +19,22 @@ const Product = (props) => {
   };
   /* ========= Redux========== */
   const product = useSelector((state) => state.products.productDetail);
-  const userId = useSelector((state) => state);
-  //??ver usuario logueado
+  const dispatch = useDispatch();
+  // const userId = useSelector((state) => state);
+  product.quantity = 0; //agrego una cantidad por default
+  // console.log(userId);
   console.log(product);
 
-  const dispatch = useDispatch();
+  // useEffect(() => {
+  // dispatch(allActions.getOneProduct(id));
+  // }, []);
 
-  useEffect(() => {
-    dispatch(allActions.getOneProduct(id));
-    dispatch(getOneUser()); //ver usuario logueado
-  }, []);
   const handleOnClick = () => {
-    dispatch(addProductCart(userId.id, product));
+    product.quantity += 1;
+    dispatch(addProductCart(1, product));
+    // localStorage.setItem("user", userId.id);
+    // dispatch(getUserOrder(userId.id));
+    // console.log(userId.id);
   };
   return (
     <div className="productContainer">

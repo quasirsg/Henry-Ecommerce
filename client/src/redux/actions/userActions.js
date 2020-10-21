@@ -1,8 +1,6 @@
 import axios from "axios";
-import * as actionTypes from "./actionTypes";
 import Toast from "../../components/alerts/toast";
-import DeleteDialog from "../../components/alerts/deleteDialog";
-import Swal from "sweetalert2";
+import * as actionTypes from "./actionTypes";
 
 const url = `http://localhost:3001`;
 
@@ -67,21 +65,45 @@ export const editUser = (id, action, values) => (dispatch) => {
   }
 };
 
-export const addProductCart = (userId, product) => (dispatch) => {
-  return axios
-    .post(url + `/users/${userId}/cart/add`, {
+// --------------- ACTION CART---------------
+
+const createOrFindOrder = (id) => {
+  return axios.post(`${url}/order/${id}`, {
+    status: "shopping_cart",
+  });
+};
+
+//Agregar productos al carrito
+export const addProductCart = (userId, product) => async (dispatch) => {
+  // Verificar que el usuario tenga un carrito
+  const data = await axios.post(`${url}/order/${userId}`, {
+    status: "shopping_cart",
+  });
+
+  axios
+    .post(`${url}/users/${userId}/cart/add`, {
       productId: product.id,
       quantity: product.quantity,
     })
     .then((res) => {
-      console.log(res);
       dispatch({
         type: actionTypes.ADD_PRODUCT_CART,
         product: res.data,
       });
+      Toast.fire({
+        icon: "success",
+        title: `Se agregó el producto: ${res.name}`,
+      });
+    })
+    .catch((err) => {
+      Toast.fire({
+        icon: "error",
+        title: `Error: No se guardo "${product.name}"`,
+      });
     });
 };
 
+//Eliminar productos del carrito
 export const deleteProductsCart = (userId, productId) => (dispatch) => {
   return axios
     .delete(url + `/${userId}/cart/${productId}`)
@@ -96,20 +118,21 @@ export const deleteProductsCart = (userId, productId) => (dispatch) => {
     });
 };
 
+//Obtenner los productos agregados al carrito
 export const getProductCart = (userId) => (dispatch) => {
   axios
-    .get(url + `/${userId}/cart`)
+    .get(url + `/users/${userId}/cart`)
     .then((res) => {
       dispatch({
         type: actionTypes.GET_CART_PRODUCTS,
-        products: res.data.products,
+        products: res.data,
       });
     })
     .catch((err) => {
       console.log(err);
     });
 };
-
+//Incremento "+"
 export const addAmount = (userId, productId) => (dispatch) => {
   return axios
     .put(`/${userId}/cart/${productId}`)
@@ -124,6 +147,7 @@ export const addAmount = (userId, productId) => (dispatch) => {
     });
 };
 
+//Decremento - "-"
 export const deletAmount = (userId, productId) => (dispatch) => {
   axios
     .put(`/${userId}/cart/${productId}`)
@@ -136,4 +160,17 @@ export const deletAmount = (userId, productId) => (dispatch) => {
     .catch((err) => {
       console.log(err);
     });
+};
+
+//Obtener todas las ordenes de un usuario
+export const getUserOrder = (id) => (dispatch) => {
+  axios
+    .get(url + `/users/orders/${id}`)
+    .then((res) => {
+      dispatch({
+        type: actionTypes.GET_USER_ORDERS,
+        orders: res.data,
+      });
+    })
+    .catch((err) => console.log(err));
 };

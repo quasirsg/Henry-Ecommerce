@@ -7,9 +7,9 @@ import { getProductCart } from "../redux/actions/userActions";
 const Cart = () => {
   const productsCarts = useSelector((state) => state);
   const dispatch = useDispatch();
-
+  const userId = localStorage.getItem("user");
   useEffect(() => {
-    dispatch(getProductCart());
+    dispatch(getProductCart(1));
   }, []);
   console.log(productsCarts);
   return (

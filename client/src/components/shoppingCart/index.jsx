@@ -11,7 +11,9 @@ const ShoppingCart = ({ items }) => {
       <Row>
         {items.map((item) => {
           console.log(item);
-          return <ItemCart product={item} quantity={item} />;
+          return (
+            <ItemCart key={item.id} product={item} quantity={item.quantity} />
+          );
         })}
       </Row>
     </Col>

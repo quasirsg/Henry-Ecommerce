@@ -92,10 +92,11 @@ server.get("/:id", (req, res) => {
     return res.status(200).json(user);
   });
 });
+
 //obtener todas las ordenes de un usuario en especifico
-server.get("/:id/order/get", (req, res, next) => {
+server.get("/order/cart/:id", (req, res, next) => {
   const id = req.params.id;
-  console.log(id);
+
   User.findOne(
     {
       where: {
@@ -110,7 +111,7 @@ server.get("/:id/order/get", (req, res, next) => {
     }
   )
     .then((user) => {
-      return res.send({ data: user.orders }).status(200);
+      return res.status(200).json({ data: user.orders });
     })
     .catch((err) => {
       next(err.message);
@@ -141,7 +142,8 @@ server.get("/orders", (req, res) => {
 server.post("/:userId/cart/add", (req, res, next) => {
   const userId = req.params.userId;
   const { productId, quantity } = req.body;
-
+  console.log(userId);
+  console.log(productId, quantity);
   Order.findOne({
     where: {
       userId: userId,
@@ -176,26 +178,26 @@ server.post("/:userId/cart/add", (req, res, next) => {
 });
 
 //Obtenes todos los productos que estan en el carrito de un usuario en especifico
-server.get("/:userId/cart", (req, res) => {
-  // Revisar con linea 295
-  const idUser = req.params.userId;
-  Order.findOne({
-    include: [User, { model: Product, through: Linea_order }],
-    where: {
-      userId: idUser,
-      status: "shopping_cart",
-    },
-  })
-    .then((order) => {
-      if (!order) {
-        return res.send({ data: { products: [] } }).status(204);
-      }
-      return res.send({ data: order });
-    })
-    .catch((err) => {
-      return res.sendStatus(500);
-    });
-});
+// server.get("/:userId/cart", (req, res) => {
+//   // Revisar con linea 295
+//   const idUser = req.params.userId;
+//   Order.findOne({
+//     include: [User, { model: Product, through: Linea_order }],
+//     where: {
+//       userId: idUser,
+//       status: "shopping_cart",
+//     },
+//   })
+//     .then((order) => {
+//       if (!order) {
+//         return res.send({ data: { products: [] } }).status(204);
+//       }
+//       return res.send({ data: order });
+//     })
+//     .catch((err) => {
+//       return res.sendStatus(500);
+//     });
+// });
 
 //modificamos la cantidad de un producto en especifico, que se encuentre en el carrito
 server.put("/:userId/cart/:productId", async (req, res) => {

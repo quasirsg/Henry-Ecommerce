@@ -9,6 +9,8 @@ import {
   GET_CART_PRODUCTS,
   DELETE_PRODUCTS_CART,
   GET_ONE_USER,
+  GET_USER_ORDERS,
+  GET_USERS_ORDERS,
 } from "../actions/actionTypes";
 
 const initialState = {
@@ -16,7 +18,8 @@ const initialState = {
   userDetail: [],
   err: [],
   carrito: [],
-  ordenes: [],
+  orders: [],
+  allOrders: [],
 };
 
 function userReducers(state = initialState, action) {
@@ -59,7 +62,6 @@ function userReducers(state = initialState, action) {
         users: state.users.filter((item) => item.id !== action.userDetail.id),
       };
     case ADD_PRODUCT_CART:
-      console.log(action);
       return {
         ...state,
         carrito: state.carrito.concat(action.product),
@@ -67,7 +69,7 @@ function userReducers(state = initialState, action) {
     case DELETE_PRODUCTS_CART:
       return {
         ...state,
-        products: products.filter((product) => product.id !== action.productId),
+        carrito: products.filter((product) => product.id !== action.productId),
       };
     case ADD_AMOUNT:
       const productsUpdate = products.map((product) => {
@@ -77,7 +79,7 @@ function userReducers(state = initialState, action) {
       });
       return {
         ...state,
-        products: productsUpdate,
+        carrito: productsUpdate,
       };
     case SUBTRACT_AMOUNT:
       const productsUp = products.map((product) => {
@@ -87,12 +89,22 @@ function userReducers(state = initialState, action) {
       });
       return {
         ...state,
-        products: productsUp,
+        carrito: productsUp,
       };
     case GET_CART_PRODUCTS:
       return {
         ...state,
-        products: action.products,
+        carrito: action.products,
+      };
+    case GET_USER_ORDERS:
+      return {
+        ...state,
+        orders: action.orders,
+      };
+    case GET_USERS_ORDERS:
+      return {
+        ...state,
+        allOrders: action.orders,
       };
     default:
       return state;

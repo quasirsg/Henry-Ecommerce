@@ -2,12 +2,19 @@ import React from "react";
 import { Card, CardImg, CardTitle, CardSubtitle } from "reactstrap";
 import { Link } from "react-router-dom";
 import "./productCard.css";
+import { useDispatch } from "react-redux";
+import { getOneProduct } from "../../redux/actions/productActions";
 
 const ProductCard = ({ product }) => {
+  const dispatch = useDispatch();
+  const handleOnclick = () => {
+    dispatch(getOneProduct(product.id));
+    console.log(product);
+  };
   return (
     // TODO:Create State and link it to the component
     <Card>
-      <Link to={`/product/${product.id}`}>
+      <Link to={`/product/${product.id}`} onClick={handleOnclick}>
         <CardImg
           className="product-img"
           top

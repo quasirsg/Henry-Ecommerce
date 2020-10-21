@@ -25,6 +25,8 @@ export const PUT_USER = "PUT_USER";
 export const DELETE_USER = "DELETE_USER";
 export const POST_USER = "POST_USER";
 export const GET_ONE_USER = "GET_ONE_USER";
+export const GET_USER_ORDERS = "GET_USER_ORDERS";
+export const GET_USERS_ORDERS = "GET_USERS_ORDERS";
 
 //Search constants
 export const SEARCH_BY_QUERY = "SEARCH_BY_QUERY";
@@ -46,9 +48,6 @@ export const SUBTRACT_AMOUNT = "SUBTRACT_AMOUNT";
 //order constants
 export const GET_ORDER = "GET_ORDER";
 export const POST_ORDER = "POST_ORDER";
-
-//export const PUT_ORDER_CART = 'PUT_ORDER_CART';
-export const DELETE_ORDER = "DELETE_ORDER";
-export const DELETE_PRODUCT_ORDER = "DELETE_PRODUCT_ORDER";
-export const ADD_AMOUNT_ORDER = "ADD_AMOUNT_ORDER";
-export const SUBTRACT_AMOUNT_ORDER = "SUBTRACT_AMOUNT_ORDER";
+export const GET_ONE_ORDER = "GET_ONE_ORDER";
+export const DELETE_ORDER = "DELET_ORDER";
+export const UPDATE_ORDER = "DELET_ORDER";

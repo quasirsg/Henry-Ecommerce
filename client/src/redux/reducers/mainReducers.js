@@ -1,6 +1,6 @@
 import productReducers from "./productReducers";
 import categoryReducers from "./categoryReducers";
-// import cartReducers from './cartReducers';
+import cartReducers from "./cartReducers";
 import searchReducer from "./searchReducer";
 import userReducers from "./userReducers";
 
@@ -10,7 +10,7 @@ const mainReducers = combineReducers({
   products: productReducers,
   category: categoryReducers,
   search: searchReducer,
-  // cart: cartReducers
+  cart: cartReducers,
   users: userReducers,
 });
 
