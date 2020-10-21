@@ -3,15 +3,14 @@ const { User, Order, Product, Linea_Order } = require("../db.js");
 
 //Agregar un usuario
 server.post("/", (req, res, next) => {
-    const { name, email, address, role, phoneNumber, password, image, location_id } = req.body;
-    if (!name || !email || !address || !role || !password || !image || !location_id)
+    const { name, email, address, phoneNumber, password, image, location_id } = req.body;
+    if (!name || !email || !address || !password || !image )
         return res.status(400).json({ message: "A parameter is missing" });
 
     User.create({
         name,
         email,
         address,
-        role,
         phoneNumber,
         password,
         image,
@@ -20,7 +19,9 @@ server.post("/", (req, res, next) => {
         .then((user) => {
             return res.status(200).json(user);
         })
-        .catch(next);
+        .catch((error)=>{
+            console.log('h');
+        });
 });
 
 //Actualizar un usuario
@@ -36,7 +37,9 @@ server.put("/:id", (req, res, next) => {
                 return res.status(200).json(userUpdate);
             });
         })
-        .catch(next);
+        .catch((error)=>{
+            console.log('h');
+        });
 });
 
 //Eliminar un usuario
