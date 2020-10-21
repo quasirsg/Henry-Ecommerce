@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import "./userForm.css";
 import { ClipboardPlus, ArrowLeftCircle } from "react-bootstrap-icons";
 import { Button, Row, Col } from "reactstrap";
@@ -8,7 +8,6 @@ import Swal from "sweetalert2";
 import CustomInput from "../custom/input";
 
 import { useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
 
 
 import allActions from "../../redux/actions/allActions";
@@ -29,10 +28,11 @@ const FormUser = ({
   id,
   name = "",
   email = "",
+  address = "",
+  phoneNumber = "",
   password = "",
   image,
   location_id = 1,
-  rol = "f",
   passwordConfirmation = "",
   action,
   icon,
@@ -68,11 +68,12 @@ const FormUser = ({
         initialValues={{
           name,
           email,
+          address,
+          phoneNumber,
           password,
           image,
-          location_id,
-          rol,
           passwordConfirmation,
+          location_id,
         }}
         validationSchema={Yup.object({
           name: Yup.string()
@@ -82,6 +83,16 @@ const FormUser = ({
           email: Yup.string()
             .email("Introduzca un email valido por favor")
             .required("Debes completar este campo"),
+          address: Yup.string()
+            .min(6, "Debe tener al menos 4 caracteres")
+            .max(50, "Debe tener 50 caracteres o menos")
+            .required("Debes completar este campo"),
+          phoneNumber: Yup.string()
+            .required("Please Enter your Phone Number")
+            .matches(
+              /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/,
+              "Phone number is not valid"
+            ),
           password: Yup.string()
             .required("Please Enter your password")
             .matches(
@@ -91,11 +102,8 @@ const FormUser = ({
           passwordConfirmation: Yup.string()
             .oneOf([Yup.ref("password"), null], "La contraseña no coincide")
             .required("Password confirm is required"),
-
-          location_id: Yup.number()
-            .min(1, "Debe ser mayor a 1")
-            .required("Debes seleccionar una localidad"),
         })}
+        
         onSubmit={async (values, { setSubmitting, resetForm }) => {
           // Convertir imagen en base64
           const imgBase64 = await convertBase64(values.image);
@@ -115,6 +123,7 @@ const FormUser = ({
                 icon,
                 title: `${message} Bienvenido ${values.name}`,
               });
+              setTimeout(function(){ window.location.href = "/"; }, 3000);
             })
             .catch((error) => {
               console.log(error);
@@ -126,7 +135,7 @@ const FormUser = ({
             });
         }}
       >
-        {({ isSubmitting, setFieldValue }) => {
+        {({ isValid,isSubmitting, setFieldValue }) => {
           return (
             <Form>
               <Col className="rounded-lg text-center">
@@ -188,6 +197,20 @@ const FormUser = ({
               </Row>
 
               <Row>
+                <Col lg="6" xs="6">
+                  <CustomInput label="Dirección" name="address" type="text" />
+                </Col>
+
+                <Col lg="6" xs="6">
+                  <CustomInput
+                    label="Numero de teléfono"
+                    name="phoneNumber"
+                    type="text"
+                  />
+                </Col>
+              </Row>
+
+              <Row>
                 <Col>
                   <CustomInput
                     label="Imagen"
@@ -197,22 +220,23 @@ const FormUser = ({
                   />
                 </Col>
               </Row>
-                <Button
-                  block
-                  className="bg-color-primary shadow-primary rounded-pill border-0"
-                  type="submit"
-                  disabled={name}
-                >
-                  {isSubmitting
-                    ? "Cargando..."
-                    : action === "put"
-                    ? "Actualizar usuario"
-                    : action === "delete"
-                    ? "Eliminar usuario"
-                    : action === "post"
-                    ? "Agregar usuario"
-                    : null}
-                </Button>
+              
+              <Button
+                block
+                className="bg-color-primary shadow-primary rounded-pill border-0"
+                type="submit"
+                disabled={!isValid}
+              >
+                {isSubmitting
+                  ? "Cargando..."
+                  : action === "put"
+                  ? "Actualizar usuario"
+                  : action === "delete"
+                  ? "Eliminar usuario"
+                  : action === "post"
+                  ? "Agregar usuario"
+                  : null}
+              </Button>
             </Form>
           );
         }}
