@@ -1,4 +1,6 @@
 import axios from "axios";
+import Swal from "sweetalert2";
+import deleteDialog from "../../components/alerts/deleteDialog";
 import Toast from "../../components/alerts/toast";
 import * as actionTypes from "./actionTypes";
 
@@ -102,18 +104,23 @@ export const addProductCart = (userId, product) => async (dispatch) => {
 };
 
 //Eliminar productos del carrito
-export const deleteProductsCart = (userId, productId) => (dispatch) => {
-  return axios
-    .delete(url + `/users/${userId}/cart/${productId}`)
-    .then((res) => {
-      dispatch({
-        type: actionTypes.DELETE_PRODUCTS_CART,
-        productId: productId,
-      });
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+export const deleteProductsCart = (userId, productId, name) => (dispatch) => {
+  deleteDialog(name).then((res) => {
+    if (res.isConfirmed) {
+      axios
+        .delete(url + `/users/${userId}/cart/${productId}`)
+        .then((res) => {
+          dispatch({
+            type: actionTypes.DELETE_PRODUCTS_CART,
+            productId: productId,
+          });
+          Swal.fire("Eliminado!", `${name} fue eliminado.`, "success");
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  });
 };
 
 //Obtenner los productos agregados al carrito

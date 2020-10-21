@@ -23,7 +23,7 @@ const initialState = {
 };
 
 function userReducers(state = initialState, action) {
-  let products = state.products;
+  let products = state.carrito;
   console.log(action);
   switch (action.type) {
     case GET_USERS:
@@ -67,9 +67,14 @@ function userReducers(state = initialState, action) {
         carrito: state.carrito.concat(action.product),
       };
     case DELETE_PRODUCTS_CART:
+      // console.log(carr);
+
+      console.log(state.carrito);
       return {
         ...state,
-        carrito: products.filter((product) => product.id !== action.productId),
+        carrito: state.carrito.filter(
+          (product) => product.product.id !== action.productId
+        ),
       };
     case ADD_AMOUNT:
       const productsUpdate = products.map((product) => {
