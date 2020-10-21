@@ -20,15 +20,7 @@ const Product = (props) => {
   /* ========= Redux========== */
   const product = useSelector((state) => state.products.productDetail);
   const dispatch = useDispatch();
-  // const userId = useSelector((state) => state);
   product.quantity = 0; //agrego una cantidad por default
-  // console.log(userId);
-  console.log(product);
-  const status = "shopping_cart";
-
-  useEffect(() => {
-    dispatch(allActions.getOneProduct(id));
-  }, []);
 
   const handleOnClick = () => {
     product.quantity += 1;
