@@ -5,7 +5,7 @@ module.exports = (sequelize) => {
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
-      autoIncrement: true
+      autoIncrement: true,
     },
     name: {
       type: DataTypes.STRING,
@@ -17,17 +17,16 @@ module.exports = (sequelize) => {
       unique: true,
       validate: {
         isEmail: true,
-      }
-
+      },
     },
     address: {
       type: DataTypes.STRING,
       allowNull: false,
     },
     role: {
-      type: DataTypes.ENUM('admin', 'client'),
+      type: DataTypes.ENUM("admin", "client"),
       allowNull: false,
-      defaultValue: 'client'
+      defaultValue: "client",
     },
     phoneNumber: {
       type: DataTypes.STRING,
@@ -38,7 +37,6 @@ module.exports = (sequelize) => {
     },
     image: {
       type: DataTypes.TEXT,
-
     },
     location_id: {
       type: DataTypes.INTEGER,

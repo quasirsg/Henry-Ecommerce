@@ -5,11 +5,12 @@ module.exports = (sequelize) => {
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
-      autoIncrement: true
+      autoIncrement: true,
     },
     quantity: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      defaultValue: 1,
     },
     total: {
       type: DataTypes.DOUBLE,

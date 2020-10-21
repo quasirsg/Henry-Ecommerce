@@ -24,6 +24,7 @@ export const GET_USERS = "GET_USERS";
 export const PUT_USER = "PUT_USER";
 export const DELETE_USER = "DELETE_USER";
 export const POST_USER = "POST_USER";
+export const GET_ONE_USER = "GET_ONE_USER";
 
 //Search constants
 export const SEARCH_BY_QUERY = "SEARCH_BY_QUERY";

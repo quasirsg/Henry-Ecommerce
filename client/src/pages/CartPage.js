@@ -1,10 +1,16 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Container, Col, Row } from "reactstrap";
 import ShoppingCart from "../components/shoppingCart";
 import ButtonBlock from "../components/custom/ButtonBlock";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { getProductCart } from "../redux/actions/userActions";
 const Cart = () => {
-  const productsCarts = useSelector((state) => state.cart.products);
+  const productsCarts = useSelector((state) => state);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getProductCart());
+  }, []);
   console.log(productsCarts);
   return (
     <Container fluid={true} className="mt-4">

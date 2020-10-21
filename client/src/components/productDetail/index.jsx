@@ -2,7 +2,11 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import StarRatings from "react-star-ratings";
 import { useParams } from "react-router-dom";
-import { addProductCart } from "../../redux/actions/cartActions";
+import {
+  addProductCart,
+  getUsers,
+  getOneUser,
+} from "../../redux/actions/userActions";
 
 import "./producto.css";
 import allActions from "../../redux/actions/allActions";
@@ -20,15 +24,18 @@ const Product = (props) => {
   };
   /* ========= Redux========== */
   const product = useSelector((state) => state.products.productDetail);
+  const userId = useSelector((state) => state);
+  //??ver usuario logueado
+  console.log(product);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(allActions.getOneProduct(id));
+    dispatch(getOneUser()); //ver usuario logueado
   }, []);
-
   const handleOnClick = () => {
-    dispatch(addProductCart(product, 1));
+    dispatch(addProductCart(userId.id, product));
   };
   return (
     <div className="productContainer">

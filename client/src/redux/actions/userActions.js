@@ -1,5 +1,8 @@
 import axios from "axios";
 import * as actionTypes from "./actionTypes";
+import Toast from "../../components/alerts/toast";
+import DeleteDialog from "../../components/alerts/deleteDialog";
+import Swal from "sweetalert2";
 
 const url = `http://localhost:3001`;
 
@@ -9,12 +12,21 @@ export const getUsers = () => (dispatch) => {
     .then((res) => {
       dispatch({
         type: actionTypes.GET_USERS,
-        users: res.data.users,
+        users: res.data,
       });
     })
     .catch((err) => {
       console.log(err);
     });
+};
+
+export const getOneUser = (id) => (dispatch) => {
+  axios.get(url + `/users/${id}`).then((res) => {
+    dispatch({
+      type: actionTypes.GET_ONE_USER,
+      user: res.data,
+    });
+  });
 };
 
 export const editUser = (id, action, values) => (dispatch) => {
@@ -55,76 +67,73 @@ export const editUser = (id, action, values) => (dispatch) => {
   }
 };
 
-// export const putProduct=(id, action, values)=>(dispatch)=>{
-//   return axios
-//     .put(url+`/products/${id}`)ñ
-//     .then(res=>{
-//       console.log(res)
-//       dispatch({
-//         type: actionTypes.PUT_PRODUCT,
-//         productDetail: res.data
-//       })
-//     })
-//     .catch(err=>console.log(err))
-// }
+export const addProductCart = (userId, product) => (dispatch) => {
+  return axios
+    .post(url + `/users/${userId}/cart/add`, {
+      productId: product.id,
+      quantity: product.quantity,
+    })
+    .then((res) => {
+      console.log(res);
+      dispatch({
+        type: actionTypes.ADD_PRODUCT_CART,
+        product: res.data,
+      });
+    });
+};
 
-// export const deleteProduct=(id, action, values)=>dispatch=>{
-//   return axios
-//   .delete(url+`/products/${id ? id : ""}`, action === "delete" ? null : values)
-//   .then(res=>{
-//     dispatch({
-//       type: actionTypes.DELETE_PRODUCT,
-//       productDetail: res.data
-//     })
-//   })
-//   .catch(err=>console.log(err))
-// }
+export const deleteProductsCart = (userId, productId) => (dispatch) => {
+  return axios
+    .delete(url + `/${userId}/cart/${productId}`)
+    .then((res) => {
+      dispatch({
+        type: actionTypes.DELETE_PRODUCTS_CART,
+        productId: productId,
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
 
-// export const addAmount = ({ id }) => {
-//   return {
-//     type: ADD_AMOUNT,
-//     productId: id,
-//   };
-// };
+export const getProductCart = (userId) => (dispatch) => {
+  axios
+    .get(url + `/${userId}/cart`)
+    .then((res) => {
+      dispatch({
+        type: actionTypes.GET_CART_PRODUCTS,
+        products: res.data.products,
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
 
-// export const subtractAmount = ({ id }) => {
-//   return {
-//     type: SUBTRACT_AMOUNT,
-//     productId: id,
-//   };
-// };
+export const addAmount = (userId, productId) => (dispatch) => {
+  return axios
+    .put(`/${userId}/cart/${productId}`)
+    .then((res) => {
+      dispatch({
+        type: actionTypes.ADD_AMOUNT,
+        productId: res.products,
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
 
-// export const addProductCart = (productId, quantity) => dispatch => {
-//   axios
-//     .post(PathBase + '/users/' + 1 + '/cart',
-//       {
-//         productId: productId,
-//         quantity: quantity
-//       })
-//     .then(res => {
-//       console.log(res);
-//       dispatch({
-//         type: ADD_PRODUCT_CART,
-//         data: "null"
-//       })
-//     })
-// };
-
-// export const deleteProductCart = ({ id }) => {
-//   return {
-//     type: DELETE_PRODUCTS_CART,
-//     productId: id,
-//   };
-// };
-
-// export const getCartProducts = () => (dispatch) => {
-//   axios
-//     .get(PathBase + '/users/' + 2 + '/cart')
-//     .then(res => {
-//       console.log('get_cart_products' + res);
-//       dispatch({
-//         type: GET_CART_PRODUCTS,
-//         data: res
-//       })
-//     })
-// };
+export const deletAmount = (userId, productId) => (dispatch) => {
+  axios
+    .put(`/${userId}/cart/${productId}`)
+    .then((res) => {
+      dispatch({
+        type: actionTypes.SUBTRACT_AMOUNT,
+        productId: res.products,
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
