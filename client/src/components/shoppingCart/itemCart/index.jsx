@@ -1,12 +1,19 @@
 import React from "react";
 import { ThreeDotsVertical } from "react-bootstrap-icons";
 import { Col, Row } from "reactstrap";
-import allActions from "../../../redux/actions/allActions";
 import ButtonCircle from "../../custom/ButtonCircle";
-
+import { useDispatch } from "react-redux";
 import "./itemCart.css";
+import { deleteProductsCart } from "../../../redux/actions/userActions";
+
 const ItemCart = ({ product, quantity }) => {
-  const handleOnClick = () => { };
+  const dispatch = useDispatch();
+  console.log(product);
+  let userId = 1;
+  const handleOnClick = (e, productId) => {
+    e.preventDefault();
+    dispatch(deleteProductsCart(userId, productId));
+  };
   return (
     <Col lg="12">
       <div className="itemCart">
@@ -23,8 +30,11 @@ const ItemCart = ({ product, quantity }) => {
             </div>
           </Col>
           <Col lg="6">
-            <div className="d-flex flex-row-reverse">
-              <button onClick={handleOnClick} className="itemCart-delete">
+            <div className="d-flex flex-row-reverse" value={product.id}>
+              <button
+                onClick={(e) => handleOnClick(e, product.id)}
+                className="itemCart-delete"
+              >
                 Remover
               </button>
             </div>

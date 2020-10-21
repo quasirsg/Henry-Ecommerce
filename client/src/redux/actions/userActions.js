@@ -69,18 +69,20 @@ export const editUser = (id, action, values) => (dispatch) => {
 
 //Agregar productos al carrito
 export const addProductCart = (userId, product) => async (dispatch) => {
-
   try {
     // Verificar que el usuario tenga un carrito
-    const { data: { orderId } } = await axios.post(`${url}/order/${userId}`, {
+    const {
+      data: { orderId },
+    } = await axios.post(`${url}/order/${userId}`, {
       status: "shopping_cart",
     });
 
-    axios.post(`${url}/users/${userId}/cart/add`, {
-      orderId,
-      productId: product.id,
-      quantity: product.quantity,
-    })
+    axios
+      .post(`${url}/users/${userId}/cart/add`, {
+        orderId,
+        productId: product.id,
+        quantity: product.quantity,
+      })
       .then((res) => {
         dispatch({
           type: actionTypes.ADD_PRODUCT_CART,
@@ -88,23 +90,21 @@ export const addProductCart = (userId, product) => async (dispatch) => {
         });
         Toast.fire({
           icon: "success",
-          title: `Se agregó el producto: ${product.name.slice(0,10)}`,
+          title: `Se agregó el producto: ${product.name.slice(0, 10)}`,
         });
       });
-
   } catch (error) {
     Toast.fire({
       icon: "error",
-      title: `Error: No se guardo "${product.name.slice(0,10)}"`,
+      title: `Error: No se guardo "${product.name.slice(0, 10)}"`,
     });
   }
-
 };
 
 //Eliminar productos del carrito
 export const deleteProductsCart = (userId, productId) => (dispatch) => {
   return axios
-    .delete(url + `/${userId}/cart/${productId}`)
+    .delete(url + `/users/${userId}/cart/${productId}`)
     .then((res) => {
       dispatch({
         type: actionTypes.DELETE_PRODUCTS_CART,
@@ -139,7 +139,6 @@ export const addAmount = (userId, productId) => (dispatch) => {
         type: actionTypes.ADD_AMOUNT,
         productId: res.products,
       });
-
     })
     .catch((err) => {
       console.log(err);

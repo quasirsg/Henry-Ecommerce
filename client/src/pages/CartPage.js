@@ -4,14 +4,10 @@ import ShoppingCart from "../components/shoppingCart";
 import ButtonBlock from "../components/custom/ButtonBlock";
 import { useSelector, useDispatch } from "react-redux";
 import { getProductCart } from "../redux/actions/userActions";
+import { getOneProduct, getProducts } from "../redux/actions/productActions";
 const Cart = () => {
-  const productsCarts = useSelector((state) => state);
-  const dispatch = useDispatch();
-  const userId = localStorage.getItem("user");
-  useEffect(() => {
-    dispatch(getProductCart(1));
-  }, []);
-  console.log(productsCarts);
+  const productsCarts = useSelector((state) => state.users.carrito);
+
   return (
     <Container fluid={true} className="mt-4">
       <Row>

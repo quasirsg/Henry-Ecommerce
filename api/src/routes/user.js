@@ -147,7 +147,8 @@ server.post("/:userId/cart/add", async (req, res, next) => {
     const { stock, price, id, name, image } = await Product.findOne({
       where: {
         id: productId,
-      }, raw: true
+      },
+      raw: true,
     });
 
     // Verificar stock
@@ -165,7 +166,7 @@ server.post("/:userId/cart/add", async (req, res, next) => {
         product_id: id,
         orderId: orderId,
         userId: userId,
-      }
+      },
     });
 
     const product = {
@@ -176,17 +177,15 @@ server.post("/:userId/cart/add", async (req, res, next) => {
       stock,
       quantity,
       total: subTotal,
-    }
+    };
 
     return res.status(201).json({
-      message: 'Se agrego al carrito.',
-      product
+      message: "Se agrego al carrito.",
+      product,
     });
-
   } catch (error) {
     next(error.message);
   }
-
 });
 
 //modificamos la cantidad de un producto en especifico, que se encuentre en el carrito
@@ -287,14 +286,14 @@ server.delete("/:userId/cart", (req, res) => {
 });
 
 //obtener el carrito del usuario
-server.get("/:idUser/cart", (req, res) => {
+server.get("/:userId/cart", (req, res) => {
   //revisar con linea 178
-  const idUser = req.params.idUser;
+  const userId = req.params.userId;
 
   Order.findOne({
     include: [User, { model: Product, through: Linea_order }],
     where: {
-      userId: idUser,
+      userId: userId,
       status: "shopping_cart",
     },
   })

@@ -4,7 +4,7 @@ import StarRatings from "react-star-ratings";
 import { useParams } from "react-router-dom";
 import { addProductCart } from "../../redux/actions/userActions";
 import "./producto.css";
-import allActions from "../../redux/actions/allActions";
+import { createOrder } from "../../redux/actions/cartActions";
 
 const Product = (props) => {
   const [rating, setRating] = useState(0);
@@ -24,9 +24,10 @@ const Product = (props) => {
   product.quantity = 0; //agrego una cantidad por default
   // console.log(userId);
   console.log(product);
+  const status = "shopping_cart";
 
   useEffect(() => {
-  dispatch(allActions.getOneProduct(id));
+    dispatch(allActions.getOneProduct(id));
   }, []);
 
   const handleOnClick = () => {
