@@ -25,9 +25,9 @@ const Product = (props) => {
   // console.log(userId);
   console.log(product);
 
-  // useEffect(() => {
-  // dispatch(allActions.getOneProduct(id));
-  // }, []);
+  useEffect(() => {
+  dispatch(allActions.getOneProduct(id));
+  }, []);
 
   const handleOnClick = () => {
     product.quantity += 1;

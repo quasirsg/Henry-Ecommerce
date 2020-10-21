@@ -139,65 +139,55 @@ server.get("/orders", (req, res) => {
 });
 
 //agregar un producto al carrito
-server.post("/:userId/cart/add", (req, res, next) => {
-  const userId = req.params.userId;
-  const { productId, quantity } = req.body;
-  console.log(userId);
-  console.log(productId, quantity);
-  Order.findOne({
-    where: {
-      userId: userId,
-      status: "shopping_cart",
-    },
-  })
-    .then((order) => {
-      const orderId = order.id;
+server.post("/:userId/cart/add", async (req, res, next) => {
+  const { userId } = req.params;
+  const { productId, quantity, orderId } = req.body;
 
-      Product.findOne({
-        where: {
-          id: productId,
-        },
-      }).then((product) => {
-        if (quantity > product.stock) {
-          return res.send("Invalid Operation");
-        }
-        Linea_order.create({
-          quantity: quantity,
-          total: product.price,
-          product_id: productId,
-          orderId: orderId,
-          userId: userId,
-        }).then((orderCreated) => {
-          return res.status(201).json(orderCreated);
-        });
-      });
-    })
-    .catch((err) => {
-      next;
+  try {
+    const { stock, price, id, name, image } = await Product.findOne({
+      where: {
+        id: productId,
+      }, raw: true
     });
-});
 
-//Obtenes todos los productos que estan en el carrito de un usuario en especifico
-// server.get("/:userId/cart", (req, res) => {
-//   // Revisar con linea 295
-//   const idUser = req.params.userId;
-//   Order.findOne({
-//     include: [User, { model: Product, through: Linea_order }],
-//     where: {
-//       userId: idUser,
-//       status: "shopping_cart",
-//     },
-//   })
-//     .then((order) => {
-//       if (!order) {
-//         return res.send({ data: { products: [] } }).status(204);
-//       }
-//       return res.send({ data: order });
-//     })
-//     .catch((err) => {
-//       return res.sendStatus(500);
-//     });
-// });
+    // Verificar stock
+    if (quantity > stock) {
+      return res.status(400).json({ message: "Invalid Operation" });
+    }
+
+    const subTotal = price * quantity;
+
+    // Agregar al carrito
+    const line_order = await Linea_order.findOrCreate({
+      where: {
+        quantity: quantity,
+        total: subTotal,
+        product_id: id,
+        orderId: orderId,
+        userId: userId,
+      }
+    });
+
+    const product = {
+      id,
+      name,
+      image,
+      price,
+      stock,
+      quantity,
+      total: subTotal,
+    }
+
+    return res.status(201).json({
+      message: 'Se agrego al carrito.',
+      product
+    });
+
+  } catch (error) {
+    next(error.message);
+  }
+
+});
 
 //modificamos la cantidad de un producto en especifico, que se encuentre en el carrito
 server.put("/:userId/cart/:productId", async (req, res) => {

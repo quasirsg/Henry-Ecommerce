@@ -67,40 +67,38 @@ export const editUser = (id, action, values) => (dispatch) => {
 
 // --------------- ACTION CART---------------
 
-const createOrFindOrder = (id) => {
-  return axios.post(`${url}/order/${id}`, {
-    status: "shopping_cart",
-  });
-};
-
 //Agregar productos al carrito
 export const addProductCart = (userId, product) => async (dispatch) => {
-  // Verificar que el usuario tenga un carrito
-  const data = await axios.post(`${url}/order/${userId}`, {
-    status: "shopping_cart",
-  });
 
-  axios
-    .post(`${url}/users/${userId}/cart/add`, {
+  try {
+    // Verificar que el usuario tenga un carrito
+    const { data: { orderId } } = await axios.post(`${url}/order/${userId}`, {
+      status: "shopping_cart",
+    });
+
+    axios.post(`${url}/users/${userId}/cart/add`, {
+      orderId,
       productId: product.id,
       quantity: product.quantity,
     })
-    .then((res) => {
-      dispatch({
-        type: actionTypes.ADD_PRODUCT_CART,
-        product: res.data,
+      .then((res) => {
+        dispatch({
+          type: actionTypes.ADD_PRODUCT_CART,
+          product: res.data,
+        });
+        Toast.fire({
+          icon: "success",
+          title: `Se agregó el producto: ${product.name.slice(0,10)}`,
+        });
       });
-      Toast.fire({
-        icon: "success",
-        title: `Se agregó el producto: ${res.name}`,
-      });
-    })
-    .catch((err) => {
-      Toast.fire({
-        icon: "error",
-        title: `Error: No se guardo "${product.name}"`,
-      });
+
+  } catch (error) {
+    Toast.fire({
+      icon: "error",
+      title: `Error: No se guardo "${product.name.slice(0,10)}"`,
     });
+  }
+
 };
 
 //Eliminar productos del carrito
@@ -141,6 +139,7 @@ export const addAmount = (userId, productId) => (dispatch) => {
         type: actionTypes.ADD_AMOUNT,
         productId: res.products,
       });
+
     })
     .catch((err) => {
       console.log(err);
