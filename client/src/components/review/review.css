@@ -1,0 +1,27 @@
+.reviews {
+    padding: 20px;
+    border-bottom: 1px solid #CED4DA;
+}
+
+.reviews__container {
+    display: flex;
+    align-items: center;
+}
+
+.reviews__userInfo {
+    padding: 0 20px;
+}
+
+.reviews__title {
+    font-size: 1.2rem;
+    font-weight: 500;
+    font-style: oblique;
+}
+
+.reviews__description {
+    font-size: 1rem;
+    font-weight: lighter;
+    letter-spacing: 0.1px;
+    font-style: italic;
+    padding: 0 2rem;
+}

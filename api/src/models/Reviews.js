@@ -20,11 +20,6 @@ module.exports = (sequelize) => {
         description: {
             type: DataTypes.TEXT,
             allowNull: false,
-            validate: {
-                len: {
-                    args: [20, 180]
-                }
-            }
         }
     });
 }

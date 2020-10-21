@@ -1,9 +1,10 @@
-import { POST_USER, PUT_USER, DELETE_USER,GET_USERS } from "../actions/actionTypes";
+import { POST_USER, PUT_USER, DELETE_USER, GET_USERS } from "../actions/actionTypes";
 
 const initialState = {
   users: [],
   userDetail: [],
   err: [],
+  reviews: []
 };
 
 function userReducers(state = initialState, action) {

@@ -1,17 +1,20 @@
 import React from 'react'
 import { Col, Row } from 'reactstrap'
-import { StarRatings } from 'react-star-ratings'
+import StarRatings from 'react-star-ratings'
+import './review.css';
+
 const Review = ({ userImage, userName, points, description }) => {
+
     return (
         <Col
             lg="12"
             className="reviews"
         >
             <Row>
-                <Col lg="4">
+                <Col lg="3" className="my-auto">
                     <div className="reviews__container">
                         <div className="reviews___userImage">
-                            <img src={userImage} alt="imagen alternativa" />
+                            <img src="/images/userDefaultIcon.png" alt={userName} />
                         </div>
                         <div className="reviews__userInfo">
                             <div className="reviews__title">
@@ -20,13 +23,11 @@ const Review = ({ userImage, userName, points, description }) => {
                         </div>
                     </div>
                 </Col>
-                <Col lg="8">
+                <Col lg="9">
                     <div className="reviews__stars">
                         <StarRatings
                             rating={points}
-                            isSelectable={false}
-                            starRatedColor="blue"
-                            changeRating={() => changeRating}
+                            starRatedColor="yellow"
                             starHoverColor="yellow"
                             starDimension="16px"
                             numberOfStars={5}
@@ -41,3 +42,5 @@ const Review = ({ userImage, userName, points, description }) => {
         </Col>
     );
 }
+
+export default Review;

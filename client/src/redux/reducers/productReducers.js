@@ -5,12 +5,15 @@ import {
   ADD_PRODUCT_CATEGORY,
   REMOVE_CHANGE_PRODUCT_CATEGORY,
   PUT_PRODUCT,
-  DELETE_PRODUCT, PUT_PRODUCT_FAILED
+  DELETE_PRODUCT,
+  PUT_PRODUCT_FAILED,
+  GET_PRODUCT_REVIEWS,
 } from "../actions/actionTypes";
 
 const initialState = {
   allProducts: [],
   productDetail: {},
+  productReviews: [],
   loading: false,
   message: ''
 };
@@ -29,6 +32,12 @@ function productReducers(state = initialState, action) {
         ...state,
         productDetail: action.payload,
       };
+
+    case GET_PRODUCT_REVIEWS:
+      return {
+        ...state,
+        productReviews: action.reviews
+      }
 
     case POST_PRODUCT:
       return {

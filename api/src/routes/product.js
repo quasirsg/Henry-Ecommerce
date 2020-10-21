@@ -1,5 +1,5 @@
 const server = require("express").Router();
-const { Product, Category, product_category, Reviews } = require("../db.js");
+const { Product, Category, product_category, Reviews, User } = require("../db.js");
 
 server.get("/", (req, res, next) => {
 	Product.findAll({
@@ -170,7 +170,7 @@ server.get('/:productId/reviews', (req, res) => {
 		}
 	})
 		.then(reviews => {
-			res.sendStatus(200).send({ result: reviews });
+			res.send({ result: reviews });
 		})
 		.catch(err => res.send(err));
 })
@@ -190,6 +190,7 @@ server.post('/:productId/:userId/review', (req, res) => {
 			res.status(201).send(data);
 		})
 })
+
 //ruta para modificar una review
 server.put('/:productId/review/:reviewId', (req, res) => {
 	const productId = req.params.productId;
