@@ -1,32 +1,30 @@
 const server = require("express").Router();
-const { Order } = require("../db.js");
+const { Order, User } = require("../db.js");
 
-// server.post("/", (req, res, next) => {
-//   const { id , status, user_id } = req.body;
-// console.log(req.body)
-//   if ( !id, !status)
-//     return res.status(400).json({ message: "incomplete order" });
+server.post("/", (req, res, next) => {
+  const { id, status, user_id } = req.body;
+  console.log(req.body);
+  if ((!id, !status))
+    return res.status(400).json({ message: "incomplete order" });
 
-//   Order.create({
-//     order_id: id,
-//     order_status: status,
-//     userId: user_id
-//   })
-//     .then((order) => {
-//       return res.status(200).json(order);
-//     })
-//     .catch(next);
-// });
+  Order.create({
+    order_id: id,
+    order_status: status,
+    userId: user_id,
+  })
+    .then((order) => {
+      return res.status(200).json(order);
+    })
+    .catch(next);
+});
 
 server.get("/", (req, res, next) => {
   Order.findAll()
     .then((order) => {
-      
       if (order === null)
         return res.status(404).json({ message: "No hay ordenes" });
 
       return res.status(200).json({ order });
-
     })
     .catch(next);
 });
@@ -50,7 +48,6 @@ server.put("/:id", (req, res, next) => {
 server.delete("/:id", (req, res, next) => {
   let { id } = req.params;
 
-<<<<<<< HEAD
   Order.findOne({ where: { id } })
     .then((order) => {
       if (!order)
@@ -58,23 +55,30 @@ server.delete("/:id", (req, res, next) => {
 
       order.destroy(order).then(() => {
         return res.status(200).json({ message: "Order eliminada" });
-=======
-  if (status === "shopping_cart") {
+      });
+    })
+    .catch(next);
+});
 
+server.post("/:id", (req, res, next) => {
+  let userId = req.params.id;
+  let status = req.body.status;
+
+  if (status === "shopping_cart") {
     try {
       User.findByPk(userId)
         .then((user) => {
           if (!user) {
             return res.sendStatus(404);
           }
-          Order.findOrCreate({ where: { status }, raw: true })
-            .then((order) => {
-              const numOrder = order[0].dataValues ? order[0].dataValues.id : order[0].id;
-              user.addOrder(numOrder)
-                .then(() => {
-                  return res.status(201).json({ orderId: numOrder })
-                })
+          Order.findOrCreate({ where: { status }, raw: true }).then((order) => {
+            const numOrder = order[0].dataValues
+              ? order[0].dataValues.id
+              : order[0].id;
+            user.addOrder(numOrder).then(() => {
+              return res.status(201).json({ orderId: numOrder });
             });
+          });
         })
         .catch((err) => {
           return res.sendStatus(500);
@@ -123,10 +127,8 @@ server.delete("/:id", (req, res, next) => {
       })
       .catch((err) => {
         return res.sendStatus(500);
->>>>>>> a7720e3d6df4cfd13d4419fd519445efd33bb213
       });
-    })
-    .catch(next);
+  }
 });
 
 module.exports = server;
