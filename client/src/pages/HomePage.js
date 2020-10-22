@@ -6,7 +6,6 @@ import Catalogo from '../components/catalogo';
 import { useSelector, useDispatch } from 'react-redux';
 import { getCategory } from '../redux/actions/categoryActions';
 import { getProducts, getBanners } from '../redux/actions/productActions';
-import '../App.css';
 
 const HomePage = () => {
 

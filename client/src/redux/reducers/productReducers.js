@@ -16,15 +16,7 @@ const initialState = {
   productDetail: {},
   productReviews: {
     average: 5,
-    reviews: [
-      {
-        points: 1,
-        description: 'Loading',
-        user: {
-          name: '...',
-          image: 'loading photo'
-        }
-      }]
+    reviews: [],
   },
   productBanner: [
     {
