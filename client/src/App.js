@@ -5,7 +5,6 @@ import { Switch, Route } from "react-router-dom";
 import Navbar from "./components/navbar";
 import ProductDetail from "./components/productDetail";
 import FormCategory from "./components/categoryForm";
-import FormUser from './components/userForm';
 
 //Pages
 import SearchPage from "./pages/SearchPage";
@@ -15,7 +14,7 @@ import CartPage from "./pages/CartPage";
 
 // Componente Orden-> probando
 import Orden from "./components/Orden/orden.jsx";
-
+import FormUser from './components/userForm';
 
 function App() {
   return (

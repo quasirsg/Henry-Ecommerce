@@ -51,3 +51,9 @@ export const DELETE_ORDER = "DELETE_ORDER";
 export const DELETE_PRODUCT_ORDER = "DELETE_PRODUCT_ORDER";
 export const ADD_AMOUNT_ORDER = "ADD_AMOUNT_ORDER";
 export const SUBTRACT_AMOUNT_ORDER = "SUBTRACT_AMOUNT_ORDER";
+
+//reviews constants
+export const ADD_REVIEW = "ADD_REVIEW";
+export const DELETE_REVIEW = "DELETE_REVIEW";
+export const EDIT_REVIEW = "EDIT_REVIEW";
+export const GET_PRODUCT_REVIEWS = "GET_PRODUCT_REVIEWS";

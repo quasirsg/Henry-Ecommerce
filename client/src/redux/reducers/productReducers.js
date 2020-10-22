@@ -5,12 +5,26 @@ import {
   ADD_PRODUCT_CATEGORY,
   REMOVE_CHANGE_PRODUCT_CATEGORY,
   PUT_PRODUCT,
-  DELETE_PRODUCT, PUT_PRODUCT_FAILED
+  DELETE_PRODUCT,
+  PUT_PRODUCT_FAILED,
+  GET_PRODUCT_REVIEWS,
 } from "../actions/actionTypes";
 
 const initialState = {
   allProducts: [],
   productDetail: {},
+  productReviews: {
+    average: 5,
+    reviews: [
+      {
+        points: 1,
+        description: 'Loading',
+        user: {
+          name: '...',
+          image: 'loading photo'
+        }
+      }]
+  },
   loading: false,
   message: ''
 };
@@ -29,6 +43,15 @@ function productReducers(state = initialState, action) {
         ...state,
         productDetail: action.payload,
       };
+
+    case GET_PRODUCT_REVIEWS:
+      return {
+        ...state,
+        productReviews: {
+          average: action.reviews.average,
+          reviews: action.reviews.result,
+        }
+      }
 
     case POST_PRODUCT:
       return {

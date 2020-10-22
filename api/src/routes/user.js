@@ -118,42 +118,40 @@ server.get("/orders", (req, res) => {
 });
 
 //agregar un producto al carrito
-server.post("/userId/cart", (req, res) => {
-    const userId = req.params.userId;
-    const { productId, quantity } = req.body;
+server.post("/cart", async (req, res) => {
+    const { userId, productId, quantity } = req.body;
 
-    Order.findOne({
+    let order = await Order.findOne({
         where: {
             userId: userId,
             status: "shopping_cart",
         },
-    })
-        .then((order) => {
-            const orderId = order.id;
+    });
 
-            Product.findOne({
-                where: {
-                    id: productId,
-                },
-            })
-                .then((product) => {
-                    if (quantity > product.stock) {
-                        return res.send("Invalid Operation");
-                    }
-                    Linea_Order.create({
-                        quantity: quantity,
-                        total: product.price,
-                        productId: productId,
-                        orderId: orderId,
-                        userId: userId,
-                    })
-                        .then((orderCreated) => {
-                            return res.send(orderCreated).sendStatus(201);
-                        })
-                        .catch((err) => {
-                            return res.sendStatus(500);
-                        });
-                });
+    if (!order)
+        order = await Order.create({
+            status: "shopping_cart",
+            userId: userId,
+        });
+
+    let product = await Product.findByPk(productId);
+    if (product.stock < quantity) return res.sendStatus(422);
+
+    Linea_Order.create({
+        price: product.price,
+        quantity: quantity,
+        product_id: productId,
+        orderId: order.id,
+        userId: userId,
+    })
+        .then((orderline) => {
+            console.log(orderline);
+            product.dataValues["orderline"] = orderline;
+            return res.send({ data: product });
+        })
+        .catch((err) => {
+            console.log(err);
+            return res.sendStatus(500);
         });
 });
 

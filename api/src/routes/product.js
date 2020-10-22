@@ -1,5 +1,5 @@
 const server = require("express").Router();
-const { Product, Category, product_category } = require("../db.js");
+const { Product, Category, product_category, Reviews, User } = require("../db.js");
 
 server.get("/", (req, res, next) => {
 	Product.findAll({
@@ -156,5 +156,89 @@ server.delete('/:idProducto/category/:idCategoria', (req, res, next) => {
 		})
 		.catch(error => next(error.message));
 });
+
+//obtener todas las reviews de un producto
+server.get('/:productId/reviews', (req, res) => {
+	const productId = req.params.productId;
+
+	Reviews.findAll({
+		where: {
+			productId,
+		},
+		include: {
+			model: User
+		}
+	})
+		.then(reviews => {
+			//sacamos el promedio para mostrar en el productDetail
+			const sumPoints = reviews.reduce((acumulador, nextValue) => acumulador + nextValue.points, 0);
+			const average = sumPoints / reviews.length;
+			res.status(200).send({
+				average,
+				result: reviews
+			});
+		})
+		.catch(err => res.send(err));
+})
+
+//Ruta para crear una review
+server.post('/:productId/:userId/review', (req, res) => {
+	const productId = req.params.productId;
+	const userId = req.params.userId;
+	const { points, description } = req.body;
+	Reviews.create({
+		points,
+		description,
+		productId,
+		userId,
+	})
+		.then(data => {
+			res.status(201).send(data);
+		})
+})
+
+//ruta para modificar una review
+server.put('/:productId/review/:reviewId', (req, res) => {
+	const productId = req.params.productId;
+	const reviewId = req.params.reviewId;
+	const { points, description } = req.body;
+
+	Reviews.findOne({
+		where: {
+			productId,
+			id: reviewId,
+		}
+	})
+		.then(review => {
+			if (!review) {
+				return res.sendStatus(404);
+			} else {
+				review.points = points;
+				review.description = description;
+			}
+			review.save()
+				.then(newReview => {
+					res.status(204).send(newReview);
+				})
+				.catch(err => res.send(err));
+		})
+})
+//borrar una determinada review
+server.delete('/:productId/review/:reviewId', (req, res) => {
+	const productId = req.params.productId;
+	const reviewId = req.params.reviewId;
+
+	Reviews.findOne({
+		where: {
+			productId,
+			id: reviewId,
+		}
+	})
+		.then(review => {
+			review.destroy();
+			res.sendStatus(200);
+		})
+		.catch(err => res.send(err));
+})
 
 module.exports = server;

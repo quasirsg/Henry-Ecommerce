@@ -1,4 +1,4 @@
-const { Product, Category, product_category } = require('./db.js');
+const { Product, Category, User, product_category, Reviews } = require('./db.js');
 
 const loadProducts = () => {
     Product.bulkCreate([{
@@ -152,8 +152,51 @@ const loadProductCategories = () => {
         ]);
 }
 
+const loadUsers = () => {
+    User.bulkCreate([
+        {
+            name: 'Bryan Ecommerce',
+            email: 'bryan@admin.com',
+            address: 'Avenida Siempre viva 1234',
+            role: 'admin',
+            password: '12345678',
+            image: 'mi_imagen',
+            location_id: 23
+        }, {
+            name: 'Leon001',
+            email: 'leonjajaj@cliente.com',
+            address: 'Avenida Siempre viva 001',
+            role: 'client',
+            password: '12345678',
+            image: 'mi_imagen_2',
+            location_id: 21
+        }
+    ]);
+}
+
+const loadReviews = () => {
+    Reviews.bulkCreate([{
+        points: 5,
+        description: 'El producto es de buena calidad',
+        productId: 1,
+        userId: 1,
+    }, {
+        points: 3,
+        description: 'Es de mala calidad F',
+        productId: 1,
+        userId: 2,
+    }, {
+        points: 1,
+        description: 'Es de mala calidad F',
+        productId: 2,
+        userId: 1,
+    }]);
+}
+
 module.exports = {
     loadProducts,
     loadCategories,
     loadProductCategories,
+    loadUsers,
+    loadReviews,
 }

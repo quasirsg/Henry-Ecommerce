@@ -88,12 +88,9 @@
 
 .rating-reviews {
   display: flex;
+  justify-content: center;
 }
 
-.rating-reviews p {
-  font-family: "Roboto";
-  padding-top: 2.5rem;
-}
 
 .button-container {
   text-align: center;
