@@ -1,6 +1,6 @@
 const express = require('express');
 const cookieParser = require('cookie-parser');  
-const jwt = require('jsonwebtoken');
+
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const routes = require('./routes/index.js');
@@ -13,11 +13,7 @@ const server = express();
 
 server.name = 'API';
 
-//1
-app.set('llave', config.llave);
-//2
 server.use(bodyParser.urlencoded({ extended: true, limit: '50mb' }));
-//3
 server.use(bodyParser.json({ limit: '50mb' }));
 server.use(cookieParser());
 server.use(morgan('dev'));

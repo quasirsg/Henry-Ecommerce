@@ -7,6 +7,7 @@ const searchRouter = require("./search.js");
 const orderRouter = require("./order.js");
 const userRouter = require("./user.js");
 
+
 const router = Router();
 
 router.use("/products", productRouter);
@@ -14,23 +15,29 @@ router.use("/category", categoryRouter);
 router.use("/search", searchRouter);
 router.use("/order", orderRouter);
 router.use("/users", userRouter);
-router.get('/', function(req, res) {
-    res.send('Inicio');
-});
-router.post('/autenticar', (req, res) => {
-    if(req.body.usuario === "asfo" && req.body.contrasena === "holamundo") {
-  const payload = {
-   check:  true
-  };
-  const token = jwt.sign(payload, app.get('llave'), {
-   expiresIn: 1440
-  });
-  res.json({
-   mensaje: 'Autenticación correcta',
-   token: token
-  });
-    } else {
-        res.json({ mensaje: "Usuario o contraseña incorrectos"})
-    }
-})
+
+//   router.get('/secure', (req, res) => {
+//     var token = req.headers['authorization']
+//     if(!token){
+//         res.status(401).send({
+//           error: "Es necesario el token de autenticación"
+//         })
+//         return
+//     }
+
+//     token = token.replace('Bearer ', '')
+
+//     jwt.verify(token, 'Secret Password', function(err, user) {
+//       if (err) {
+//         res.status(401).send({
+//           error: 'Token inválido'
+//         })
+//       } else {
+//         res.send({
+//           message: 'Awwwww yeah!!!!'
+//         })
+//       }
+//     })
+// })
+
 module.exports = router;
