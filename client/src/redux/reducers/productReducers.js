@@ -8,6 +8,7 @@ import {
   DELETE_PRODUCT,
   PUT_PRODUCT_FAILED,
   GET_PRODUCT_REVIEWS,
+  GET_BANNERS,
 } from "../actions/actionTypes";
 
 const initialState = {
@@ -25,6 +26,22 @@ const initialState = {
         }
       }]
   },
+  productBanner: [
+    {
+      src: '/images/banner1.png',
+      altText: 'Slide 1',
+      caption: '',
+      header: '',
+      key: '1'
+    },
+    {
+      src: '/images/banner2.png',
+      altText: 'Slide 1',
+      caption: '',
+      header: '',
+      key: '2'
+    }
+  ],
   loading: false,
   message: ''
 };
@@ -89,6 +106,8 @@ function productReducers(state = initialState, action) {
         ...state,
         allProducts: state.allProducts.filter(item => item.id !== action.payload),
       };
+    case GET_BANNERS:
+      return state;
 
     default:
       return state;

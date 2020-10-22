@@ -7,7 +7,7 @@ const Catalogue = ({ products }) => {
 
   return (
     <div className="col-lg-10 mt-4">
-      <div className="container">
+      <div className="container-fluid">
         <div className="cat-ppal">
           <div className="catalogo">
             {products.map(fit => {
