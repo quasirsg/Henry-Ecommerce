@@ -12,11 +12,11 @@ export const PUT_PRODUCT = "PUT_PRODUCT";
 export const PUT_PRODUCT_FAILED = "PUT_PRODUCT_FAILED";
 export const DELETE_PRODUCT = "DELETE_PRODUCT";
 export const POST_PRODUCT = "POST_PRODUCT";
+export const GET_BANNERS = "GET_BANNERS";
 
 //Category of products constants
 export const ADD_PRODUCT_CATEGORY = "ADD_PRODUCT_CATEGORY";
 export const REMOVE_CHANGE_PRODUCT_CATEGORY = "REMOVE_CHANGE_PRODUCT_CATEGORY";
-
 export const DELETE_PRODUCT_CATEGORY = "DELETE_PRODUCT_CATEGORY";
 
 //Users
@@ -29,11 +29,6 @@ export const POST_USER = "POST_USER";
 export const SEARCH_BY_QUERY = "SEARCH_BY_QUERY";
 export const SEARCH_BY_CATEGORY = "SEARCH_BY_CATEGORY";
 export const SEARCH_ALL = "SEARCH_ALL";
-
-//Users COnstants
-// export const DELETE_USER = "DELETE_USER";
-// export const POST_USER = "POST_USER";
-// export const PUT_USER = "PUT_USER";
 
 //Cart Constants
 export const GET_CART_PRODUCTS = "GET_CART_PRODUCTS";

@@ -8,6 +8,7 @@ import {
   PUT_PRODUCT,
   PUT_PRODUCT_FAILED,
   DELETE_PRODUCT,
+  GET_BANNERS,
 } from "./actionTypes";
 import axios from 'axios';
 import apiCall from "../api";
@@ -36,13 +37,17 @@ export const getProducts = () => (dispatch) => {
 export const getReviews = productId => dispatch => {
   axios.get(url + '/products/' + productId + '/reviews')
     .then(res => {
-      if (res.average !== null && res.result !== []) {
-        dispatch({
-          type: GET_PRODUCT_REVIEWS,
-          reviews: res.data,
-        })
-      }
+      dispatch({
+        type: GET_PRODUCT_REVIEWS,
+        reviews: res.data,
+      })
     })
+}
+
+export const getBanners = () => {
+  return {
+    type: GET_BANNERS,
+  }
 }
 
 export const getOneProduct = (id) => (dispatch) => {

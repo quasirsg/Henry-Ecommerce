@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import StarRatings from "react-star-ratings";
 import { useParams } from "react-router-dom";
@@ -24,7 +24,7 @@ const Product = () => {
   const handleOnClick = () => {
     dispatch(addProductCart(product, 1));
   };
-  console.log(average);
+
   return (
     <div>
       <div className="productContainer">
@@ -41,7 +41,7 @@ const Product = () => {
             <p className="infoCardDescription">{product.description}</p>
             <div className="rating-reviews">
               <StarRatings
-                rating={average}
+                rating={average !== null ? average : 5}
                 starRatedColor="yellow"
                 starHoverColor="yellow"
                 starDimension="16px"
@@ -61,14 +61,15 @@ const Product = () => {
         fluid={true}
         className="py-4"
       >
-        {reviews.map(review => (
-          <Review
-            userImage={review.user.image}
-            userName={review.user.name}
-            points={review.points}
-            description={review.description}
-          />
-        ))}
+        {reviews.length > 0 &&
+          reviews.map(review => (
+            <Review
+              userImage={review.user.image}
+              userName={review.user.name}
+              points={review.points}
+              description={review.description}
+            />
+          ))}
       </Container>
     </div>
   );
