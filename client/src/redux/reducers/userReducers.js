@@ -11,6 +11,7 @@ import {
   GET_ONE_USER,
   GET_USER_ORDERS,
   GET_USERS_ORDERS,
+  DELETE_ALL_CART,
 } from "../actions/actionTypes";
 
 const initialState = {
@@ -67,9 +68,6 @@ function userReducers(state = initialState, action) {
         carrito: state.carrito.concat(action.product),
       };
     case DELETE_PRODUCTS_CART:
-      // console.log(carr);
-
-      console.log(state.carrito);
       return {
         ...state,
         carrito: state.carrito.filter(
@@ -77,39 +75,43 @@ function userReducers(state = initialState, action) {
         ),
       };
     case ADD_AMOUNT:
-      const productsUpdate = products.map((product) => {
-        if (product.id === action.productId) {
-          product.quantity = product.quantity + 1;
+      state.carrito.map((product) => {
+        if (product.product.id === action.product.product_id) {
+          product.product.quantity++;
         }
       });
+      console.log(state.carrito);
       return {
         ...state,
-        carrito: productsUpdate,
+        carrito: state.carrito,
       };
     case SUBTRACT_AMOUNT:
-      const productsUp = products.map((product) => {
-        if (product.id === action.productId) {
-          product.quantity = product.quantity - 1;
+      products.map((product) => {
+        if (product.product.id === action.product.product_id) {
+          if (product.product.quantity >= 1) {
+            product.product.quantity--;
+          }
         }
       });
+      console.log(state.carrito);
       return {
         ...state,
-        carrito: productsUp,
+        carrito: state.carrito,
+      };
+    case DELETE_ALL_CART:
+      return {
+        ...state,
+        carrito: [],
       };
     case GET_CART_PRODUCTS:
       return {
         ...state,
-        carrito: action.products,
+        carrito: state.carrito,
       };
     case GET_USER_ORDERS:
       return {
         ...state,
         orders: action.orders,
-      };
-    case GET_USERS_ORDERS:
-      return {
-        ...state,
-        allOrders: action.orders,
       };
     default:
       return state;

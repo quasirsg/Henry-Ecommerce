@@ -1,10 +1,14 @@
 import React from "react";
 import { ThreeDotsVertical } from "react-bootstrap-icons";
-import { Col, Row } from "reactstrap";
+import { Button, Col, Row } from "reactstrap";
 import ButtonCircle from "../../custom/ButtonCircle";
 import { useDispatch } from "react-redux";
 import "./itemCart.css";
-import { deleteProductsCart } from "../../../redux/actions/userActions";
+import {
+  addAmount,
+  deletAmount,
+  deleteProductsCart,
+} from "../../../redux/actions/userActions";
 
 const ItemCart = ({ product, quantity }) => {
   const dispatch = useDispatch();
@@ -13,6 +17,16 @@ const ItemCart = ({ product, quantity }) => {
   const handleOnClick = (e, productId, name) => {
     e.preventDefault();
     dispatch(deleteProductsCart(userId, productId, name));
+  };
+
+  const handleIncrement = (e) => {
+    e.preventDefault();
+    dispatch(addAmount(userId, product.id, quantity));
+  };
+
+  const handleDecrement = (e) => {
+    e.preventDefault();
+    dispatch(deletAmount(userId, product.id, quantity));
   };
 
   return (
@@ -25,7 +39,7 @@ const ItemCart = ({ product, quantity }) => {
                 <img src={product.image} className="img-fill" alt="" />
               </div>
               <div className="itemCart__content">
-                <div className="itemCart-title">{product.title}</div>
+                <div className="itemCart-title">{product.name}</div>
                 <div className="itemCart-subtitle">$ {product.price}</div>
               </div>
             </div>
@@ -39,10 +53,13 @@ const ItemCart = ({ product, quantity }) => {
                 Remover
               </button>
             </div>
-            <div className="d-flex flex-row-reverse">
-              <ButtonCircle children={"+"} />
-              <div className="itemCart-count">{quantity}</div>
-              <ButtonCircle children={"-"} />
+            z
+            <div className="d-flex flex-row-reverse" values={product.id}>
+              <Button children={"+"} onClick={handleIncrement} />
+              <div className="itemCart-count" values={product.id}>
+                {quantity}
+              </div>
+              <Button children={"-"} onClick={handleDecrement} />
             </div>
           </Col>
         </Row>

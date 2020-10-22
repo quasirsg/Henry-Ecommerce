@@ -198,12 +198,12 @@ server.put("/:userId/cart/:productId", async (req, res) => {
 
   if (product.stock < quantity) return res.sendStatus(422);
 
-  Orderline.findOne({
+  Linea_order.findOne({
     //??orderline??
     include: [{ model: Order }],
     where: {
       userId: userId,
-      productId: productId,
+      product_id: productId,
       "$order.status$": "shopping_cart",
     },
   })

@@ -138,13 +138,15 @@ export const getProductCart = (userId) => (dispatch) => {
     });
 };
 //Incremento "+"
-export const addAmount = (userId, productId) => (dispatch) => {
-  return axios
-    .put(`/${userId}/cart/${productId}`)
+export const addAmount = (userId, productId, quantity) => (dispatch) => {
+  axios
+    .put(url + `/users/${userId}/cart/${productId}`, {
+      quantity: quantity,
+    })
     .then((res) => {
       dispatch({
         type: actionTypes.ADD_AMOUNT,
-        productId: res.products,
+        product: res.data.data,
       });
     })
     .catch((err) => {
@@ -153,18 +155,32 @@ export const addAmount = (userId, productId) => (dispatch) => {
 };
 
 //Decremento - "-"
-export const deletAmount = (userId, productId) => (dispatch) => {
+export const deletAmount = (userId, productId, quantity) => (dispatch) => {
   axios
-    .put(`/${userId}/cart/${productId}`)
+    .put(url + `/users/${userId}/cart/${productId}`, { quantity: quantity })
     .then((res) => {
       dispatch({
         type: actionTypes.SUBTRACT_AMOUNT,
-        productId: res.products,
+        product: res.data.data,
       });
     })
     .catch((err) => {
       console.log(err);
     });
+};
+
+export const deleteAllCart = (userId) => (dispatch) => {
+  deleteDialog("Carrito").then((res) => {
+    if (res.isConfirmed) {
+      axios.delete(url + `/users/${userId}/cart`).then((res) => {
+        dispatch({
+          type: actionTypes.DELETE_ALL_CART,
+          order: res.data,
+        });
+        Swal.fire("Eliminado!", `${"Carrito"} fue eliminado.`, "success");
+      });
+    }
+  });
 };
 
 //Obtener todas las ordenes de un usuario

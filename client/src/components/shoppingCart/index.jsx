@@ -5,7 +5,6 @@ import ItemCart from "./itemCart";
 const ShoppingCart = ({ items }) => {
   return (
     <Col lg="12">
-      <h6>Item(s)</h6>
       <Row>
         {items.map((item) => {
           console.log(item);
