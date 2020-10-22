@@ -1,17 +1,21 @@
 import React, { useEffect } from "react";
-import { Container, Col, Row } from "reactstrap";
+import { Container, Col, Row, Button } from "reactstrap";
 import ShoppingCart from "../components/shoppingCart";
 import ButtonBlock from "../components/custom/ButtonBlock";
 import { useSelector, useDispatch } from "react-redux";
-import { getProductCart } from "../redux/actions/userActions";
+import { deleteAllCart, getProductCart } from "../redux/actions/userActions";
+import { getOneProduct, getProducts } from "../redux/actions/productActions";
 const Cart = () => {
-  const productsCarts = useSelector((state) => state);
+  const prueba = useSelector((state) => state);
+  const productsCarts = useSelector((state) => state.users.carrito);
   const dispatch = useDispatch();
-  const userId = localStorage.getItem("user");
-  useEffect(() => {
-    dispatch(getProductCart(1));
-  }, []);
-  console.log(productsCarts);
+
+  const userId = 1;
+  const deleteAll = (e) => {
+    e.preventDefault();
+    dispatch(deleteAllCart(userId));
+  };
+
   return (
     <Container fluid={true} className="mt-4">
       <Row>
@@ -19,9 +23,8 @@ const Cart = () => {
           <ShoppingCart items={productsCarts} />
         </Col>
         <Col lg="4">
-          DETALLES DEL CLIENTE , METODOS DE PAGO Y BOTON PARA PROCEDER AL
-          CHECKOUT
           <ButtonBlock children={"Siguiente"} />
+          <Button children={"Eliminar Carrito"} onClick={deleteAll} />
         </Col>
       </Row>
     </Container>

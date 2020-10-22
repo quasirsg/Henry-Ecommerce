@@ -14,13 +14,14 @@ const ProductCard = ({ product }) => {
   return (
     // TODO:Create State and link it to the component
     <Card>
-      <Link to={`/product/${product.id}`} onClick={handleOnclick}>
+      <Link to={`/product/${product.id}`}>
         <CardImg
           className="product-img"
           top
           width="100%"
           src={product.image}
           alt="Product Card Img"
+          onClick={handleOnclick}
         />
       </Link>
       <CardTitle>{product.name}</CardTitle>

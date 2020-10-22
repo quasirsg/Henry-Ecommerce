@@ -44,6 +44,7 @@ export const ADD_PRODUCT_CART = "ADD_PRODUCT_CART";
 export const DELETE_PRODUCTS_CART = "DELETE_PRODUCT_CART";
 export const ADD_AMOUNT = "ADD_AMOUNT";
 export const SUBTRACT_AMOUNT = "SUBTRACT_AMOUNT";
+export const DELETE_ALL_CART = "DELETE_ALL_CART";
 
 //order constants
 export const GET_ORDERS = "GET_ORDERS";

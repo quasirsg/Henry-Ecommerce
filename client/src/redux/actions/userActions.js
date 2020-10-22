@@ -1,4 +1,6 @@
 import axios from "axios";
+import Swal from "sweetalert2";
+import deleteDialog from "../../components/alerts/deleteDialog";
 import Toast from "../../components/alerts/toast";
 import * as actionTypes from "./actionTypes";
 
@@ -67,55 +69,58 @@ export const editUser = (id, action, values) => (dispatch) => {
 
 // --------------- ACTION CART---------------
 
-const createOrFindOrder = (id) => {
-  return axios.post(`${url}/order/${id}`, {
-    status: "shopping_cart",
-  });
-};
-
 //Agregar productos al carrito
 export const addProductCart = (userId, product) => async (dispatch) => {
-  // Verificar que el usuario tenga un carrito
-  const data = await axios.post(`${url}/order/${userId}`, {
-    status: "shopping_cart",
-  });
-
-  axios
-    .post(`${url}/users/${userId}/cart/add`, {
-      productId: product.id,
-      quantity: product.quantity,
-    })
-    .then((res) => {
-      dispatch({
-        type: actionTypes.ADD_PRODUCT_CART,
-        product: res.data,
-      });
-      Toast.fire({
-        icon: "success",
-        title: `Se agregó el producto: ${res.name}`,
-      });
-    })
-    .catch((err) => {
-      Toast.fire({
-        icon: "error",
-        title: `Error: No se guardo "${product.name}"`,
-      });
+  try {
+    // Verificar que el usuario tenga un carrito
+    const {
+      data: { orderId },
+    } = await axios.post(`${url}/order/${userId}`, {
+      status: "shopping_cart",
     });
+
+    axios
+      .post(`${url}/users/${userId}/cart/add`, {
+        orderId,
+        productId: product.id,
+        quantity: product.quantity,
+      })
+      .then((res) => {
+        dispatch({
+          type: actionTypes.ADD_PRODUCT_CART,
+          product: res.data,
+        });
+        Toast.fire({
+          icon: "success",
+          title: `Se agregó el producto: ${product.name.slice(0, 10)}`,
+        });
+      });
+  } catch (error) {
+    Toast.fire({
+      icon: "error",
+      title: `Error: No se guardo "${product.name.slice(0, 10)}"`,
+    });
+  }
 };
 
 //Eliminar productos del carrito
-export const deleteProductsCart = (userId, productId) => (dispatch) => {
-  return axios
-    .delete(url + `/${userId}/cart/${productId}`)
-    .then((res) => {
-      dispatch({
-        type: actionTypes.DELETE_PRODUCTS_CART,
-        productId: productId,
-      });
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+export const deleteProductsCart = (userId, productId, name) => (dispatch) => {
+  deleteDialog(name).then((res) => {
+    if (res.isConfirmed) {
+      axios
+        .delete(url + `/users/${userId}/cart/${productId}`)
+        .then((res) => {
+          dispatch({
+            type: actionTypes.DELETE_PRODUCTS_CART,
+            productId: productId,
+          });
+          Swal.fire("Eliminado!", `${name} fue eliminado.`, "success");
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  });
 };
 
 //Obtenner los productos agregados al carrito
@@ -133,13 +138,15 @@ export const getProductCart = (userId) => (dispatch) => {
     });
 };
 //Incremento "+"
-export const addAmount = (userId, productId) => (dispatch) => {
-  return axios
-    .put(`/${userId}/cart/${productId}`)
+export const addAmount = (userId, productId, quantity) => (dispatch) => {
+  axios
+    .put(url + `/users/${userId}/cart/${productId}`, {
+      quantity: quantity,
+    })
     .then((res) => {
       dispatch({
         type: actionTypes.ADD_AMOUNT,
-        productId: res.products,
+        product: res.data.data,
       });
     })
     .catch((err) => {
@@ -148,18 +155,32 @@ export const addAmount = (userId, productId) => (dispatch) => {
 };
 
 //Decremento - "-"
-export const deletAmount = (userId, productId) => (dispatch) => {
+export const deletAmount = (userId, productId, quantity) => (dispatch) => {
   axios
-    .put(`/${userId}/cart/${productId}`)
+    .put(url + `/users/${userId}/cart/${productId}`, { quantity: quantity })
     .then((res) => {
       dispatch({
         type: actionTypes.SUBTRACT_AMOUNT,
-        productId: res.products,
+        product: res.data.data,
       });
     })
     .catch((err) => {
       console.log(err);
     });
+};
+
+export const deleteAllCart = (userId) => (dispatch) => {
+  deleteDialog("Carrito").then((res) => {
+    if (res.isConfirmed) {
+      axios.delete(url + `/users/${userId}/cart`).then((res) => {
+        dispatch({
+          type: actionTypes.DELETE_ALL_CART,
+          order: res.data,
+        });
+        Swal.fire("Eliminado!", `${"Carrito"} fue eliminado.`, "success");
+      });
+    }
+  });
 };
 
 //Obtener todas las ordenes de un usuario

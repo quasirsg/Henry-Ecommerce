@@ -1,8 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import {Cart3, Collection } from "react-bootstrap-icons";
+import { Cart3, Collection } from "react-bootstrap-icons";
 import { Col, CustomInput } from "reactstrap";
-
 //Components
 import Guest from "../../guestOptions";
 
@@ -16,7 +15,7 @@ const groupIcons = () => {
         <Cart3 size={20} />
       </Link>
 
-      <Guest/>
+      <Guest />
 
       {/* <CustomInput
         className="pl-0 pt-1 text-dark"

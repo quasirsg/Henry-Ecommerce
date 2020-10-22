@@ -50,6 +50,7 @@ server.put("/:id", (req, res, next) => {
 server.delete("/:id", (req, res, next) => {
   let { id } = req.params;
 
+<<<<<<< HEAD
   Order.findOne({ where: { id } })
     .then((order) => {
       if (!order)
@@ -57,6 +58,72 @@ server.delete("/:id", (req, res, next) => {
 
       order.destroy(order).then(() => {
         return res.status(200).json({ message: "Order eliminada" });
+=======
+  if (status === "shopping_cart") {
+
+    try {
+      User.findByPk(userId)
+        .then((user) => {
+          if (!user) {
+            return res.sendStatus(404);
+          }
+          Order.findOrCreate({ where: { status }, raw: true })
+            .then((order) => {
+              const numOrder = order[0].dataValues ? order[0].dataValues.id : order[0].id;
+              user.addOrder(numOrder)
+                .then(() => {
+                  return res.status(201).json({ orderId: numOrder })
+                })
+            });
+        })
+        .catch((err) => {
+          return res.sendStatus(500);
+        });
+    } catch (error) {
+      console.log(error.message);
+    }
+  } else if (status === "created") {
+    Order.findOne({
+      where: {
+        userId: userId,
+        status: "shopping_cart",
+      },
+    })
+      .then((order) => {
+        order.status = "created";
+        order
+          .save()
+          .then((order) => {
+            return res.send(order);
+          })
+          .catch((err) => {
+            return res.sendStatus(500);
+          });
+      })
+      .catch((err) => {
+        return res.sendStatus(500);
+      });
+  } else if (status === "processing") {
+    Order.findOne({
+      where: {
+        userId: userId,
+        status: "created",
+      },
+    })
+      .then((order) => {
+        order.status = "processing";
+        order
+          .save()
+          .then((order) => {
+            return res.send(order);
+          })
+          .catch((err) => {
+            return res.sendStatus(500);
+          });
+      })
+      .catch((err) => {
+        return res.sendStatus(500);
+>>>>>>> a7720e3d6df4cfd13d4419fd519445efd33bb213
       });
     })
     .catch(next);

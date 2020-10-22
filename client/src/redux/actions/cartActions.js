@@ -6,7 +6,7 @@ const url = `http://localhost:3001`;
 //Crear una ordern
 export const createOrder = (userId, status) => (dispatch) => {
   return axios
-    .post(url + `orders/${userId}`, status)
+    .post(url + `/order/${userId}`, status)
     .then((res) => {
       dispatch({
         type: actionTypes.POST_ORDER,
