@@ -36,32 +36,20 @@ server.get("/:orderId", (req, res, next) => {
   const { orderId } = req.params;
 
   Order.findAll({
-    attributes: ["id", "status"],
+    attributes: ["id", "status", "userId"],
+    where: {
+      id: orderId,
+    },
     include: {
       attributes: ["name", "price", "image", "id"],
       model: Product,
       through: {
         attributes: ["id", "quantity", "total"],
-        where: {
-          orderId,
-        },
       },
     },
   })
     .then((order) => res.json(order))
     .catch((error) => next(error.message));
-});
-
-server.get("/:id", (req, res, next) => {
-  let id = req.params.id;
-  console.log(id);
-  Order.findOne({
-    where: { id },
-  })
-    .then((order) => {
-      res.status(200).json(order);
-    })
-    .catch((err) => console.log(err));
 });
 
 //Actualiza orden por id
