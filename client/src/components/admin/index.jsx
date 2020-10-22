@@ -10,7 +10,8 @@ import {
   NavLink,
   Nav,
   NavbarToggler,
-  Collapse, Jumbotron
+  Collapse,
+  Jumbotron,
 } from "reactstrap";
 import {
   PersonBadge,
@@ -30,6 +31,7 @@ import InventoryTableCategory from "./tools/inventoryTableCategory";
 import { getCategory } from "../../redux/actions/categoryActions";
 import { getProducts } from "../../redux/actions/productActions";
 import { getOrders } from "../../redux/actions/ordenActions";
+import Orden from "../tablaOrdenes/Orden";
 
 const AdminMenu = () => {
   const [collapsed, setCollapsed] = useState(true);
@@ -40,12 +42,11 @@ const AdminMenu = () => {
   const products = useSelector((state) => state.products.products);
   const allCategories = useSelector((state) => state.category.category);
   const users = useSelector((state) => state.category.category);
-  //const order = useSelector ((state)=> state.order.order)
+  // const order = useSelector((state) => state.order);
 
+  // console.log(order);
 
-
-
-  console.log('Cambio el estado de redux')
+  console.log("Cambio el estado de redux");
 
   useEffect(() => {
     dispatch(getProducts());
@@ -107,13 +108,17 @@ const AdminMenu = () => {
               </Navbar>
             </Col>
             <Col md={9} lg={10}>
-
               <Route exact path="/admin">
-                <div className='col-10 mx-auto'>
+                <div className="col-10 mx-auto">
                   <Jumbotron>
-                    <h2 className="display-3"><PersonBadge /> ¡Bienvenido Admin!</h2>
+                    <h2 className="display-3">
+                      <PersonBadge /> ¡Bienvenido Admin!
+                    </h2>
                     <hr className="my-2" />
-                    <p>Este es el panel del usuario administrador donde podrá controlar todo el inventario.</p>
+                    <p>
+                      Este es el panel del usuario administrador donde podrá
+                      controlar todo el inventario.
+                    </p>
                   </Jumbotron>
                 </div>
               </Route>
@@ -167,7 +172,9 @@ const AdminMenu = () => {
               <Route exact path="/admin/ordenes">
                 <TablaOrdenes />
               </Route>
-
+              <Route exact path="/admin/ordenes/:id">
+                <Orden />
+              </Route>
             </Col>
           </Router>
         </Row>

@@ -52,3 +52,6 @@ export const GET_ORDERS = "GET_ORDERS";
 export const GET_ONE_ORDER = "GET_ONE_ORDER";
 export const DELETE_ORDER = "DELETE_ORDER";
 export const UPDATE_ORDER = "UPDATE_ORDER";
+
+// Line_Order
+export const GET_ORDER_BY_ID = "GET_ORDER_BY_ID";
