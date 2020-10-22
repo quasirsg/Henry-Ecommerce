@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import StarRatings from "react-star-ratings";
 import { useParams } from "react-router-dom";
@@ -16,15 +16,15 @@ const Product = () => {
   useEffect(() => {
     dispatch(allActions.getOneProduct(id));
     dispatch(getReviews(id));
-  }, []);
+  }, [id]);
 
   const product = useSelector((state) => state.products.productDetail);
-  const reviews = useSelector(state => state.products.productReviews);
-  console.log(reviews);
+  const { average, reviews } = useSelector(state => state.products.productReviews);
+
   const handleOnClick = () => {
     dispatch(addProductCart(product, 1));
   };
-
+  console.log(average);
   return (
     <div>
       <div className="productContainer">
@@ -41,10 +41,10 @@ const Product = () => {
             <p className="infoCardDescription">{product.description}</p>
             <div className="rating-reviews">
               <StarRatings
-                rating={2}
-                starRatedColor="blue"
+                rating={1}
+                starRatedColor="yellow"
                 starHoverColor="yellow"
-                starDimension="30px"
+                starDimension="16px"
                 numberOfStars={5}
                 name="rating"
               />
@@ -71,7 +71,6 @@ const Product = () => {
           />
         ))}
       </Container>
-
     </div>
   );
 };

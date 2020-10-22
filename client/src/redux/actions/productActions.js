@@ -36,10 +36,12 @@ export const getProducts = () => (dispatch) => {
 export const getReviews = productId => dispatch => {
   axios.get(url + '/products/' + productId + '/reviews')
     .then(res => {
-      dispatch({
-        type: GET_PRODUCT_REVIEWS,
-        reviews: res.data.result,
-      })
+      if (res.average !== null && res.result !== []) {
+        dispatch({
+          type: GET_PRODUCT_REVIEWS,
+          reviews: res.data,
+        })
+      }
     })
 }
 

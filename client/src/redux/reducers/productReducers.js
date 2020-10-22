@@ -13,7 +13,18 @@ import {
 const initialState = {
   allProducts: [],
   productDetail: {},
-  productReviews: [],
+  productReviews: {
+    average: 5,
+    reviews: [
+      {
+        points: 1,
+        description: 'Loading',
+        user: {
+          name: '...',
+          image: 'loading photo'
+        }
+      }]
+  },
   loading: false,
   message: ''
 };
@@ -36,7 +47,10 @@ function productReducers(state = initialState, action) {
     case GET_PRODUCT_REVIEWS:
       return {
         ...state,
-        productReviews: action.reviews
+        productReviews: {
+          average: action.reviews.average,
+          reviews: action.reviews.result,
+        }
       }
 
     case POST_PRODUCT:

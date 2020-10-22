@@ -170,7 +170,13 @@ server.get('/:productId/reviews', (req, res) => {
 		}
 	})
 		.then(reviews => {
-			res.send({ result: reviews });
+			//sacamos el promedio para mostrar en el productDetail
+			const sumPoints = reviews.reduce((acumulador, nextValue) => acumulador + nextValue.points, 0);
+			const average = sumPoints / reviews.length;
+			res.status(200).send({
+				average,
+				result: reviews
+			});
 		})
 		.catch(err => res.send(err));
 })
@@ -217,7 +223,7 @@ server.put('/:productId/review/:reviewId', (req, res) => {
 				.catch(err => res.send(err));
 		})
 })
-
+//borrar una determinada review
 server.delete('/:productId/review/:reviewId', (req, res) => {
 	const productId = req.params.productId;
 	const reviewId = req.params.reviewId;
