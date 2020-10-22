@@ -15,6 +15,7 @@ import CartPage from "./pages/CartPage";
 // Componente Orden-> probando
 import Orden from "./components/Orden/orden.jsx";
 import FormUser from "./components/userForm";
+import TablaOrdenes from "./components/tablaOrdenes"
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
           <ProductDetail />
         </Route>
         <Route exact path="/cart" component={CartPage} />
+        <Route exact path="/ordenes" component={TablaOrdenes}/>
         <Route exact path="/admin">
           <AdminMenu />
         </Route>

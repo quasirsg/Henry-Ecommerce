@@ -24,10 +24,12 @@ import FormUser from "../userForm";
 import FormCategory from "../categoryForm";
 import Catalogue from "../catalogo";
 import ProductCard from "../productCard/ProductCard";
+import TablaOrdenes from "../tablaOrdenes";
 import InventoryTable from "./tools/inventoryTable";
 import InventoryTableCategory from "./tools/inventoryTableCategory";
 import { getCategory } from "../../redux/actions/categoryActions";
 import { getProducts } from "../../redux/actions/productActions";
+import { getOrders } from "../../redux/actions/ordenActions";
 
 const AdminMenu = () => {
   const [collapsed, setCollapsed] = useState(true);
@@ -38,6 +40,7 @@ const AdminMenu = () => {
   const products = useSelector((state) => state.products.products);
   const allCategories = useSelector((state) => state.category.category);
   const users = useSelector((state) => state.category.category);
+  //const order = useSelector ((state)=> state.order.order)
 
 
 
@@ -47,6 +50,7 @@ const AdminMenu = () => {
   useEffect(() => {
     dispatch(getProducts());
     dispatch(getCategory());
+    dispatch(getOrders());
   }, []);
 
   return (
@@ -90,6 +94,12 @@ const AdminMenu = () => {
                       <NavLink tag={Link} to="/admin/categories">
                         <Files size={17} className="mr-1" />
                         Categorias
+                      </NavLink>
+                    </NavItem>
+                    <NavItem>
+                      <NavLink tag={Link} to="/admin/ordenes">
+                        <Files size={17} className="mr-1" />
+                        Ordenes
                       </NavLink>
                     </NavItem>
                   </Nav>
@@ -154,6 +164,9 @@ const AdminMenu = () => {
                   />
                 )}
               />
+              <Route exact path="/admin/ordenes">
+                <TablaOrdenes />
+              </Route>
 
             </Col>
           </Router>

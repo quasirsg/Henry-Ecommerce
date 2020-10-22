@@ -3,13 +3,13 @@ import * as actionTypes from "./actionTypes";
 
 const url = `http://localhost:3001`;
 
-export const getOrder = () => (dispatch) => {
-  axios
-    .get(url + "//")
+export const getOrders = () => (dispatch) => {
+    axios
+    .get(url + "/order/")
     .then((res) => {
       dispatch({
-        type: actionTypes.GET_ORDER,
-        order: res.data.order,
+        type: actionTypes.GET_ORDERS,
+        order: res.data
       });
     })
     .catch((err) => {
@@ -17,66 +17,39 @@ export const getOrder = () => (dispatch) => {
     });
 };
 
-export const postOrder = (id, values) => (dispatch) => {
-  return axios
-    .post(url + `/ /${id ? id : ""}`, values)
-    .then((res) => {
-      dispatch({
-        type: actionTypes.POST_ORDER,
-        order: res.data,
-      });
-    })
-    .catch((err) => console.log(err));
-};
-
 export const deleteOrder = (id) => (dispatch) => {
-  // clear limpia todoo
-  return axios
-    .post(url + `/ /${id ? id : ""}`)
+   return axios
+    .delete(url + `/order/${id}`)
     .then((res) => {
-      dispatch({
-        type: actionTypes.POST_ORDER,
-        order: res.data,
-      });
+        dispatch({
+          type: actionTypes.DELETE_ORDER,
+          order: res.data
+        });
+    }) 
+    .catch((err) => console.log(err));
+};
+
+
+export const getOneOrder = (id) => (dispatch) => {
+    return axios
+    .get(url + `/order/${id}`)
+    .then((res) => {
+        dispatch({
+            type:actionTypes.GET_ONE_ORDER,
+            order: res.data
+        })
     })
     .catch((err) => console.log(err));
 };
 
-export const deleteProductOrder = (id, values) => (dispatch) => {
-  //Tacho de basura
-  return axios
-    .post(url + `/ /${id ? id : ""}`, values)
-    .then((res) => {
-      dispatch({
-        type: actionTypes.POST_ORDER,
-        order: res.data,
-      });
-    })
-    .catch((err) => console.log(err));
-};
+export const updateStatusOrder = (id, status) => (dispatch) => {
+    return axios
+    .put(url + `/order/${id}`, status)
+    .then((res)=> {
+        dispatch({
+            type: actionTypes.UPDATE_ORDER,
+            order: res.data
+        })
+    });
 
-export const addAmountOrder = (id, values) => (dispatch) => {
-  //signo mas agrego cantidad
-  return axios
-    .post(url + `/ /${id ? id : ""}`, values)
-    .then((res) => {
-      dispatch({
-        type: actionTypes.POST_ORDER,
-        order: res.data,
-      });
-    })
-    .catch((err) => console.log(err));
-};
-
-export const subtractAmountOrder = (id, values) => (dispatch) => {
-  //signo menos quito cantidad
-  return axios
-    .post(url + `/ /${id ? id : ""}`, values)
-    .then((res) => {
-      dispatch({
-        type: actionTypes.POST_ORDER,
-        order: res.data,
-      });
-    })
-    .catch((err) => console.log(err));
-};
+}

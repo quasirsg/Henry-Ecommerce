@@ -46,8 +46,8 @@ export const ADD_AMOUNT = "ADD_AMOUNT";
 export const SUBTRACT_AMOUNT = "SUBTRACT_AMOUNT";
 
 //order constants
-export const GET_ORDER = "GET_ORDER";
-export const POST_ORDER = "POST_ORDER";
+export const GET_ORDERS = "GET_ORDERS";
+//export const POST_ORDER = "POST_ORDER";
 export const GET_ONE_ORDER = "GET_ONE_ORDER";
-export const DELETE_ORDER = "DELET_ORDER";
-export const UPDATE_ORDER = "DELET_ORDER";
+export const DELETE_ORDER = "DELETE_ORDER";
+export const UPDATE_ORDER = "UPDATE_ORDER";
