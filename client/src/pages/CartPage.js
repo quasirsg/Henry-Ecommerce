@@ -1,14 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Container, Col, Row, Button } from "reactstrap";
 import ShoppingCart from "../components/shoppingCart";
 import ButtonBlock from "../components/custom/ButtonBlock";
 import { useSelector, useDispatch } from "react-redux";
-import { deleteAllCart } from "../redux/actions/userActions";
-
+import { deleteAllCart, getProductCart } from "../redux/actions/userActions";
+import { getOneProduct, getProducts } from "../redux/actions/productActions";
 const Cart = () => {
+  const prueba = useSelector((state) => state);
   const productsCarts = useSelector((state) => state.users.carrito);
   const dispatch = useDispatch();
-  const userId = 1; //?id usuario
+
+  const userId = 1;
   const deleteAll = (e) => {
     e.preventDefault();
     dispatch(deleteAllCart(userId));
