@@ -41,14 +41,13 @@ const Product = () => {
             <p className="infoCardDescription">{product.description}</p>
             <div className="rating-reviews">
               <StarRatings
-                rating={1}
+                rating={average}
                 starRatedColor="yellow"
                 starHoverColor="yellow"
                 starDimension="16px"
                 numberOfStars={5}
                 name="rating"
               />
-              <p>{product.reviews} reviews</p>
             </div>
           </div>
           <div className="button-container">
