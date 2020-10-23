@@ -76,7 +76,7 @@ const loadProducts = () => {
         image: 'https://http2.mlstatic.com/D_NQ_NP_853813-MLA42543135842_072020-F.jpg',
     }, {
         name: 'Mancuerna Recargable Hasta 2 Kg. Gym, Fitness, Pesas.',
-        stock: Math.floor(Math.random() * 10),
+        stock: 0,
         description: 'Mancuerna Recargable Hasta 2 Kg. Gym, Fitness, Pesas.',
         price: 720.00,
         image: 'https://http2.mlstatic.com/D_NQ_NP_882930-MLA43238429277_082020-F.jpg',

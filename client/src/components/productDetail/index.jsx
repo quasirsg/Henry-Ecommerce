@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import StarRatings from "react-star-ratings";
 import { useParams } from "react-router-dom";
@@ -7,7 +7,7 @@ import "./producto.css";
 import allActions from "../../redux/actions/allActions";
 import { getReviews } from '../../redux/actions/productActions';
 import Review from '../review/index';
-import { Container } from 'reactstrap';
+import { Col, Row, Container } from 'reactstrap';
 
 const Product = () => {
   let { id } = useParams();
@@ -16,8 +16,8 @@ const Product = () => {
   useEffect(() => {
     dispatch(allActions.getOneProduct(id));
     dispatch(getReviews(id));
-  }, [id]);
 
+  }, [id]);
   const product = useSelector((state) => state.products.productDetail);
   const { average, reviews } = useSelector(state => state.products.productReviews);
 
@@ -26,19 +26,18 @@ const Product = () => {
   };
 
   return (
-    <div>
-      <div className="productContainer">
-        <div className="prod-img">
-          <img src={product.image} alt="" />
-        </div>
-        <div className="productInfo">
-          <div className="title-price">
-            <h2 className="productTitle">{product.name}</h2>
-            <p className="inforPrice">${product.price}</p>
+    <Container
+      fluid={true}
+      className="productDetail py-4 my-4"
+    >
+      <Row className="productDeatil__content">
+        <Col lg="8">
+          <div className="prod-img">
+            <img src={product.image} alt="" />
           </div>
-
-          <div className="desc-rating">
-            <p className="infoCardDescription">{product.description}</p>
+        </Col>
+        <Col lg="4">
+          <div className="productInfo">
             <div className="rating-reviews">
               <StarRatings
                 rating={average !== null ? average : 5}
@@ -49,19 +48,38 @@ const Product = () => {
                 name="rating"
               />
             </div>
+            <h2 className="productTitle">{product.name}</h2>
+            <p className="inforPrice">${product.price}</p>
+            <h6
+              className="productStock"
+            >
+              {product.stock > 0 ? 'Stock Disponible: ' + product.stock : 'Producto No Disponible'}
+            </h6>
+            <div className="button-container">
+              <button
+                onClick={() => console.log('has hecho click xD')}
+                className={product.stock > 0 ? "button btn-block" : 'button-disabled btn-block'}
+              >
+                Comprar Ahora
+              </button>
+              <button
+                onClick={handleOnClick}
+                className={product.stock > 0 ? "button-secundary btn-block" : 'button-disabled btn-block'}
+              >
+                Agregar al Carrito
+              </button>
+            </div>
           </div>
-          <div className="button-container">
-            <button onClick={handleOnClick} className="button">
-              Add To Cart
-          </button>
-          </div>
-        </div>
-      </div>
-      <Container
-        fluid={true}
-        className="py-4"
-      >
-        {reviews.length > 0 &&
+        </Col>
+      </Row>
+      <Col lg="12">
+        <div className="infoCardDescriptionTitle">Descripcion:</div>
+        <p className="infoCardDescription">{product.description}</p>
+      </Col>
+      <Col lg="12">
+        <div className="infoCardDescriptionTitle">Reviews:</div>
+        {reviews.length > 0
+          ?
           reviews.map(review => (
             <Review
               userImage={review.user.image}
@@ -69,9 +87,15 @@ const Product = () => {
               points={review.points}
               description={review.description}
             />
-          ))}
-      </Container>
-    </div>
+          ))
+          :
+          <div className="warning-alert">
+            Lo sentimos este producto no cuenta con Reviews!
+          </div>
+        }
+      </Col>
+
+    </Container >
   );
 };
 
