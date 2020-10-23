@@ -18,7 +18,7 @@ export default () => {
       <Link to={"/cart"} className="text-dark">
         <Cart3 size={20} />
         { 
-          cart.length > 0 && <Badge color="danger" size={5}> {cart.length} </Badge>
+          cart.length > 0 && <Badge color="danger" style={{paddingTop: '2px', paddingBottom: '2px'}} className='rounded-pill' size={5}> {cart.length} </Badge>
         }
       </Link>
 
