@@ -7,13 +7,8 @@ const ShoppingCart = ({ items }) => {
     <Col lg="12">
       <Row>
         {items.map((item) => {
-          console.log(item);
           return (
-            <ItemCart
-              key={item.product.id}
-              product={item.product}
-              quantity={item.product.quantity}
-            />
+            <ItemCart key={item.id} product={item} quantity={item.quantity} />
           );
         })}
       </Row>

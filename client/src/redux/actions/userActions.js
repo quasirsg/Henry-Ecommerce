@@ -72,29 +72,53 @@ export const editUser = (id, action, values) => (dispatch) => {
 //Agregar productos al carrito
 export const addProductCart = (userId, product) => async (dispatch) => {
   try {
-    // Verificar que el usuario tenga un carrito
-    const {
-      data: { orderId },
-    } = await axios.post(`${url}/order/${userId}`, {
-      status: "shopping_cart",
-    });
+    if (!localStorage.token) {
+      if (!localStorage.cart) {
+        localStorage.setItem("cart", JSON.stringify([product]));
+      }
 
-    axios
-      .post(`${url}/users/${userId}/cart/add`, {
-        orderId,
-        productId: product.id,
-        quantity: product.quantity,
-      })
-      .then((res) => {
-        dispatch({
-          type: actionTypes.ADD_PRODUCT_CART,
-          product: res.data,
-        });
-        Toast.fire({
-          icon: "success",
-          title: `Se agregó el producto: ${product.name.slice(0, 10)}`,
-        });
+      // Guardar carrito en localstorage
+      const data = JSON.parse(localStorage.getItem("cart"));
+
+      if (!data.some((item) => item.id === product.id)) {
+        data.push(product);
+        localStorage.setItem("cart", JSON.stringify(data));
+      }
+
+      // Mostrar mensaje 'Guardo en el carrito'
+      Toast.fire({
+        icon: "success",
+        title: `Se agregó el producto: ${product.name.slice(0, 10)}`,
       });
+      dispatch({
+        type: actionTypes.ADD_PRODUCT_CART_GUEST,
+        message: `Se agrego producto con ID: ${product.id} al carrito de invitado.`,
+      });
+    } else {
+      // Verificar que el usuario tenga un carrito
+      const {
+        data: { orderId },
+      } = await axios.post(`${url}/order/${userId}`, {
+        status: "shopping_cart",
+      });
+
+      axios
+        .post(`${url}/users/${userId}/cart/add`, {
+          orderId,
+          productId: product.id,
+          quantity: product.quantity,
+        })
+        .then((res) => {
+          dispatch({
+            type: actionTypes.ADD_PRODUCT_CART,
+            product: res.data.product,
+          });
+          Toast.fire({
+            icon: "success",
+            title: `Se agregó el producto: ${product.name.slice(0, 15)}`,
+          });
+        });
+    }
   } catch (error) {
     Toast.fire({
       icon: "error",
@@ -107,18 +131,31 @@ export const addProductCart = (userId, product) => async (dispatch) => {
 export const deleteProductsCart = (userId, productId, name) => (dispatch) => {
   deleteDialog(name).then((res) => {
     if (res.isConfirmed) {
-      axios
-        .delete(url + `/users/${userId}/cart/${productId}`)
-        .then((res) => {
-          dispatch({
-            type: actionTypes.DELETE_PRODUCTS_CART,
-            productId: productId,
-          });
+      if (!localStorage.token) {
+        if (localStorage.cart) {
+          const oldCart = JSON.parse(localStorage.getItem("cart"));
+          const newCart = oldCart.filter((item) => item.id !== productId);
+          localStorage.setItem("cart", JSON.stringify(newCart));
           Swal.fire("Eliminado!", `${name} fue eliminado.`, "success");
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+          dispatch({
+            type: actionTypes.DELETE_PRODUCT_CART_GUEST,
+            message: `Se elimino el producto con ID: ${productId} del carrito de invitado.`,
+          });
+        }
+      } else {
+        axios
+          .delete(url + `/users/${userId}/cart/${productId}`)
+          .then((res) => {
+            dispatch({
+              type: actionTypes.DELETE_PRODUCTS_CART,
+              productId: productId,
+            });
+            Swal.fire("Eliminado!", `${name} fue eliminado.`, "success");
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
     }
   });
 };
@@ -174,28 +211,30 @@ export const deletAmount = (userId, productId, quantity) => (dispatch) => {
 };
 
 export const deleteAllCart = (userId) => (dispatch) => {
-  deleteDialog("Carrito").then((res) => {
-    if (res.isConfirmed) {
-      axios.delete(`${url}/users/${userId}/cart`).then((res) => {
-        dispatch({
-          type: actionTypes.DELETE_ALL_CART,
-          order: res.data,
-        });
-        Swal.fire("Eliminado!", `${"Carrito"} fue eliminado.`, "success");
+  if (!localStorage.token) {
+    if (localStorage.cart) {
+      deleteDialog("Carrito").then((res) => {
+        if (res.isConfirmed) {
+          localStorage.removeItem("cart");
+          Swal.fire("Eliminado!", `${"Carrito"} fue eliminado.`, "success");
+          dispatch({
+            type: actionTypes.DELETE_ALL_PRODUCTS_CART_GUEST,
+            message: "Se elimino el carrito",
+          });
+        }
       });
     }
-  });
-};
-
-//Obtener todas las ordenes de un usuario
-export const getUserOrder = (id) => (dispatch) => {
-  axios
-    .get(url + `/users/orders/${id}`)
-    .then((res) => {
-      dispatch({
-        type: actionTypes.GET_USER_ORDERS,
-        orders: res.data,
-      });
-    })
-    .catch((err) => console.log(err));
+  } else {
+    deleteDialog("Carrito").then((res) => {
+      if (res.isConfirmed) {
+        axios.delete(`${url}/users/${userId}/cart`).then((res) => {
+          dispatch({
+            type: actionTypes.DELETE_ALL_CART,
+            order: res.data,
+          });
+          Swal.fire("Eliminado!", `${"Carrito"} fue eliminado.`, "success");
+        });
+      }
+    });
+  }
 };

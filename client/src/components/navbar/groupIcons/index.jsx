@@ -2,13 +2,19 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { Cart3, Collection } from "react-bootstrap-icons";
-import { Col, CustomInput, Badge } from "reactstrap";
+import { Col, Badge, CustomInput } from "reactstrap";
 //Components
 import Guest from "../../guestOptions";
-import { useSelector } from "react-redux";
 
 export default () => {
-  const cart = useSelector((state) => state.users.carrito);
+  let cart = useSelector((state) => state.users.carrito);
+  const notification = useSelector((state) => state.users.message);
+
+  if (localStorage.cart) {
+    cart = JSON.parse(localStorage.getItem("cart"));
+  } else {
+    cart = [];
+  }
 
   return (
     <Col lg="2" style={{ display: "flex", justifyContent: "space-between" }}>
@@ -29,11 +35,6 @@ export default () => {
           </Badge>
         )}
       </Link>
-      {count.length > 0 ? (
-        <Badge href="#" color="danger">
-          {count.length}
-        </Badge>
-      ) : null}
 
       <Guest />
 
@@ -41,6 +42,7 @@ export default () => {
         className="pl-0 pt-1 text-dark"
         type="switch"
         id="exampleCustomCheckbox"
+        onClick={changeStyle}
       /> */}
     </Col>
   );

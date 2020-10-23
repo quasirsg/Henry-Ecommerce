@@ -1,20 +1,29 @@
-import React, { useEffect } from "react";
+import React, { useState } from "react";
 import { Container, Col, Row, Button } from "reactstrap";
 import ShoppingCart from "../components/shoppingCart";
 import ButtonBlock from "../components/custom/ButtonBlock";
 import { useSelector, useDispatch } from "react-redux";
-import { deleteAllCart, getProductCart } from "../redux/actions/userActions";
-import { getOneProduct, getProducts } from "../redux/actions/productActions";
+import { deleteAllCart } from "../redux/actions/userActions";
+
 const Cart = () => {
   const prueba = useSelector((state) => state);
-  const productsCarts = useSelector((state) => state.users.carrito);
+  let productsCarts = useSelector((state) => state.users.carrito);
   const dispatch = useDispatch();
 
-  const userId = 1;
+  const userId = 1; //?? loguin o guest
   const deleteAll = (e) => {
     e.preventDefault();
     dispatch(deleteAllCart(userId));
   };
+
+  // Verificar que exista una sesion
+  if (!localStorage.token) {
+    if (localStorage.cart) {
+      productsCarts = JSON.parse(localStorage.getItem("cart"));
+    } else {
+      productsCarts = [];
+    }
+  }
 
   return (
     <Container fluid={true} className="mt-4">

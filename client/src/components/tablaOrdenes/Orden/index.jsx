@@ -20,7 +20,6 @@ const Orden = () => {
   /* ===== Redux ====== */
   const dispatch = useDispatch();
   const orden = useSelector((state) => state.order.orderDetail);
-  console.log(orden);
   // const id = orden.id;
   const { id } = useParams();
 

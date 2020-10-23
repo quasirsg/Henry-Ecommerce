@@ -4,10 +4,13 @@ import {
   DELETE_USER,
   GET_USERS,
   ADD_PRODUCT_CART,
+  ADD_PRODUCT_CART_GUEST,
   ADD_AMOUNT,
   SUBTRACT_AMOUNT,
   GET_CART_PRODUCTS,
   DELETE_PRODUCTS_CART,
+  DELETE_PRODUCT_CART_GUEST,
+  DELETE_ALL_PRODUCTS_CART_GUEST,
   GET_ONE_USER,
   GET_USER_ORDERS,
   GET_USERS_ORDERS,
@@ -19,13 +22,13 @@ const initialState = {
   userDetail: [],
   err: [],
   carrito: [],
+  message: "",
   orders: [],
   allOrders: [],
 };
 
 function userReducers(state = initialState, action) {
   let products = state.carrito;
-  console.log(action);
   switch (action.type) {
     case GET_USERS:
       return {
@@ -44,7 +47,6 @@ function userReducers(state = initialState, action) {
       };
 
     case POST_USER:
-      console.log(action);
       return {
         ...state,
         users: state.concat(action.userDetail),
@@ -67,6 +69,12 @@ function userReducers(state = initialState, action) {
         ...state,
         carrito: state.carrito.concat(action.product),
       };
+
+    case ADD_PRODUCT_CART_GUEST:
+      return {
+        ...state,
+        message: action.message,
+      };
     case DELETE_PRODUCTS_CART:
       return {
         ...state,
@@ -74,13 +82,18 @@ function userReducers(state = initialState, action) {
           (product) => product.product.id !== action.productId
         ),
       };
+
+    case DELETE_PRODUCT_CART_GUEST:
+      return {
+        ...state,
+        message: action.message,
+      };
     case ADD_AMOUNT:
       state.carrito.map((product) => {
         if (product.product.id === action.product.product_id) {
           product.product.quantity = product.product.quantity + 1;
         }
       });
-      console.log(state.carrito);
       return {
         ...state,
       };
@@ -95,7 +108,6 @@ function userReducers(state = initialState, action) {
           }
         }
       });
-      console.log(state.carrito);
       return {
         ...state,
         carrito: state.carrito,
@@ -104,6 +116,11 @@ function userReducers(state = initialState, action) {
       return {
         ...state,
         carrito: [],
+      };
+    case DELETE_ALL_PRODUCTS_CART_GUEST:
+      return {
+        ...state,
+        message: action.message,
       };
     case GET_CART_PRODUCTS:
       return {

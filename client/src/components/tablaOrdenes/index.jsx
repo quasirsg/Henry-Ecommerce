@@ -10,8 +10,6 @@ const TablaOrdenes = () => {
   const data = useSelector((state) => state.order.allOrders);
   const dispatch = useDispatch();
 
-  console.log(data);
-
   const handleClick = (e, id) => {
     e.preventDefault();
     dispatch(deleteOrder(id));

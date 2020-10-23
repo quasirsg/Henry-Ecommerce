@@ -28,7 +28,6 @@ function App() {
         <Route path="/search/q/" component={SearchPage} />
         <Route path="/search/category/" component={SearchPage} />
         <Route exact path="/products" component={HomePage} />
-        {/* <Route exact path="/order" component={Orden} /> */}
         <Route exact path="/product/:id">
           <ProductDetail />
         </Route>
