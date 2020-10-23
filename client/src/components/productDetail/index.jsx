@@ -20,10 +20,9 @@ const Product = (props) => {
   /* ========= Redux========== */
   const product = useSelector((state) => state.products.productDetail);
   const dispatch = useDispatch();
-  product.quantity = 0; //agrego una cantidad por default
+  product.quantity = 1; //agrego una cantidad por default
 
   const handleOnClick = () => {
-    product.quantity += 1;
     dispatch(addProductCart(1, product));
     // localStorage.setItem("user", userId.id);
     // dispatch(getUserOrder(userId.id));

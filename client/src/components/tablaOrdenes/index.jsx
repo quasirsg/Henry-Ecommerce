@@ -7,7 +7,7 @@ import { deleteOrder } from "../../redux/actions/ordenActions";
 import { getProductCart } from "../../redux/actions/userActions";
 
 const TablaOrdenes = () => {
-  const data = useSelector((state) => state.order.allOrders.order);
+  const data = useSelector((state) => state.order.allOrders);
   const dispatch = useDispatch();
 
   console.log(data);

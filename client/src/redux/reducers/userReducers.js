@@ -91,7 +91,7 @@ function userReducers(state = initialState, action) {
             product.product.quantity !== 0 &&
             product.product.quantity !== 1
           ) {
-            --product.product.quantity;
+            product.product.quantity--;
           }
         }
       });

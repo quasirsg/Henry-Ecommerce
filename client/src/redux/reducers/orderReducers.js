@@ -28,6 +28,7 @@ function orderReducer(state = initialState, action) {
     case DELETE_ORDER:
       return {
         ...state,
+        allOrders: state.allOrders.filter((item) => item.id !== action.order),
       };
     case GET_ONE_ORDER:
       return {

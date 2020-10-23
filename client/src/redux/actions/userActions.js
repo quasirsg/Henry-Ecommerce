@@ -126,7 +126,7 @@ export const deleteProductsCart = (userId, productId, name) => (dispatch) => {
 //Obtenner los productos agregados al carrito
 export const getProductCart = (userId) => (dispatch) => {
   axios
-    .get(url + `/users/${userId}/cart`)
+    .get(`${url}/users/${userId}/cart`)
     .then((res) => {
       dispatch({
         type: actionTypes.GET_CART_PRODUCTS,
@@ -140,8 +140,9 @@ export const getProductCart = (userId) => (dispatch) => {
 //Incremento "+"
 export const addAmount = (userId, productId, quantity) => (dispatch) => {
   axios
-    .put(url + `/users/${userId}/cart/${productId}`, {
+    .put(`${url}/users/${userId}/cart/${productId}`, {
       quantity: quantity,
+      amount: "addAmount",
     })
     .then((res) => {
       dispatch({
@@ -157,7 +158,10 @@ export const addAmount = (userId, productId, quantity) => (dispatch) => {
 //Decremento - "-"
 export const deletAmount = (userId, productId, quantity) => (dispatch) => {
   axios
-    .put(url + `/users/${userId}/cart/${productId}`, { quantity: quantity })
+    .put(`${url}/users/${userId}/cart/${productId}`, {
+      quantity: quantity,
+      amount: "deleteAmount",
+    })
     .then((res) => {
       dispatch({
         type: actionTypes.SUBTRACT_AMOUNT,
@@ -172,7 +176,7 @@ export const deletAmount = (userId, productId, quantity) => (dispatch) => {
 export const deleteAllCart = (userId) => (dispatch) => {
   deleteDialog("Carrito").then((res) => {
     if (res.isConfirmed) {
-      axios.delete(url + `/users/${userId}/cart`).then((res) => {
+      axios.delete(`${url}/users/${userId}/cart`).then((res) => {
         dispatch({
           type: actionTypes.DELETE_ALL_CART,
           order: res.data,

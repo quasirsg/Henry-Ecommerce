@@ -10,7 +10,7 @@ export const getOrders = () => (dispatch) => {
     .then((res) => {
       dispatch({
         type: actionTypes.GET_ORDERS,
-        order: res.data,
+        order: res.data.order,
       });
     })
     .catch((err) => {
@@ -20,11 +20,11 @@ export const getOrders = () => (dispatch) => {
 
 export const deleteOrder = (id) => (dispatch) => {
   return axios
-    .delete(url + `/order/${id}`)
+    .delete(`${url}/order/${id}`)
     .then((res) => {
       dispatch({
         type: actionTypes.DELETE_ORDER,
-        order: res.data,
+        order: id,
       });
     })
     .catch((err) => console.log(err));
@@ -51,6 +51,9 @@ export const updateStatusOrder = (id, status, userId) => (dispatch) => {
       dispatch({
         type: actionTypes.UPDATE_ORDER,
         status: res.data.orderUpdate.status,
+      });
+      dispatch({
+        type: actionTypes.DELETE_ALL_CART,
       });
     });
 };
