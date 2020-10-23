@@ -10,10 +10,12 @@ export default () => {
   let cart = useSelector((state) => state.users.carrito);
   const notification = useSelector((state) => state.users.message);
 
-  if (localStorage.cart) {
-    cart = JSON.parse(localStorage.getItem("cart"));
-  } else {
-    cart = [];
+  if (!localStorage.token) {
+    if (localStorage.cart) {
+      cart = JSON.parse(localStorage.getItem("cart"));
+    } else {
+      cart = [];
+    }
   }
 
   return (

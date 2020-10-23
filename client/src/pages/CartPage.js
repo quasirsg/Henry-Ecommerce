@@ -11,6 +11,7 @@ const Cart = () => {
   const dispatch = useDispatch();
 
   const userId = 1; //?? loguin o guest
+
   const deleteAll = (e) => {
     e.preventDefault();
     dispatch(deleteAllCart(userId));
@@ -22,6 +23,10 @@ const Cart = () => {
       productsCarts = JSON.parse(localStorage.getItem("cart"));
     } else {
       productsCarts = [];
+    }
+  } else {
+    if (localStorage.cart) {
+      // productsCarts = JSON.parse(localStorage.getItem("cart"));
     }
   }
 

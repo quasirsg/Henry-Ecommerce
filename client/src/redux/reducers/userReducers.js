@@ -28,6 +28,7 @@ const initialState = {
 };
 
 function userReducers(state = initialState, action) {
+  console.log(action);
   let products = state.carrito;
   switch (action.type) {
     case GET_USERS:
@@ -79,7 +80,7 @@ function userReducers(state = initialState, action) {
       return {
         ...state,
         carrito: state.carrito.filter(
-          (product) => product.product.id !== action.productId
+          (product) => product.id !== action.productId
         ),
       };
 

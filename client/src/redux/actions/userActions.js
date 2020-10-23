@@ -144,7 +144,7 @@ export const deleteProductsCart = (userId, productId, name) => (dispatch) => {
         }
       } else {
         axios
-          .delete(url + `/users/${userId}/cart/${productId}`)
+          .delete(`${url}/users/${userId}/cart/${productId}`)
           .then((res) => {
             dispatch({
               type: actionTypes.DELETE_PRODUCTS_CART,
