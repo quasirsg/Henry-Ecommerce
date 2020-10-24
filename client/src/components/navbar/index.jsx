@@ -7,8 +7,8 @@ import "./navbar.css";
 const Navbar = () => {
   return (
     <div className="navbar">
-      <Link to="/">
-        <h3 style={{ color: "424242", margin: "0" }}>Grupo 12</h3>
+      <Link to="/" className="navbar__link">
+        <img src="/gym.png" width="40" height="40" ></img>
       </Link>
       <SearchBar />
       <GroupIcons />
