@@ -15,6 +15,8 @@ import {
   GET_USER_ORDERS,
   GET_USERS_ORDERS,
   DELETE_ALL_CART,
+  DELETE_AMOUNT_GUEST,
+  ADD_AMOUNT_GUEST,
 } from "../actions/actionTypes";
 
 const initialState = {
@@ -91,27 +93,32 @@ function userReducers(state = initialState, action) {
       };
     case ADD_AMOUNT:
       state.carrito.map((product) => {
-        if (product.product.id === action.product.product_id) {
-          product.product.quantity = product.product.quantity + 1;
+        if (product.id === action.product.product_id) {
+          product.quantity++;
         }
       });
       return {
         ...state,
       };
+    case ADD_AMOUNT_GUEST:
+      return {
+        ...state,
+      };
     case SUBTRACT_AMOUNT:
       products.map((product) => {
-        if (product.product.id === action.product.product_id) {
-          if (
-            product.product.quantity !== 0 &&
-            product.product.quantity !== 1
-          ) {
-            product.product.quantity--;
+        if (product.id === action.product.product_id) {
+          if (product.quantity > 1) {
+            product.quantity--;
           }
         }
       });
       return {
         ...state,
         carrito: state.carrito,
+      };
+    case DELETE_AMOUNT_GUEST:
+      return {
+        ...state,
       };
     case DELETE_ALL_CART:
       return {

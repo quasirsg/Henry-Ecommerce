@@ -101,6 +101,7 @@ server.post("/:id", (req, res, next) => {
             const numOrder = order[0].dataValues
               ? order[0].dataValues.id
               : order[0].id;
+            console.log(numOrder);
             user.addOrder(numOrder).then(() => {
               return res.status(201).json({ orderId: numOrder });
             });

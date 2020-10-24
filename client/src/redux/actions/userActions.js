@@ -176,38 +176,66 @@ export const getProductCart = (userId) => (dispatch) => {
 };
 //Incremento "+"
 export const addAmount = (userId, productId, quantity) => (dispatch) => {
-  axios
-    .put(`${url}/users/${userId}/cart/${productId}`, {
-      quantity: quantity,
-      amount: "addAmount",
-    })
-    .then((res) => {
-      dispatch({
-        type: actionTypes.ADD_AMOUNT,
-        product: res.data.data,
-      });
-    })
-    .catch((err) => {
-      console.log(err);
+  if (!localStorage.token) {
+    let cart = JSON.parse(localStorage.getItem("cart"));
+    cart.forEach((item) => {
+      if (item.id === productId) {
+        item.quantity += 1;
+      }
     });
+    localStorage.setItem("cart", JSON.stringify(cart));
+    dispatch({
+      type: actionTypes.ADD_AMOUNT_GUEST,
+    });
+  } else {
+    axios
+      .put(`${url}/users/${userId}/cart/${productId}`, {
+        quantity: quantity,
+        amount: "addAmount",
+      })
+      .then((res) => {
+        dispatch({
+          type: actionTypes.ADD_AMOUNT,
+          product: res.data.data,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
 };
 
 //Decremento - "-"
 export const deletAmount = (userId, productId, quantity) => (dispatch) => {
-  axios
-    .put(`${url}/users/${userId}/cart/${productId}`, {
-      quantity: quantity,
-      amount: "deleteAmount",
-    })
-    .then((res) => {
-      dispatch({
-        type: actionTypes.SUBTRACT_AMOUNT,
-        product: res.data.data,
-      });
-    })
-    .catch((err) => {
-      console.log(err);
+  if (!localStorage.token) {
+    let cart = JSON.parse(localStorage.getItem("cart"));
+    cart.forEach((item) => {
+      if (item.id === productId) {
+        if (item.quantity > 1) {
+          item.quantity -= 1;
+        }
+      }
     });
+    localStorage.setItem("cart", JSON.stringify(cart));
+    dispatch({
+      type: actionTypes.DELETE_AMOUNT_GUEST,
+    });
+  } else {
+    axios
+      .put(`${url}/users/${userId}/cart/${productId}`, {
+        quantity: quantity,
+        amount: "deleteAmount",
+      })
+      .then((res) => {
+        dispatch({
+          type: actionTypes.SUBTRACT_AMOUNT,
+          product: res.data.data,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
 };
 
 export const deleteAllCart = (userId) => (dispatch) => {
