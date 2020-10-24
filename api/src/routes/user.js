@@ -194,6 +194,7 @@ server.post("/:userId/cart/add", async (req, res, next) => {
   const { productId, quantity, orderId } = req.body;
 
   try {
+
     const { stock, price, id, name, image } = await Product.findOne({
       where: {
         id: productId,
@@ -209,7 +210,7 @@ server.post("/:userId/cart/add", async (req, res, next) => {
     const subTotal = price * quantity;
 
     // Agregar al carrito
-    const line_order = await Linea_order.findOrCreate({
+    await Linea_order.findOrCreate({
       where: {
         quantity: quantity,
         total: subTotal,
@@ -238,11 +239,61 @@ server.post("/:userId/cart/add", async (req, res, next) => {
   }
 });
 
+// Agregar los productos al carrito
+server.post('/:userId/cart', async (req, res, next) => {
+  const { productsCarts, orderId } = req.body;
+  const { userId } = req.params;
+
+  try {
+
+    productsCarts.forEach(async (product) => {
+
+      const { stock, id: idProduct} = await Product.findOne({
+        where: {
+          id: product.id
+        },
+        raw: true
+      });
+
+      // Verificar stock
+      if (product.quantity > stock) {
+        return res.status(400).json({ message: "Invalid Operation" });
+      }
+
+      // Agregar total
+      product.total = product.price * product.quantity;
+
+      // Agregar al carrito
+      await Linea_order.findOrCreate({
+        where: {
+          quantity: product.quantity,
+          total: product.total,
+          product_id: idProduct,
+          orderId: orderId,
+          userId: userId,
+        }
+      });
+
+    });
+
+    return res.json({
+      message: 'Se agregaron los productos',
+      productsCarts
+    });
+
+
+  } catch (error) {
+    next(error.message)
+  }
+
+});
+
 //modificamos la cantidad de un producto en especifico, que se encuentre en el carrito
 server.put("/:userId/cart/:productId", async (req, res) => {
   const userId = req.params.userId;
   const productId = req.params.productId;
   const quantity = req.body.quantity;
+  const amount = req.body.amount;
 
   let product = await Product.findByPk(productId);
 
@@ -259,8 +310,15 @@ server.put("/:userId/cart/:productId", async (req, res) => {
   })
     .then(async (orderline) => {
       if (!orderline) return res.sendStatus(404);
-
-      orderline.quantity = quantity;
+      if (amount === "addAmount") {
+        orderline.quantity += 1;
+      } else if (amount === "deleteAmount") {
+        if (quantity !== 0) {
+          orderline.quantity -= 1;
+        } else if (quantity === 0) {
+          orderline.quantity = quantity;
+        }
+      }
       await orderline.save();
       return res.send({
         data: orderline,

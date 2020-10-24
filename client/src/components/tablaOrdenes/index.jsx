@@ -3,13 +3,12 @@ import { Button, Container, Table } from "reactstrap";
 import { GearFill, Trash, Tools } from "react-bootstrap-icons";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { deleteOrder } from '../../redux/actions/ordenActions';
+import { deleteOrder } from "../../redux/actions/ordenActions";
+import { getProductCart } from "../../redux/actions/userActions";
 
 const TablaOrdenes = () => {
-  const data = useSelector((state) => state.order.allOrders.order);
+  const data = useSelector((state) => state.order.allOrders);
   const dispatch = useDispatch();
-
-  console.log(data);
 
   const handleClick = (e, id) => {
     e.preventDefault();
@@ -38,7 +37,7 @@ const TablaOrdenes = () => {
               <td>{item.userId}</td>
               <td className="p-2">
                 <Link
-                  to={`/admin/lineaOrden/${item.id}`} //el id es el ID de Orden
+                  to={`/admin/ordenes/${item.id}`} //el id es el ID de Orden
                   className="btn btn-default border btn-sm mr-3"
                 >
                   <Tools size={17} />
@@ -48,7 +47,7 @@ const TablaOrdenes = () => {
                   onClick={(e) => handleClick(e, item.id)}
                   className="border btn-sm"
                 >
-                  <Trash  id={item.id} size={17} />
+                  <Trash id={item.id} size={17} />
                 </Button>
               </td>
             </tr>

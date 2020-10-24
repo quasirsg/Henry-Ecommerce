@@ -43,23 +43,23 @@ const { Product, Category, Order, Linea_order, User, Reviews } = sequelize.model
 //Hooks
 //User
 User.beforeCreate((user, options) => {
-
-  return bcrypt.hash(user.password, 10)
-    .then(hash => {
+  return bcrypt
+    .hash(user.password, 10)
+    .then((hash) => {
       user.password = hash;
     })
-    .catch(err => {
+    .catch((err) => {
       throw new Error();
     });
 });
 
 User.beforeUpdate((user, options) => {
-
-  return bcrypt.hash(user.password, 10)
-    .then(hash => {
+  return bcrypt
+    .hash(user.password, 10)
+    .then((hash) => {
       user.password = hash;
     })
-    .catch(err => {
+    .catch((err) => {
       throw new Error();
     });
 });
@@ -78,15 +78,17 @@ Category.belongsToMany(Product, {
 //Linea_producto Relacion
 
 Product.belongsToMany(Order, {
-  as: "order",
   through: Linea_order,
   foreignKey: "product_id",
 });
-Order.belongsTo(User)
-Order.belongsToMany(Product, { through: { model: Linea_order }, foreignKey: "orderId" });
-User.hasMany(Order, { foreignKey: 'userId' });
-User.hasMany(Linea_order, { foreignKey: 'userId' });
-Linea_order.belongsTo(Order, { foreignKey: 'orderId' });
+Order.belongsToMany(Product, {
+  through: { model: Linea_order },
+  foreignKey: "orderId",
+});
+Order.belongsTo(User);
+User.hasMany(Order, { foreignKey: "userId" });
+User.hasMany(Linea_order, { foreignKey: "userId" });
+Linea_order.belongsTo(Order, { foreignKey: "orderId" });
 
 //reviews Relations
 Product.belongsToMany(User, { through: { model: Reviews }, foreignKey: 'productId' });

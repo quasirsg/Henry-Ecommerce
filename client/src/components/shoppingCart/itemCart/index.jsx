@@ -53,7 +53,6 @@ const ItemCart = ({ product, quantity }) => {
                 Remover
               </button>
             </div>
-            z
             <div className="d-flex flex-row-reverse" values={product.id}>
               <Button children={"+"} onClick={handleIncrement} />
               <div className="itemCart-count" values={product.id}>

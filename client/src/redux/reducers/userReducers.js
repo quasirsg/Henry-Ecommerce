@@ -4,14 +4,20 @@ import {
   DELETE_USER,
   GET_USERS,
   ADD_PRODUCT_CART,
+  ADD_PRODUCT_CART_GUEST,
   ADD_AMOUNT,
   SUBTRACT_AMOUNT,
   GET_CART_PRODUCTS,
   DELETE_PRODUCTS_CART,
+  DELETE_PRODUCT_CART_GUEST,
+  DELETE_ALL_PRODUCTS_CART_GUEST,
   GET_ONE_USER,
   GET_USER_ORDERS,
   GET_USERS_ORDERS,
   DELETE_ALL_CART,
+  DELETE_AMOUNT_GUEST,
+  ADD_AMOUNT_GUEST,
+  ADD_ALL_PRODUCTS_CART_GUEST,
 } from "../actions/actionTypes";
 
 const initialState = {
@@ -20,14 +26,15 @@ const initialState = {
   err: [],
 
   carrito: [],
+  message: "",
   orders: [],
   allOrders: [],
   reviews: []
 };
 
 function userReducers(state = initialState, action) {
-  let products = state.carrito;
   console.log(action);
+  let products = state.carrito;
   switch (action.type) {
     case GET_USERS:
       return {
@@ -46,7 +53,6 @@ function userReducers(state = initialState, action) {
       };
 
     case POST_USER:
-      console.log(action);
       return {
         ...state,
         users: state.concat(action.userDetail),
@@ -69,41 +75,63 @@ function userReducers(state = initialState, action) {
         ...state,
         carrito: state.carrito.concat(action.product),
       };
+
+    case ADD_PRODUCT_CART_GUEST:
+      return {
+        ...state,
+        message: action.message,
+      };
     case DELETE_PRODUCTS_CART:
       return {
         ...state,
         carrito: state.carrito.filter(
-          (product) => product.product.id !== action.productId
+          (product) => product.id !== action.productId
         ),
+      };
+
+    case DELETE_PRODUCT_CART_GUEST:
+      return {
+        ...state,
+        message: action.message,
       };
     case ADD_AMOUNT:
       state.carrito.map((product) => {
-        if (product.product.id === action.product.product_id) {
-          ++product.product.quantity;
+        if (product.id === action.product.product_id) {
+          product.quantity++;
         }
       });
-      console.log(state.carrito);
+      return {
+        ...state,
+      };
+    case ADD_AMOUNT_GUEST:
+      return {
+        ...state,
+      };
+    case SUBTRACT_AMOUNT:
+      products.map((product) => {
+        if (product.id === action.product.product_id) {
+          if (product.quantity > 1) {
+            product.quantity--;
+          }
+        }
+      });
       return {
         ...state,
         carrito: state.carrito,
       };
-    case SUBTRACT_AMOUNT:
-      products.map((product) => {
-        if (product.product.id === action.product.product_id) {
-          if (product.product.quantity >= 1) {
-            --product.product.quantity;
-          }
-        }
-      });
-      console.log(state.carrito);
+    case DELETE_AMOUNT_GUEST:
       return {
         ...state,
-        carrito: state.carrito,
       };
     case DELETE_ALL_CART:
       return {
         ...state,
         carrito: [],
+      };
+    case DELETE_ALL_PRODUCTS_CART_GUEST:
+      return {
+        ...state,
+        message: action.message,
       };
     case GET_CART_PRODUCTS:
       return {
@@ -114,6 +142,12 @@ function userReducers(state = initialState, action) {
       return {
         ...state,
         orders: action.orders,
+      };
+
+    case ADD_ALL_PRODUCTS_CART_GUEST:
+      return {
+        ...state,
+        carrito: state.carrito.concat(action.products.productsCarts),
       };
     default:
       return state;

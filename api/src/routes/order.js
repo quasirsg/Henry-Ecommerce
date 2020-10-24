@@ -1,5 +1,5 @@
 const server = require("express").Router();
-const { Order, User } = require("../db.js");
+const { Order, User, Product, Linea_order } = require("../db.js");
 
 server.post("/", (req, res, next) => {
   const { id, status, user_id } = req.body;
@@ -18,6 +18,7 @@ server.post("/", (req, res, next) => {
     .catch(next);
 });
 
+//trae todas las ordenes de todos los usuarios
 server.get("/", (req, res, next) => {
   Order.findAll()
     .then((order) => {
@@ -29,13 +30,38 @@ server.get("/", (req, res, next) => {
     .catch(next);
 });
 
+//??Get order by orderId
+
+server.get("/:orderId", (req, res, next) => {
+  const { orderId } = req.params;
+
+  Order.findAll({
+    attributes: ["id", "status", "userId"],
+    where: {
+      id: orderId,
+    },
+    include: {
+      attributes: ["name", "price", "image", "id"],
+      model: Product,
+      through: {
+        attributes: ["id", "quantity", "total"],
+      },
+    },
+  })
+    .then((order) => res.json(order))
+    .catch((error) => next(error.message));
+});
+
+//Actualiza orden por id
 server.put("/:id", (req, res, next) => {
   let { id } = req.params;
   let currentOrder = req.body;
 
+  console.log(id);
+
   Order.findOne({ where: { id } })
     .then((order) => {
-      if (!orden)
+      if (!order)
         return res.status(404).json({ message: "Esa orden no existe" });
 
       order.update(currentOrder).then((orderUpdate) => {
@@ -75,6 +101,7 @@ server.post("/:id", (req, res, next) => {
             const numOrder = order[0].dataValues
               ? order[0].dataValues.id
               : order[0].id;
+            console.log(numOrder);
             user.addOrder(numOrder).then(() => {
               return res.status(201).json({ orderId: numOrder });
             });
