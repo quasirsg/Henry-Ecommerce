@@ -127,6 +127,29 @@ export const addProductCart = (userId, product) => async (dispatch) => {
   }
 };
 
+/*===== Agregar productos al carrito una vez se loguea  ======*/
+export const addProducts = (userId, productsCarts) => async (dispatch) => {
+  // Verificar que el usuario tenga un carrito
+  const {
+    data: { orderId },
+  } = await axios.post(`${url}/order/${userId}`, {
+    status: "shopping_cart",
+  });
+  // Agregar al carrito
+  axios
+    .post(`${url}/users/${userId}/cart`, {
+      orderId,
+      productsCarts,
+    })
+    .then((res) => {
+      dispatch({
+        type: actionTypes.ADD_ALL_PRODUCTS_CART_GUEST,
+        products: res.data,
+      });
+    })
+    .catch((error) => console.log(error));
+};
+
 //Eliminar productos del carrito
 export const deleteProductsCart = (userId, productId, name) => (dispatch) => {
   deleteDialog(name).then((res) => {

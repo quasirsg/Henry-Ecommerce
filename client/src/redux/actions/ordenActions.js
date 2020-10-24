@@ -30,9 +30,9 @@ export const deleteOrder = (id) => (dispatch) => {
     .catch((err) => console.log(err));
 };
 
-export const getOneOrder = (id) => (dispatch) => {
+export const getOneOrder = (userId) => (dispatch) => {
   axios
-    .get(url + `/order/${id}`)
+    .get(`${url}/order/${userId}`)
     .then((res) => {
       dispatch({
         type: actionTypes.GET_ONE_ORDER,

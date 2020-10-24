@@ -11,6 +11,7 @@ const initialState = {
   orderDetail: {},
 };
 function orderReducer(state = initialState, action) {
+  console.log(action);
   switch (action.type) {
     case GET_ORDERS:
       return {

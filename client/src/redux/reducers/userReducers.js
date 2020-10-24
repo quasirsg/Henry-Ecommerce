@@ -17,6 +17,7 @@ import {
   DELETE_ALL_CART,
   DELETE_AMOUNT_GUEST,
   ADD_AMOUNT_GUEST,
+  ADD_ALL_PRODUCTS_CART_GUEST,
 } from "../actions/actionTypes";
 
 const initialState = {
@@ -139,6 +140,12 @@ function userReducers(state = initialState, action) {
       return {
         ...state,
         orders: action.orders,
+      };
+
+    case ADD_ALL_PRODUCTS_CART_GUEST:
+      return {
+        ...state,
+        carrito: state.carrito.concat(action.products.productsCarts),
       };
     default:
       return state;
