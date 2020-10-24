@@ -4,19 +4,18 @@ import StarRatings from "react-star-ratings";
 import { useParams } from "react-router-dom";
 import { addProductCart } from "../../redux/actions/userActions";
 import "./producto.css";
-import Review from '../review/index';
-import { Col, Row, Container } from 'reactstrap';
-
+import Review from "../review/index";
+import { Col, Row, Container } from "reactstrap";
 
 const Product = () => {
   let { id } = useParams();
 
   /* ======== Star Rating Handle ======== */
-  const changeRating = (newRating, name) => {
-    setRating({
-      rating: newRating,
-    });
-  };
+  // const changeRating = (newRating, name) => {
+  //   setRating({
+  //     rating: newRating,
+  //   });
+  // };
   /* ========= Redux========== */
   const product = useSelector((state) => state.products.productDetail);
   const dispatch = useDispatch();
@@ -29,11 +28,11 @@ const Product = () => {
     // console.log(userId.id);
   };
 
+  //agrego provisoriamente
+  let reviews = [];
+
   return (
-    <Container
-      fluid={true}
-      className="productDetail py-4 my-4"
-    >
+    <Container fluid={true} className="productDetail py-4 my-4">
       <Row className="productDeatil__content">
         <Col lg="8">
           <div className="prod-img">
@@ -44,7 +43,7 @@ const Product = () => {
           <div className="productInfo">
             <div className="rating-reviews">
               <StarRatings
-                rating={average !== null ? average : 5}
+                // rating={average !== null ? average : 5}
                 starRatedColor="yellow"
                 starHoverColor="yellow"
                 starDimension="16px"
@@ -54,14 +53,20 @@ const Product = () => {
             </div>
             <h2 className="productTitle">{product.name}</h2>
             <p className="inforPrice">${product.price}</p>
-            <h6
-              className="productStock"
-            >
-              {product.stock > 0 ? 'Stock Disponible: ' + product.stock : 'Producto No Disponible'}
+            <h6 className="productStock">
+              {product.stock > 0
+                ? "Stock Disponible: " + product.stock
+                : "Producto No Disponible"}
             </h6>
-            <div className={product.stock > 0 ? "button-container" : 'button-container-disabled'}>
+            <div
+              className={
+                product.stock > 0
+                  ? "button-container"
+                  : "button-container-disabled"
+              }
+            >
               <button
-                onClick={() => console.log('action dispath buy product')}
+                onClick={() => console.log("action dispath buy product")}
                 className={"button btn-block"}
               >
                 Comprar Ahora
@@ -82,9 +87,8 @@ const Product = () => {
       </Col>
       <Col lg="12">
         <div className="infoCardDescriptionTitle">Reviews:</div>
-        {reviews.length > 0
-          ?
-          reviews.map(review => (
+        {reviews.length > 0 ? (
+          reviews.map((review) => (
             <Review
               userImage={review.user.image}
               userName={review.user.name}
@@ -92,14 +96,13 @@ const Product = () => {
               description={review.description}
             />
           ))
-          :
+        ) : (
           <div className="warning-alert">
             Lo sentimos este producto no cuenta con Reviews!
           </div>
-        }
+        )}
       </Col>
-
-    </Container >
+    </Container>
   );
 };
 

@@ -100,7 +100,6 @@ server.get("/", (req, res) => {
     .catch((err) => {
       return res.sendStatus(500);
     });
-
 });
 
 //obtener detalles de usuario por id//??nuevo
@@ -133,7 +132,7 @@ server.get("/order/cart/:id", (req, res, next) => {
     })
     .catch((err) => {
       next(err.message);
-
+    });
 });
 
 //obtener todas las ordenes de un usuario en especifico
@@ -194,7 +193,6 @@ server.post("/:userId/cart/add", async (req, res, next) => {
   const { productId, quantity, orderId } = req.body;
 
   try {
-
     const { stock, price, id, name, image } = await Product.findOne({
       where: {
         id: productId,
@@ -240,19 +238,17 @@ server.post("/:userId/cart/add", async (req, res, next) => {
 });
 
 // Agregar los productos al carrito
-server.post('/:userId/cart', async (req, res, next) => {
+server.post("/:userId/cart", async (req, res, next) => {
   const { productsCarts, orderId } = req.body;
   const { userId } = req.params;
 
   try {
-
     productsCarts.forEach(async (product) => {
-
-      const { stock, id: idProduct} = await Product.findOne({
+      const { stock, id: idProduct } = await Product.findOne({
         where: {
-          id: product.id
+          id: product.id,
         },
-        raw: true
+        raw: true,
       });
 
       // Verificar stock
@@ -271,21 +267,17 @@ server.post('/:userId/cart', async (req, res, next) => {
           product_id: idProduct,
           orderId: orderId,
           userId: userId,
-        }
+        },
       });
-
     });
 
     return res.json({
-      message: 'Se agregaron los productos',
-      productsCarts
+      message: "Se agregaron los productos",
+      productsCarts,
     });
-
-
   } catch (error) {
-    next(error.message)
+    next(error.message);
   }
-
 });
 
 //modificamos la cantidad de un producto en especifico, que se encuentre en el carrito
@@ -473,7 +465,7 @@ server.post("/login", (req, res) => {
 //Ruta de prueba con middleware
 server.get("/secure", authenticateToken, (req, res) => {
   return res.status(200).send({
-    message: "Paso la verificación!!!!"
+    message: "Paso la verificación!!!!",
   });
 });
 

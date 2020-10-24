@@ -13,10 +13,10 @@ import HomePage from "./pages/HomePage";
 import CartPage from "./pages/CartPage";
 
 // Componente Orden-> probando
-import Orden from "./components/Orden/orden.jsx";
-import TablaOrdenes from "./components/tablaOrdenes"
-import FormUser from './components/userForm';
-import LoginForm from './components/loginForm';
+import Orden from "./components/tablaOrdenes/Orden";
+import TablaOrdenes from "./components/tablaOrdenes";
+import FormUser from "./components/userForm";
+import LoginForm from "./components/loginForm";
 
 function App() {
   return (

@@ -1,9 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { Cart3, Collection } from "react-bootstrap-icons";
-import { Col, CustomInput } from "reactstrap";
-import { PersonSquare } from "react-bootstrap-icons";
+import { Cart3, Collection, PersonSquare } from "react-bootstrap-icons";
+import { Col, CustomInput, Badge } from "reactstrap";
 
 //Components
 import Guest from "../../guestOptions";
@@ -40,13 +39,13 @@ export default () => {
         )}
       </Link>
       <Link to={"/user/login"} className="text-dark ">
-            Ingresá
+        Ingresá
       </Link>
       <Link to={"/user/register"} className="text-dark ">
-            Crea tu cuenta
+        Crea tu cuenta
       </Link>
       <Link to={"/admin"} className="text-dark ">
-            <PersonSquare size={20} />
+        <PersonSquare size={20} />
       </Link>
 
       {/* <Guest/> */}
