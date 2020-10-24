@@ -18,9 +18,11 @@ const initialState = {
   users: [],
   userDetail: [],
   err: [],
+
   carrito: [],
   orders: [],
   allOrders: [],
+  reviews: []
 };
 
 function userReducers(state = initialState, action) {

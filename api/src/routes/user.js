@@ -1,34 +1,29 @@
 const server = require("express").Router();
-const { User, Order, Product, Linea_order } = require("../db.js");
-
+const { User, Order, Product, Linea_Order } = require("../db.js");
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+var config = require("../configs/config");
+var { authenticateToken } = require("../middlewares/middleware");
 //Agregar un usuario
 server.post("/", (req, res, next) => {
   const {
     name,
     email,
     address,
-    role,
     phoneNumber,
     password,
     image,
     location_id,
   } = req.body;
-  if (
-    !name ||
-    !email ||
-    !address ||
-    !role ||
-    !password ||
-    !image ||
-    !location_id
-  )
-    return res.status(400).json({ message: "A parameter is missing" });
+  if (!name || !email || !address || !password || !image)
+    return res.status(400).json({
+      message: "A parameter is missing",
+    });
 
   User.create({
     name,
     email,
     address,
-    role,
     phoneNumber,
     password,
     image,
@@ -37,7 +32,9 @@ server.post("/", (req, res, next) => {
     .then((user) => {
       return res.status(200).json(user);
     })
-    .catch(next);
+    .catch((error) => {
+      console.log("h");
+    });
 });
 
 //Actualizar un usuario
@@ -45,27 +42,45 @@ server.put("/:id", (req, res, next) => {
   let { id } = req.params;
   let update = req.body;
 
-  User.findOne({ where: { id } })
+  User.findOne({
+    where: {
+      id,
+    },
+  })
     .then((user) => {
-      if (!user) return res.status(404).json({ message: "User doesnt exist" });
+      if (!user)
+        return res.status(404).json({
+          message: "User doesnt exist",
+        });
 
       user.update(update).then((userUpdate) => {
         return res.status(200).json(userUpdate);
       });
     })
-    .catch(next);
+    .catch((error) => {
+      console.log("h");
+    });
 });
 
 //Eliminar un usuario
 server.delete("/:id", (req, res, next) => {
   let { id } = req.params;
 
-  User.findOne({ where: { id } })
+  User.findOne({
+    where: {
+      id,
+    },
+  })
     .then((user) => {
-      if (!user) return res.status(404).json({ message: "User doesnt exist" });
+      if (!user)
+        return res.status(404).json({
+          message: "User doesnt exist",
+        });
 
       user.destroy(user).then(() => {
-        return res.status(200).json({ message: "User deleted" });
+        return res.status(200).json({
+          message: "User deleted",
+        });
       });
     })
     .catch(next);
@@ -78,11 +93,14 @@ server.get("/", (req, res) => {
     attributes: ["id", "name", "email", "address", "role", "phoneNumber"],
   })
     .then((users) => {
-      return res.send({ data: users });
+      return res.send({
+        data: users,
+      });
     })
     .catch((err) => {
       return res.sendStatus(500);
     });
+
 });
 
 //obtener detalles de usuario por id//??nuevo
@@ -115,6 +133,30 @@ server.get("/order/cart/:id", (req, res, next) => {
     })
     .catch((err) => {
       next(err.message);
+
+});
+
+//obtener todas las ordenes de un usuario en especifico
+server.get("/:id/orders", (req, res) => {
+  const id = req.params.id;
+
+  User.findByPk(id, {
+    include: {
+      model: Order,
+      through: {
+        attributes: ["total", "quantity"],
+      },
+    },
+  })
+    .then((user) => {
+      return res
+        .send({
+          data: user.orders,
+        })
+        .status(200);
+    })
+    .catch((err) => {
+      return res.sendStatus(500);
     });
 });
 
@@ -122,7 +164,13 @@ server.get("/order/cart/:id", (req, res, next) => {
 server.get("/orders", (req, res) => {
   const userId = req.userId;
   Order.findAll({
-    include: [User, { model: Product, through: Linea_order }],
+    include: [
+      User,
+      {
+        model: Product,
+        through: Linea_Order,
+      },
+    ],
     where: {
       userId: userId,
       status: {
@@ -131,7 +179,9 @@ server.get("/orders", (req, res) => {
     },
   })
     .then((orders) => {
-      return res.send({ data: orders });
+      return res.send({
+        data: orders,
+      });
     })
     .catch((err) => {
       return res.sendStatus(500);
@@ -212,7 +262,9 @@ server.put("/:userId/cart/:productId", async (req, res) => {
 
       orderline.quantity = quantity;
       await orderline.save();
-      return res.send({ data: orderline });
+      return res.send({
+        data: orderline,
+      });
     })
     .catch((err) => {
       console.log(err);
@@ -301,11 +353,70 @@ server.get("/:userId/cart", (req, res) => {
       if (!order) {
         return res.sendStatus(404);
       }
-      return res.send({ data: order });
+      return res.send({
+        data: order,
+      });
     })
     .catch((err) => {
       return res.sendStatus(500);
     });
+});
+
+//Login de un usuario
+server.post("/login", (req, res) => {
+  var email = req.body.email.toLowerCase();
+  var password = req.body.password;
+  var tokenData = {
+    email: email,
+    // ANY DATA
+  };
+  User.findOne({
+    attributes: [
+      "id",
+      "name",
+      "password",
+      "email",
+      "address",
+      "role",
+      "phoneNumber",
+    ],
+    where: {
+      email: email,
+    },
+  })
+    .then((user) => {
+      console.log();
+      bcrypt.compare(password, user.dataValues.password, (err, response) => {
+        if (err) {
+          console.log("error");
+        }
+        if (response) {
+          var token = jwt.sign(tokenData, config.llave, {
+            expiresIn: 60 * 60 * 24, // expires in 24 hours
+          });
+          return res.status(200).send({
+            token,
+            user: user,
+          });
+        } else {
+          return res.status(404).send({
+            error: "contraseña Erronea",
+          });
+        }
+      });
+    })
+    .catch((err) => {
+      return res.status(404).send({
+        error: "Email invalido",
+      });
+    });
+});
+
+//Ruta de prueba con middleware
+server.get("/secure", authenticateToken, (req, res) => {
+  return res.status(200).send({
+    message: "Paso la verificación!!!!"
+  });
 });
 
 module.exports = server;

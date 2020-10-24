@@ -14,8 +14,9 @@ import CartPage from "./pages/CartPage";
 
 // Componente Orden-> probando
 import Orden from "./components/Orden/orden.jsx";
-import FormUser from "./components/userForm";
 import TablaOrdenes from "./components/tablaOrdenes"
+import FormUser from './components/userForm';
+import LoginForm from './components/loginForm';
 
 function App() {
   return (
@@ -40,6 +41,10 @@ function App() {
 
         <Route exact path="/user/register">
           <FormUser action="post" icon="success" message="Usuario agregado" />
+        </Route>
+
+        <Route exact path="/user/login">
+          <LoginForm action="post" icon="success" message="Usuario agregado" />
         </Route>
 
         <Route

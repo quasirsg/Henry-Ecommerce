@@ -7,11 +7,33 @@ import {
   PUT_PRODUCT,
   DELETE_PRODUCT,
   PUT_PRODUCT_FAILED,
+  GET_PRODUCT_REVIEWS,
+  GET_BANNERS,
 } from "../actions/actionTypes";
 
 const initialState = {
   allProducts: [],
   productDetail: {},
+  productReviews: {
+    average: 5,
+    reviews: [],
+  },
+  productBanner: [
+    {
+      src: '/images/banner1.png',
+      altText: 'Slide 1',
+      caption: '',
+      header: '',
+      key: '1'
+    },
+    {
+      src: '/images/banner2.png',
+      altText: 'Slide 1',
+      caption: '',
+      header: '',
+      key: '2'
+    }
+  ],
   loading: false,
   message: "",
 };
@@ -30,6 +52,15 @@ function productReducers(state = initialState, action) {
         ...state,
         productDetail: action.payload,
       };
+
+    case GET_PRODUCT_REVIEWS:
+      return {
+        ...state,
+        productReviews: {
+          average: action.reviews.average,
+          reviews: action.reviews.result,
+        }
+      }
 
     case POST_PRODUCT:
       return {
@@ -69,6 +100,8 @@ function productReducers(state = initialState, action) {
           (item) => item.id !== action.payload
         ),
       };
+    case GET_BANNERS:
+      return state;
 
     default:
       return state;

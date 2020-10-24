@@ -66,8 +66,46 @@ export const editUser = (id, action, values) => (dispatch) => {
       .catch((err) => console.log(err));
   }
 };
-
-// --------------- ACTION CART---------------
+//un usuario puede añadir una review a un producto que haya comprado
+export const addReview = (productId, userId, points, description) => dispatch => {
+  axios.post(url + '/products/' + productId + '/' + userId + '/review', {
+    points,
+    description,
+  })
+    .then(review => {
+      dispatch({
+        type: actionTypes.ADD_REVIEW,
+        review,
+      })
+    })
+    .catch(err => console.log(err));
+}
+//un usuario puede editar una review de un producto que haya comprado
+export const editReview = (productId, reviewId, points, description) => dispatch => {
+  axios.put(url + '/products/' + productId + '/review/' + reviewId, {
+    points,
+    description,
+  })
+    .then(newReview => {
+      dispatch({
+        type: actionTypes.EDIT_REVIEW,
+        review: newReview,
+      })
+        .catch(err => console.log(err));
+    })
+}
+// export const putProduct=(id, action, values)=>(dispatch)=>{
+//   return axios
+//     .put(url+`/products/${id}`)ñ
+//     .then(res=>{
+//       console.log(res)
+//       dispatch({
+//         type: actionTypes.PUT_PRODUCT,
+//         productDetail: res.data
+//       })
+//     })
+//     .catch(err=>console.log(err))
+// }
 
 //Agregar productos al carrito
 export const addProductCart = (userId, product) => async (dispatch) => {

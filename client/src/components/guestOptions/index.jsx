@@ -17,12 +17,6 @@ const Guest = (props) => {
       <DropdownToggle caret>Login</DropdownToggle>
       <DropdownMenu>
         <DropdownItem header>Header</DropdownItem>
-        <DropdownItem>Login</DropdownItem>
-        <DropdownItem>
-          <Link to={"/user/register"} className="text-dark ">
-            Register
-          </Link>
-        </DropdownItem>
         <DropdownItem divider />
         <DropdownItem>
           <Link to={"/admin"} className="text-dark ">

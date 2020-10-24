@@ -37,6 +37,7 @@ module.exports = (sequelize) => {
     },
     image: {
       type: DataTypes.TEXT,
+      defaultValue: '/images/userDefaultIcon.png'
     },
     location_id: {
       type: DataTypes.INTEGER,

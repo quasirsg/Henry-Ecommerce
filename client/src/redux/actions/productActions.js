@@ -1,17 +1,22 @@
 import {
   GET_PRODUCTS,
   GET_PRODUCT,
+  GET_PRODUCT_REVIEWS,
   POST_PRODUCT,
   ADD_PRODUCT_CATEGORY,
   REMOVE_CHANGE_PRODUCT_CATEGORY,
   PUT_PRODUCT,
   PUT_PRODUCT_FAILED,
   DELETE_PRODUCT,
+  GET_BANNERS,
 } from "./actionTypes";
+import axios from 'axios';
 import apiCall from "../api";
 import Toast from "../../components/alerts/toast";
 import DeleteDialog from "../../components/alerts/deleteDialog";
 import Swal from "sweetalert2";
+
+const url = 'http://localhost:3001';
 
 export const getProducts = () => (dispatch) => {
   apiCall("/products/", null, null, "get")
@@ -28,6 +33,22 @@ export const getProducts = () => (dispatch) => {
       });
     });
 };
+
+export const getReviews = productId => dispatch => {
+  axios.get(url + '/products/' + productId + '/reviews')
+    .then(res => {
+      dispatch({
+        type: GET_PRODUCT_REVIEWS,
+        reviews: res.data,
+      })
+    })
+}
+
+export const getBanners = () => {
+  return {
+    type: GET_BANNERS,
+  }
+}
 
 export const getOneProduct = (id) => (dispatch) => {
   apiCall(`/products/${id}`, null, null, "get")
