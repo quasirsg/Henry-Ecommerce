@@ -8,3 +8,12 @@
   background-color: #fdfdff;
   box-shadow: 0 0 10px 3px #abafc07e;
 }
+
+.navbar__link {
+  background-image: linear-gradient(to right, #8763fc, #806afd, #7a70fd, #7576fd, #707cfd, #6385ff, #578dff, #4d94ff, #39a0ff, #2caaff, #2cb4fe, #39bdfb);
+  margin: 5px 0;
+  padding: 5px;
+  border: none;
+  color: white;
+  border-radius: 10px;
+}
