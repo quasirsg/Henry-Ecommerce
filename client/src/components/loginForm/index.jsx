@@ -99,7 +99,7 @@ const LoginForm = ({
                   <Row>
                     <Button
                       className="btn btn-light text-secondary btn-sm float-left"
-                      onClick={() => history.push("/user/register")}
+                      onClick={() => history.push("/user/login")}
                     >
                       <ArrowLeftCircle size={20} />
                     </Button>
@@ -110,7 +110,7 @@ const LoginForm = ({
 
                 <Row className="d-block">
                   <ClipboardPlus className="mb-1 mr-2" size={40} />
-                  <h2>Registrarse</h2>
+                  <h2>Ingresar</h2>
                 </Row>
               </Col>
               <hr className="mt-0 mb-3" />
@@ -147,7 +147,7 @@ const LoginForm = ({
                   : action === "delete"
                   ? "Eliminar usuario"
                   : action === "post"
-                  ? "Agregar usuario"
+                  ? "Ingresar"
                   : null}
               </Button>
             </Form>
