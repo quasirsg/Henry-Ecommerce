@@ -1,6 +1,6 @@
 const server = require("express").Router();
 const { Product, Category } = require("../db.js");
-
+const jwt = require('jsonwebtoken');
 server.get('/q/:searchTerm', (req, res, next) => {
     const searchTerm = req.params.searchTerm;
     console.log(searchTerm)
