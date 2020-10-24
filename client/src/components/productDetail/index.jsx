@@ -55,16 +55,16 @@ const Product = () => {
             >
               {product.stock > 0 ? 'Stock Disponible: ' + product.stock : 'Producto No Disponible'}
             </h6>
-            <div className="button-container">
+            <div className={product.stock > 0 ? "button-container" : 'button-container-disabled'}>
               <button
-                onClick={() => console.log('has hecho click xD')}
-                className={product.stock > 0 ? "button btn-block" : 'button-disabled btn-block'}
+                onClick={() => console.log('action dispath buy product')}
+                className={"button btn-block"}
               >
                 Comprar Ahora
               </button>
               <button
                 onClick={handleOnClick}
-                className={product.stock > 0 ? "button-secundary btn-block" : 'button-disabled btn-block'}
+                className={"button-secundary btn-block"}
               >
                 Agregar al Carrito
               </button>

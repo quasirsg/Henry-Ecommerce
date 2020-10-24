@@ -83,6 +83,10 @@
   padding: 2rem 3rem;
 }
 
+.button-container-disabled {
+  display: none;
+}
+
 .button {
   background: linear-gradient(to bottom, #8763fc 5%, #6b83fc 100%);
   background-color: #8763fc;
@@ -110,18 +114,6 @@
 .button-secundary:hover {
   background: linear-gradient(to bottom, #8763fc 5%, #6b83fc 100%);
   color: white;
-  border: none;
-}
-
-.button-disabled {
-  font-family: Arial;
-  margin-top: 2rem;
-  font-size: 17px;
-  padding: 11px 30px;
-  text-decoration: none;
-  border-radius: 10px;
-  background-color: #CED4DA;
-  color: #FEFEFE;
   border: none;
 }
 
