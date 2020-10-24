@@ -143,9 +143,8 @@ server.post("/:userId/cart/add", async (req, res, next) => {
   const { userId } = req.params;
   const { productId, quantity, orderId } = req.body;
 
-  console.log(quantity);
-
   try {
+
     const { stock, price, id, name, image } = await Product.findOne({
       where: {
         id: productId,
@@ -190,6 +189,55 @@ server.post("/:userId/cart/add", async (req, res, next) => {
   }
 });
 
+// Agregar los productos al carrito
+server.post('/:userId/cart', async (req, res, next) => {
+  const { productsCarts, orderId } = req.body;
+  const { userId } = req.params;
+
+  try {
+
+    productsCarts.forEach(async (product) => {
+
+      const { stock, id: idProduct} = await Product.findOne({
+        where: {
+          id: product.id
+        },
+        raw: true
+      });
+
+      // Verificar stock
+      if (product.quantity > stock) {
+        return res.status(400).json({ message: "Invalid Operation" });
+      }
+
+      // Agregar total
+      product.total = product.price * product.quantity;
+
+      // Agregar al carrito
+      await Linea_order.findOrCreate({
+        where: {
+          quantity: product.quantity,
+          total: product.total,
+          product_id: idProduct,
+          orderId: orderId,
+          userId: userId,
+        }
+      });
+
+    });
+
+    return res.json({
+      message: 'Se agregaron los productos',
+      productsCarts
+    });
+
+
+  } catch (error) {
+    next(error.message)
+  }
+
+});
+
 //modificamos la cantidad de un producto en especifico, que se encuentre en el carrito
 server.put("/:userId/cart/:productId", async (req, res) => {
   const userId = req.params.userId;
@@ -197,7 +245,6 @@ server.put("/:userId/cart/:productId", async (req, res) => {
   const quantity = req.body.quantity;
   const amount = req.body.amount;
 
-  console.log(quantity);
   let product = await Product.findByPk(productId);
 
   if (product.stock < quantity) return res.sendStatus(422);

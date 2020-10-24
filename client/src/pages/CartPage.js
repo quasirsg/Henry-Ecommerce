@@ -5,6 +5,7 @@ import ButtonBlock from "../components/custom/ButtonBlock";
 import { useSelector, useDispatch } from "react-redux";
 import { addProductCart, deleteAllCart } from "../redux/actions/userActions";
 import { getOneOrder } from "../redux/actions/ordenActions";
+import axios from 'axios';
 
 const Cart = () => {
   const prueba = useSelector((state) => state);
@@ -32,6 +33,27 @@ const Cart = () => {
     dispatch(deleteAllCart(userId));
   };
 
+  const addProducts = async (userId) => {
+    const url = 'http://localhost:3001';
+    // Verificar que el usuario tenga un carrito
+    const {
+      data: { orderId },
+    } = await axios.post(`${url}/order/${userId}`, {
+      status: "shopping_cart",
+    });
+
+    // Agregar al carrito
+    axios.post(`${url}/users/${userId}/cart`, {
+      orderId,
+      productsCarts
+    })
+      .then(response => {
+        console.log('Products: ', response.data);
+      })
+      .catch(error => console.log(error))
+
+  }
+
   /* cambio de guest-login */
 
   if (!userData && !localStorage.token) {
@@ -46,13 +68,21 @@ const Cart = () => {
     if (localStorage.cart) {
       //?? Loguin
       productsCarts = JSON.parse(localStorage.getItem("cart"));
-      productsCarts.map((item) => {
-        dispatch(addProductCart(userId, item)); //al hacer un dispatch distinto por producto genera ordenes distintas por producto
-      });
+
+      // Buscar order
+      // Verificar que el usuario tenga un carrito
+      // Agregar carrito
+      addProducts(1);
+
+      // productsCarts.map(async (item) => {
+      //   await dispatch(addProductCart(userId, item)); //al hacer un dispatch distinto por producto genera ordenes distintas por producto
+      // });
+
       localStorage.removeItem("cart");
       setUserData(null); //evitar un loop
     }
   }
+
 
   console.log(productsCarts);
 
