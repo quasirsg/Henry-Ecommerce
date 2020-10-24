@@ -2,27 +2,31 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import StarRatings from "react-star-ratings";
 import { useParams } from "react-router-dom";
-import { addProductCart } from "../../redux/actions/cartActions";
+import { addProductCart } from "../../redux/actions/userActions";
 import "./producto.css";
-import allActions from "../../redux/actions/allActions";
-import { getReviews } from '../../redux/actions/productActions';
 import Review from '../review/index';
 import { Col, Row, Container } from 'reactstrap';
 
+
 const Product = () => {
   let { id } = useParams();
-  const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(allActions.getOneProduct(id));
-    dispatch(getReviews(id));
-
-  }, [id]);
+  /* ======== Star Rating Handle ======== */
+  const changeRating = (newRating, name) => {
+    setRating({
+      rating: newRating,
+    });
+  };
+  /* ========= Redux========== */
   const product = useSelector((state) => state.products.productDetail);
-  const { average, reviews } = useSelector(state => state.products.productReviews);
+  const dispatch = useDispatch();
+  product.quantity = 1; //agrego una cantidad por default
 
   const handleOnClick = () => {
-    dispatch(addProductCart(product, 1));
+    dispatch(addProductCart(1, product));
+    // localStorage.setItem("user", userId.id);
+    // dispatch(getUserOrder(userId.id));
+    // console.log(userId.id);
   };
 
   return (

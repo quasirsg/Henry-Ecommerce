@@ -100,6 +100,40 @@ server.get("/", (req, res) => {
     .catch((err) => {
       return res.sendStatus(500);
     });
+
+});
+
+//obtener detalles de usuario por id//??nuevo
+server.get("/:id", (req, res) => {
+  const id = req.params.id;
+  User.findByPk(id).then((user) => {
+    return res.status(200).json(user);
+  });
+});
+
+//obtener todas las ordenes de un usuario en especifico
+server.get("/order/cart/:id", (req, res, next) => {
+  const id = req.params.id;
+
+  User.findOne(
+    {
+      where: {
+        id,
+      },
+    },
+    {
+      include: {
+        model: Order,
+        through: { attributes: ["total", "quantity"] },
+      },
+    }
+  )
+    .then((user) => {
+      return res.status(200).json({ data: user.orders });
+    })
+    .catch((err) => {
+      next(err.message);
+
 });
 
 //obtener todas las ordenes de un usuario en especifico
@@ -155,104 +189,136 @@ server.get("/orders", (req, res) => {
 });
 
 //agregar un producto al carrito
-server.post("/cart", async (req, res) => {
-  const { userId, productId, quantity } = req.body;
+server.post("/:userId/cart/add", async (req, res, next) => {
+  const { userId } = req.params;
+  const { productId, quantity, orderId } = req.body;
 
-  let order = await Order.findOne({
-    where: {
-      userId: userId,
-      status: "shopping_cart",
-    },
-  });
+  try {
 
-  if (!order)
-    order = await Order.create({
-      status: "shopping_cart",
-      userId: userId,
+    const { stock, price, id, name, image } = await Product.findOne({
+      where: {
+        id: productId,
+      },
+      raw: true,
     });
 
-  let product = await Product.findByPk(productId);
-  if (product.stock < quantity) return res.sendStatus(422);
+    // Verificar stock
+    if (quantity > stock) {
+      return res.status(400).json({ message: "Invalid Operation" });
+    }
 
-  Linea_Order.create({
-    price: product.price,
-    quantity: quantity,
-    product_id: productId,
-    orderId: order.id,
-    userId: userId,
-  })
-    .then((orderline) => {
-      console.log(orderline);
-      product.dataValues["orderline"] = orderline;
-      return res.send({ data: product });
-    })
-    .catch((err) => {
-      console.log(err);
-      return res.sendStatus(500);
+    const subTotal = price * quantity;
+
+    // Agregar al carrito
+    await Linea_order.findOrCreate({
+      where: {
+        quantity: quantity,
+        total: subTotal,
+        product_id: id,
+        orderId: orderId,
+        userId: userId,
+      },
     });
+
+    const product = {
+      id,
+      name,
+      image,
+      price,
+      stock,
+      quantity,
+      total: subTotal,
+    };
+
+    return res.status(201).json({
+      message: "Se agrego al carrito.",
+      product,
+    });
+  } catch (error) {
+    next(error.message);
+  }
 });
 
-//Obtenes todos los productos que estan en el carrito de un usuario en especifico
-server.get("/userId/cart", (req, res) => {
-  const idUser = req.params.userId;
-  Order.findOne({
-    include: [
-      User,
-      {
-        model: Product,
-        through: Linea_Order,
-      },
-    ],
-    where: {
-      userId: idUser,
-      status: "shopping_cart",
-    },
-  })
-    .then((order) => {
-      if (!order) {
-        return res
-          .send({
-            data: {
-              products: [],
-            },
-          })
-          .status(204);
-      }
-      return res.send({
-        data: order,
+// Agregar los productos al carrito
+server.post('/:userId/cart', async (req, res, next) => {
+  const { productsCarts, orderId } = req.body;
+  const { userId } = req.params;
+
+  try {
+
+    productsCarts.forEach(async (product) => {
+
+      const { stock, id: idProduct} = await Product.findOne({
+        where: {
+          id: product.id
+        },
+        raw: true
       });
-    })
-    .catch((err) => {
-      return res.sendStatus(500);
+
+      // Verificar stock
+      if (product.quantity > stock) {
+        return res.status(400).json({ message: "Invalid Operation" });
+      }
+
+      // Agregar total
+      product.total = product.price * product.quantity;
+
+      // Agregar al carrito
+      await Linea_order.findOrCreate({
+        where: {
+          quantity: product.quantity,
+          total: product.total,
+          product_id: idProduct,
+          orderId: orderId,
+          userId: userId,
+        }
+      });
+
     });
+
+    return res.json({
+      message: 'Se agregaron los productos',
+      productsCarts
+    });
+
+
+  } catch (error) {
+    next(error.message)
+  }
+
 });
 
 //modificamos la cantidad de un producto en especifico, que se encuentre en el carrito
-server.put("/userId/cart/:productId", async (req, res) => {
+server.put("/:userId/cart/:productId", async (req, res) => {
   const userId = req.params.userId;
   const productId = req.params.productId;
   const quantity = req.body.quantity;
+  const amount = req.body.amount;
 
   let product = await Product.findByPk(productId);
 
   if (product.stock < quantity) return res.sendStatus(422);
 
-  Orderline.findOne({
-    include: [
-      {
-        model: Order,
-      },
-    ],
+  Linea_order.findOne({
+    //??orderline??
+    include: [{ model: Order }],
     where: {
       userId: userId,
-      productId: productId,
+      product_id: productId,
       "$order.status$": "shopping_cart",
     },
   })
     .then(async (orderline) => {
       if (!orderline) return res.sendStatus(404);
-
-      orderline.quantity = quantity;
+      if (amount === "addAmount") {
+        orderline.quantity += 1;
+      } else if (amount === "deleteAmount") {
+        if (quantity !== 0) {
+          orderline.quantity -= 1;
+        } else if (quantity === 0) {
+          orderline.quantity = quantity;
+        }
+      }
       await orderline.save();
       return res.send({
         data: orderline,
@@ -265,11 +331,11 @@ server.put("/userId/cart/:productId", async (req, res) => {
 });
 
 //Eliminar un producto del carrito de un usuario en especifico
-server.delete("/userId/cart/:productId", (req, res) => {
+server.delete("/:userId/cart/:productId", (req, res) => {
   const userId = req.params.userId;
   const productId = req.params.productId;
 
-  Linea_Order.findOne({
+  Linea_order.findOne({
     include: [
       {
         model: Order,
@@ -278,7 +344,7 @@ server.delete("/userId/cart/:productId", (req, res) => {
     where: {
       "$order.userId$": userId,
       "$order.status$": "shopping_cart",
-      productId: productId,
+      product_id: productId,
     },
   })
     .then(async (orderline) => {
@@ -288,7 +354,7 @@ server.delete("/userId/cart/:productId", (req, res) => {
 
       await orderline.destroy();
 
-      let _orderline = await Linea_Order.findOne({
+      let _orderline = await Linea_order.findOne({
         where: {
           orderId: orderline.orderId,
         },
@@ -302,8 +368,10 @@ server.delete("/userId/cart/:productId", (req, res) => {
 
       return res.sendStatus(204);
     })
-    .catch((err) => {
-      return res.sendStatus(500);
+    .catch((error) => {
+      return res.status(500).json({
+        error: error.message,
+      });
     });
 });
 
@@ -328,19 +396,14 @@ server.delete("/:userId/cart", (req, res) => {
 });
 
 //obtener el carrito del usuario
-server.get("/:idUser/cart", (req, res) => {
-  const idUser = req.params.idUser;
+server.get("/:userId/cart", (req, res) => {
+  //revisar con linea 178
+  const userId = req.params.userId;
 
   Order.findOne({
-    include: [
-      User,
-      {
-        model: Product,
-        through: Linea_Order,
-      },
-    ],
+    include: [User, { model: Product, through: Linea_order }],
     where: {
-      userId: idUser,
+      userId: userId,
       status: "shopping_cart",
     },
   })
@@ -410,7 +473,7 @@ server.post("/login", (req, res) => {
 //Ruta de prueba con middleware
 server.get("/secure", authenticateToken, (req, res) => {
   return res.status(200).send({
-    message: "Paso la verificación!!!!",
+    message: "Paso la verificación!!!!"
   });
 });
 

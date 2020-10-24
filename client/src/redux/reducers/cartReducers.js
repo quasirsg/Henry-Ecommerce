@@ -1,57 +1,51 @@
-import {
-  ADD_PRODUCT_CART,
-  ADD_AMOUNT,
-  SUBTRACT_AMOUNT,
-  GET_CART_PRODUCTS,
-  DELETE_PRODUCTS_CART,
-} from "../actions/actionTypes";
+// import {
+//   GET_ORDER, //todas las ordenes
+//   POST_ORDER,
+//   GET_ONE_ORDER,
+//   DELETE_ORDER,
+//   UPDATE_ORDER,
+// } from "../actions/actionTypes";
 
-const initialState = {
-  products: [],
-};
+// const initialState = {
+//   orders: [],
+//   order: [],
+// };
 
-function cartReducers(state = initialState, action) {
-  let products = state.products;
-  switch (action.type) {
-    case ADD_PRODUCT_CART:
-      return {
-        ...state,
-        products: products.concat(action.product),
-      };
-    case DELETE_PRODUCTS_CART:
-      return {
-        ...state,
-        products: products.filter((product) => product.id !== action.productId),
-      };
-    case ADD_AMOUNT:
-      const productsUpdate = products.map((product) => {
-        if (product.id === action.productId) {
-          product.quantity = product.quantity + 1;
-        }
-      });
-      return {
-        ...state,
-        products: productsUpdate,
-      };
-    case SUBTRACT_AMOUNT:
-      const productsUp = products.map((product) => {
-        if (product.id === action.productId) {
-          product.quantity = product.quantity - 1;
-        }
-      });
-      return {
-        ...state,
-        products: productsUp,
-      };
-    case GET_CART_PRODUCTS:
-      return {
-        ...state,
-        products: action.products,
-      };
-
-    default:
-      return state;
-  }
-}
-
-export default cartReducers;
+// function cartReducers(state = initialState, action) {
+//   switch (action.type) {
+//     case GET_ORDER:
+//       return {
+//         ...state,
+//         orders: action.orders.data.map((order) => ({
+//           //??
+//           id: order.id,
+//           status: order.status,
+//         })),
+//       };
+//     case GET_ONE_ORDER:
+//       return {
+//         ...state,
+//         order: action.order,
+//       };
+//     case POST_ORDER:
+//       return {
+//         ...state,
+//         orders: state.orders.concat(action.order),
+//       };
+//     case UPDATE_ORDER:
+//       return {
+//         ...state,
+//         orders: state.orders.map((order) => {
+//           return order.id === action.order.id ? action.order : order;
+//         }),
+//       };
+//     case DELETE_ORDER:
+//       return {
+//         ...state,
+//         orders: state.orders.filter((order) => order.id === action.order.id),
+//       };
+//     default:
+//       return state;
+//   }
+// }
+// export default cartReducers;

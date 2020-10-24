@@ -1,40 +1,49 @@
-import { GET_ORDER_CART, POST_ORDER_CART } from "../actions/actionTypes";
+import {
+  GET_ORDERS,
+  GET_ONE_ORDER,
+  DELETE_ORDER,
+  UPDATE_ORDER,
+  GET_ORDER_BY_ID,
+} from "../actions/actionTypes";
 
-const initalState = {
-    order: [],
+const initialState = {
+  allOrders: [],
+  orderDetail: {},
 };
-function  orderReducer(state = initialState, action){
-    switch (action.type) {
-        case GET_ORDER:
+function orderReducer(state = initialState, action) {
+  console.log(action);
+  switch (action.type) {
+    case GET_ORDERS:
       return {
         ...state,
-        products: action.products,
+        allOrders: action.order,
       };
-        case POST_OTDER:
-          return{
-            ...state,
-          }
-        case DELETE_ORDER:
-          return {
-            ...state,
-          }
-        case DELETE_PRODUCT_ORER:
-          return {
-            ...state,
-          }
+    case UPDATE_ORDER:
+      if (state.orderDetail.status === "shopping_cart") {
+        state.orderDetail.status = action.status;
+      }
+      return {
+        ...state,
+      };
+    case DELETE_ORDER:
+      return {
+        ...state,
+        allOrders: state.allOrders.filter((item) => item.id !== action.order),
+      };
+    case GET_ONE_ORDER:
+      return {
+        ...state,
+        orderDetail: action.order,
+      };
+    case GET_ORDER_BY_ID:
+      return {
+        ...state,
+        orderDetail: action.order,
+      };
 
-        case ADD_AMOUNT:
-          return {
-            ...state,
-          }
-        case SUBTRACT_AMOUNT_ORDER:
-          return {
-            ...state,
-          }
-          
     default:
       return state;
-    }
+  }
 }
 
 export default orderReducer;

@@ -81,76 +81,100 @@ const loadProducts = () => {
         price: 720.00,
         image: 'https://http2.mlstatic.com/D_NQ_NP_882930-MLA43238429277_082020-F.jpg',
     }, //Si queres crear otro producto hacelo aca y crea un objecto y asociale una categoria
-    ]);
-}
+  ]);
+};
 
 const loadCategories = () => {
-    Category.bulkCreate(
-        [
-            {
-                name: 'Shorts Deportivos',
-                description: 'Todo lo que necesitas para el fitness xD'
-            }, {
-                name: 'Remeras',
-                description: 'Todo en remeras deportivas'
-            },
-            {
-                name: 'Pesas y Mancuernas',
-                description: 'Pesas y mancuernas'
-            },
-            {
-                name: 'fitness',
-                description: 'fitness'
-            }, {
-                name: 'Suplementos',
-                description: 'fitness'
-            }
-        ]);
-}
+  Category.bulkCreate([
+    {
+      name: "Shorts Deportivos",
+      description: "Todo lo que necesitas para el fitness xD",
+    },
+    {
+      name: "Remeras",
+      description: "Todo en remeras deportivas",
+    },
+    {
+      name: "Pesas y Mancuernas",
+      description: "Pesas y mancuernas",
+    },
+    {
+      name: "fitness",
+      description: "fitness",
+    },
+    {
+      name: "Suplementos",
+      description: "fitness",
+    },
+  ]);
+};
 
 const loadProductCategories = () => {
-    product_category.bulkCreate(
-        [
-            {
-                product_id: 1,
-                category_id: 2
-            }, {
-                product_id: 2,
-                category_id: 2
-            }, {
-                product_id: 3,
-                category_id: 2
-            }, {
-                product_id: 4,
-                category_id: 2
-            },
-            {
-                product_id: 5,
-                category_id: 2
-            }, {
-                product_id: 6,
-                category_id: 1
-            }, {
-                product_id: 7,
-                category_id: 1
-            }, {
-                product_id: 8,
-                category_id: 1
-            }, {
-                product_id: 9,
-                category_id: 5
-            }, {
-                product_id: 10,
-                category_id: 5
-            }, {
-                product_id: 11,
-                category_id: 3
-            }, {
-                product_id: 12,
-                category_id: 3
-            },
-        ]);
-}
+  product_category.bulkCreate([
+    {
+      product_id: 1,
+      category_id: 2,
+    },
+    {
+      product_id: 2,
+      category_id: 2,
+    },
+    {
+      product_id: 3,
+      category_id: 2,
+    },
+    {
+      product_id: 4,
+      category_id: 2,
+    },
+    {
+      product_id: 5,
+      category_id: 2,
+    },
+    {
+      product_id: 6,
+      category_id: 1,
+    },
+    {
+      product_id: 7,
+      category_id: 1,
+    },
+    {
+      product_id: 8,
+      category_id: 1,
+    },
+    {
+      product_id: 9,
+      category_id: 5,
+    },
+    {
+      product_id: 10,
+      category_id: 5,
+    },
+    {
+      product_id: 11,
+      category_id: 3,
+    },
+    {
+      product_id: 12,
+      category_id: 3,
+    },
+  ]);
+};
+
+const loadUsers = () => {
+  User.bulkCreate([
+    {
+      name: "admin",
+      email: "admin@gmail.com",
+      address: "admin 1234",
+      role: "admin",
+      password: "admin",
+      image: "1234",
+      location_id: 21,
+    },
+  ]);
+};
 
 const loadUsers = () => {
     User.bulkCreate([

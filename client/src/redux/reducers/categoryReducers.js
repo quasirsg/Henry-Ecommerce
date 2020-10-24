@@ -10,7 +10,6 @@ const initialState = {
 };
 
 function categoryReducers(state = initialState, action) {
-  console.log(action);
   switch (action.type) {
     case GET_CATEGORY:
       return {
