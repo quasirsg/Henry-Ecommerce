@@ -18,6 +18,8 @@ import TablaOrdenes from "./components/tablaOrdenes";
 import FormUser from "./components/userForm";
 import LoginForm from "./components/loginForm";
 
+import UserPage from "./pages/UserPage";
+
 function App() {
   return (
     //No modifique ni elimine las rutas existentes
@@ -37,6 +39,10 @@ function App() {
         <Route exact path="/admin/ordenes/:id" component={Orden} />
         <Route exact path="/admin">
           <AdminMenu />
+        </Route>
+
+        <Route exact path="/user/page">
+          <UserPage />
         </Route>
 
         <Route exact path="/user/register">

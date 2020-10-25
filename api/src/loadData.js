@@ -6,6 +6,8 @@ const {
   Reviews,
 } = require("./db.js");
 
+const bcrypt = require("bcrypt");
+
 const loadProducts = () => {
   Product.bulkCreate([
     {
@@ -195,7 +197,7 @@ const loadUsers = () => {
       email: "admin@gmail.com",
       address: "admin 1234",
       role: "admin",
-      password: "admin",
+      password: bcrypt.hashSync("Vsl@17477", 10),
       image: "1234",
       location_id: 21,
     },

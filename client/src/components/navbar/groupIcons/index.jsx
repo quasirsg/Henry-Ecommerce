@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Cart3, Collection, PersonSquare } from "react-bootstrap-icons";
@@ -6,7 +6,7 @@ import { Col, CustomInput, Badge } from "reactstrap";
 
 //Components
 import Guest from "../../guestOptions";
-import { logoutUser } from "../../../redux/actions/jwtUsers";
+import { getCurretnUser, logoutUser } from "../../../redux/actions/jwtUsers";
 
 export default () => {
   let cart = useSelector((state) => state.users.carrito);
@@ -24,6 +24,52 @@ export default () => {
   const handleClose = (e) => {
     e.preventDefault();
     dispatch(logoutUser());
+  };
+
+  let userDetail = useSelector((state) => state.jwt.userDetail[0]);
+  let userRole = userDetail && userDetail.role;
+  useEffect(() => {
+    dispatch(getCurretnUser());
+  }, []);
+
+  userDetail && console.log(userDetail.role);
+
+  const linkUser = (userRole) => {
+    if (userRole === "client") {
+      return (
+        <>
+          <Link to={"/user/page"} className="text-dark ">
+            <PersonSquare size={20} />
+          </Link>
+          <Link to={"/"} className="text-dark " onClick={handleClose}>
+            Salir
+          </Link>
+        </>
+      );
+    } else if (userRole === "admin") {
+      return (
+        <>
+          <Link to={"/"} className="text-dark " onClick={handleClose}>
+            Salir
+          </Link>
+
+          <Link to={"/admin"} className="text-dark ">
+            <PersonSquare size={20} />
+          </Link>
+        </>
+      );
+    } else {
+      return (
+        <>
+          <Link to={"/user/login"} className="text-dark ">
+            Ingresá
+          </Link>
+          <Link to={"/user/register"} className="text-dark ">
+            Crea tu cuenta
+          </Link>
+        </>
+      );
+    }
   };
 
   return (
@@ -45,21 +91,9 @@ export default () => {
           </Badge>
         )}
       </Link>
-      <Link to={"/user/login"} className="text-dark ">
-        Ingresá
-      </Link>
-      <Link to={"/user/register"} className="text-dark ">
-        Crea tu cuenta
-      </Link>
-      <Link to={"/"} className="text-dark " onClick={handleClose}>
-        Salir
-      </Link>
-      <Link to={"/admin"} className="text-dark ">
-        <PersonSquare size={20} />
-      </Link>
+      {linkUser(userRole)}
 
       {/* <Guest/> */}
-
       {/* <CustomInput
         className="pl-0 pt-1 text-dark"
         type="switch"
