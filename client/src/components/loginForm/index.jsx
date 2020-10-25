@@ -63,7 +63,7 @@ const LoginForm = ({
           const data = action === "delete" ? null : user;
           //To lower case
           user.email = user.email.toLowerCase();
-
+          //?? Corregir mensaje de error
           dispatch(loguinUser(user.email, user.password))
             .then((res) => {
               // console.log(res);

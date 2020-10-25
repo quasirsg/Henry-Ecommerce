@@ -30,16 +30,6 @@ export const loguinUser = (email, password) => (dispatch) => {
     });
 };
 
-export const authUser = () => (dispatch) => {
-  //?????????????????????????????
-  return axios.get(`${url}/users/secure`).then((res) => {
-    dispatch({
-      type: actionTypes.AUTH_USER,
-      auth: res.data,
-    });
-  });
-};
-
 //obtener información actual del usuario
 export const getCurretnUser = () => (dispatch) => {};
 
