@@ -8,26 +8,27 @@ const url = `http://localhost:3001`;
 
 //loguin de usuario
 export const loguinUser = (email, password) => (dispatch) => {
-  return axios
-    .post(`${url}/users/login`, {
-      email: email,
-      password: password,
-    })
-    .then((res) => {
-      if (res.data.token) {
-        localStorage.setItem("token", JSON.stringify(res.data));
-        dispatch({
-          type: actionTypes.USER_LOGUIN,
-          userLoguin: res.data,
-        });
-      }
-    })
-    .catch((err) => {
-      dispatch({
-        type: actionTypes.USER_LOGUIN_ERROR,
-        message: err.message,
+  try {
+    return axios
+      .post(`${url}/users/login`, {
+        email: email,
+        password: password,
+      })
+      .then((res) => {
+        if (res.data.token) {
+          localStorage.setItem("token", JSON.stringify(res.data));
+          dispatch({
+            type: actionTypes.USER_LOGUIN,
+            userLoguin: res.data,
+          });
+        }
       });
+  } catch {
+    dispatch({
+      type: actionTypes.USER_LOGUIN_ERROR,
+      message: "Error de loguin",
     });
+  }
 };
 
 //obtener información actual del usuario
@@ -38,5 +39,9 @@ export const logoutUser = () => (dispatch) => {
   localStorage.removeItem("token");
   dispatch({
     type: actionTypes.LOGOUT_USER,
+  });
+  Toast.fire({
+    icon: "success",
+    title: `Hasta la proxima`,
   });
 };

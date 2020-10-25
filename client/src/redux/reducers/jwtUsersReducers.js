@@ -1,7 +1,7 @@
 import {
   USER_LOGUIN,
   USER_LOGUIN_ERROR,
-  AUTH_USER,
+  LOGOUT_USER,
 } from "../actions/actionTypes";
 
 const initialState = {
@@ -23,10 +23,10 @@ function jwtUserRducers(state = initialState, action) {
         ...state,
         message: action.message,
       };
-    case AUTH_USER:
+    case LOGOUT_USER:
       return {
         ...state,
-        message: action.auth,
+        userDetail: [],
       };
     default:
       return state;

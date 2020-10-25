@@ -370,7 +370,7 @@ server.delete("/:userId/cart/:productId", (req, res) => {
 //vacia el carrito
 server.delete("/:userId/cart", (req, res) => {
   const userId = req.params.userId;
-
+  console.log(userId);
   Order.findOne({
     where: {
       userId: userId,
