@@ -66,7 +66,7 @@ export const editUser = (id, action, values) => (dispatch) => {
       .catch((err) => console.log(err));
   }
 };
-
+//loguin de usuario
 export const loguinUser = (email, password) => (dispatch) => {
   return axios
     .post(`${url}/users/loguin`, {
@@ -79,7 +79,12 @@ export const loguinUser = (email, password) => (dispatch) => {
         userLoguin: res.data,
       });
     })
-    .catch((err) => console.log(err));
+    .catch((err) => {
+      dispatch({
+        type: actionTypes.USER_LOGUIN_ERROR,
+        message: err.message,
+      });
+    });
 };
 
 //un usuario puede añadir una review a un producto que haya comprado
