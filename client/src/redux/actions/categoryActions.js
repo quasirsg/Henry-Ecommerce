@@ -5,7 +5,7 @@ const url = "http://localhost:3001";
 
 export const getCategory = () => (dispatch) => {
   axios
-    .get(url + "/category/")
+    .get(`${url}/category/`)
     .then((res) => {
       dispatch({
         type: actionTypes.GET_CATEGORY,
