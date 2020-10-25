@@ -31,6 +31,8 @@ export const GET_USERS_ORDERS = "GET_USERS_ORDERS";
 //Users loguin
 export const USER_LOGUIN = "USER_LOGUIN";
 export const USER_LOGUIN_ERROR = "USER_LOGUIN_ERROR";
+export const AUTH_USER = "AUTH_USER"; //??????
+export const LOGOUT_USER = "LOGOUT_USER";
 
 //Search constants
 export const SEARCH_BY_QUERY = "SEARCH_BY_QUERY";

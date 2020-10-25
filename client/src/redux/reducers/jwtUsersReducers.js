@@ -1,0 +1,35 @@
+import {
+  USER_LOGUIN,
+  USER_LOGUIN_ERROR,
+  AUTH_USER,
+} from "../actions/actionTypes";
+
+const initialState = {
+  userDetail: [],
+  login: "",
+  message: "",
+};
+
+function jwtUserRducers(state = initialState, action) {
+  switch (action.type) {
+    /* ====== USERS LOGUINS ========== */
+    case USER_LOGUIN:
+      return {
+        ...state,
+        userDetail: state.userDetail.concat(action.userDetail),
+      };
+    case USER_LOGUIN_ERROR:
+      return {
+        ...state,
+        message: action.message,
+      };
+    case AUTH_USER:
+      return {
+        ...state,
+        message: action.auth,
+      };
+    default:
+      return state;
+  }
+}
+export default jwtUserRducers;

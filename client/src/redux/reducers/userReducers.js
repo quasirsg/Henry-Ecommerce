@@ -18,8 +18,6 @@ import {
   DELETE_AMOUNT_GUEST,
   ADD_AMOUNT_GUEST,
   ADD_ALL_PRODUCTS_CART_GUEST,
-  USER_LOGUIN,
-  USER_LOGUIN_ERROR,
 } from "../actions/actionTypes";
 
 const initialState = {
@@ -71,17 +69,6 @@ function userReducers(state = initialState, action) {
       return {
         ...state,
         users: state.users.filter((item) => item.id !== action.userDetail.id),
-      };
-    /* ====== USERS LOGUINS ========== */
-    case USER_LOGUIN:
-      return {
-        ...state,
-        userDetail: state.userDetail.concat(action.userDetail),
-      };
-    case USER_LOGUIN_ERROR:
-      return {
-        ...state,
-        message: action.message,
       };
 
     /* REDUCERS CARRITO DE USUARIOS */

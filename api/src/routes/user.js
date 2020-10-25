@@ -435,7 +435,7 @@ server.post("/login", (req, res) => {
     },
   })
     .then((user) => {
-      console.log();
+      console.log(user);
       bcrypt.compare(password, user.dataValues.password, (err, response) => {
         if (err) {
           console.log("error");
@@ -464,6 +464,7 @@ server.post("/login", (req, res) => {
 
 //Ruta de prueba con middleware
 server.get("/secure", authenticateToken, (req, res) => {
+  console.log(res);
   return res.status(200).send({
     message: "Paso la verificación!!!!",
   });

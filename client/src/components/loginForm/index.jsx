@@ -7,7 +7,7 @@ import * as Yup from "yup";
 import Swal from "sweetalert2";
 import CustomInput from "../custom/input";
 import { useDispatch } from "react-redux";
-import { loguinUser } from "../../redux/actions/userActions";
+import { loguinUser } from "../../redux/actions/jwtUsers";
 
 const Toast = Swal.mixin({
   toast: true,
@@ -64,7 +64,7 @@ const LoginForm = ({
           //To lower case
           user.email = user.email.toLowerCase();
 
-          dispatch(loguinUser(email, password))
+          dispatch(loguinUser(user.email, user.password))
             .then((res) => {
               // console.log(res);
               resetForm();
