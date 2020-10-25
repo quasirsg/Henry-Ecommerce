@@ -6,11 +6,8 @@ import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import Swal from "sweetalert2";
 import CustomInput from "../custom/input";
-
 import { useDispatch } from "react-redux";
-
-
-import allActions from "../../redux/actions/allActions";
+import { loguinUser } from "../../redux/actions/userActions";
 
 const Toast = Swal.mixin({
   toast: true,
@@ -49,7 +46,6 @@ const LoginForm = ({
           password,
         }}
         validationSchema={Yup.object({
-
           email: Yup.string()
             .email("Introduzca un email valido por favor")
             .required("Debes completar este campo"),
@@ -60,17 +56,15 @@ const LoginForm = ({
               "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character"
             ),
         })}
-        
         onSubmit={async (values, { setSubmitting, resetForm }) => {
-
           //Request al backend
-          let user = { ...values,};
+          let user = { ...values };
 
           const data = action === "delete" ? null : user;
           //To lower case
           user.email = user.email.toLowerCase();
 
-          dispatch(allActions.editUser(id, action, user))
+          dispatch(loguinUser(email, password))
             .then((res) => {
               // console.log(res);
               resetForm();
@@ -79,7 +73,9 @@ const LoginForm = ({
                 icon,
                 title: `${message} Bienvenido ${values.name}`,
               });
-              setTimeout(function(){ window.location.href = "/"; }, 3000);
+              setTimeout(function () {
+                window.location.href = "/";
+              }, 3000);
             })
             .catch((error) => {
               console.log(error);
@@ -91,7 +87,7 @@ const LoginForm = ({
             });
         }}
       >
-        {({ isValid,isSubmitting }) => {
+        {({ isValid, isSubmitting }) => {
           return (
             <Form>
               <Col className="rounded-lg text-center">
@@ -133,7 +129,7 @@ const LoginForm = ({
                     type="password"
                   />
                 </Col>
-              </Row>              
+              </Row>
               <Button
                 block
                 className="bg-color-primary shadow-primary rounded-pill border-0"

@@ -28,6 +28,9 @@ export const GET_ONE_USER = "GET_ONE_USER";
 export const GET_USER_ORDERS = "GET_USER_ORDERS";
 export const GET_USERS_ORDERS = "GET_USERS_ORDERS";
 
+//Users loguin
+export const USER_LOGUIN = "USER_LOGUIN";
+
 //Search constants
 export const SEARCH_BY_QUERY = "SEARCH_BY_QUERY";
 export const SEARCH_BY_CATEGORY = "SEARCH_BY_CATEGORY";

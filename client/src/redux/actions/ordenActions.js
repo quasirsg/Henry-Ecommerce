@@ -18,13 +18,19 @@ export const getOrders = () => (dispatch) => {
     });
 };
 
-export const deleteOrder = (id) => (dispatch) => {
+export const deleteOrder = (id, userId) => (dispatch) => {
   return axios
     .delete(`${url}/order/${id}`)
     .then((res) => {
       dispatch({
         type: actionTypes.DELETE_ORDER,
         order: id,
+      });
+      axios.delete(`${url}/users/${userId}/cart`).then((res) => {
+        dispatch({
+          type: actionTypes.DELETE_ALL_CART,
+          order: res.data,
+        });
       });
     })
     .catch((err) => console.log(err));

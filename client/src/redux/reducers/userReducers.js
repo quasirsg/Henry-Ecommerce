@@ -18,24 +18,25 @@ import {
   DELETE_AMOUNT_GUEST,
   ADD_AMOUNT_GUEST,
   ADD_ALL_PRODUCTS_CART_GUEST,
+  USER_LOGUIN,
 } from "../actions/actionTypes";
 
 const initialState = {
   users: [],
   userDetail: [],
   err: [],
-
   carrito: [],
   message: "",
   orders: [],
   allOrders: [],
-  reviews: []
+  reviews: [],
 };
 
 function userReducers(state = initialState, action) {
   console.log(action);
   let products = state.carrito;
   switch (action.type) {
+    /* REDUCERS USUARIOS Y LOGUIN USUARIOS */
     case GET_USERS:
       return {
         ...state,
@@ -55,8 +56,8 @@ function userReducers(state = initialState, action) {
     case POST_USER:
       return {
         ...state,
-        users: state.concat(action.userDetail),
-        err: state.concat(action.error),
+        users: state.userDetail.concat(action.userDetail),
+        err: state.userDetail.concat(action.error),
       };
     case PUT_USER:
       return {
@@ -70,6 +71,13 @@ function userReducers(state = initialState, action) {
         ...state,
         users: state.users.filter((item) => item.id !== action.userDetail.id),
       };
+    case USER_LOGUIN:
+      return {
+        ...state,
+        userDetail: state.userDetail.concat(action.userDetail),
+      };
+
+    /* REDUCERS CARRITO DE USUARIOS */
     case ADD_PRODUCT_CART:
       return {
         ...state,

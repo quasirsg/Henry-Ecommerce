@@ -4,15 +4,16 @@ import { GearFill, Trash, Tools } from "react-bootstrap-icons";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { deleteOrder } from "../../redux/actions/ordenActions";
-import { getProductCart } from "../../redux/actions/userActions";
+import { deleteAllCart, getProductCart } from "../../redux/actions/userActions";
 
 const TablaOrdenes = () => {
   const data = useSelector((state) => state.order.allOrders);
   const dispatch = useDispatch();
 
-  const handleClick = (e, id) => {
+  const handleClick = (e, id, userId) => {
     e.preventDefault();
-    dispatch(deleteOrder(id));
+    console.log(userId);
+    dispatch(deleteOrder(id, userId));
   };
 
   return (
@@ -44,7 +45,7 @@ const TablaOrdenes = () => {
                 </Link>
                 <Button
                   color="default"
-                  onClick={(e) => handleClick(e, item.id)}
+                  onClick={(e) => handleClick(e, item.id, item.userId)}
                   className="border btn-sm"
                 >
                   <Trash id={item.id} size={17} />
