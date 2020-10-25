@@ -33,6 +33,9 @@ export const USER_LOGUIN = "USER_LOGUIN";
 export const USER_LOGUIN_ERROR = "USER_LOGUIN_ERROR";
 export const AUTH_USER = "AUTH_USER"; //??????
 export const LOGOUT_USER = "LOGOUT_USER";
+export const CURRENT_CLIENT_USER = "CURRENT_CLIENT_USER";
+export const CURRENT_ADMIN_USER = "CURRENT_ADMIN_USER";
+export const NO_CURRENT_USER = "NO_CURRENT_USER";
 
 //Search constants
 export const SEARCH_BY_QUERY = "SEARCH_BY_QUERY";

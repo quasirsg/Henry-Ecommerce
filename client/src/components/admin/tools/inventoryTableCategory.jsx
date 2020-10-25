@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Button, Container, Table } from "reactstrap";
 import { GearFill, Trash, Tools } from "react-bootstrap-icons";
 import { Link } from "react-router-dom";
@@ -8,13 +8,13 @@ import { useSelector, useDispatch } from "react-redux";
 import allActions from "../../../redux/actions/allActions";
 
 const InventoryTableCategory = () => {
-  /* Redux */
-  const data = useSelector((state) => state.category.category);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(allActions.getCategory());
   }, []);
+
+  const data = useSelector((state) => state.category.category);
 
   const handleClick = (e, id, name) => {
     e.preventDefault();
@@ -39,8 +39,6 @@ const InventoryTableCategory = () => {
       }
     });
   };
-
-  console.log(data);
 
   return (
     <Container>

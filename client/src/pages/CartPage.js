@@ -6,11 +6,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { addProducts, deleteAllCart } from "../redux/actions/userActions";
 
 const Cart = () => {
-  const prueba = useSelector((state) => state);
-  let productsCarts = useSelector((state) => state.users.carrito);
-  let products = useSelector((state) => state.users.carrito);
   const dispatch = useDispatch();
-  const [userData, setUserData] = useState(null);
 
   useEffect(() => {
     function checkUsetData() {
@@ -25,7 +21,10 @@ const Cart = () => {
     };
   }, []);
 
+  let productsCarts = useSelector((state) => state.users.carrito);
+  const [userData, setUserData] = useState(null);
   const userId = 1; //?? loguin o guest
+
   const deleteAll = (e) => {
     e.preventDefault();
     dispatch(deleteAllCart(userId));
@@ -52,7 +51,7 @@ const Cart = () => {
       setUserData(null); //evitar un loop
     }
   }
-  console.log(productsCarts);
+
   return (
     <Container fluid={true} className="mt-4">
       <Row>

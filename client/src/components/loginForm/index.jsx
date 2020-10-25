@@ -2,7 +2,7 @@ import React from "react";
 import "./userForm.css";
 import { ClipboardPlus, ArrowLeftCircle } from "react-bootstrap-icons";
 import { Button, Row, Col } from "reactstrap";
-import { Formik, Form, Field } from "formik";
+import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import Swal from "sweetalert2";
 import CustomInput from "../custom/input";
@@ -60,18 +60,18 @@ const LoginForm = ({
           //Request al backend
           let user = { ...values };
 
-          const data = action === "delete" ? null : user;
+          // const data = action === "delete" ? null : user;
           //To lower case
           user.email = user.email.toLowerCase();
-          //?? Corregir mensaje de error
-          dispatch(loguinUser(user.email, user.password))
+
+          dispatch(loguinUser(user.email, user.password)) //Funciona loguin correcto e error al ingresar mal los datos
             .then((res) => {
               // console.log(res);
               resetForm();
               setSubmitting(false);
               Toast.fire({
                 icon,
-                title: `${message} Bienvenido ${values.name}`,
+                title: `${message} Bienvenido ${user.name}`,
               });
               setTimeout(function () {
                 window.location.href = "/";

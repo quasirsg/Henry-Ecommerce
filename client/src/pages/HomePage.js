@@ -19,10 +19,7 @@ const HomePage = () => {
   const categorias = useSelector((state) => state.category.category);
   const productos = useSelector((state) => state.products.allProducts);
   const productBanners = useSelector((state) => state.products.productBanner);
-  const auth = useSelector((state) => state); //??
-  console.log(auth);
-
-  console.log(productos);
+  // const auth = useSelector((state) => state);
 
   return (
     <Container fluid={true} className="mt-4">

@@ -1,24 +1,27 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import StarRatings from "react-star-ratings";
 import { useParams } from "react-router-dom";
 import { addProductCart } from "../../redux/actions/userActions";
-import "./producto.css";
+import { getReviews } from "../../redux/actions/productActions";
 import Review from "../review/index";
 import { Col, Row, Container } from "reactstrap";
+import allActions from "../../redux/actions/allActions";
+import "./producto.css";
 
 const Product = () => {
   let { id } = useParams();
-
-  /* ======== Star Rating Handle ======== */
-  // const changeRating = (newRating, name) => {
-  //   setRating({
-  //     rating: newRating,
-  //   });
-  // };
-  /* ========= Redux========== */
-  const product = useSelector((state) => state.products.productDetail);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(allActions.getOneProduct(id));
+    dispatch(getReviews(id));
+  }, [id]);
+
+  const product = useSelector((state) => state.products.productDetail);
+  const { average, reviews } = useSelector(
+    (state) => state.products.productReviews
+  );
   product.quantity = 1; //agrego una cantidad por default
 
   const handleOnClick = () => {
@@ -27,9 +30,6 @@ const Product = () => {
     // dispatch(getUserOrder(userId.id));
     // console.log(userId.id);
   };
-
-  //agrego provisoriamente
-  let reviews = [];
 
   return (
     <Container fluid={true} className="productDetail py-4 my-4">
@@ -43,7 +43,7 @@ const Product = () => {
           <div className="productInfo">
             <div className="rating-reviews">
               <StarRatings
-                // rating={average !== null ? average : 5}
+                rating={average !== null ? average : 5}
                 starRatedColor="yellow"
                 starHoverColor="yellow"
                 starDimension="16px"
@@ -65,12 +65,6 @@ const Product = () => {
                   : "button-container-disabled"
               }
             >
-              <button
-                onClick={() => console.log("action dispath buy product")}
-                className={"button btn-block"}
-              >
-                Comprar Ahora
-              </button>
               <button
                 onClick={handleOnClick}
                 className={"button-secundary btn-block"}

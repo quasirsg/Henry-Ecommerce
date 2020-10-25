@@ -1,16 +1,17 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { Cart3, Collection } from "react-bootstrap-icons";
-import { Col, CustomInput, Badge } from "reactstrap";
+import { Col, Badge } from "reactstrap";
 import { PersonSquare } from "react-bootstrap-icons";
 
 //Components
-import Guest from "../../guestOptions";
+import { logoutUser } from "../../../redux/actions/jwtUsers";
 
 export default () => {
   let cart = useSelector((state) => state.users.carrito);
-  const notification = useSelector((state) => state.users.message);
+  // const notification = useSelector((state) => state.users.message);
+  const dispatch = useDispatch();
 
   if (!localStorage.token) {
     if (localStorage.cart) {
@@ -19,6 +20,12 @@ export default () => {
       cart = [];
     }
   }
+
+  const HandleLogout = (e) => {
+    //elimina el token de localStorage
+    e.preventDefault();
+    dispatch(logoutUser());
+  };
 
   return (
     <Col lg="3" style={{ display: "flex", justifyContent: "space-between" }}>
@@ -45,7 +52,7 @@ export default () => {
       <Link to={"/user/register"} className="text-dark ">
         Crea tu cuenta
       </Link>
-      <Link to={"/"} className="text-dark ">
+      <Link to={"/"} className="text-dark " onClick={HandleLogout}>
         Salir
       </Link>
       <Link to={"/admin"} className="text-dark ">
