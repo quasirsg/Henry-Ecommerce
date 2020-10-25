@@ -1,5 +1,5 @@
 const server = require("express").Router();
-const { User, Order, Product, Linea_Order } = require("../db.js");
+const { User, Order, Product, Linea_order } = require("../db.js");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 var config = require("../configs/config");
@@ -167,7 +167,7 @@ server.get("/orders", (req, res) => {
       User,
       {
         model: Product,
-        through: Linea_Order,
+        through: Linea_order,
       },
     ],
     where: {
