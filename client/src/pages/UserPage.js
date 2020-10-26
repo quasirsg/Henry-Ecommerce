@@ -2,17 +2,19 @@ import React from 'react'
 import { Container, Row, Col } from 'reactstrap'
 import { Person, Lock, BoxSeam, ChatSquareText } from 'react-bootstrap-icons'
 import ButtonSquare from '../components/custom/ButtonSquare';
+import UserDetail from '../components/userDetail';
 
 const UserPage = () => {
 
     return (
-        <Container fluid={true} style={{ border: '1px solid #ccc9c9', padding: '10px 0' }}>
-            <Row className="px-3">
+        <Container
+            fluid={true}
+            style={{ border: '1px solid #ccc9c9', padding: '2rem 3rem', marginTop: '3rem' }}
+        >
+            <Row>
                 <Col lg="3">
-                    <div>
-                        <img src="" alt="" />
-                    </div>
-                    <ul style={{ margin: '0', padding: '0', padding: '3rem 1rem' }}>
+
+                    <ul style={{ margin: '0', padding: '3rem 0' }}>
                         <li>
                             <ButtonSquare
                                 icon={<Person size={20} />}
@@ -43,8 +45,11 @@ const UserPage = () => {
                         </li>
                     </ul>
                 </Col>
-                <Col lg="9">
-
+                <Col
+                    lg="9"
+                    style={{ border: '1px solid #ccc9c9', padding: '3rem 1rem', margin: '3rem 0' }}
+                >
+                    <UserDetail />
                 </Col>
             </Row>
         </Container>
