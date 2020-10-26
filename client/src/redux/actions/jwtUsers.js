@@ -19,7 +19,7 @@ export const loguinUser = (email, password) => (dispatch) => {
           localStorage.setItem("token", JSON.stringify(res.data));
           dispatch({
             type: actionTypes.USER_LOGUIN,
-            userLoguin: res.data,
+            userLoguin: res.data.user,
           });
         }
       });
@@ -58,7 +58,7 @@ export const logoutUser = () => (dispatch) => {
     type: actionTypes.LOGOUT_USER,
   });
   Toast.fire({
-    icon: "success",
+    icon: "info",
     title: `Hasta la proxima`,
   });
 };

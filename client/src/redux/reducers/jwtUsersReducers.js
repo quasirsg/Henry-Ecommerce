@@ -18,7 +18,7 @@ function jwtUserRducers(state = initialState, action) {
     case USER_LOGUIN:
       return {
         ...state,
-        userDetail: state.userDetail.concat(action.userDetail),
+        userDetail: state.userDetail.concat(action.userLoguin),
       };
     case USER_LOGUIN_ERROR:
       return {

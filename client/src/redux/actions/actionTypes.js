@@ -68,3 +68,7 @@ export const EDIT_REVIEW = "EDIT_REVIEW";
 export const GET_PRODUCT_REVIEWS = "GET_PRODUCT_REVIEWS";
 
 export const GET_ORDER_BY_ID = "GET_ORDER_BY_ID";
+
+//Admin actions
+
+export const PROM_USER = "PROM_USER";

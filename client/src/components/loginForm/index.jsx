@@ -1,27 +1,15 @@
 import React, { useEffect, useState } from "react";
 import "./userForm.css";
-import { ClipboardPlus, ArrowLeftCircle } from "react-bootstrap-icons";
+import { ArrowLeftCircle, PersonCircle } from "react-bootstrap-icons";
 import { Button, Row, Col } from "reactstrap";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
-import Swal from "sweetalert2";
 import CustomInput from "../custom/input";
 import { useDispatch } from "react-redux";
 import { loguinUser } from "../../redux/actions/jwtUsers";
 import { cartLoginListen } from "../custom/utils";
 import { addProducts } from "../../redux/actions/userActions";
-
-const Toast = Swal.mixin({
-  toast: true,
-  position: "top-end",
-  showConfirmButton: false,
-  timer: 3000,
-  timerProgressBar: true,
-  didOpen: (toast) => {
-    toast.addEventListener("mouseenter", Swal.stopTimer);
-    toast.addEventListener("mouseleave", Swal.resumeTimer);
-  },
-});
+import Toast from '../alerts/toast'; 
 
 const LoginForm = ({
   id,
@@ -31,7 +19,7 @@ const LoginForm = ({
   action,
   icon,
   message,
-  history,
+  history
 }) => {
   const dispatch = useDispatch();
 
@@ -40,7 +28,7 @@ const LoginForm = ({
       lg="6"
       sm="10"
       xs="10"
-      className="card shadow pl-3 pr-3 pb-4 pt-2 mb-3 mx-auto"
+      className="card shadow pl-3 pr-3 pb-4 pt-2 mb-3 mt-4 mx-auto"
     >
       <Formik
         initialValues={{
@@ -68,19 +56,15 @@ const LoginForm = ({
 
           dispatch(loguinUser(user.email, user.password))
             .then((res) => {
-              // console.log(res);
               resetForm();
               setSubmitting(false);
               Toast.fire({
-                icon,
-                title: `${message} Bienvenido ${values.name}`,
+                icon: 'info',
+                title: `¡Bienvenido de vuelta!`,
               });
-              setTimeout(function () {
-                window.location.href = "/";
-              }, 3000);
+              history.push('/');
             })
             .catch((error) => {
-              console.log(error);
               setSubmitting(false);
               Toast.fire({
                 icon: "error",
@@ -107,7 +91,7 @@ const LoginForm = ({
                 )}
 
                 <Row className="d-block">
-                  <ClipboardPlus className="mb-1 mr-2" size={40} />
+                  <PersonCircle className="mb-1 mr-2" size={40} />
                   <h2>Ingresar</h2>
                 </Row>
               </Col>
@@ -139,7 +123,7 @@ const LoginForm = ({
                 disabled={!isValid}
               >
                 {isSubmitting
-                  ? "Cargando..."
+                  ? "Iniciando sesón..."
                   : action === "put"
                   ? "Actualizar usuario"
                   : action === "delete"

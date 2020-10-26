@@ -26,6 +26,7 @@ import FormCategory from "../categoryForm";
 import Catalogue from "../catalogo";
 import ProductCard from "../productCard/ProductCard";
 import TablaOrdenes from "../tablaOrdenes";
+import TablaUsuarios from "../tablaUsuarios";
 import InventoryTable from "./tools/inventoryTable";
 import InventoryTableCategory from "./tools/inventoryTableCategory";
 import { getCategory } from "../../redux/actions/categoryActions";
@@ -102,6 +103,13 @@ const AdminMenu = () => {
                         <Files size={17} className="mr-1" />
                         Ordenes
                       </NavLink>
+                      
+                    </NavItem>
+                    <NavItem>
+                      <NavLink tag={Link} to="/admin/usuarios">
+                        <Files size={17} className="mr-1" />
+                        Usuarios
+                      </NavLink> 
                     </NavItem>
                   </Nav>
                 </Collapse>
@@ -174,6 +182,9 @@ const AdminMenu = () => {
               </Route>
               <Route exact path="/admin/ordenes/:id">
                 <Orden />
+              </Route>
+              <Route exact path="/admin/usuarios">
+                <TablaUsuarios />
               </Route>
             </Col>
           </Router>
