@@ -11,6 +11,7 @@ import SearchPage from "./pages/SearchPage";
 import AdminMenu from "./components/admin";
 import HomePage from "./pages/HomePage";
 import CartPage from "./pages/CartPage";
+import UserPage from './pages/UserPage';
 
 // Componente Orden-> probando
 import Orden from "./components/tablaOrdenes/Orden";
@@ -38,7 +39,7 @@ function App() {
         <Route exact path="/admin">
           <AdminMenu />
         </Route>
-
+        <Route exact path='/user' component={UserPage} />
         <Route exact path="/user/register">
           <FormUser action="post" icon="success" message="Usuario agregado" />
         </Route>

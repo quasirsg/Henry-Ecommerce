@@ -41,17 +41,20 @@ const Product = () => {
         </Col>
         <Col lg="4">
           <div className="productInfo">
+            <h2 className="productTitle">{product.name}</h2>
             <div className="rating-reviews">
               <StarRatings
                 rating={average !== null ? average : 5}
-                starRatedColor="yellow"
+                starRatedColor="blue"
                 starHoverColor="yellow"
                 starDimension="16px"
                 numberOfStars={5}
                 name="rating"
               />
+              <div className="rating-reviews-count">
+                {reviews.length > 0 && reviews.length + ' Opiniones'}
+              </div>
             </div>
-            <h2 className="productTitle">{product.name}</h2>
             <p className="inforPrice">${product.price}</p>
             <h6 className="productStock">
               {product.stock > 0
@@ -67,7 +70,7 @@ const Product = () => {
             >
               <button
                 onClick={handleOnClick}
-                className={"button-secundary btn-block"}
+                className={"button btn-block"}
               >
                 Agregar al Carrito
               </button>
@@ -91,10 +94,10 @@ const Product = () => {
             />
           ))
         ) : (
-          <div className="warning-alert">
-            Lo sentimos este producto no cuenta con Reviews!
-          </div>
-        )}
+            <div className="warning-alert">
+              Lo sentimos este producto no cuenta con Reviews!
+            </div>
+          )}
       </Col>
     </Container>
   );
