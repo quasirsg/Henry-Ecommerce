@@ -1,14 +1,16 @@
 import React from "react";
+import "./userForm.css";
 import { ClipboardPlus, ArrowLeftCircle } from "react-bootstrap-icons";
 import { Button, Row, Col } from "reactstrap";
-import { Formik, Form } from "formik";
+import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import Swal from "sweetalert2";
 import CustomInput from "../custom/input";
+
 import { useDispatch } from "react-redux";
+
 import allActions from "../../redux/actions/allActions";
 
-import "./userForm.css";
 const Toast = Swal.mixin({
   toast: true,
   position: "top-end",
@@ -106,7 +108,7 @@ const FormUser = ({
           //Request al backend
           let user = { ...values, image: imgBase64 };
 
-          // const data = action === "delete" ? null : user;
+          const data = action === "delete" ? null : user;
           //To lower case
           user.email = user.email.toLowerCase();
 
@@ -146,8 +148,8 @@ const FormUser = ({
                     </Button>
                   </Row>
                 ) : (
-                    ""
-                  )}
+                  ""
+                )}
 
                 <Row className="d-block">
                   <ClipboardPlus className="mb-1 mr-2" size={40} />
@@ -227,12 +229,12 @@ const FormUser = ({
                 {isSubmitting
                   ? "Cargando..."
                   : action === "put"
-                    ? "Actualizar usuario"
-                    : action === "delete"
-                      ? "Eliminar usuario"
-                      : action === "post"
-                        ? "Agregar usuario"
-                        : null}
+                  ? "Actualizar usuario"
+                  : action === "delete"
+                  ? "Eliminar usuario"
+                  : action === "post"
+                  ? "Agregar usuario"
+                  : null}
               </Button>
             </Form>
           );

@@ -18,58 +18,46 @@ export const loguinUser = (email, password) => (dispatch) => {
           localStorage.setItem("token", JSON.stringify(res.data));
           dispatch({
             type: actionTypes.USER_LOGUIN,
-            userLoguin: res.data,
+            userLoguin: res.data.user,
           });
         }
       });
   } catch {
-    return dispatch({
+    dispatch({
       type: actionTypes.USER_LOGUIN_ERROR,
-      message: "Error de login",
+      message: "Error de loguin",
     });
   }
 };
 
-//obtener información actual del usuario y limitar permisos
-export const getCurrentUser = () => (dispatch) => {
+//obtener información actual del usuario
+export const getCurretnUser = () => (dispatch) => {
   let token = JSON.parse(localStorage.getItem("token"));
   if (token) {
-    let role = token.user.role;
-    if (role === "client") {
-      return dispatch({
-        type: allActions.CURRENT_CLIENT_USER,
-        info: {
-          id: token.user.id,
-          role: token.user.role,
-          name: token.user.name,
-        },
-      });
-    } else {
-      return dispatch({
-        type: allActions.CURRENT_ADMIN_USER,
-        info: {
-          id: token.user.id,
-          role: token.user.role,
-          name: token.user.name,
-        },
-      });
-    }
+    return dispatch({
+      type: actionTypes.CURRENT_USER,
+      userDetail: {
+        id: token.user.id,
+        role: token.user.role,
+        name: token.user.name,
+      },
+    });
   } else {
     return dispatch({
-      type: allActions.NO_CURRENT_USER,
-      message: "No existe usuario logueado",
+      type: actionTypes.NOT_CURRENT_USER,
+      message: "Usuaro no logueado",
     });
   }
 };
 
-//logout-> funciona logout
+//logout
 export const logoutUser = () => (dispatch) => {
   localStorage.removeItem("token");
   dispatch({
     type: actionTypes.LOGOUT_USER,
   });
   Toast.fire({
-    icon: "success",
-    title: `Hasta la próxima`,
+    icon: "info",
+    title: `Hasta la proxima`,
   });
 };

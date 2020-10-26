@@ -1,11 +1,9 @@
 import {
   USER_LOGUIN,
   USER_LOGUIN_ERROR,
-  AUTH_USER,
   LOGOUT_USER,
-  CURRENT_CLIENT_USER,
-  CURRENT_ADMIN_USER,
-  NO_CURRENT_USER,
+  CURRENT_USER,
+  NOT_CURRENT_USER,
 } from "../actions/actionTypes";
 
 const initialState = {
@@ -20,17 +18,27 @@ function jwtUserRducers(state = initialState, action) {
     case USER_LOGUIN:
       return {
         ...state,
-        userDetail: state.userDetail.concat(action.userDetail),
+        userDetail: state.userDetail.concat(action.userLoguin),
       };
     case USER_LOGUIN_ERROR:
       return {
         ...state,
         message: action.message,
       };
-    case AUTH_USER:
+    case LOGOUT_USER:
       return {
         ...state,
-        message: action.auth,
+        userDetail: [],
+      };
+    case CURRENT_USER:
+      return {
+        ...state,
+        userDetail: state.userDetail.concat(action.userDetail),
+      };
+    case NOT_CURRENT_USER:
+      return {
+        ...state,
+        message: action.message,
       };
     case LOGOUT_USER:
       return {

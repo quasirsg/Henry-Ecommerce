@@ -86,6 +86,24 @@ server.delete("/:id", (req, res, next) => {
     .catch(next);
 });
 
+// Dar permisos de Admin a user 
+server.put('/:id/promote', (req,res,next) => {
+  const {id} = req.params;
+
+  User.update({
+    role: 'admin'
+  }, {
+    where: {id}
+  })
+  .then(user => {
+    return res.json({
+      user
+    });
+  })
+  .catch(error => next(error.message))
+
+});
+
 //obtener todos los usuarios
 server.get("/", (req, res) => {
   User.findAll({
@@ -370,7 +388,7 @@ server.delete("/:userId/cart/:productId", (req, res) => {
 //vacia el carrito
 server.delete("/:userId/cart", (req, res) => {
   const userId = req.params.userId;
-
+  console.log(userId);
   Order.findOne({
     where: {
       userId: userId,

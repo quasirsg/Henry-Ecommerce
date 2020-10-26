@@ -17,6 +17,7 @@ import {
   DELETE_AMOUNT_GUEST,
   ADD_AMOUNT_GUEST,
   ADD_ALL_PRODUCTS_CART_GUEST,
+  PROM_USER,
 } from "../actions/actionTypes";
 
 const initialState = {
@@ -37,14 +38,9 @@ function userReducers(state = initialState, action) {
     case GET_USERS:
       return {
         ...state,
-        users: action.users.data.map((user) => ({
-          //corregir
-          id: user.id,
-          name: user.name,
-          email: user.description,
-          rol: user.categories,
-        })),
+        users: action.users
       };
+  
     case GET_ONE_USER:
       return {
         ...state,
@@ -150,6 +146,12 @@ function userReducers(state = initialState, action) {
         ...state,
         carrito: state.carrito.concat(action.products.productsCarts),
       };
+      case PROM_USER:
+        const user = state.users.data.find((item)=> item.id === action.user);
+        user.role = 'admin';
+        return {
+          ...state
+        };
     default:
       return state;
   }

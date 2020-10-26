@@ -5,6 +5,7 @@ import { Switch, Route } from "react-router-dom";
 import Navbar from "./components/navbar";
 import ProductDetail from "./components/productDetail";
 import FormCategory from "./components/categoryForm";
+import TablaUsuarios from "./components/tablaUsuarios";
 
 //Pages
 import SearchPage from "./pages/SearchPage";
@@ -18,6 +19,8 @@ import Orden from "./components/tablaOrdenes/Orden";
 import TablaOrdenes from "./components/tablaOrdenes";
 import FormUser from "./components/userForm";
 import LoginForm from "./components/loginForm";
+
+import UserPage from "./pages/UserPage";
 
 function App() {
   return (
@@ -36,6 +39,7 @@ function App() {
         <Route exact path="/cart" component={CartPage} />
         <Route exact path="/ordenes" component={TablaOrdenes} />
         <Route exact path="/admin/ordenes/:id" component={Orden} />
+        <Route exact path="/usuarios" component={TablaUsuarios} />
         <Route exact path="/admin">
           <AdminMenu />
         </Route>
@@ -44,8 +48,7 @@ function App() {
           <FormUser action="post" icon="success" message="Usuario agregado" />
         </Route>
 
-        <Route exact path="/user/login">
-          <LoginForm action="post" icon="success" message="Usuario agregado" />
+        <Route exact path="/user/login" render={({history}) => <LoginForm action="post" icon="success" message="Usuario agregado" history={history} />}>
         </Route>
 
         <Route

@@ -31,11 +31,9 @@ export const GET_USERS_ORDERS = "GET_USERS_ORDERS";
 //Users loguin
 export const USER_LOGUIN = "USER_LOGUIN";
 export const USER_LOGUIN_ERROR = "USER_LOGUIN_ERROR";
-export const AUTH_USER = "AUTH_USER"; //??????
 export const LOGOUT_USER = "LOGOUT_USER";
-export const CURRENT_CLIENT_USER = "CURRENT_CLIENT_USER";
-export const CURRENT_ADMIN_USER = "CURRENT_ADMIN_USER";
-export const NO_CURRENT_USER = "NO_CURRENT_USER";
+export const CURRENT_USER = "CURRENT_USER";
+export const NOT_CURRENT_USER = "NOT_CURRENT_USER";
 
 //Search constants
 export const SEARCH_BY_QUERY = "SEARCH_BY_QUERY";
@@ -70,3 +68,7 @@ export const EDIT_REVIEW = "EDIT_REVIEW";
 export const GET_PRODUCT_REVIEWS = "GET_PRODUCT_REVIEWS";
 
 export const GET_ORDER_BY_ID = "GET_ORDER_BY_ID";
+
+//Admin actions
+
+export const PROM_USER = "PROM_USER";
