@@ -201,28 +201,71 @@ const loadUsers = () => {
       image: "1234",
       location_id: 21,
     },
+    {
+      name: "client1",
+      email: "client1@gmail.com",
+      address: "client1 1234",
+      role: "client",
+      password: "client",
+      location_id: 21,
+    },
+    {
+      name: "client2",
+      email: "client2@gmail.com",
+      address: "client2 1234",
+      role: "client",
+      password: "client",
+      location_id: 21,
+    },
+    {
+      name: "client3",
+      email: "client3@gmail.com",
+      address: "client3 1234",
+      role: "client",
+      password: "client",
+      location_id: 21,
+    },
   ]);
 };
 
 const loadReviews = () => {
+  //load fake reviews
   Reviews.bulkCreate([
     {
       points: 5,
-      description: "El producto es de buena calidad",
+      description: "Es linda, me quedó como esperaba! imaginé que la tela era como la de las remeras deportivas de las grandes marcas pero al tocarla me di cuenta de que no. Igual está bien por el precio de la remera! muy buen precio!",
       productId: 1,
       userId: 1,
     },
     {
-      points: 3,
-      description: "Es de mala calidad F",
+      points: 4,
+      description: "Hay que pedir un talle más de lo habitual. Excelente calidad de la tela, confección y modelo. Compré 3 para mi hijo y le encantan estas remeras!",
       productId: 1,
       userId: 2,
     },
     {
-      points: 1,
-      description: "Es de mala calidad F",
-      productId: 2,
-      userId: 1,
+      points: 3,
+      description: "El material se parece a lycra, y es medio fino. Si bien no repetiría, es una calidad pasable por el precio",
+      productId: 1,
+      userId: 3,
+    },
+    {
+      points: 5,
+      description: "Me encantó,muy buen producto,resultó mejor de lo que esperaba.",
+      productId: 1,
+      userId: 4,
+    },
+    {
+      points: 5,
+      description: "Todo genial ya había comprado una y la calidad es buenisima.",
+      productId: 1,
+      userId: 5,
+    },
+    {
+      points: 4,
+      description: "Buena tela, buena costura. Recomendable",
+      productId: 1,
+      userId: 6,
     },
   ]);
 };

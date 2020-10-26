@@ -1,6 +1,5 @@
 import axios from "axios";
 import * as actionTypes from "./actionTypes";
-import { deleteAllCart } from "./userActions";
 
 const url = `http://localhost:3001`;
 

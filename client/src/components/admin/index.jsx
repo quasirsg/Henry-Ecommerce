@@ -21,10 +21,7 @@ import {
   CaretDown,
 } from "react-bootstrap-icons";
 import FormProduct from "../productForm";
-import FormUser from "../userForm";
 import FormCategory from "../categoryForm";
-import Catalogue from "../catalogo";
-import ProductCard from "../productCard/ProductCard";
 import TablaOrdenes from "../tablaOrdenes";
 import TablaUsuarios from "../tablaUsuarios";
 import InventoryTable from "./tools/inventoryTable";
@@ -38,22 +35,14 @@ const AdminMenu = () => {
   const [collapsed, setCollapsed] = useState(true);
   const toggleNavbar = () => setCollapsed(!collapsed);
 
-  /*=======Redux ================ */
   const dispatch = useDispatch();
-  const products = useSelector((state) => state.products.products);
-  const allCategories = useSelector((state) => state.category.category);
-  const users = useSelector((state) => state.category.category);
-  // const order = useSelector((state) => state.order);
-
-  // console.log(order);
-
-  console.log("Cambio el estado de redux");
-
   useEffect(() => {
     dispatch(getProducts());
     dispatch(getCategory());
     dispatch(getOrders());
   }, []);
+
+  const allCategories = useSelector((state) => state.category.category);
 
   return (
     <>

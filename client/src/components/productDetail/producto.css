@@ -55,6 +55,7 @@
 
 .inforPrice {
   font-family: "Roboto";
+  margin: 10px 0;
   color: #3B3B3B;
   font-size: 2.7rem;
   letter-spacing: .1rem;
@@ -74,8 +75,11 @@
 
 .rating-reviews {
   display: flex;
-  justify-content: center;
   align-items: center;
+}
+
+.rating-reviews-count {
+  color: #3B3B3B;
 }
 
 

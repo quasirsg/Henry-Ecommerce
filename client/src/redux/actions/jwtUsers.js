@@ -1,12 +1,11 @@
 import axios from "axios";
-import Swal from "sweetalert2";
-import deleteDialog from "../../components/alerts/deleteDialog";
 import Toast from "../../components/alerts/toast";
 import * as actionTypes from "./actionTypes";
+import allActions from "./allActions";
 
 const url = `http://localhost:3001`;
 
-//loguin de usuario
+//loguin  -> funciona loguin correcto e incorrecto.
 export const loguinUser = (email, password) => (dispatch) => {
   try {
     return axios

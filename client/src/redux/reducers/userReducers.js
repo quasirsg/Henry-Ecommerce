@@ -13,7 +13,6 @@ import {
   DELETE_ALL_PRODUCTS_CART_GUEST,
   GET_ONE_USER,
   GET_USER_ORDERS,
-  GET_USERS_ORDERS,
   DELETE_ALL_CART,
   DELETE_AMOUNT_GUEST,
   ADD_AMOUNT_GUEST,
@@ -33,7 +32,6 @@ const initialState = {
 };
 
 function userReducers(state = initialState, action) {
-  console.log(action);
   let products = state.carrito;
   switch (action.type) {
     /* REDUCERS USUARIOS Y LOGUIN USUARIOS */

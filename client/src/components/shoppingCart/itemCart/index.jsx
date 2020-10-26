@@ -1,7 +1,5 @@
 import React from "react";
-import { ThreeDotsVertical } from "react-bootstrap-icons";
 import { Button, Col, Row } from "reactstrap";
-import ButtonCircle from "../../custom/ButtonCircle";
 import { useDispatch } from "react-redux";
 import "./itemCart.css";
 import {

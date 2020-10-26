@@ -40,6 +40,27 @@ function jwtUserRducers(state = initialState, action) {
         ...state,
         message: action.message,
       };
+    case LOGOUT_USER:
+      return {
+        ...state,
+        userDetail: [],
+      };
+
+    // case CURRENT_CLIENT_USER:
+    //   return {
+    //     ...state,
+    //     userDetail: state.userDetail.concat(action.info),
+    //   };
+    // case CURRENT_ADMIN_USER:
+    //   return {
+    //     ...state,
+    //     userDetail: state.userDetail.concat(action.info),
+    //   };
+    // case NO_CURRENT_USER:
+    //   return {
+    //     ...state,
+    //     message: action.message,
+    //   };
     default:
       return state;
   }

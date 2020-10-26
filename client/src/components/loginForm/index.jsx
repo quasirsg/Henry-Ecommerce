@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./userForm.css";
 import { ArrowLeftCircle, PersonCircle } from "react-bootstrap-icons";
 import { Button, Row, Col } from "reactstrap";
-import { Formik, Form, Field } from "formik";
+import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import CustomInput from "../custom/input";
 import { useDispatch } from "react-redux";
@@ -50,11 +50,11 @@ const LoginForm = ({
           //Request al backend
           let user = { ...values };
 
-          const data = action === "delete" ? null : user;
+          // const data = action === "delete" ? null : user;
           //To lower case
           user.email = user.email.toLowerCase();
 
-          dispatch(loguinUser(user.email, user.password))
+          dispatch(loguinUser(user.email, user.password)) //Funciona loguin correcto e error al ingresar mal los datos
             .then((res) => {
               resetForm();
               setSubmitting(false);
