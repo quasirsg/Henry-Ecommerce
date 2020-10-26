@@ -9,7 +9,6 @@ import CustomInput from "../custom/input";
 
 import { useDispatch } from "react-redux";
 
-
 import allActions from "../../redux/actions/allActions";
 
 const Toast = Swal.mixin({
@@ -103,7 +102,6 @@ const FormUser = ({
             .oneOf([Yup.ref("password"), null], "La contraseña no coincide")
             .required("Password confirm is required"),
         })}
-        
         onSubmit={async (values, { setSubmitting, resetForm }) => {
           // Convertir imagen en base64
           const imgBase64 = await convertBase64(values.image);
@@ -114,16 +112,17 @@ const FormUser = ({
           //To lower case
           user.email = user.email.toLowerCase();
 
-          dispatch(allActions.editUser(id, action, user))
+          await dispatch(allActions.editUser(id, action, user))
             .then((res) => {
-              // console.log(res);
               resetForm();
               setSubmitting(false);
               Toast.fire({
                 icon,
                 title: `${message} Bienvenido ${values.name}`,
               });
-              setTimeout(function(){ window.location.href = "/"; }, 3000);
+              setTimeout(function () {
+                window.location.href = "/";
+              }, 3000);
             })
             .catch((error) => {
               console.log(error);
@@ -135,7 +134,7 @@ const FormUser = ({
             });
         }}
       >
-        {({ isValid,isSubmitting, setFieldValue }) => {
+        {({ isValid, isSubmitting, setFieldValue }) => {
           return (
             <Form>
               <Col className="rounded-lg text-center">
@@ -220,7 +219,7 @@ const FormUser = ({
                   />
                 </Col>
               </Row>
-              
+
               <Button
                 block
                 className="bg-color-primary shadow-primary rounded-pill border-0"

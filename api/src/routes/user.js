@@ -1,5 +1,5 @@
 const server = require("express").Router();
-const { User, Order, Product, Linea_Order } = require("../db.js");
+const { User, Order, Product, Linea_order } = require("../db.js");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 var config = require("../configs/config");
@@ -86,6 +86,24 @@ server.delete("/:id", (req, res, next) => {
     .catch(next);
 });
 
+// Dar permisos de Admin a user 
+server.put('/:id/promote', (req,res,next) => {
+  const {id} = req.params;
+
+  User.update({
+    role: 'admin'
+  }, {
+    where: {id}
+  })
+  .then(user => {
+    return res.json({
+      user
+    });
+  })
+  .catch(error => next(error.message))
+
+});
+
 //obtener todos los usuarios
 server.get("/", (req, res) => {
   User.findAll({
@@ -100,7 +118,6 @@ server.get("/", (req, res) => {
     .catch((err) => {
       return res.sendStatus(500);
     });
-
 });
 
 //obtener detalles de usuario por id//??nuevo
@@ -133,7 +150,7 @@ server.get("/order/cart/:id", (req, res, next) => {
     })
     .catch((err) => {
       next(err.message);
-
+    });
 });
 
 //obtener todas las ordenes de un usuario en especifico
@@ -168,7 +185,7 @@ server.get("/orders", (req, res) => {
       User,
       {
         model: Product,
-        through: Linea_Order,
+        through: Linea_order,
       },
     ],
     where: {
@@ -194,7 +211,6 @@ server.post("/:userId/cart/add", async (req, res, next) => {
   const { productId, quantity, orderId } = req.body;
 
   try {
-
     const { stock, price, id, name, image } = await Product.findOne({
       where: {
         id: productId,
@@ -240,19 +256,17 @@ server.post("/:userId/cart/add", async (req, res, next) => {
 });
 
 // Agregar los productos al carrito
-server.post('/:userId/cart', async (req, res, next) => {
+server.post("/:userId/cart", async (req, res, next) => {
   const { productsCarts, orderId } = req.body;
   const { userId } = req.params;
 
   try {
-
     productsCarts.forEach(async (product) => {
-
-      const { stock, id: idProduct} = await Product.findOne({
+      const { stock, id: idProduct } = await Product.findOne({
         where: {
-          id: product.id
+          id: product.id,
         },
-        raw: true
+        raw: true,
       });
 
       // Verificar stock
@@ -271,21 +285,17 @@ server.post('/:userId/cart', async (req, res, next) => {
           product_id: idProduct,
           orderId: orderId,
           userId: userId,
-        }
+        },
       });
-
     });
 
     return res.json({
-      message: 'Se agregaron los productos',
-      productsCarts
+      message: "Se agregaron los productos",
+      productsCarts,
     });
-
-
   } catch (error) {
-    next(error.message)
+    next(error.message);
   }
-
 });
 
 //modificamos la cantidad de un producto en especifico, que se encuentre en el carrito
@@ -378,7 +388,7 @@ server.delete("/:userId/cart/:productId", (req, res) => {
 //vacia el carrito
 server.delete("/:userId/cart", (req, res) => {
   const userId = req.params.userId;
-
+  console.log(userId);
   Order.findOne({
     where: {
       userId: userId,
@@ -443,7 +453,7 @@ server.post("/login", (req, res) => {
     },
   })
     .then((user) => {
-      console.log();
+      console.log(user);
       bcrypt.compare(password, user.dataValues.password, (err, response) => {
         if (err) {
           console.log("error");
@@ -472,8 +482,9 @@ server.post("/login", (req, res) => {
 
 //Ruta de prueba con middleware
 server.get("/secure", authenticateToken, (req, res) => {
+  console.log(res);
   return res.status(200).send({
-    message: "Paso la verificación!!!!"
+    message: "Paso la verificación!!!!",
   });
 });
 

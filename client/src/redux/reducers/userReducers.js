@@ -18,34 +18,31 @@ import {
   DELETE_AMOUNT_GUEST,
   ADD_AMOUNT_GUEST,
   ADD_ALL_PRODUCTS_CART_GUEST,
+  PROM_USER,
 } from "../actions/actionTypes";
 
 const initialState = {
   users: [],
   userDetail: [],
   err: [],
-
   carrito: [],
   message: "",
   orders: [],
   allOrders: [],
-  reviews: []
+  reviews: [],
 };
 
 function userReducers(state = initialState, action) {
   console.log(action);
   let products = state.carrito;
   switch (action.type) {
+    /* REDUCERS USUARIOS Y LOGUIN USUARIOS */
     case GET_USERS:
       return {
         ...state,
-        users: action.users.data.map((user) => ({
-          id: user.id,
-          name: user.name,
-          email: user.description,
-          rol: user.categories,
-        })),
+        users: action.users
       };
+  
     case GET_ONE_USER:
       return {
         ...state,
@@ -55,8 +52,8 @@ function userReducers(state = initialState, action) {
     case POST_USER:
       return {
         ...state,
-        users: state.concat(action.userDetail),
-        err: state.concat(action.error),
+        users: state.userDetail.concat(action.userDetail),
+        err: state.userDetail.concat(action.error),
       };
     case PUT_USER:
       return {
@@ -70,6 +67,8 @@ function userReducers(state = initialState, action) {
         ...state,
         users: state.users.filter((item) => item.id !== action.userDetail.id),
       };
+
+    /* REDUCERS CARRITO DE USUARIOS */
     case ADD_PRODUCT_CART:
       return {
         ...state,
@@ -149,6 +148,12 @@ function userReducers(state = initialState, action) {
         ...state,
         carrito: state.carrito.concat(action.products.productsCarts),
       };
+      case PROM_USER:
+        const user = state.users.data.find((item)=> item.id === action.user);
+        user.role = 'admin';
+        return {
+          ...state
+        };
     default:
       return state;
   }

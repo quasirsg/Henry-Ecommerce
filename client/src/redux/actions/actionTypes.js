@@ -28,6 +28,13 @@ export const GET_ONE_USER = "GET_ONE_USER";
 export const GET_USER_ORDERS = "GET_USER_ORDERS";
 export const GET_USERS_ORDERS = "GET_USERS_ORDERS";
 
+//Users loguin
+export const USER_LOGUIN = "USER_LOGUIN";
+export const USER_LOGUIN_ERROR = "USER_LOGUIN_ERROR";
+export const LOGOUT_USER = "LOGOUT_USER";
+export const CURRENT_USER = "CURRENT_USER";
+export const NOT_CURRENT_USER = "NOT_CURRENT_USER";
+
 //Search constants
 export const SEARCH_BY_QUERY = "SEARCH_BY_QUERY";
 export const SEARCH_BY_CATEGORY = "SEARCH_BY_CATEGORY";
@@ -47,14 +54,6 @@ export const DELETE_AMOUNT_GUEST = "DELETE_AMOUNT_GUEST";
 export const ADD_AMOUNT_GUEST = "ADD_AMOUNT_GUEST";
 export const ADD_ALL_PRODUCTS_CART_GUEST = "ADD_ALL_PRODUCTS_CART_GUEST";
 
-export const DELETE_PRODUCT_CART_GUEST = "DELETE_PRODUCT_CART_GUEST";
-export const ADD_PRODUCT_CART_GUEST = "ADD_PRODUCT_CART_GUEST";
-export const DELETE_AMOUNT_GUEST = "DELETE_AMOUNT_GUEST";
-export const ADD_AMOUNT_GUEST = "ADD_AMOUNT_GUEST";
-export const ADD_ALL_PRODUCTS_CART_GUEST = "ADD_ALL_PRODUCTS_CART_GUEST";
-export const DELETE_ALL_PRODUCTS_CART_GUEST = "DELETE_ALL_PRODUCTS_CART_GUEST";
-
-
 //order constants
 export const GET_ORDERS = "GET_ORDERS";
 //export const POST_ORDER = "POST_ORDER";
@@ -62,13 +61,14 @@ export const GET_ONE_ORDER = "GET_ONE_ORDER";
 export const DELETE_ORDER = "DELETE_ORDER";
 export const UPDATE_ORDER = "UPDATE_ORDER";
 
-
-
 //reviews constants
 export const ADD_REVIEW = "ADD_REVIEW";
 export const DELETE_REVIEW = "DELETE_REVIEW";
 export const EDIT_REVIEW = "EDIT_REVIEW";
 export const GET_PRODUCT_REVIEWS = "GET_PRODUCT_REVIEWS";
 
-
 export const GET_ORDER_BY_ID = "GET_ORDER_BY_ID";
+
+//Admin actions
+
+export const PROM_USER = "PROM_USER";

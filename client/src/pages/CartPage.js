@@ -52,6 +52,7 @@ const Cart = () => {
       setUserData(null); //evitar un loop
     }
   }
+  console.log(productsCarts);
   return (
     <Container fluid={true} className="mt-4">
       <Row>

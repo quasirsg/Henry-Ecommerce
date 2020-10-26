@@ -4,6 +4,7 @@ import cartReducers from "./cartReducers";
 import searchReducer from "./searchReducer";
 import userReducers from "./userReducers";
 import orderReducer from "./orderReducers";
+import jwtUserRducers from "./jwtUsersReducers";
 
 import { combineReducers } from "redux";
 
@@ -14,6 +15,7 @@ const mainReducers = combineReducers({
   cart: cartReducers,
   users: userReducers,
   order: orderReducer,
+  jwt: jwtUserRducers,
 });
 
 export default mainReducers;

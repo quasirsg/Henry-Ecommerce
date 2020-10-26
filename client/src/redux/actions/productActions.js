@@ -10,16 +10,17 @@ import {
   DELETE_PRODUCT,
   GET_BANNERS,
 } from "./actionTypes";
-import axios from 'axios';
+import axios from "axios";
 import apiCall from "../api";
 import Toast from "../../components/alerts/toast";
 import DeleteDialog from "../../components/alerts/deleteDialog";
 import Swal from "sweetalert2";
 
-const url = 'http://localhost:3001';
+const url = "http://localhost:3001";
 
 export const getProducts = () => (dispatch) => {
-  apiCall("/products/", null, null, "get")
+  axios
+    .get(`${url}/products/`)
     .then((res) => {
       dispatch({
         type: GET_PRODUCTS,
@@ -34,21 +35,20 @@ export const getProducts = () => (dispatch) => {
     });
 };
 
-export const getReviews = productId => dispatch => {
-  axios.get(url + '/products/' + productId + '/reviews')
-    .then(res => {
-      dispatch({
-        type: GET_PRODUCT_REVIEWS,
-        reviews: res.data,
-      })
-    })
-}
+export const getReviews = (productId) => (dispatch) => {
+  axios.get(url + "/products/" + productId + "/reviews").then((res) => {
+    dispatch({
+      type: GET_PRODUCT_REVIEWS,
+      reviews: res.data,
+    });
+  });
+};
 
 export const getBanners = () => {
   return {
     type: GET_BANNERS,
-  }
-}
+  };
+};
 
 export const getOneProduct = (id) => (dispatch) => {
   apiCall(`/products/${id}`, null, null, "get")

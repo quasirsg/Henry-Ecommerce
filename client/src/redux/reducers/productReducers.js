@@ -20,30 +20,31 @@ const initialState = {
   },
   productBanner: [
     {
-      src: '/images/banner1.png',
-      altText: 'Slide 1',
-      caption: '',
-      header: '',
-      key: '1'
+      src: "/images/banner1.png",
+      altText: "Slide 1",
+      caption: "",
+      header: "",
+      key: "1",
     },
     {
-      src: '/images/banner2.png',
-      altText: 'Slide 1',
-      caption: '',
-      header: '',
-      key: '2'
-    }
+      src: "/images/banner2.png",
+      altText: "Slide 1",
+      caption: "",
+      header: "",
+      key: "2",
+    },
   ],
   loading: false,
   message: "",
 };
 
 function productReducers(state = initialState, action) {
+  console.log(action);
   switch (action.type) {
     case GET_PRODUCTS:
       return {
         ...state,
-        allProducts: [...action.payload],
+        allProducts: state.allProducts.concat(action.payload),
       };
 
     case GET_PRODUCT:
@@ -58,8 +59,8 @@ function productReducers(state = initialState, action) {
         productReviews: {
           average: action.reviews.average,
           reviews: action.reviews.result,
-        }
-      }
+        },
+      };
 
     case POST_PRODUCT:
       return {
