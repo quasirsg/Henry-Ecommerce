@@ -1,19 +1,18 @@
 import React from 'react'
 
-const ButtonBlock = ({ children }) => {
+const ButtonBlockSecundary = ({ children }) => {
     return (
         <button style={{
-            backgroundImage: 'linear-gradient(to right, #8763fc, #806afd, #7a70fd, #7576fd, #707cfd, #6385ff, #578dff, #4d94ff, #39a0ff, #2caaff, #2cb4fe, #39bdfb)',
-            border: 'none',
+            border: '1px solid #ccc9c9',
             display: 'block',
             width: '100%',
             padding: '10px 0',
-            color: 'white',
+            color: '#424242',
             fontSize: '1rem',
             fontWeight: 'bold',
             borderRadius: '5px',
             textAlign: 'center',
-            margin: '0 1rem',
+            margin: '0 1rem'
         }}
         >
             {children}
@@ -21,4 +20,4 @@ const ButtonBlock = ({ children }) => {
     );
 }
 
-export default ButtonBlock;
+export default ButtonBlockSecundary;

@@ -1,12 +1,15 @@
 import React from "react";
 import { ClipboardPlus, ArrowLeftCircle } from "react-bootstrap-icons";
-import { Container, Button, Row, Col } from "reactstrap";
+import { Container, Row, Col } from "reactstrap";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import Swal from "sweetalert2";
 import CustomInput from "../custom/input";
-import { useDispatch } from "react-redux";
-import allActions from "../../redux/actions/allActions";
+import ButtonBlock from '../custom/ButtonBlock';
+import ButtonBlockSecundary from '../custom/ButtonBlockSecundary';
+import { useDispatch, useSelector } from "react-redux";
+
+import './userDetail.css';
 
 const Toast = Swal.mixin({
     toast: true,
@@ -20,51 +23,17 @@ const Toast = Swal.mixin({
     },
 });
 
-const FormUser = ({
-    id,
-    name = "Bryan",
-    email = "clientes.g4a",
-    address = "avenida siempre viva-123",
-    phoneNumber = "",
-    password = "",
-    image,
-    location_id = 1,
-    passwordConfirmation = "",
-    action,
-    icon,
-    message,
-    history,
-}) => {
+const FormUser = () => {
     const dispatch = useDispatch();
-
-    // const convertBase64 = (file) => {
-    //     if (typeof file === "string") return file;
-    //     return new Promise((resolve, reject) => {
-    //         const fileReader = new FileReader();
-    //         fileReader.readAsDataURL(file);
-
-    //         fileReader.onload = () => {
-    //             resolve(fileReader.result);
-    //         };
-
-    //         fileReader.onerror = (error) => {
-    //             reject(error);
-    //         };
-    //     });
-    // };
+    const userDetail = useSelector(state => console.log(state));
 
     return (
-
         <Formik
             initialValues={{
-                name,
-                email,
-                address,
-                phoneNumber,
-                password,
-                image,
-                passwordConfirmation,
-                location_id,
+                name: 'Bryan Plata',
+                email: 'cliente@gmail.com',
+                address: 'avenida 123',
+                phoneNumber: '400340304',
             }}
             validationSchema={Yup.object({
                 name: Yup.string()
@@ -86,34 +55,14 @@ const FormUser = ({
                     ),
             })}
             onSubmit={async (values, { setSubmitting, resetForm }) => {
-                // await dispatch(allActions.editUser(id, action, user))
-                //     .then((res) => {
-                //         resetForm();
-                //         setSubmitting(false);
-                //         Toast.fire({
-                //             icon,
-                //             title: `${message} Bienvenido ${values.name}`,
-                //         });
-                //         setTimeout(function () {
-                //             window.location.href = "/";
-                //         }, 3000);
-                //     })
-                //     .catch((error) => {
-                //         console.log(error);
-                //         setSubmitting(false);
-                //         Toast.fire({
-                //             icon: "error",
-                //             title: "Error: vuelve a intentarlo",
-                //         });
-                //     });
             }}
         >
             {({ isValid, isSubmitting, setFieldValue }) => {
                 return (
                     <Form>
-                        <div className="userDetail__title">
-
-                        </div>
+                        <Col>
+                            <h2 style={{ fontWeight: 'bold', color: '#424242', marginBottom: '2rem' }}>Mis Datos Personales!</h2>
+                        </Col>
                         <Container fluid={true}>
                             <Row
                                 lg="2"
@@ -135,25 +84,8 @@ const FormUser = ({
                                     />
                                 </Col>
                                 <Col lg="6" xs="6">
-                                    <CustomInput
-                                        label="Password"
-                                        name="password"
-                                        type="password"
-                                    />
-                                </Col>
-
-                                <Col lg="6" xs="6">
-                                    <CustomInput
-                                        label="Confirm Password"
-                                        name="passwordConfirmation"
-                                        type="password"
-                                    />
-                                </Col>
-
-                                <Col lg="6" xs="6">
                                     <CustomInput label="Dirección" name="address" type="text" />
                                 </Col>
-
                                 <Col lg="6" xs="6">
                                     <CustomInput
                                         label="Numero de teléfono"
@@ -161,23 +93,14 @@ const FormUser = ({
                                         type="text"
                                     />
                                 </Col>
-
-                                <Button
-                                    block
-                                    className="bg-color-primary shadow-primary rounded-pill border-0"
-                                    type="submit"
-                                    disabled={!isValid}
+                                <Col
+                                    lg="12 d-flex justify-content-center pt-5"
                                 >
-                                    {isSubmitting
-                                        ? "Cargando..."
-                                        : action === "put"
-                                            ? "Actualizar usuario"
-                                            : action === "delete"
-                                                ? "Eliminar usuario"
-                                                : action === "post"
-                                                    ? "Agregar usuario"
-                                                    : null}
-                                </Button>
+                                    <div className="userDetail__buttons">
+                                        <ButtonBlock style={{ margin: '1rem' }}>Actualizar Datos</ButtonBlock>
+                                        <ButtonBlockSecundary>Cancelar</ButtonBlockSecundary>
+                                    </div>
+                                </Col>
                             </Row>
                         </Container>
                     </Form>
