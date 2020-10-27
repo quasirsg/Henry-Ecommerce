@@ -93,14 +93,14 @@ function userReducers(state = initialState, action) {
         carrito: action.newCart,
       };
     case ADD_AMOUNT:
-      state.carrito.map((product) => {
+      let carrito = state.carrito.map((product) => {
         if (product.id === action.product.product_id) {
           product.quantity = action.product.quantity;
         }
       });
       return {
         ...state,
-        carrito: state.carrito,
+        carrito: carrito,
       };
     case ADD_AMOUNT_GUEST:
       return {

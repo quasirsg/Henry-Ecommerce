@@ -27,8 +27,15 @@ const Product = () => {
   );
   product.quantity = 1; //agrego una cantidad por default
 
+  if (localStorage.token) {
+    let user = JSON.parse(localStorage.getItem("token"));
+    var userId = user.user.id;
+  } else {
+    var userId = 1;
+  }
+
   const handleOnClick = () => {
-    dispatch(addProductCart(1, product));
+    dispatch(addProductCart(userId, product));
     // localStorage.setItem("user", userId.id);
     // dispatch(getUserOrder(userId.id));
     // console.log(userId.id);
@@ -63,7 +70,7 @@ const Product = () => {
                 name="rating"
               />
               <div className="rating-reviews-count">
-                {reviews.length > 0 && reviews.length + ' Opiniones'}
+                {reviews.length > 0 && reviews.length + " Opiniones"}
               </div>
             </div>
             <p className="inforPrice">${product.price}</p>
@@ -79,10 +86,7 @@ const Product = () => {
                   : "button-container-disabled"
               }
             >
-              <button
-                onClick={handleOnClick}
-                className={"button btn-block"}
-              >
+              <button onClick={handleOnClick} className={"button btn-block"}>
                 Agregar al Carrito
               </button>
             </div>
@@ -105,10 +109,10 @@ const Product = () => {
             />
           ))
         ) : (
-            <div className="warning-alert">
-              Lo sentimos este producto no cuenta con Reviews!
-            </div>
-          )}
+          <div className="warning-alert">
+            Lo sentimos este producto no cuenta con Reviews!
+          </div>
+        )}
       </Col>
     </Container>
   );

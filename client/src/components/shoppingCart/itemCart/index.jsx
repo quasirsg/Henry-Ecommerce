@@ -8,25 +8,26 @@ import {
   deleteProductsCart,
 } from "../../../redux/actions/userActions";
 
-const ItemCart = ({ product }) => {
+const ItemCart = ({ product, userId }) => {
   const dispatch = useDispatch();
 
-  console.log(product);
-  let userId = 1;
-  const handleOnClick = (e, productId, name) => {
+  const handleOnClick = (e) => {
     e.preventDefault();
-    dispatch(deleteProductsCart(userId, productId, name));
+    dispatch(deleteProductsCart(userId, product.id, product.name));
   };
 
   const handleIncrement = (e) => {
+    // e.preventDefault();
     dispatch(addAmount(userId, product.id, product.quantity));
   };
 
   const handleDecrement = (e) => {
-    e.preventDefault();
+    // e.preventDefault();
     dispatch(deletAmount(userId, product.id, product.quantity));
   };
   console.log(product);
+  console.log(userId);
+
   return (
     <Col lg="12">
       <div className="itemCart">
@@ -44,10 +45,7 @@ const ItemCart = ({ product }) => {
           </Col>
           <Col lg="6">
             <div className="d-flex flex-row-reverse" value={product.id}>
-              <button
-                onClick={(e) => handleOnClick(e, product.id, product.name)}
-                className="itemCart-delete"
-              >
+              <button onClick={handleOnClick} className="itemCart-delete">
                 Remover
               </button>
             </div>

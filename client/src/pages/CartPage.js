@@ -12,22 +12,23 @@ import {
 const Cart = () => {
   const dispatch = useDispatch();
 
-  let user = localStorage.getItem("token");
+  let user = JSON.parse(localStorage.getItem("token"));
+  console.log(user);
 
   if (localStorage.token) {
-    var userId = user.id; //?? loguin o guest
+    var userId = user.user.id;
   } else {
-    var userId = 1;
+    var userId = 2;
   }
 
   useEffect(() => {
+    dispatch(getProductCart(userId));
     function checkUsetData() {
       const item = localStorage.getItem("token");
       if (item) {
         setUserData(item);
       }
     }
-    dispatch(getProductCart(userId));
     window.addEventListener("storage", checkUsetData);
     return () => {
       window.removeEventListener("storage", checkUsetData);
@@ -64,7 +65,7 @@ const Cart = () => {
     <Container fluid={true} className="mt-4">
       <Row>
         <Col lg="8">
-          <ShoppingCart items={productsCarts} />
+          <ShoppingCart items={productsCarts} userId={userId} />
         </Col>
         <Col lg="4">
           <ButtonBlock children={"Siguiente"} />
