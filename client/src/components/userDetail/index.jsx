@@ -1,5 +1,4 @@
-import React from "react";
-import { ClipboardPlus, ArrowLeftCircle } from "react-bootstrap-icons";
+import React, { useEffect } from "react";
 import { Container, Row, Col } from "reactstrap";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
@@ -23,9 +22,8 @@ const Toast = Swal.mixin({
     },
 });
 
-const FormUser = () => {
-    const dispatch = useDispatch();
-    const userDetail = useSelector(state => console.log(state));
+const UserDetail = ({ id }) => {
+
 
     return (
         <Formik
@@ -110,4 +108,4 @@ const FormUser = () => {
     );
 };
 
-export default FormUser;
+export default UserDetail;

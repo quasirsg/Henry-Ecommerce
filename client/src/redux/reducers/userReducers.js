@@ -18,11 +18,14 @@ import {
   ADD_AMOUNT_GUEST,
   ADD_ALL_PRODUCTS_CART_GUEST,
   PROM_USER,
+  GET_REVIEWS_BY_ID,
 } from "../actions/actionTypes";
 
 const initialState = {
   users: [],
-  userDetail: [],
+  userDetail: {
+    id: 
+  },
   err: [],
   carrito: [],
   message: "",
@@ -40,7 +43,7 @@ function userReducers(state = initialState, action) {
         ...state,
         users: action.users
       };
-  
+
     case GET_ONE_USER:
       return {
         ...state,
@@ -146,12 +149,17 @@ function userReducers(state = initialState, action) {
         ...state,
         carrito: state.carrito.concat(action.products.productsCarts),
       };
-      case PROM_USER:
-        const user = state.users.data.find((item)=> item.id === action.user);
-        user.role = 'admin';
-        return {
-          ...state
-        };
+    case PROM_USER:
+      const user = state.users.data.find((item) => item.id === action.user);
+      user.role = 'admin';
+      return {
+        ...state
+      };
+    case GET_REVIEWS_BY_ID:
+      return {
+        ...state,
+        reviews: action.data,
+      }
     default:
       return state;
   }
