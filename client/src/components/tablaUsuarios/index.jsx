@@ -6,6 +6,7 @@ import { useSelector, useDispatch } from "react-redux";
 //import { deleteOrder } from "../../redux/actions/ordenActions";
 import { adminActions } from "../../redux/actions/adminActions";
 import { getUsers } from "../../redux/actions/userActions";
+import Toast from "../../components/alerts/toast";
 
 const TablaUsuarios = () => {
     const dispatch= useDispatch();
@@ -16,9 +17,17 @@ useEffect(()=> {
     dispatch(getUsers())
 }, [])
 
-  const handleClick = (e, id, item) => {
-    e.preventDefault();
-    dispatch(adminActions(id)); 
+const handleClick = (e, id, item) => {
+  e.preventDefault();
+    if (item.role === "client") {
+      dispatch(adminActions(id)); 
+    } else {
+      Toast.fire({
+        icon: 'error',
+        title: 'Usuario ya es administrador'
+      });
+    }
+
   };
 
   return (
