@@ -24,7 +24,7 @@ import {
 const initialState = {
   users: [],
   userDetail: {
-    id: 
+    id: 1,
   },
   err: [],
   carrito: [],
