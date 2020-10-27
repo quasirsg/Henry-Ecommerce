@@ -8,7 +8,7 @@ import {
   deleteProductsCart,
 } from "../../../redux/actions/userActions";
 
-const ItemCart = ({ product, userId }) => {
+const ItemCart = ({ product, userId, quantity }) => {
   const dispatch = useDispatch();
 
   const handleOnClick = (e) => {

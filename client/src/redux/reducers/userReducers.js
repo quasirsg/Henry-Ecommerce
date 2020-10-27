@@ -93,14 +93,16 @@ function userReducers(state = initialState, action) {
         carrito: action.newCart,
       };
     case ADD_AMOUNT:
-      let carrito = state.carrito.map((product) => {
-        if (product.id === action.product.product_id) {
-          product.quantity = action.product.quantity;
-        }
-      });
       return {
         ...state,
-        carrito: carrito,
+        carrito: state.carrito.map((product) => {
+          if (product.id === action.product.product_id) {
+            if (product.stock > action.product.quantity) {
+              product.quantity = action.product.quantity;
+            }
+            return product;
+          }
+        }),
       };
     case ADD_AMOUNT_GUEST:
       return {
@@ -108,14 +110,16 @@ function userReducers(state = initialState, action) {
         carrito: action.carritoGuest,
       };
     case SUBTRACT_AMOUNT:
-      products.map((product) => {
-        if (product.id === action.product.product_id) {
-          product.quantity = action.product.quantity;
-        }
-      });
       return {
         ...state,
-        carrito: state.carrito,
+        carrito: products.map((product) => {
+          if (product.id === action.product.product_id) {
+            if (product.quantity > 1) {
+              product.quantity = action.product.quantity;
+            }
+            return product;
+          }
+        }),
       };
     case DELETE_AMOUNT_GUEST:
       return {
@@ -141,7 +145,7 @@ function userReducers(state = initialState, action) {
             id: item.linea_order.product_id,
             name: item.name,
             stock: item.stock,
-            quantity: item.linea_order.quantity,
+            quantity: item.quantity,
             price: item.price,
             total: item.linea_order.total,
             image: item.image,

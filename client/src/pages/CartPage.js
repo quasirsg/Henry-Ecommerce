@@ -11,6 +11,8 @@ import {
 
 const Cart = () => {
   const dispatch = useDispatch();
+  let productsCarts = useSelector((state) => state.users.carrito);
+  const [userData, setUserData] = useState(null);
 
   let user = JSON.parse(localStorage.getItem("token"));
   console.log(user);
@@ -34,9 +36,6 @@ const Cart = () => {
       window.removeEventListener("storage", checkUsetData);
     };
   }, []);
-
-  let productsCarts = useSelector((state) => state.users.carrito);
-  const [userData, setUserData] = useState(null);
 
   const deleteAll = (e) => {
     e.preventDefault();
