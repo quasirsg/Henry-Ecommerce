@@ -194,7 +194,7 @@ export const deleteProductsCart = (userId, productId, name) => (dispatch) => {
           Swal.fire("Eliminado!", `${name} fue eliminado.`, "success");
           dispatch({
             type: actionTypes.DELETE_PRODUCT_CART_GUEST,
-            message: `Se elimino el producto con ID: ${productId} del carrito de invitado.`,
+            carritoGuest: newCart,
           });
         }
       } else {
@@ -215,14 +215,14 @@ export const deleteProductsCart = (userId, productId, name) => (dispatch) => {
   });
 };
 
-//Obtenner los productos agregados al carrito
+//Obtener los productos agregados al carrito
 export const getProductCart = (userId) => (dispatch) => {
   axios
     .get(`${url}/users/${userId}/cart`)
     .then((res) => {
       dispatch({
         type: actionTypes.GET_CART_PRODUCTS,
-        products: res.data,
+        products: res.data.data.products,
       });
     })
     .catch((err) => {
@@ -233,15 +233,18 @@ export const getProductCart = (userId) => (dispatch) => {
 export const addAmount = (userId, productId, quantity) => (dispatch) => {
   if (!localStorage.token) {
     let cart = JSON.parse(localStorage.getItem("cart"));
-    cart.forEach((item) => {
+    cart.map((item) => {
       if (item.id === productId) {
-        item.quantity += 1;
+        if (item.quantity <= item.stock) {
+          item.quantity += 1;
+          dispatch({
+            type: actionTypes.ADD_AMOUNT_GUEST,
+            carritoGuest: item,
+          });
+        }
       }
     });
     localStorage.setItem("cart", JSON.stringify(cart));
-    dispatch({
-      type: actionTypes.ADD_AMOUNT_GUEST,
-    });
   } else {
     axios
       .put(`${url}/users/${userId}/cart/${productId}`, {
@@ -268,13 +271,14 @@ export const deletAmount = (userId, productId, quantity) => (dispatch) => {
       if (item.id === productId) {
         if (item.quantity > 1) {
           item.quantity -= 1;
+          dispatch({
+            type: actionTypes.DELETE_AMOUNT_GUEST,
+            carritoGuest: item,
+          });
         }
       }
     });
     localStorage.setItem("cart", JSON.stringify(cart));
-    dispatch({
-      type: actionTypes.DELETE_AMOUNT_GUEST,
-    });
   } else {
     axios
       .put(`${url}/users/${userId}/cart/${productId}`, {
@@ -302,7 +306,6 @@ export const deleteAllCart = (userId) => (dispatch) => {
           Swal.fire("Eliminado!", `${"Carrito"} fue eliminado.`, "success");
           dispatch({
             type: actionTypes.DELETE_ALL_PRODUCTS_CART_GUEST,
-            message: "Se elimino el carrito",
           });
         }
       });

@@ -8,9 +8,10 @@ import {
   deleteProductsCart,
 } from "../../../redux/actions/userActions";
 
-const ItemCart = ({ product, quantity }) => {
+const ItemCart = ({ product }) => {
   const dispatch = useDispatch();
 
+  console.log(product);
   let userId = 1;
   const handleOnClick = (e, productId, name) => {
     e.preventDefault();
@@ -18,15 +19,14 @@ const ItemCart = ({ product, quantity }) => {
   };
 
   const handleIncrement = (e) => {
-    e.preventDefault();
-    dispatch(addAmount(userId, product.id, quantity));
+    dispatch(addAmount(userId, product.id, product.quantity));
   };
 
   const handleDecrement = (e) => {
     e.preventDefault();
-    dispatch(deletAmount(userId, product.id, quantity));
+    dispatch(deletAmount(userId, product.id, product.quantity));
   };
-
+  console.log(product);
   return (
     <Col lg="12">
       <div className="itemCart">
@@ -54,7 +54,7 @@ const ItemCart = ({ product, quantity }) => {
             <div className="d-flex flex-row-reverse" values={product.id}>
               <Button children={"+"} onClick={handleIncrement} />
               <div className="itemCart-count" values={product.id}>
-                {quantity}
+                {product.quantity}
               </div>
               <Button children={"-"} onClick={handleDecrement} />
             </div>

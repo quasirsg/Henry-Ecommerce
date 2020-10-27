@@ -33,14 +33,15 @@ const initialState = {
 
 function userReducers(state = initialState, action) {
   let products = state.carrito;
+  console.log(action);
   switch (action.type) {
     /* REDUCERS USUARIOS Y LOGUIN USUARIOS */
     case GET_USERS:
       return {
         ...state,
-        users: action.users
+        users: action.users,
       };
-  
+
     case GET_ONE_USER:
       return {
         ...state,
@@ -89,27 +90,27 @@ function userReducers(state = initialState, action) {
     case DELETE_PRODUCT_CART_GUEST:
       return {
         ...state,
-        message: action.message,
+        carrito: action.newCart,
       };
     case ADD_AMOUNT:
       state.carrito.map((product) => {
         if (product.id === action.product.product_id) {
-          product.quantity++;
+          product.quantity = action.product.quantity;
         }
       });
       return {
         ...state,
+        carrito: state.carrito,
       };
     case ADD_AMOUNT_GUEST:
       return {
         ...state,
+        carrito: action.carritoGuest,
       };
     case SUBTRACT_AMOUNT:
       products.map((product) => {
         if (product.id === action.product.product_id) {
-          if (product.quantity > 1) {
-            product.quantity--;
-          }
+          product.quantity = action.product.quantity;
         }
       });
       return {
@@ -119,6 +120,7 @@ function userReducers(state = initialState, action) {
     case DELETE_AMOUNT_GUEST:
       return {
         ...state,
+        carrito: action.carritoGuest,
       };
     case DELETE_ALL_CART:
       return {
@@ -128,12 +130,24 @@ function userReducers(state = initialState, action) {
     case DELETE_ALL_PRODUCTS_CART_GUEST:
       return {
         ...state,
-        message: action.message,
+        carrito: [],
       };
     case GET_CART_PRODUCTS:
+      console.log(action.products);
       return {
         ...state,
-        carrito: state.carrito,
+        carrito: action.products.map((item) => {
+          return {
+            id: item.linea_order.product_id,
+            name: item.name,
+            stock: item.stock,
+            quantity: item.linea_order.quantity,
+            price: item.price,
+            total: item.linea_order.total,
+            image: item.image,
+            description: item.description,
+          };
+        }),
       };
     case GET_USER_ORDERS:
       return {
@@ -146,12 +160,12 @@ function userReducers(state = initialState, action) {
         ...state,
         carrito: state.carrito.concat(action.products.productsCarts),
       };
-      case PROM_USER:
-        const user = state.users.data.find((item)=> item.id === action.user);
-        user.role = 'admin';
-        return {
-          ...state
-        };
+    case PROM_USER:
+      const user = state.users.data.find((item) => item.id === action.user);
+      user.role = "admin";
+      return {
+        ...state,
+      };
     default:
       return state;
   }

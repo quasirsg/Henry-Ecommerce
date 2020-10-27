@@ -86,22 +86,24 @@ server.delete("/:id", (req, res, next) => {
     .catch(next);
 });
 
-// Dar permisos de Admin a user 
-server.put('/:id/promote', (req,res,next) => {
-  const {id} = req.params;
+// Dar permisos de Admin a user
+server.put("/:id/promote", (req, res, next) => {
+  const { id } = req.params;
 
-  User.update({
-    role: 'admin'
-  }, {
-    where: {id}
-  })
-  .then(user => {
-    return res.json({
-      user
-    });
-  })
-  .catch(error => next(error.message))
-
+  User.update(
+    {
+      role: "admin",
+    },
+    {
+      where: { id },
+    }
+  )
+    .then((user) => {
+      return res.json({
+        user,
+      });
+    })
+    .catch((error) => next(error.message));
 });
 
 //obtener todos los usuarios
@@ -321,9 +323,11 @@ server.put("/:userId/cart/:productId", async (req, res) => {
     .then(async (orderline) => {
       if (!orderline) return res.sendStatus(404);
       if (amount === "addAmount") {
-        orderline.quantity += 1;
+        if (quantity <= product.stock) {
+          orderline.quantity += 1;
+        }
       } else if (amount === "deleteAmount") {
-        if (quantity !== 0) {
+        if (quantity > 1) {
           orderline.quantity -= 1;
         } else if (quantity === 0) {
           orderline.quantity = quantity;
