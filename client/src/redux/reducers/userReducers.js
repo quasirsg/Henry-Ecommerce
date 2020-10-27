@@ -93,16 +93,17 @@ function userReducers(state = initialState, action) {
         carrito: action.newCart,
       };
     case ADD_AMOUNT:
+      let addProducts = state.carrito.map((product) => {
+        if (product.id === action.product.product_id) {
+          if (product.stock > action.product.quantity) {
+            product.quantity = action.product.quantity;
+          }
+        }
+        return product;
+      });
       return {
         ...state,
-        carrito: state.carrito.map((product) => {
-          if (product.id === action.product.product_id) {
-            if (product.stock > action.product.quantity) {
-              product.quantity = action.product.quantity;
-            }
-            return product;
-          }
-        }),
+        carrito: addProducts,
       };
     case ADD_AMOUNT_GUEST:
       return {
@@ -110,16 +111,17 @@ function userReducers(state = initialState, action) {
         carrito: action.carritoGuest,
       };
     case SUBTRACT_AMOUNT:
+      let subProducts = state.carrito.map((product) => {
+        if (product.id === action.product.product_id) {
+          if (product.quantity > 1) {
+            product.quantity = action.product.quantity;
+          }
+        }
+        return product;
+      });
       return {
         ...state,
-        carrito: products.map((product) => {
-          if (product.id === action.product.product_id) {
-            if (product.quantity > 1) {
-              product.quantity = action.product.quantity;
-            }
-            return product;
-          }
-        }),
+        carrito: subProducts,
       };
     case DELETE_AMOUNT_GUEST:
       return {
@@ -138,20 +140,21 @@ function userReducers(state = initialState, action) {
       };
     case GET_CART_PRODUCTS:
       console.log(action.products);
+      let products = action.products.map((item) => {
+        return {
+          id: item.linea_order.product_id,
+          name: item.name,
+          stock: item.stock,
+          quantity: item.linea_order.quantity,
+          price: item.price,
+          total: item.linea_order.total,
+          image: item.image,
+          description: item.description,
+        };
+      });
       return {
         ...state,
-        carrito: action.products.map((item) => {
-          return {
-            id: item.linea_order.product_id,
-            name: item.name,
-            stock: item.stock,
-            quantity: item.quantity,
-            price: item.price,
-            total: item.linea_order.total,
-            image: item.image,
-            description: item.description,
-          };
-        }),
+        carrito: products,
       };
     case GET_USER_ORDERS:
       return {
