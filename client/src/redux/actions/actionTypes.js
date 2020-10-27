@@ -66,6 +66,7 @@ export const ADD_REVIEW = "ADD_REVIEW";
 export const DELETE_REVIEW = "DELETE_REVIEW";
 export const EDIT_REVIEW = "EDIT_REVIEW";
 export const GET_PRODUCT_REVIEWS = "GET_PRODUCT_REVIEWS";
+export const GET_REVIEWS_BY_ID = "GET_REVIEWS_BY_ID";
 
 export const GET_ORDER_BY_ID = "GET_ORDER_BY_ID";
 

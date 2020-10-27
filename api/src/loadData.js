@@ -258,14 +258,14 @@ const loadReviews = () => {
     {
       points: 5,
       description: "Todo genial ya había comprado una y la calidad es buenisima.",
-      productId: 1,
-      userId: 5,
+      productId: 2,
+      userId: 1,
     },
     {
       points: 4,
       description: "Buena tela, buena costura. Recomendable",
-      productId: 1,
-      userId: 6,
+      productId: 2,
+      userId: 2,
     },
   ]);
 };

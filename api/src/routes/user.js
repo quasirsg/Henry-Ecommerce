@@ -1,9 +1,10 @@
 const server = require("express").Router();
-const { User, Order, Product, Linea_order } = require("../db.js");
+const { User, Order, Product, Linea_order, Reviews } = require("../db.js");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 var config = require("../configs/config");
 var { authenticateToken } = require("../middlewares/middleware");
+
 //Agregar un usuario
 server.post("/", (req, res, next) => {
   const {
@@ -87,20 +88,20 @@ server.delete("/:id", (req, res, next) => {
 });
 
 // Dar permisos de Admin a user 
-server.put('/:id/promote', (req,res,next) => {
-  const {id} = req.params;
+server.put('/:id/promote', (req, res, next) => {
+  const { id } = req.params;
 
   User.update({
     role: 'admin'
   }, {
-    where: {id}
+    where: { id }
   })
-  .then(user => {
-    return res.json({
-      user
-    });
-  })
-  .catch(error => next(error.message))
+    .then(user => {
+      return res.json({
+        user
+      });
+    })
+    .catch(error => next(error.message))
 
 });
 
@@ -429,6 +430,18 @@ server.get("/:userId/cart", (req, res) => {
       return res.sendStatus(500);
     });
 });
+
+//ruta que retorna todas las reviews de un usuario
+server.get('/:id/reviews', (req, res) => {
+  const userId = req.params.id;
+
+  Reviews.findAll({
+    include: [{ model: User, attributes: ["name", "image"] }],
+    where: { userId, }
+  })
+    .then(reviews => res.status(200).json({ data: reviews }))
+    .catch(err => console.log(err));
+})
 
 //Login de un usuario
 server.post("/login", (req, res) => {

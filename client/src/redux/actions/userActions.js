@@ -101,6 +101,18 @@ export const editReview = (productId, reviewId, points, description) => (
     });
 };
 
+export const getReviewsById = userId => dispatch => {
+  axios.get(url + '/users/' + userId + '/reviews')
+    .then(res => {
+      console.log(res);
+      dispatch({
+        type: actionTypes.GET_REVIEWS_BY_ID,
+        data: res.data.data,
+      })
+    })
+    .catch(err => console.log(err));
+}
+
 //Agregar productos al carrito
 export const addProductCart = (userId, product) => async (dispatch) => {
   try {

@@ -43,12 +43,12 @@ function App() {
         <Route exact path="/admin">
           <AdminMenu />
         </Route>
-        <Route exact path='/user' component={UserPage} />
+        <Route exact path='/user/account' component={UserPage} />
         <Route exact path="/user/register">
           <FormUser action="post" icon="success" message="Usuario agregado" />
         </Route>
 
-        <Route exact path="/user/login" render={({history}) => <LoginForm action="post" icon="success" message="Usuario agregado" history={history} />}>
+        <Route exact path="/user/login" render={({ history }) => <LoginForm action="post" icon="success" message="Usuario agregado" history={history} />}>
         </Route>
 
         <Route
