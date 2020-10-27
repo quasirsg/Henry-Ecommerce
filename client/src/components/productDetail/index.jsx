@@ -5,11 +5,14 @@ import { useParams } from "react-router-dom";
 import { addProductCart } from "../../redux/actions/userActions";
 import { getReviews } from "../../redux/actions/productActions";
 import Review from "../review/index";
-import { Col, Row, Container } from "reactstrap";
+import { Col, Row, Container, Button } from "reactstrap";
+import { ArrowLeftCircle } from "react-bootstrap-icons";
 import allActions from "../../redux/actions/allActions";
 import "./producto.css";
+import { useHistory } from 'react-router-dom';
 
 const Product = () => {
+  const history = useHistory();
   let { id } = useParams();
   const dispatch = useDispatch();
 
@@ -33,6 +36,14 @@ const Product = () => {
 
   return (
     <Container fluid={true} className="productDetail py-4 my-4">
+      <Row>
+         <Button
+          className="btn btn-light text-secondary btn-sm float-left"
+          onClick={()=> history.push('/products')}
+           >
+            <ArrowLeftCircle size={20} />
+          </Button>
+      </Row>
       <Row className="productDeatil__content">
         <Col lg="8">
           <div className="prod-img">
