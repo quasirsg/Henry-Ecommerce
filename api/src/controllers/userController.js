@@ -11,7 +11,6 @@ module.exports = {
   login
 };
 
-
 //GetById (ADMINS)
 function getById(req, res, next) {
   const currentUser = req.user;

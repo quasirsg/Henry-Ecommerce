@@ -34,12 +34,13 @@ export const loguinUser = (email, password) => (dispatch) => {
 export const getCurretnUser = () => (dispatch) => {
   let token = JSON.parse(localStorage.getItem("token"));
   if (token) {
+    console.log(token);
     return dispatch({
       type: actionTypes.CURRENT_USER,
       userDetail: {
-        id: token.user.id,
-        role: token.user.role,
-        name: token.user.name,
+        id: 1,
+        role: 'client',
+        name: 'bryan',
       },
     });
   } else {
