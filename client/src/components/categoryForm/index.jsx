@@ -6,9 +6,10 @@ import * as Yup from "yup";
 import Swal from "sweetalert2";
 import CustomInput from "../custom/input";
 import { useDispatch } from "react-redux";
-import allActions from "../../redux/actions/allActions";
+//import allActions from "../../redux/actions/allActions";
 import { ArrowLeftCircle } from "react-bootstrap-icons";
 import { useHistory } from 'react-router-dom';
+import {editCategory} from "../../redux/actions/categoryActions";
 
 const Toast = Swal.mixin({
   toast: true,
@@ -52,7 +53,7 @@ const FormCategory = ({
           // const data = action === "delete" ? null : values;
 
           console.log(values);
-          dispatch(allActions.editCategory(id, action, values))
+          dispatch(editCategory(id, action, values))
             .then((response) => {
               resetForm();
               setSubmitting(false);
