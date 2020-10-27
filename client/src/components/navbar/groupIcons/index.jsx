@@ -7,7 +7,7 @@ import { Col, CustomInput, Badge } from "reactstrap";
 import Guest from "../../guestOptions";
 import { getCurretnUser, logoutUser } from "../../../redux/actions/jwtUsers";
 
-export default ({history}) => {
+export default ({ history }) => {
   let cart = useSelector((state) => state.users.carrito);
   const notification = useSelector((state) => state.users.message);
   const dispatch = useDispatch();
@@ -37,7 +37,7 @@ export default ({history}) => {
     if (userRole === "client") {
       return (
         <>
-          <Link to={"/user/page"} className="text-dark ">
+          <Link to={"/user/account"} className="text-dark ">
             <PersonSquare size={20} />
           </Link>
           <Link to={"/"} className="text-dark " onClick={handleClose}>
