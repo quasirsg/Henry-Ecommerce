@@ -33,6 +33,7 @@ export const loguinUser = (email, password) => (dispatch) => {
 //obtener información actual del usuario
 export const getCurretnUser = () => (dispatch) => {
   let token = JSON.parse(localStorage.getItem("token"));
+  
   if (token) {
     //Configuro un header para pasar el token por bearer y hacer la autenticación
     let config = {
