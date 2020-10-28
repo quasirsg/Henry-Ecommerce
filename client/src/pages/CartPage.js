@@ -16,7 +16,7 @@ const Cart = () => {
 
   if (localStorage.token) {
     let user = JSON.parse(localStorage.getItem("token"));
-    var userId = user.user.id;
+    var userId = user.id;
   }
 
   useEffect(() => {

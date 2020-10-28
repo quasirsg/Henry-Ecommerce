@@ -1,9 +1,8 @@
 const server = require("express").Router();
 const { User, Order, Product, Linea_order } = require("../db.js");
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
-var config = require("../configs/config");
-var { authenticateToken } = require("../middlewares/middleware");
+const authorize = require('../helpers/auth')
+const userService = require('../controllers/userController');
+
 //Agregar un usuario
 server.post("/", (req, res, next) => {
   const {
@@ -120,14 +119,6 @@ server.get("/", (req, res) => {
     .catch((err) => {
       return res.sendStatus(500);
     });
-});
-
-//obtener detalles de usuario por id//??nuevo
-server.get("/:id", (req, res) => {
-  const id = req.params.id;
-  User.findByPk(id).then((user) => {
-    return res.status(200).json(user);
-  });
 });
 
 //obtener todas las ordenes de un usuario en especifico
@@ -436,62 +427,13 @@ server.get("/:userId/cart", (req, res) => {
     });
 });
 
+//AUTH{
 //Login de un usuario
-server.post("/login", (req, res) => {
-  var email = req.body.email.toLowerCase();
-  var password = req.body.password;
-  var tokenData = {
-    email: email,
-    // ANY DATA
-  };
-  User.findOne({
-    attributes: [
-      "id",
-      "name",
-      "password",
-      "email",
-      "address",
-      "role",
-      "phoneNumber",
-    ],
-    where: {
-      email: email,
-    },
-  })
-    .then((user) => {
-      console.log(user);
-      bcrypt.compare(password, user.dataValues.password, (err, response) => {
-        if (err) {
-          console.log("error");
-        }
-        if (response) {
-          var token = jwt.sign(tokenData, config.llave, {
-            expiresIn: 60 * 60 * 24, // expires in 24 hours
-          });
-          return res.status(200).send({
-            token,
-            user: user,
-          });
-        } else {
-          return res.status(404).send({
-            error: "contraseña Erronea",
-          });
-        }
-      });
-    })
-    .catch((err) => {
-      return res.status(404).send({
-        error: "Email invalido",
-      });
-    });
-});
-
-//Ruta de prueba con middleware
-server.get("/secure", authenticateToken, (req, res) => {
-  console.log(res);
-  return res.status(200).send({
-    message: "Paso la verificación!!!!",
-  });
-});
+server.post("/login",userService.login) ;
+//obtener "mis" detalles de usuario por id (client)
+server.get("/mi/:id",authorize(),userService.getByMyId) ;
+//obtener detalles de usuario por id (admin)
+server.get("/:id",authorize(),userService.getById);
+//}
 
 module.exports = server;

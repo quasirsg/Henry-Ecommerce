@@ -26,8 +26,8 @@ export default ({ history }) => {
 
   let userDetail = useSelector((state) => state.jwt.userDetail[0]);
   let userRole = userDetail && userDetail.role;
-
-  userDetail && console.log(userRole);
+  console.log(userRole);
+  // userDetail && console.log(userRole);
 
   useEffect(() => {
     dispatch(getCurretnUser());
