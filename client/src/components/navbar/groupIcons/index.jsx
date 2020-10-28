@@ -5,7 +5,7 @@ import { Cart3, Collection, PersonSquare } from "react-bootstrap-icons";
 import { Col, CustomInput, Badge } from "reactstrap";
 //Components
 import Guest from "../../guestOptions";
-import { getCurretnUser, logoutUser } from "../../../redux/actions/jwtUsers";
+import { getCurrentUser, logoutUser } from "../../../redux/actions/jwtUsers";
 
 export default ({ history }) => {
   let cart = useSelector((state) => state.users.carrito);
@@ -24,14 +24,15 @@ export default ({ history }) => {
     dispatch(logoutUser());
   };
 
-  let userDetail = useSelector((state) => state.jwt.userDetail[0]);
-  let userRole = userDetail && userDetail.role;
-  console.log(userRole);
+  let userRole = useSelector((state) => state.session.userDetail.role);
+  // let userRole = userDetail && userDetail.role;
+
+  // console.log(userRole);
   // userDetail && console.log(userRole);
 
-  useEffect(() => {
-    dispatch(getCurretnUser());
-  }, []);
+  // useEffect(() => {
+  //   dispatch(getCurrentUser());
+  // }, []);
 
   const linkUser = (userRole) => {
     if (userRole === "client") {

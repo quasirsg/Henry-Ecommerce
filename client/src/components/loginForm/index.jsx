@@ -9,7 +9,7 @@ import { useDispatch } from "react-redux";
 import { loguinUser } from "../../redux/actions/jwtUsers";
 import { cartLoginListen } from "../custom/utils";
 import { addProducts } from "../../redux/actions/userActions";
-import Toast from '../alerts/toast'; 
+import Toast from '../alerts/toast';
 
 const LoginForm = ({
   id,
@@ -55,22 +55,9 @@ const LoginForm = ({
           user.email = user.email.toLowerCase();
 
           dispatch(loguinUser(user.email, user.password)) //Funciona loguin correcto e error al ingresar mal los datos
-            .then((res) => {
-              resetForm();
-              setSubmitting(false);
-              Toast.fire({
-                icon: 'info',
-                title: `¡Bienvenido de vuelta!`,
-              });
-              history.push('/');
-            })
-            .catch((error) => {
-              setSubmitting(false);
-              Toast.fire({
-                icon: "error",
-                title: "Error: vuelve a intentarlo",
-              });
-            });
+          resetForm();
+          setSubmitting(false);
+          history.push('/');
         }}
       >
         {({ isValid, isSubmitting }) => {
@@ -87,8 +74,8 @@ const LoginForm = ({
                     </Button>
                   </Row>
                 ) : (
-                  ""
-                )}
+                    ""
+                  )}
 
                 <Row className="d-block">
                   <PersonCircle className="mb-1 mr-2" size={40} />
@@ -125,12 +112,12 @@ const LoginForm = ({
                 {isSubmitting
                   ? "Iniciando sesón..."
                   : action === "put"
-                  ? "Actualizar usuario"
-                  : action === "delete"
-                  ? "Eliminar usuario"
-                  : action === "post"
-                  ? "Ingresar"
-                  : null}
+                    ? "Actualizar usuario"
+                    : action === "delete"
+                      ? "Eliminar usuario"
+                      : action === "post"
+                        ? "Ingresar"
+                        : null}
               </Button>
             </Form>
           );

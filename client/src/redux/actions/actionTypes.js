@@ -29,8 +29,8 @@ export const GET_USER_ORDERS = "GET_USER_ORDERS";
 export const GET_USERS_ORDERS = "GET_USERS_ORDERS";
 
 //Users loguin
-export const USER_LOGUIN = "USER_LOGUIN";
-export const USER_LOGUIN_ERROR = "USER_LOGUIN_ERROR";
+export const USER_LOGIN = "USER_LOGIN";
+export const USER_LOGIN_ERROR = "USER_LOGIN_ERROR";
 export const LOGOUT_USER = "LOGOUT_USER";
 export const CURRENT_USER = "CURRENT_USER";
 export const NOT_CURRENT_USER = "NOT_CURRENT_USER";

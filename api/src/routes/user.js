@@ -429,11 +429,11 @@ server.get("/:userId/cart", (req, res) => {
 
 //AUTH{
 //Login de un usuario
-server.post("/login",userService.login) ;
+server.post("/login", userService.login);
 //obtener "mis" detalles de usuario por id (client)
-server.get("/mi/:id",authorize(),userService.getByMyId) ;
+server.get("/me", authorize(), userService.getByMyId);
 //obtener detalles de usuario por id (admin)
-server.get("/:id",authorize(),userService.getById);
+server.get("/:id", authorize(), userService.getById);
 //}
 
 module.exports = server;

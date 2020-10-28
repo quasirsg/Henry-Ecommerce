@@ -13,8 +13,8 @@ const ProductCard = ({ product }) => {
   };
 
   if (localStorage.token) {
-    let user = JSON.parse(localStorage.getItem("token"));
-    var userId = user.user.id;
+    let user = localStorage.getItem("token");
+    var userId = user.id;
   } else {
     var userId = 1;
   }

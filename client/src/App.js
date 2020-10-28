@@ -3,6 +3,7 @@ import { Switch, Route } from "react-router-dom";
 import { useDispatch } from 'react-redux';
 import { getProducts, getBanners } from './redux/actions/productActions';
 import { getCategory } from './redux/actions/categoryActions';
+import { verifySession } from './redux/actions/jwtUsers';
 
 //Components
 import Navbar from "./components/navbar";
@@ -31,6 +32,8 @@ function App() {
     dispatch(getCategory());
     dispatch(getProducts());
     dispatch(getBanners());
+    dispatch(verifySession());
+
   }, []);
 
   return (
