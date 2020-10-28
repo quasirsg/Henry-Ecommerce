@@ -62,7 +62,7 @@ const LoginForm = ({
                 icon: 'info',
                 title: `¡Bienvenido de vuelta!`,
               });
-              history.push('/');
+              window.location.href = "/";
             })
             .catch((error) => {
               setSubmitting(false);
