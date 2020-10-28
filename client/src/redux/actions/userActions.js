@@ -8,7 +8,7 @@ const url = `http://localhost:3001`;
 
 export const getUsers = () => (dispatch) => {
   axios
-    .get(url + "/users/")
+    .get(`${url}/users/`)
     .then((res) => {
       dispatch({
         type: actionTypes.GET_USERS,
@@ -236,7 +236,7 @@ export const addAmount = (userId, productId, quantity) => (dispatch) => {
     let cart = JSON.parse(localStorage.getItem("cart"));
     cart.map((item) => {
       if (item.id === productId) {
-        if (item.quantity <= item.stock) {
+        if (item.quantity < item.stock) {
           item.quantity += 1;
           dispatch({
             type: actionTypes.ADD_AMOUNT_GUEST,
