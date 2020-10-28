@@ -15,8 +15,12 @@ import {
   updateStatusOrder,
 } from "../../../redux/actions/ordenActions";
 import Toast from "../../alerts/toast";
+import { ArrowLeftCircle } from "react-bootstrap-icons";
+import { Row, Button } from "reactstrap";
+import { useHistory } from "react-router-dom";
 
 const Orden = () => {
+  const history = useHistory();
   /* ===== Redux ====== */
   const dispatch = useDispatch();
   const orden = useSelector((state) => state.order.orderDetail);
@@ -69,6 +73,14 @@ const Orden = () => {
   return (
     <div className="orden-cont">
       <div></div>
+      <Row>
+        <Button
+          className="btn btn-light text-secondary btn-sm float-left"
+          onClick={() => history.push("/admin/ordenes")}
+        >
+          <ArrowLeftCircle size={20} />
+        </Button>
+      </Row>
       <Container>
         <Table hover responsive className="table-sm">
           <thead>

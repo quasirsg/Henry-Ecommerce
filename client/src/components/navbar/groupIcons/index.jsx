@@ -7,7 +7,7 @@ import { Col, CustomInput, Badge } from "reactstrap";
 import Guest from "../../guestOptions";
 import { getCurretnUser, logoutUser } from "../../../redux/actions/jwtUsers";
 
-export default ({history}) => {
+export default ({ history }) => {
   let cart = useSelector((state) => state.users.carrito);
   const notification = useSelector((state) => state.users.message);
   const dispatch = useDispatch();
@@ -27,7 +27,7 @@ export default ({history}) => {
   let userDetail = useSelector((state) => state.jwt.userDetail[0]);
   let userRole = userDetail && userDetail.role;
 
-  userDetail && console.log(userRole)
+  userDetail && console.log(userRole);
 
   useEffect(() => {
     dispatch(getCurretnUser());
@@ -48,7 +48,7 @@ export default ({history}) => {
     } else if (userRole === "admin") {
       return (
         <>
-          <Link to='/' className="text-dark " onClick={handleClose}>
+          <Link to="/" className="text-dark " onClick={handleClose}>
             Salir
           </Link>
 

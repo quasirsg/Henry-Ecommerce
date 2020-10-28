@@ -8,24 +8,25 @@ import {
   deleteProductsCart,
 } from "../../../redux/actions/userActions";
 
-const ItemCart = ({ product, quantity }) => {
+const ItemCart = ({ product, userId, quantity }) => {
   const dispatch = useDispatch();
 
-  let userId = 1;
-  const handleOnClick = (e, productId, name) => {
+  const handleOnClick = (e) => {
     e.preventDefault();
-    dispatch(deleteProductsCart(userId, productId, name));
+    dispatch(deleteProductsCart(userId, product.id, product.name));
   };
 
   const handleIncrement = (e) => {
     e.preventDefault();
-    dispatch(addAmount(userId, product.id, quantity));
+    dispatch(addAmount(userId, product.id, product.quantity));
   };
 
   const handleDecrement = (e) => {
     e.preventDefault();
-    dispatch(deletAmount(userId, product.id, quantity));
+    dispatch(deletAmount(userId, product.id, product.quantity));
   };
+  console.log(product);
+  console.log(userId);
 
   return (
     <Col lg="12">
@@ -44,17 +45,14 @@ const ItemCart = ({ product, quantity }) => {
           </Col>
           <Col lg="6">
             <div className="d-flex flex-row-reverse" value={product.id}>
-              <button
-                onClick={(e) => handleOnClick(e, product.id, product.name)}
-                className="itemCart-delete"
-              >
+              <button onClick={handleOnClick} className="itemCart-delete">
                 Remover
               </button>
             </div>
             <div className="d-flex flex-row-reverse" values={product.id}>
               <Button children={"+"} onClick={handleIncrement} />
               <div className="itemCart-count" values={product.id}>
-                {quantity}
+                {product.quantity}
               </div>
               <Button children={"-"} onClick={handleDecrement} />
             </div>

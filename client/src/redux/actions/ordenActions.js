@@ -29,6 +29,7 @@ export const deleteOrder = (id, userId) => (dispatch) => {
     .then((res) => {
       dispatch({
         type: actionTypes.DELETE_ALL_CART,
+        order: res.data,
       });
     })
     .catch((err) => console.log(err));

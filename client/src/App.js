@@ -12,7 +12,7 @@ import SearchPage from "./pages/SearchPage";
 import AdminMenu from "./components/admin";
 import HomePage from "./pages/HomePage";
 import CartPage from "./pages/CartPage";
-import UserPage from './pages/UserPage';
+import UserPage from "./pages/UserPage";
 
 // Componente Orden-> probando
 import Orden from "./components/tablaOrdenes/Orden";
@@ -20,12 +20,10 @@ import TablaOrdenes from "./components/tablaOrdenes";
 import FormUser from "./components/userForm";
 import LoginForm from "./components/loginForm";
 
-
-
 function App() {
   return (
     //No modifique ni elimine las rutas existentes
-    <div className="col-lg-12">
+    <div classNasme="col-lg-12">
       <Navbar />
       <Switch>
         <Route exact path="/" component={HomePage} />
@@ -43,13 +41,23 @@ function App() {
         <Route exact path="/admin">
           <AdminMenu />
         </Route>
-        <Route exact path='/user' component={UserPage} />
+        <Route exact path="/user" component={UserPage} />
         <Route exact path="/user/register">
           <FormUser action="post" icon="success" message="Usuario agregado" />
         </Route>
 
-        <Route exact path="/user/login" render={({history}) => <LoginForm action="post" icon="success" message="Usuario agregado" history={history} />}>
-        </Route>
+        <Route
+          exact
+          path="/user/login"
+          render={({ history }) => (
+            <LoginForm
+              action="post"
+              icon="success"
+              message="Usuario agregado"
+              history={history}
+            />
+          )}
+        ></Route>
 
         <Route
           exact

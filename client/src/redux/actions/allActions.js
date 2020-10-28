@@ -1,5 +1,5 @@
 import { getProducts, getOneProduct } from "./productActions";
-import { getCategory, editCategory } from "./categoryActions";
+import { getCategory } from "./categoryActions";
 import { editUser, getUsers } from "./userActions";
 import {
   getOrders,
@@ -12,7 +12,7 @@ const allActions = {
   getProducts,
   getOneProduct,
   getCategory,
-  editCategory,
+  //editCategory,
   editUser,
   getUsers,
   getOrders,

@@ -3,12 +3,23 @@ import { Container, Col, Row, Button } from "reactstrap";
 import ShoppingCart from "../components/shoppingCart";
 import ButtonBlock from "../components/custom/ButtonBlock";
 import { useSelector, useDispatch } from "react-redux";
-import { addProducts, deleteAllCart } from "../redux/actions/userActions";
+import {
+  addProducts,
+  deleteAllCart,
+  getProductCart,
+} from "../redux/actions/userActions";
 
 const Cart = () => {
   const dispatch = useDispatch();
+  let productsCarts = useSelector((state) => state.users.carrito);
+  const [userData, setUserData] = useState(null);
 
+  if (localStorage.token) {
+    let user = JSON.parse(localStorage.getItem("token"));
+    var userId = user.user.id;
+  }
   useEffect(() => {
+    dispatch(getProductCart(userId));
     function checkUsetData() {
       const item = localStorage.getItem("token");
       if (item) {
@@ -20,10 +31,6 @@ const Cart = () => {
       window.removeEventListener("storage", checkUsetData);
     };
   }, []);
-
-  let productsCarts = useSelector((state) => state.users.carrito);
-  const [userData, setUserData] = useState(null);
-  const userId = 1; //?? loguin o guest
 
   const deleteAll = (e) => {
     e.preventDefault();
@@ -39,13 +46,9 @@ const Cart = () => {
       localStorage.setItem("cart", JSON.stringify([]));
     }
   } else if (userData || localStorage.token) {
-    //cambio guest-loguin userdata!==null Ex. token
     if (localStorage.cart) {
       //?? Loguin
       productsCarts = JSON.parse(localStorage.getItem("cart"));
-      // Buscar order
-      // Verificar que el usuario tenga un carrito
-      // Agregar carrito
       dispatch(addProducts(userId, productsCarts));
       localStorage.removeItem("cart");
       setUserData(null); //evitar un loop
@@ -56,7 +59,7 @@ const Cart = () => {
     <Container fluid={true} className="mt-4">
       <Row>
         <Col lg="8">
-          <ShoppingCart items={productsCarts} />
+          <ShoppingCart items={productsCarts} userId={userId} />
         </Col>
         <Col lg="4">
           <ButtonBlock children={"Siguiente"} />

@@ -5,11 +5,14 @@ import { useParams } from "react-router-dom";
 import { addProductCart } from "../../redux/actions/userActions";
 import { getReviews } from "../../redux/actions/productActions";
 import Review from "../review/index";
-import { Col, Row, Container } from "reactstrap";
+import { Col, Row, Container, Button } from "reactstrap";
+import { ArrowLeftCircle } from "react-bootstrap-icons";
 import allActions from "../../redux/actions/allActions";
 import "./producto.css";
+import { useHistory } from 'react-router-dom';
 
 const Product = () => {
+  const history = useHistory();
   let { id } = useParams();
   const dispatch = useDispatch();
 
@@ -24,8 +27,15 @@ const Product = () => {
   );
   product.quantity = 1; //agrego una cantidad por default
 
+  if (localStorage.token) {
+    let user = JSON.parse(localStorage.getItem("token"));
+    var userId = user.user.id;
+  } else {
+    var userId = 1;
+  }
+
   const handleOnClick = () => {
-    dispatch(addProductCart(1, product));
+    dispatch(addProductCart(userId, product));
     // localStorage.setItem("user", userId.id);
     // dispatch(getUserOrder(userId.id));
     // console.log(userId.id);
@@ -33,6 +43,14 @@ const Product = () => {
 
   return (
     <Container fluid={true} className="productDetail py-4 my-4">
+      <Row>
+         <Button
+          className="btn btn-light text-secondary btn-sm float-left"
+          onClick={()=> history.push('/products')}
+           >
+            <ArrowLeftCircle size={20} />
+          </Button>
+      </Row>
       <Row className="productDeatil__content">
         <Col lg="8">
           <div className="prod-img">
@@ -52,7 +70,7 @@ const Product = () => {
                 name="rating"
               />
               <div className="rating-reviews-count">
-                {reviews.length > 0 && reviews.length + ' Opiniones'}
+                {reviews.length > 0 && reviews.length + " Opiniones"}
               </div>
             </div>
             <p className="inforPrice">${product.price}</p>
@@ -68,10 +86,7 @@ const Product = () => {
                   : "button-container-disabled"
               }
             >
-              <button
-                onClick={handleOnClick}
-                className={"button btn-block"}
-              >
+              <button onClick={handleOnClick} className={"button btn-block"}>
                 Agregar al Carrito
               </button>
             </div>
@@ -94,10 +109,10 @@ const Product = () => {
             />
           ))
         ) : (
-            <div className="warning-alert">
-              Lo sentimos este producto no cuenta con Reviews!
-            </div>
-          )}
+          <div className="warning-alert">
+            Lo sentimos este producto no cuenta con Reviews!
+          </div>
+        )}
       </Col>
     </Container>
   );

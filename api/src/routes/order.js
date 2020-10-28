@@ -90,6 +90,7 @@ server.post("/:id", (req, res, next) => {
   let userId = req.params.id;
   let status = req.body.status;
 
+  console.log(userId);
   if (status === "shopping_cart") {
     try {
       User.findByPk(userId)
@@ -98,6 +99,7 @@ server.post("/:id", (req, res, next) => {
             return res.sendStatus(404);
           }
           Order.findOrCreate({ where: { status }, raw: true }).then((order) => {
+            console.log(order);
             const numOrder = order[0].dataValues
               ? order[0].dataValues.id
               : order[0].id;

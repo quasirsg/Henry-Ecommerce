@@ -6,7 +6,10 @@ import * as Yup from "yup";
 import Swal from "sweetalert2";
 import CustomInput from "../custom/input";
 import { useDispatch } from "react-redux";
-import allActions from "../../redux/actions/allActions";
+//import allActions from "../../redux/actions/allActions";
+import { ArrowLeftCircle } from "react-bootstrap-icons";
+import { useHistory } from "react-router-dom";
+import { editCategory } from "../../redux/actions/categoryActions";
 
 const Toast = Swal.mixin({
   toast: true,
@@ -29,6 +32,7 @@ const FormCategory = ({
   message,
 }) => {
   const dispatch = useDispatch();
+  const history = useHistory();
   return (
     <div className="categoryForm">
       <Formik
@@ -49,7 +53,7 @@ const FormCategory = ({
           // const data = action === "delete" ? null : values;
 
           console.log(values);
-          dispatch(allActions.editCategory(id, action, values))
+          dispatch(editCategory(id, action, values))
             .then((response) => {
               resetForm();
               setSubmitting(false);
@@ -69,10 +73,19 @@ const FormCategory = ({
       >
         {({ isSubmitting }) => (
           <Form className="categoryForm__form">
+            <Row>
+              <Button
+                className="btn btn-light text-secondary btn-sm float-left"
+                onClick={() => history.push("/admin/categories")}
+              >
+                <ArrowLeftCircle size={20} />
+              </Button>
+            </Row>
             <Container className="my-5 d-flex justify-content-center">
               <h2 className="text-center">Categorias</h2>
             </Container>
             <hr className="mt-0 mb-3" />
+
             <Row className="mt-5">
               <Col>
                 <CustomInput
@@ -99,12 +112,12 @@ const FormCategory = ({
               {isSubmitting
                 ? "Cargando..."
                 : action === "put"
-                  ? "Actualizar categoria"
-                  : action === "delete"
-                    ? "Eliminar categoria"
-                    : action === "post"
-                      ? "Agregar categoria"
-                      : null}
+                ? "Actualizar categoria"
+                : action === "delete"
+                ? "Eliminar categoria"
+                : action === "post"
+                ? "Agregar categoria"
+                : null}
             </Button>
           </Form>
         )}
