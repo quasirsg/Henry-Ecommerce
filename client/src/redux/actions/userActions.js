@@ -162,6 +162,7 @@ export const addProductCart = (userId, product) => async (dispatch) => {
 /*===== Agregar productos al carrito una vez se loguea  ======*/
 export const addProducts = (userId, productsCarts) => async (dispatch) => {
   // Verificar que el usuario tenga un carrito
+
   const {
     data: { orderId },
   } = await axios.post(`${url}/order/${userId}`, {
@@ -170,8 +171,8 @@ export const addProducts = (userId, productsCarts) => async (dispatch) => {
   // Agregar al carrito
   axios
     .post(`${url}/users/${userId}/cart`, {
-      orderId,
-      productsCarts,
+      orderId: orderId,
+      productsCarts: productsCarts,
     })
     .then((res) => {
       dispatch({

@@ -14,15 +14,10 @@ const Cart = () => {
   let productsCarts = useSelector((state) => state.users.carrito);
   const [userData, setUserData] = useState(null);
 
-  let user = JSON.parse(localStorage.getItem("token"));
-  console.log(user);
-
   if (localStorage.token) {
+    let user = JSON.parse(localStorage.getItem("token"));
     var userId = user.user.id;
-  } else {
-    var userId = 2;
   }
-
   useEffect(() => {
     dispatch(getProductCart(userId));
     function checkUsetData() {
