@@ -6,7 +6,8 @@ import { useSelector } from 'react-redux';
 import ButtonSquare from '../components/custom/ButtonSquare';
 import UserDetail from '../components/userDetail';
 import UserReviews from '../components/userReviews';
-
+import UserOrders from '../components/userOrders';
+import UserPassword from '../components/userPassword';
 
 const UserPage = () => {
 
@@ -32,11 +33,13 @@ const UserPage = () => {
                                 </Link>
                             </li>
                             <li>
-                                <ButtonSquare
-                                    icon={<BoxSeam size={20} />}
-                                    onClick={() => console.log('click xD')}
-                                    Children={'Mis Pedidos!'}
-                                />
+                                <Link to="/user/orders">
+                                    <ButtonSquare
+                                        icon={<BoxSeam size={20} />}
+                                        onClick={() => console.log('click xD')}
+                                        Children={'Mis Pedidos!'}
+                                    />
+                                </Link>
                             </li>
                             <li>
                                 <Link to="/user/reviews">
@@ -48,11 +51,13 @@ const UserPage = () => {
                                 </Link>
                             </li>
                             <li>
-                                <ButtonSquare
-                                    icon={<Lock size={20} />}
-                                    onClick={() => console.log('click xD')}
-                                    Children={'Cambiar Mi Contraseña'}
-                                />
+                                <Link to="/user/change-password">
+                                    <ButtonSquare
+                                        icon={<Lock size={20} />}
+                                        onClick={() => console.log('click xD')}
+                                        Children={'Cambiar Mi Contraseña'}
+                                    />
+                                </Link>
                             </li>
                         </ul>
                     </Col>
@@ -62,6 +67,8 @@ const UserPage = () => {
                     >
                         <Route exact path='/user/account' component={() => <UserDetail id={1} />} />
                         <Route exact path="/user/reviews" component={() => <UserReviews id={1} />} />
+                        <Route exact path="/user/orders" component={() => <UserOrders id={1} />} />
+                        <Route exact path="/user/change-password" component={() => <UserPassword id={1} />} />
                     </Col>
                 </Row>
             </Router>

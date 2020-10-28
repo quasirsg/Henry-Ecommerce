@@ -1,5 +1,5 @@
 const server = require("express").Router();
-const { User, Order, Product, Linea_order } = require("../db.js");
+const { User, Order, Product, Linea_order, Reviews } = require("../db.js");
 const authorize = require('../helpers/auth')
 const userService = require('../controllers/userController');
 
