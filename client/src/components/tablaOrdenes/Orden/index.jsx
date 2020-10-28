@@ -16,8 +16,8 @@ import {
 } from "../../../redux/actions/ordenActions";
 import Toast from "../../alerts/toast";
 import { ArrowLeftCircle } from "react-bootstrap-icons";
-import {  Row, Button } from "reactstrap";
-import { useHistory } from 'react-router-dom';
+import { Row, Button } from "reactstrap";
+import { useHistory } from "react-router-dom";
 
 const Orden = () => {
   const history = useHistory();
@@ -70,17 +70,16 @@ const Orden = () => {
     setOpen(!dropdownOpen);
   };
 
-
   return (
     <div className="orden-cont">
       <div></div>
       <Row>
-         <Button
+        <Button
           className="btn btn-light text-secondary btn-sm float-left"
-          onClick={()=> history.push('/admin/ordenes')}
-           >
-            <ArrowLeftCircle size={20} />
-          </Button>
+          onClick={() => history.push("/admin/ordenes")}
+        >
+          <ArrowLeftCircle size={20} />
+        </Button>
       </Row>
       <Container>
         <Table hover responsive className="table-sm">

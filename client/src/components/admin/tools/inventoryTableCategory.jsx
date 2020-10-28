@@ -87,6 +87,5 @@ const InventoryTableCategory = () => {
     </Container>
   );
 };
-window.location.replace('');
 
 export default InventoryTableCategory;
