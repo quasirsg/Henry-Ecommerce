@@ -24,6 +24,7 @@ function orderReducer(state = initialState, action) {
       }
       return {
         ...state,
+        orderDetail: state.orderDetail.status,
       };
     case DELETE_ORDER:
       return {

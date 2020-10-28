@@ -1,17 +1,20 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Button, Container, Table } from "reactstrap";
 import { GearFill, Trash, Tools } from "react-bootstrap-icons";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { deleteOrder } from "../../redux/actions/ordenActions";
+import { deleteOrder, getOrders } from "../../redux/actions/ordenActions";
 
 const TablaOrdenes = () => {
   const data = useSelector((state) => state.order.allOrders);
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    dispatch(getOrders());
+  }, []);
+
   const handleClick = (e, id, userId) => {
     e.preventDefault();
-    console.log(userId);
     dispatch(deleteOrder(id, userId));
   };
 
