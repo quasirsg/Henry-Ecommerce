@@ -95,7 +95,7 @@ function userReducers(state = initialState, action) {
     case ADD_AMOUNT:
       let addProducts = state.carrito.map((product) => {
         if (product.id === action.product.product_id) {
-          if (product.stock > action.product.quantity) {
+          if (product.stock > product.quantity) {
             product.quantity = action.product.quantity;
           }
         }

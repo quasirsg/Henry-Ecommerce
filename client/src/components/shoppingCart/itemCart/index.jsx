@@ -17,12 +17,12 @@ const ItemCart = ({ product, userId, quantity }) => {
   };
 
   const handleIncrement = (e) => {
-    // e.preventDefault();
+    e.preventDefault();
     dispatch(addAmount(userId, product.id, product.quantity));
   };
 
   const handleDecrement = (e) => {
-    // e.preventDefault();
+    e.preventDefault();
     dispatch(deletAmount(userId, product.id, product.quantity));
   };
   console.log(product);

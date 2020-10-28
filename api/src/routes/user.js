@@ -323,7 +323,7 @@ server.put("/:userId/cart/:productId", async (req, res) => {
     .then(async (orderline) => {
       if (!orderline) return res.sendStatus(404);
       if (amount === "addAmount") {
-        if (quantity <= product.stock) {
+        if (quantity < product.stock) {
           orderline.quantity += 1;
         }
       } else if (amount === "deleteAmount") {
