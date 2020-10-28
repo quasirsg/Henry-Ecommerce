@@ -19,6 +19,7 @@ const ProductCard = ({ product }) => {
     var userId = 1;
   }
   product.quantity = 1;
+  
   const handleClick = () => {
     dispatch(addProductCart(userId, product));
   };

@@ -92,11 +92,13 @@ function userReducers(state = initialState, action) {
         ...state,
         carrito: action.newCart,
       };
+
     case ADD_AMOUNT:
       let addProducts = state.carrito.map((product) => {
         if (product.id === action.product.product_id) {
           if (product.stock > product.quantity) {
             product.quantity = action.product.quantity;
+            product.total = action.product.total;
           }
         }
         return product;
@@ -105,16 +107,19 @@ function userReducers(state = initialState, action) {
         ...state,
         carrito: addProducts,
       };
+
     case ADD_AMOUNT_GUEST:
       return {
         ...state,
         carrito: action.carritoGuest,
       };
+
     case SUBTRACT_AMOUNT:
       let subProducts = state.carrito.map((product) => {
         if (product.id === action.product.product_id) {
           if (product.quantity > 1) {
             product.quantity = action.product.quantity;
+            product.total = action.product.total;
           }
         }
         return product;

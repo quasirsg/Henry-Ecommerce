@@ -37,8 +37,6 @@ const AdminMenu = () => {
 
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getProducts());
-    dispatch(getCategory());
     dispatch(getOrders());
   }, []);
 

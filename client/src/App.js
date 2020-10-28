@@ -1,5 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Switch, Route } from "react-router-dom";
+import { useDispatch } from 'react-redux';
+import { getProducts, getBanners } from './redux/actions/productActions';
+import { getCategory } from './redux/actions/categoryActions';
 
 //Components
 import Navbar from "./components/navbar";
@@ -21,6 +24,15 @@ import FormUser from "./components/userForm";
 import LoginForm from "./components/loginForm";
 
 function App() {
+  const dispatch = useDispatch();
+
+  // Obtener products ,categorias y banners 
+  useEffect(() => {
+    dispatch(getCategory());
+    dispatch(getProducts());
+    dispatch(getBanners());
+  }, []);
+
   return (
     //No modifique ni elimine las rutas existentes
     <div classNasme="col-lg-12">

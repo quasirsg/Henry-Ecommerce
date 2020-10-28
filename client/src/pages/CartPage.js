@@ -9,7 +9,7 @@ import {
   getProductCart,
 } from "../redux/actions/userActions";
 
-const Cart = () => {
+const Cart = () => { 
   const dispatch = useDispatch();
   let productsCarts = useSelector((state) => state.users.carrito);
   const [userData, setUserData] = useState(null);
@@ -18,6 +18,7 @@ const Cart = () => {
     let user = JSON.parse(localStorage.getItem("token"));
     var userId = user.user.id;
   }
+
   useEffect(() => {
     dispatch(getProductCart(userId));
     function checkUsetData() {

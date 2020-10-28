@@ -257,7 +257,7 @@ server.post("/:userId/cart/add", async (req, res, next) => {
   }
 });
 
-// Agregar los productos al carrito
+// Agregar los productos del carrito guest al carrito del user
 server.post("/:userId/cart", async (req, res, next) => {
   const { productsCarts, orderId } = req.body;
   const { userId } = req.params;
@@ -325,7 +325,6 @@ server.put("/:userId/cart/:productId", async (req, res) => {
       if (amount === "addAmount") {
         if (quantity < product.stock) {
           orderline.quantity += 1;
-          console.log(product);
           orderline.total = orderline.quantity * product.price;
         }
       } else if (amount === "deleteAmount") {
@@ -337,7 +336,7 @@ server.put("/:userId/cart/:productId", async (req, res) => {
         }
       }
       await orderline.save();
-      return res.send({
+      return res.json({
         data: orderline,
       });
     })

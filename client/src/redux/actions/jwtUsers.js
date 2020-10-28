@@ -56,6 +56,9 @@ export const logoutUser = () => (dispatch) => {
   dispatch({
     type: actionTypes.LOGOUT_USER,
   });
+  dispatch({
+    type: actionTypes.DELETE_ALL_CART
+  });
   Toast.fire({
     icon: "info",
     title: `Hasta la proxima`,

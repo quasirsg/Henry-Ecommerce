@@ -3,7 +3,6 @@ const { Order, User, Product, Linea_order } = require("../db.js");
 
 server.post("/", (req, res, next) => {
   const { id, status, user_id } = req.body;
-  console.log(req.body);
   if ((!id, !status))
     return res.status(400).json({ message: "incomplete order" });
 
@@ -57,8 +56,6 @@ server.put("/:id", (req, res, next) => {
   let { id } = req.params;
   let currentOrder = req.body;
 
-  console.log(id);
-
   Order.findOne({ where: { id } })
     .then((order) => {
       if (!order)
@@ -86,11 +83,10 @@ server.delete("/:id", (req, res, next) => {
     .catch(next);
 });
 
-server.post("/:id", (req, res, next) => {
-  let userId = req.params.id;
-  let status = req.body.status;
+server.post("/:userId", (req, res, next) => {
+  let { userId } = req.params;
+  let { status } = req.body;
 
-  console.log(userId);
   if (status === "shopping_cart") {
     try {
       User.findByPk(userId)
@@ -98,12 +94,10 @@ server.post("/:id", (req, res, next) => {
           if (!user) {
             return res.sendStatus(404);
           }
-          Order.findOrCreate({ where: { status }, raw: true }).then((order) => {
-            console.log(order);
+          Order.findOrCreate({ where: { status, userId }, raw: true }).then((order) => {
             const numOrder = order[0].dataValues
               ? order[0].dataValues.id
               : order[0].id;
-            console.log(numOrder);
             user.addOrder(numOrder).then(() => {
               return res.status(201).json({ orderId: numOrder });
             });
@@ -113,7 +107,7 @@ server.post("/:id", (req, res, next) => {
           return res.sendStatus(500);
         });
     } catch (error) {
-      console.log(error.message);
+      next(error.message);
     }
   } else if (status === "created") {
     Order.findOne({

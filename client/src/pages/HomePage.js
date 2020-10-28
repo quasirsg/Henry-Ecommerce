@@ -3,18 +3,9 @@ import { Container, Col, Row, UncontrolledCarousel } from "reactstrap";
 import { ShieldFillCheck, Percent, Truck } from "react-bootstrap-icons";
 import Categoria from "../components/categoria";
 import Catalogo from "../components/catalogo";
-import { useSelector, useDispatch } from "react-redux";
-import { getCategory } from "../redux/actions/categoryActions";
-import { getProducts, getBanners } from "../redux/actions/productActions";
+import { useSelector } from "react-redux";
 
 const HomePage = () => {
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(getCategory());
-    dispatch(getProducts());
-    dispatch(getBanners());
-  }, []);
 
   const categorias = useSelector((state) => state.category.category);
   const productos = useSelector((state) => state.products.allProducts);

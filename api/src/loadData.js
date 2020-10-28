@@ -12,7 +12,7 @@ const loadProducts = () => {
   Product.bulkCreate([
     {
       name: "Remera Camiseta Deportiva Hombre Gdo Fit Running Ciclista",
-      stock: Math.floor(Math.random() * 10),
+      stock: 1000,
       description: "Remera deportiva masculina manga corta Gol De Oro fit®",
       price: 480.0,
       image:
@@ -20,7 +20,7 @@ const loadProducts = () => {
     },
     {
       name: "3 Top Deportivo Algodon Con Lycra Corpiño Fitness T Grande",
-      stock: Math.floor(Math.random() * 10),
+      stock: 1000,
       description: "3 Top Deportivo Algodon Con Lycra Corpiño Fitness T Grande",
       price: 900.0,
       image:
@@ -28,7 +28,7 @@ const loadProducts = () => {
     },
     {
       name: "Remera De Entrenamiento Boxeo Crossfit Fitness Running Gym",
-      stock: Math.floor(Math.random() * 10),
+      stock: 1000,
       description: "Remera De Entrenamiento Boxeo Crossfit Fitness Running Gym",
       price: 750.0,
       image:
@@ -36,7 +36,7 @@ const loadProducts = () => {
     },
     {
       name: "Remera Térmica Compresión Hydrowick - Dry - Alfest",
-      stock: Math.floor(Math.random() * 10),
+      stock: 1000,
       description: "Remera Térmica Compresión Hydrowick - Dry - Alfest",
       price: 1300.0,
       image:
@@ -44,7 +44,7 @@ const loadProducts = () => {
     },
     {
       name: "Remera Deportiva Pro Dry - Tecnología Hydrowick - Alfest",
-      stock: Math.floor(Math.random() * 10),
+      stock: 1000,
       description: "Remera Deportiva Pro Dry - Tecnología Hydrowick - Alfest",
       price: 990.0,
       image:
@@ -52,7 +52,7 @@ const loadProducts = () => {
     },
     {
       name: "Short De Running Crossfit Unisex - Gol De Oro Style",
-      stock: Math.floor(Math.random() * 10),
+      stock: 1000,
       description: "Short De Running Crossfit Unisex - Gol De Oro Style",
       price: 390.0,
       image:
@@ -60,7 +60,7 @@ const loadProducts = () => {
     },
     {
       name: "Shorts Deportivos Gol De Oro Elite Pocket Con Bolsillos Run",
-      stock: Math.floor(Math.random() * 10),
+      stock: 1000,
       description:
         "Shorts Deportivos Gol De Oro Elite Pocket Con Bolsillos Run",
       price: 490.0,
@@ -69,7 +69,7 @@ const loadProducts = () => {
     },
     {
       name: "Kit Short Deportivos+medias Stripes Gol De Oro Pro Elite",
-      stock: Math.floor(Math.random() * 10),
+      stock: 1000,
       description: "Kit Short Deportivos+medias Stripes Gol De Oro Pro Elite",
       price: 530.0,
       image:
@@ -77,7 +77,7 @@ const loadProducts = () => {
     },
     {
       name: "1 Kg Whey Protein Pack Premium Imperdible ! Proteina Pura !",
-      stock: Math.floor(Math.random() * 10),
+      stock: 1000,
       description:
         "1 Kg Whey Protein Pack Premium Imperdible ! Proteina Pura !",
       price: 520.0,
@@ -86,7 +86,7 @@ const loadProducts = () => {
     },
     {
       name: "True Made Whey Protein Ena 1kg Concentrada Isolada Truemade",
-      stock: Math.floor(Math.random() * 10),
+      stock: 1000,
       description:
         "True Made Whey Protein Ena 1kg Concentrada Isolada Truemade",
       price: 720.0,
@@ -95,7 +95,7 @@ const loadProducts = () => {
     },
     {
       name: "Mancuerna Pes Recargable X 2 Hasta 2 Kg Plastico Fitness",
-      stock: Math.floor(Math.random() * 10),
+      stock: 1000,
       description: "Mancuerna Pes Recargable X 2 Hasta 2 Kg Plastico Fitness",
       price: 2000.0,
       image:
@@ -201,22 +201,22 @@ const loadUsers = () => {
       image: "1234",
       location_id: 21,
     },
-    // {
-    //   name: "client1",
-    //   email: "client1@gmail.com",
-    //   address: "client1 1234",
-    //   role: "client",
-    //   password: "client",
-    //   location_id: 21,
-    // },
-    // {
-    //   name: "client2",
-    //   email: "client2@gmail.com",
-    //   address: "client2 1234",
-    //   role: "client",
-    //   password: "client",
-    //   location_id: 21,
-    // },
+    {
+      name: "client1",
+      email: "client1@gmail.com",
+      address: "client1 1234",
+      role: "client",
+      password: bcrypt.hashSync("Vsl@17477", 10),
+      location_id: 21,
+    },
+    {
+      name: "client2",
+      email: "client2@gmail.com",
+      address: "client2 1234",
+      role: "client",
+      password: bcrypt.hashSync("Vsl@17477", 10),
+      location_id: 21,
+    },
     // {
     //   name: "client3",
     //   email: "client3@gmail.com",

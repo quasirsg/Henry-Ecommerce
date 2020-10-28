@@ -103,6 +103,7 @@ export const editReview = (productId, reviewId, points, description) => (
 
 //Agregar productos al carrito
 export const addProductCart = (userId, product) => async (dispatch) => {
+  alert('Id user: ', userId)
   try {
     if (!localStorage.token) {
       if (!localStorage.cart) {
