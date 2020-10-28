@@ -21,9 +21,10 @@ import FormUser from "./components/userForm";
 import LoginForm from "./components/loginForm";
 
 function App() {
+  
   return (
     //No modifique ni elimine las rutas existentes
-    <div classNasme="col-lg-12">
+    <div className="col-lg-12">
       <Navbar />
       <Switch>
         <Route exact path="/" component={HomePage} />

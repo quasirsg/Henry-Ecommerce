@@ -14,11 +14,12 @@ const ProductCard = ({ product }) => {
 
   if (localStorage.token) {
     let user = JSON.parse(localStorage.getItem("token"));
-    var userId = user.user.id;
+    var userId = user.id;
   } else {
     var userId = 1;
   }
   product.quantity = 1;
+
   const handleClick = () => {
     dispatch(addProductCart(userId, product));
   };

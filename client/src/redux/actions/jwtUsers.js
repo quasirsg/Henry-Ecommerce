@@ -34,19 +34,29 @@ export const loguinUser = (email, password) => (dispatch) => {
 export const getCurretnUser = () => (dispatch) => {
   let token = JSON.parse(localStorage.getItem("token"));
   if (token) {
-    return dispatch({
-      type: actionTypes.CURRENT_USER,
-      userDetail: {
-        id: token.user.id,
-        role: token.user.role,
-        name: token.user.name,
-      },
-    });
-  } else {
-    return dispatch({
-      type: actionTypes.NOT_CURRENT_USER,
-      message: "Usuaro no logueado",
-    });
+    //Configuro un header para pasar el token por bearer y hacer la autenticación
+    let config = {
+      headers: { Authorization: `Bearer ${token.token}` },
+    };
+
+    axios
+      .get(`${url}/users/mi/${token.id}`, config)
+      .then((res) => {
+        dispatch({
+          type: actionTypes.CURRENT_USER,
+          userDetail: {
+            id: res.data.id,
+            role: res.data.role,
+            name: res.data.name,
+          },
+        });
+      })
+      .catch(
+        dispatch({
+          type: actionTypes.NOT_CURRENT_USER,
+          message: "No hay usuario logueado",
+        })
+      );
   }
 };
 

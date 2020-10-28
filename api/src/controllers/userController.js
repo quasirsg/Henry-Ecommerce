@@ -64,6 +64,7 @@ function login(req, res, next) {
     },
   })
     .then((user) => {
+      console.log(user.id);
       //Comparar el password que trae el request con el password del objeto user
       bcrypt.compare(password, user.dataValues.password, (err, response) => {
         if (err) {
@@ -87,6 +88,7 @@ function login(req, res, next) {
           );
           return res.status(200).send({
             token,
+            id:user.id
           });
         } else {
           return res.status(404).send({

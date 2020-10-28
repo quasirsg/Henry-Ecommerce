@@ -25,11 +25,6 @@ function jwtUserRducers(state = initialState, action) {
         ...state,
         message: action.message,
       };
-    case LOGOUT_USER:
-      return {
-        ...state,
-        userDetail: [],
-      };
     case CURRENT_USER:
       return {
         ...state,
