@@ -325,10 +325,13 @@ server.put("/:userId/cart/:productId", async (req, res) => {
       if (amount === "addAmount") {
         if (quantity < product.stock) {
           orderline.quantity += 1;
+          console.log(product);
+          orderline.total = orderline.quantity * product.price;
         }
       } else if (amount === "deleteAmount") {
         if (quantity > 1) {
           orderline.quantity -= 1;
+          orderline.total = orderline.total - product.price;
         } else if (quantity === 0) {
           orderline.quantity = quantity;
         }
