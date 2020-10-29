@@ -443,15 +443,9 @@ server.get('/:id/reviews', (req, res) => {
 //Login de un usuario
 server.post("/login", userService.login);
 //obtener "mis" detalles de usuario por id (client)
-<<<<<<< HEAD
-server.get("/mi/:id", authorize(), userService.getByMyId);
-//obtener detalles de usuario por id (admin)
-server.get("/:id", authorize(), userService.getById);
-=======
 server.get("/me", authorize(), userService.getByMyId);
 //obtener detalles de usuario por id (admin)
 server.get("/:id", authorize(), userService.getById);
 //}
->>>>>>> 520c3b0629df38741100c5bb82d1dbcd5f0996aa
 
 module.exports = server;
