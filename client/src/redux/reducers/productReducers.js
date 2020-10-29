@@ -44,7 +44,7 @@ function productReducers(state = initialState, action) {
     case GET_PRODUCTS:
       return {
         ...state,
-        allProducts: action.payload
+        allProducts: action.payload,
       };
 
     case GET_PRODUCT:

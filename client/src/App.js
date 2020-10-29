@@ -1,5 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Switch, Route } from "react-router-dom";
+import { useDispatch } from 'react-redux';
+import { getProducts, getBanners } from './redux/actions/productActions';
+import { getCategory } from './redux/actions/categoryActions';
+import { verifySession } from './redux/actions/jwtUsers';
 
 //Components
 import Navbar from "./components/navbar";
@@ -12,7 +16,7 @@ import SearchPage from "./pages/SearchPage";
 import AdminMenu from "./components/admin";
 import HomePage from "./pages/HomePage";
 import CartPage from "./pages/CartPage";
-import UserPage from './pages/UserPage';
+import UserPage from "./pages/UserPage";
 
 // Componente Orden-> probando
 import Orden from "./components/tablaOrdenes/Orden";
@@ -20,9 +24,18 @@ import TablaOrdenes from "./components/tablaOrdenes";
 import FormUser from "./components/userForm";
 import LoginForm from "./components/loginForm";
 
-
-
 function App() {
+  const dispatch = useDispatch();
+
+  // Obtener products ,categorias y banners 
+  useEffect(() => {
+    dispatch(getCategory());
+    dispatch(getProducts());
+    dispatch(getBanners());
+    dispatch(verifySession());
+
+  }, []);
+
   return (
     //No modifique ni elimine las rutas existentes
     <div className="col-lg-12">
@@ -47,9 +60,18 @@ function App() {
         <Route exact path="/user/register">
           <FormUser action="post" icon="success" message="Usuario agregado" />
         </Route>
-
-        <Route exact path="/user/login" render={({ history }) => <LoginForm action="post" icon="success" message="Usuario agregado" history={history} />}>
-        </Route>
+        <Route
+          exact
+          path="/user/login"
+          render={({ history }) => (
+            <LoginForm
+              action="post"
+              icon="success"
+              message="Usuario agregado"
+              history={history}
+            />
+          )}
+        ></Route>
 
         <Route
           exact

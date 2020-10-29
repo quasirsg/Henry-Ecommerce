@@ -9,7 +9,8 @@ import { useDispatch } from "react-redux";
 import { loguinUser } from "../../redux/actions/jwtUsers";
 import { cartLoginListen } from "../custom/utils";
 import { addProducts } from "../../redux/actions/userActions";
-import Toast from '../alerts/toast'; 
+import Toast from "../alerts/toast";
+import Swal from "sweetalert2";
 
 const LoginForm = ({
   id,
@@ -19,7 +20,7 @@ const LoginForm = ({
   action,
   icon,
   message,
-  history
+  history,
 }) => {
   const dispatch = useDispatch();
 
@@ -46,7 +47,7 @@ const LoginForm = ({
               "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character"
             ),
         })}
-        onSubmit={async (values, { setSubmitting, resetForm }) => {
+        onSubmit={(values, { setSubmitting, resetForm }) => {
           //Request al backend
           let user = { ...values };
 
@@ -54,23 +55,18 @@ const LoginForm = ({
           //To lower case
           user.email = user.email.toLowerCase();
 
-          dispatch(loguinUser(user.email, user.password)) //Funciona loguin correcto e error al ingresar mal los datos
-            .then((res) => {
-              resetForm();
-              setSubmitting(false);
-              Toast.fire({
-                icon: 'info',
-                title: `¡Bienvenido de vuelta!`,
-              });
-              history.push('/');
-            })
-            .catch((error) => {
-              setSubmitting(false);
-              Toast.fire({
-                icon: "error",
-                title: "Error: vuelve a intentarlo",
-              });
-            });
+          dispatch(loguinUser(user.email, user.password)); //Funciona loguin correcto e error al ingresar mal los datos
+
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title: `¡Bienvenido de nuevo ${user.name}!`,
+            showConfirmButton: false,
+            timer: 2000,
+          });
+          resetForm();
+          setSubmitting(false);
+          history.push("/");
         }}
       >
         {({ isValid, isSubmitting }) => {

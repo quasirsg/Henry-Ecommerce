@@ -1,13 +1,13 @@
 import {
-  USER_LOGUIN,
-  USER_LOGUIN_ERROR,
+  USER_LOGIN,
+  USER_LOGIN_ERROR,
   LOGOUT_USER,
   CURRENT_USER,
   NOT_CURRENT_USER,
 } from "../actions/actionTypes";
 
 const initialState = {
-  userDetail: [],
+  userDetail: {},
   login: "",
   message: "",
 };
@@ -15,25 +15,16 @@ const initialState = {
 function jwtUserRducers(state = initialState, action) {
   switch (action.type) {
     /* ====== USERS LOGUINS ========== */
-    case USER_LOGUIN:
-      return {
-        ...state,
-        userDetail: state.userDetail.concat(action.userLoguin),
-      };
-    case USER_LOGUIN_ERROR:
+
+    case USER_LOGIN_ERROR:
       return {
         ...state,
         message: action.message,
       };
-    case LOGOUT_USER:
-      return {
-        ...state,
-        userDetail: [],
-      };
     case CURRENT_USER:
       return {
         ...state,
-        userDetail: state.userDetail.concat(action.userDetail),
+        userDetail: action.user,
       };
     case NOT_CURRENT_USER:
       return {
@@ -43,7 +34,7 @@ function jwtUserRducers(state = initialState, action) {
     case LOGOUT_USER:
       return {
         ...state,
-        userDetail: [],
+        userDetail: {}
       };
 
     // case CURRENT_CLIENT_USER:
@@ -61,6 +52,8 @@ function jwtUserRducers(state = initialState, action) {
     //     ...state,
     //     message: action.message,
     //   };
+    case USER_LOGIN:
+      
     default:
       return state;
   }

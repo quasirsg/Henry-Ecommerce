@@ -15,7 +15,7 @@ const mainReducers = combineReducers({
   cart: cartReducers,
   users: userReducers,
   order: orderReducer,
-  jwt: jwtUserRducers,
+  session: jwtUserRducers,
 });
 
 export default mainReducers;

@@ -2,15 +2,15 @@ import React from "react";
 import { Col, Row } from "reactstrap";
 import ItemCart from "./itemCart";
 
-const ShoppingCart = ({ items }) => {
+const ShoppingCart = ({ items, userId }) => {
+  console.log(items);
   return (
     <Col lg="12">
       <Row>
-        {items.map((item) => {
-          return (
-            <ItemCart key={item.id} product={item} quantity={item.quantity} />
-          );
-        })}
+        {typeof items[0] !== "undefined" &&
+          items.map((item) => {
+            return <ItemCart key={item.id} product={item} userId={userId} />;
+          })}
       </Row>
     </Col>
   );

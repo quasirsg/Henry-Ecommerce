@@ -1,5 +1,12 @@
 import axios from "axios";
-import * as actionTypes from "./actionTypes";
+//import * as actionTypes from "./actionTypes";
+import Toast from "../../components/alerts/toast";
+import {
+  POST_CATEGORY,
+  GET_CATEGORY,
+  PUT_CATEGORY,
+  DELETE_CATEGORY 
+} from "./actionTypes";
 
 const url = "http://localhost:3001";
 
@@ -8,7 +15,7 @@ export const getCategory = () => (dispatch) => {
     .get(`${url}/category/`)
     .then((res) => {
       dispatch({
-        type: actionTypes.GET_CATEGORY,
+        type: GET_CATEGORY,
         category: res.data.category,
       });
     })
@@ -23,8 +30,12 @@ export const editCategory = (id, action, values) => (dispatch) => {
       .post(url + `/category/${id ? id : ""}`, values)
       .then((res) => {
         dispatch({
-          type: actionTypes.POST_CATEGORY,
+          type: POST_CATEGORY,
           category: res.data,
+        });
+        Toast.fire({
+          icon: "success",
+          title: `Se agregó la categoria: ${res.data.name}`,
         });
       })
       .catch((err) => {
@@ -35,7 +46,7 @@ export const editCategory = (id, action, values) => (dispatch) => {
       .put(url + `/category/${id}`)
       .then((res) => {
         dispatch({
-          type: actionTypes.PUT_CATEGORY,
+          type: PUT_CATEGORY,
           category: res.data,
         });
       })
@@ -47,7 +58,7 @@ export const editCategory = (id, action, values) => (dispatch) => {
       .delete(url + `/category/${id}`)
       .then((res) => {
         dispatch({
-          type: actionTypes.DELETE_CATEGORY,
+          type: DELETE_CATEGORY,
           category: null,
         });
       })
@@ -55,4 +66,5 @@ export const editCategory = (id, action, values) => (dispatch) => {
         console.log(err);
       });
   }
+  window.location.reload(true);
 };
