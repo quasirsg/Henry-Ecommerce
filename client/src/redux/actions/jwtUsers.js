@@ -1,6 +1,6 @@
 import axios from "axios";
 import Toast from "../../components/alerts/toast";
-import Swal from 'sweetalert2';
+import Swal from "sweetalert2";
 import * as actionTypes from "./actionTypes";
 import allActions from "./allActions";
 
@@ -16,21 +16,21 @@ export const loguinUser = (email, password) => (dispatch) => {
       })
       .then((res) => {
         const token = res.data.token;
-        console.log(token)
+        console.log(token);
         if (token) {
           localStorage.setItem("token", token);
           dispatch({
-            type: actionTypes.USER_LOGIN
+            type: actionTypes.USER_LOGIN,
           });
-          dispatch(getCurrentUser(token))
+          dispatch(getCurrentUser(token));
         }
       })
-      .catch(error => {
+      .catch((error) => {
         Toast.fire({
           icon: "error",
           title: "Error: email o contraseña no válidos",
         });
-      })
+      });
   } catch {
     dispatch({
       type: actionTypes.USER_LOGIN_ERROR,
@@ -46,34 +46,25 @@ export const getCurrentUser = (token) => (dispatch) => {
     headers: { Authorization: `Bearer ${token}` },
   };
 
-  axios
-    .get(`${url}/users/me/`, config)
-    .then((res) => {
-      Swal.fire({
-        position: 'center',
-        icon: 'success',
-        title: `¡Bienvenido de nuevo ${res.data.name}!`,
-        showConfirmButton: false,
-        timer: 2000
-      });
-      dispatch({
-        type: actionTypes.CURRENT_USER,
-        user: res.data
-      });
-    })
+  axios.get(`${url}/users/me/`, config).then((res) => {
+    dispatch({
+      type: actionTypes.CURRENT_USER,
+      user: res.data,
+    });
+  });
 };
 
 export const verifySession = () => (dispatch) => {
   const { token } = localStorage;
   if (token) {
-    dispatch(getCurrentUser(token))
+    dispatch(getCurrentUser(token));
   } else {
     dispatch({
       type: actionTypes.NOT_CURRENT_USER,
-      message: 'No hay un usuario logueado.'
-    })
+      message: "No hay un usuario logueado.",
+    });
   }
-}
+};
 
 //logout
 export const logoutUser = () => (dispatch) => {
@@ -88,17 +79,16 @@ export const logoutUser = () => (dispatch) => {
     },
     cancelButtonText: "Cancelar",
     confirmButtonText: "Cerrar sesión",
-  })
-    .then((res) => {
-      if (res.isConfirmed) {
-        Swal.fire("¡Has cerrado sesión!", `Hasta la proxima`, "info");
-        localStorage.removeItem("token");
-        dispatch({
-          type: actionTypes.LOGOUT_USER,
-        });
-        dispatch({
-          type: actionTypes.DELETE_ALL_CART
-        });
-      }
-    })
+  }).then((res) => {
+    if (res.isConfirmed) {
+      Swal.fire("¡Has cerrado sesión!", `Hasta la proxima`, "info");
+      localStorage.removeItem("token");
+      dispatch({
+        type: actionTypes.LOGOUT_USER,
+      });
+      dispatch({
+        type: actionTypes.DELETE_ALL_CART,
+      });
+    }
+  });
 };

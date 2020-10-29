@@ -8,19 +8,24 @@ import {
   deleteAllCart,
   getProductCart,
 } from "../redux/actions/userActions";
+import { getCurrentUser } from "../redux/actions/jwtUsers";
 
-const Cart = () => { 
+const Cart = () => {
   const dispatch = useDispatch();
   let productsCarts = useSelector((state) => state.users.carrito);
+  let user = useSelector((state) => state.session.userDetail);
   const [userData, setUserData] = useState(null);
 
   // TODO: utilizar redux
   if (localStorage.token) {
-    let user = localStorage.getItem("token");
+    var token = localStorage.getItem("token");
     var userId = user.id;
   }
 
+  console.log(user);
+
   useEffect(() => {
+    dispatch(getCurrentUser(token));
     dispatch(getProductCart(userId));
     function checkUsetData() {
       const item = localStorage.getItem("token");

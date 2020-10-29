@@ -3,14 +3,24 @@ import { Container, Col, Row, UncontrolledCarousel } from "reactstrap";
 import { ShieldFillCheck, Percent, Truck } from "react-bootstrap-icons";
 import Categoria from "../components/categoria";
 import Catalogo from "../components/catalogo";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { getCurrentUser, verifySession } from "../redux/actions/jwtUsers";
 
 const HomePage = () => {
-
   const categorias = useSelector((state) => state.category.category);
   const productos = useSelector((state) => state.products.allProducts);
   const productBanners = useSelector((state) => state.products.productBanner);
+  const user = useSelector((state) => state.session.userDetail);
   // const auth = useSelector((state) => state);
+  const dispatch = useDispatch();
+
+  if (localStorage.token) {
+    var userId = user.id;
+  }
+
+  useEffect(() => {
+    dispatch(verifySession());
+  }, []);
 
   return (
     <Container fluid={true} className="mt-4">
@@ -42,7 +52,7 @@ const HomePage = () => {
       </Row>
       <Row>
         <Categoria categorys={categorias} />
-        <Catalogo products={productos} />
+        <Catalogo products={productos} userId={userId} />
       </Row>
     </Container>
   );
