@@ -9,14 +9,17 @@ import { Col, Row, Container, Button } from "reactstrap";
 import { ArrowLeftCircle } from "react-bootstrap-icons";
 import allActions from "../../redux/actions/allActions";
 import "./producto.css";
-import { useHistory } from 'react-router-dom';
+import { useHistory } from "react-router-dom";
+import { verifySession } from "../../redux/actions/jwtUsers";
 
 const Product = () => {
   const history = useHistory();
   let { id } = useParams();
   const dispatch = useDispatch();
+  const user = useSelector((state) => state.session.userDetail);
 
   useEffect(() => {
+    dispatch(verifySession());
     dispatch(allActions.getOneProduct(id));
     dispatch(getReviews(id));
   }, [id]);
@@ -26,30 +29,23 @@ const Product = () => {
     (state) => state.products.productReviews
   );
   product.quantity = 1; //agrego una cantidad por default
-
   if (localStorage.token) {
-    let user = JSON.parse(localStorage.getItem("token"));
     var userId = user.id;
-  } else {
-    var userId = 1;
   }
 
   const handleOnClick = () => {
     dispatch(addProductCart(userId, product));
-    // localStorage.setItem("user", userId.id);
-    // dispatch(getUserOrder(userId.id));
-    // console.log(userId.id);
   };
 
   return (
     <Container fluid={true} className="productDetail py-4 my-4">
       <Row>
-         <Button
+        <Button
           className="btn btn-light text-secondary btn-sm float-left"
-          onClick={()=> history.push('/products')}
-           >
-            <ArrowLeftCircle size={20} />
-          </Button>
+          onClick={() => history.push("/products")}
+        >
+          <ArrowLeftCircle size={20} />
+        </Button>
       </Row>
       <Row className="productDeatil__content">
         <Col lg="8">
