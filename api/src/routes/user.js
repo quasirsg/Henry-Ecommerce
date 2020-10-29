@@ -37,7 +37,7 @@ server.post("/", (req, res, next) => {
 });
 
 //Actualizar un usuario
-server.put("/:id", (req, res, next) => {
+server.put("/:id", authorize(), (req, res, next) => {
   let { id } = req.params;
   let update = req.body;
 

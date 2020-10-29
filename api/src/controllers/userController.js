@@ -33,7 +33,7 @@ function getByMyId(req, res, next) {
 
   // Buscar usuario
   User.findOne({
-    attributes: ['id', 'name', 'email', 'image', 'role'],
+    attributes: ['id', 'name', 'email', 'address', 'phoneNumber', 'image', 'role'],
     where: {
       id: userId
     }

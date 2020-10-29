@@ -29,42 +29,44 @@ export const getOneUser = (id) => (dispatch) => {
   });
 };
 
-export const editUser = (id, action, values) => (dispatch) => {
-  if (action === "post") {
-    return axios
-      .post(`${url}/users/${id ? id : ""}`, values)
-      .then((res) => {
-        dispatch({
-          type: actionTypes.POST_USER,
-          userDetail: res.data,
-        });
-      })
-      .catch((err) => {
-        dispatch({
-          error: err,
-        });
+export const editUser = (id, values, token) => dispatch => {
+  // if (action === "post") {
+  //   return axios
+  //     .post(`${url}/users/${id ? id : ""}`, values)
+  //     .then((res) => {
+  //       dispatch({
+  //         type: actionTypes.POST_USER,
+  //         userDetail: res.data,
+  //       });
+  //     })
+  //     .catch((err) => {
+  //       dispatch({
+  //         error: err,
+  //       });
+  //     });
+  // } else if (action === "put") {
+  let config = {
+    headers: { Authorization: `Bearer ${token}` },
+  };
+  axios.put(url + `/users/${id}`, values, config)
+    .then((res) => {
+      dispatch({
+        type: actionTypes.PUT_USER,
+        userDetail: res.data,
       });
-  } else if (action === "put") {
-    return axios
-      .put(url + `/users/${id}`, values)
-      .then((res) => {
-        dispatch({
-          type: actionTypes.PUT_USER,
-          userDetail: res.data,
-        });
-      })
-      .catch((err) => console.log(err));
-  } else if (action === "delete") {
-    return axios
-      .delete(url + `/users/${id}`)
-      .then((res) => {
-        dispatch({
-          type: actionTypes.DELETE_USER,
-          userDetail: id,
-        });
-      })
-      .catch((err) => console.log(err));
-  }
+    })
+    .catch((err) => console.log(err));
+  // } else if (action === "delete") {
+  //   return axios
+  //     .delete(url + `/users/${id}`)
+  //     .then((res) => {
+  //       dispatch({
+  //         type: actionTypes.DELETE_USER,
+  //         userDetail: id,
+  //       });
+  //     })
+  //     .catch((err) => console.log(err));
+  // }
 };
 
 //un usuario puede añadir una review a un producto que haya comprado

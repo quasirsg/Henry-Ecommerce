@@ -10,8 +10,8 @@ import UserOrders from '../components/userOrders';
 import UserPassword from '../components/userPassword';
 
 const UserPage = () => {
-
     const userDetail = useSelector(state => state.session.userDetail);
+
     return (
         <Container
             fluid={true}
@@ -60,7 +60,7 @@ const UserPage = () => {
                         lg="9"
                         style={{ border: '1px solid #ccc9c9', padding: '3rem 1rem', margin: '3rem 0' }}
                     >
-                        <Route exact path='/user/account' component={() => <UserDetail id={1} />} />
+                        <Route exact path='/user/account' component={() => <UserDetail />} />
                         <Route exact path="/user/reviews" component={() => <UserReviews id={userDetail.id} />} />
                         <Route exact path="/user/orders" component={() => <UserOrders id={1} />} />
                         <Route exact path="/user/change-password" component={() => <UserPassword id={1} />} />

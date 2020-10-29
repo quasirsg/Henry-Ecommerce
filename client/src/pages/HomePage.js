@@ -11,7 +11,6 @@ const HomePage = () => {
   const productos = useSelector((state) => state.products.allProducts);
   const productBanners = useSelector((state) => state.products.productBanner);
   const user = useSelector((state) => state.session.userDetail);
-  // const auth = useSelector((state) => state);
   const dispatch = useDispatch();
 
   if (localStorage.token) {

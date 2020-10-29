@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Container, Row, Col } from "reactstrap";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
@@ -6,7 +6,9 @@ import Swal from "sweetalert2";
 import CustomInput from "../custom/input";
 import ButtonBlock from '../custom/ButtonBlock';
 import ButtonBlockSecundary from '../custom/ButtonBlockSecundary';
+import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
+import { editUser } from '../../redux/actions/userActions';
 
 import './userDetail.css';
 
@@ -22,16 +24,16 @@ const Toast = Swal.mixin({
     },
 });
 
-const UserDetail = ({ id }) => {
-
-
+const UserDetail = () => {
+    const dispatch = useDispatch();
+    const { id, name, email, address, phoneNumber } = useSelector(state => state.session.userDetail);
     return (
         <Formik
             initialValues={{
-                name: 'Bryan Plata',
-                email: 'cliente@gmail.com',
-                address: 'avenida 123',
-                phoneNumber: '400340304',
+                name,
+                email,
+                address,
+                phoneNumber: phoneNumber === null ? '' : phoneNumber,
             }}
             validationSchema={Yup.object({
                 name: Yup.string()
@@ -46,13 +48,13 @@ const UserDetail = ({ id }) => {
                     .max(50, "Debe tener 50 caracteres o menos")
                     .required("Debes completar este campo"),
                 phoneNumber: Yup.string()
-                    .required("Please Enter your Phone Number")
                     .matches(
                         /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/,
                         "Phone number is not valid"
                     ),
             })}
-            onSubmit={async (values, { setSubmitting, resetForm }) => {
+            onSubmit={values => {
+                dispatch(editUser(id, values, localStorage.token));
             }}
         >
             {({ isValid, isSubmitting, setFieldValue }) => {
@@ -82,7 +84,11 @@ const UserDetail = ({ id }) => {
                                     />
                                 </Col>
                                 <Col lg="6" xs="6">
-                                    <CustomInput label="Dirección" name="address" type="text" />
+                                    <CustomInput
+                                        label="Dirección"
+                                        name="address"
+                                        type="text"
+                                    />
                                 </Col>
                                 <Col lg="6" xs="6">
                                     <CustomInput
