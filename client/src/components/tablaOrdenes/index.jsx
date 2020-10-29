@@ -16,6 +16,9 @@ const TablaOrdenes = () => {
   /* ==== Traemos todas las ordenes ====== */
   const allOrders = useSelector((state) => state.order.allOrders);
   const [data, setData] = useState(allOrders);
+  const [click, setClick] = useState(null);
+
+  let orders;
 
   useEffect(() => {
     dispatch(getOrders());
@@ -27,7 +30,7 @@ const TablaOrdenes = () => {
 
   /* ====== Delete one order ======= */
   const handleClick = (e, id, userId) => {
-    e.preventDefault();
+    // e.preventDefault();
     dispatch(deleteOrder(id, userId));
   };
 
@@ -40,8 +43,10 @@ const TablaOrdenes = () => {
     if (status !== "allOrders") {
       let statusChanged = filt(status);
       setData(statusChanged);
+      setClick(1);
     } else {
       setData(allOrders);
+      setClick(null);
     }
   };
 
@@ -81,28 +86,31 @@ const TablaOrdenes = () => {
             </tr>
           </thead>
           <tbody className="scroll">
-            {data.map((item) => (
-              <tr className="my-auto" key={item.id}>
-                <th>{item.id}</th>
-                <td>{item.status}</td>
-                <td>{item.userId}</td>
-                <td className="p-2">
-                  <Link
-                    to={`/admin/ordenes/${item.id}`} //el id es el ID de Orden
-                    className="btn btn-default border btn-sm mr-3"
-                  >
-                    <Tools size={17} />
-                  </Link>
-                  <Button
-                    color="default"
-                    onClick={(e) => handleClick(e, item.id, item.userId)}
-                    className="border btn-sm"
-                  >
-                    <Trash id={item.id} size={17} />
-                  </Button>
-                </td>
-              </tr>
-            ))}
+            {
+              (click === null ? (orders = allOrders) : (orders = data),
+              orders.map((item) => (
+                <tr className="my-auto" key={item.id}>
+                  <th>{item.id}</th>
+                  <td>{item.status}</td>
+                  <td>{item.userId}</td>
+                  <td className="p-2">
+                    <Link
+                      to={`/admin/ordenes/${item.id}`} //el id es el ID de Orden
+                      className="btn btn-default border btn-sm mr-3"
+                    >
+                      <Tools size={17} />
+                    </Link>
+                    <Button
+                      color="default"
+                      onClick={(e) => handleClick(e, item.id, item.userId)}
+                      className="border btn-sm"
+                    >
+                      <Trash id={item.id} size={17} />
+                    </Button>
+                  </td>
+                </tr>
+              )))
+            }
           </tbody>
         </Table>
       </Container>
