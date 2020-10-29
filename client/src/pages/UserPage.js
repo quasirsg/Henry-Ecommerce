@@ -11,7 +11,6 @@ import UserPassword from '../components/userPassword';
 
 const UserPage = () => {
     const userDetail = useSelector(state => state.session.userDetail);
-
     return (
         <Container
             fluid={true}

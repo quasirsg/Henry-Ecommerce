@@ -5,8 +5,6 @@ import * as Yup from "yup";
 import Swal from "sweetalert2";
 import CustomInput from "../custom/input";
 import ButtonBlock from '../custom/ButtonBlock';
-import ButtonBlockSecundary from '../custom/ButtonBlockSecundary';
-import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
 import { editUser } from '../../redux/actions/userActions';
 
@@ -26,7 +24,7 @@ const Toast = Swal.mixin({
 
 const UserDetail = () => {
     const dispatch = useDispatch();
-    const { id, name, email, address, phoneNumber } = useSelector(state => state.session.userDetail);
+    const { id, name, email, address, phoneNumber, role } = useSelector(state => state.session.userDetail);
     return (
         <Formik
             initialValues={{
@@ -55,61 +53,63 @@ const UserDetail = () => {
             })}
             onSubmit={values => {
                 dispatch(editUser(id, values, localStorage.token));
+                Toast.fire({
+                    icon: 'success',
+                    title: 'Ha modificado su cuenta con exito!',
+                });
+                setTimeout(function () {
+                    window.location.href = "/";
+                }, 1000);
             }}
         >
-            {({ isValid, isSubmitting, setFieldValue }) => {
-                return (
-                    <Form>
+            <Form>
+                <Col>
+                    <h2 style={{ fontWeight: 'bold', color: '#424242', marginBottom: '2rem' }}>Mis Datos Personales!</h2>
+                </Col>
+                <Container fluid={true}>
+                    <Row
+                        lg="2"
+                    >
                         <Col>
-                            <h2 style={{ fontWeight: 'bold', color: '#424242', marginBottom: '2rem' }}>Mis Datos Personales!</h2>
+                            <CustomInput
+                                label="Nombre"
+                                name="name"
+                                type="text"
+                                placeholder="Introduzca su nombre"
+                            />
                         </Col>
-                        <Container fluid={true}>
-                            <Row
-                                lg="2"
-                            >
-                                <Col>
-                                    <CustomInput
-                                        label="Nombre"
-                                        name="name"
-                                        type="text"
-                                        placeholder="Introduzca su nombre"
-                                    />
-                                </Col>
-                                <Col>
-                                    <CustomInput
-                                        label="Email"
-                                        name="email"
-                                        type="email"
-                                        placeholder="Introzuca su email"
-                                    />
-                                </Col>
-                                <Col lg="6" xs="6">
-                                    <CustomInput
-                                        label="Dirección"
-                                        name="address"
-                                        type="text"
-                                    />
-                                </Col>
-                                <Col lg="6" xs="6">
-                                    <CustomInput
-                                        label="Numero de teléfono"
-                                        name="phoneNumber"
-                                        type="text"
-                                    />
-                                </Col>
-                                <Col
-                                    lg="12 d-flex justify-content-center pt-5"
-                                >
-                                    <div className="userDetail__buttons">
-                                        <ButtonBlock style={{ margin: '1rem' }}>Actualizar Datos</ButtonBlock>
-                                        <ButtonBlockSecundary>Cancelar</ButtonBlockSecundary>
-                                    </div>
-                                </Col>
-                            </Row>
-                        </Container>
-                    </Form>
-                );
-            }}
+                        <Col>
+                            <CustomInput
+                                label="Email"
+                                name="email"
+                                type="email"
+                                placeholder="Introzuca su email"
+                            />
+                        </Col>
+                        <Col lg="6" xs="6">
+                            <CustomInput
+                                label="Dirección"
+                                name="address"
+                                type="text"
+                            />
+                        </Col>
+                        <Col lg="6" xs="6">
+                            <CustomInput
+                                label="Numero de teléfono"
+                                name="phoneNumber"
+                                type="text"
+                            />
+                        </Col>
+                        <Col
+                            lg="12 d-flex justify-content-center pt-5"
+                        >
+                            <div className="userDetail__buttons">
+                                <ButtonBlock style={{ margin: '1rem' }}>Actualizar Datos</ButtonBlock>
+                            </div>
+                        </Col>
+                    </Row>
+                </Container>
+            </Form>
         </Formik>
     );
 };

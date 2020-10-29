@@ -4,6 +4,7 @@ import {
   LOGOUT_USER,
   CURRENT_USER,
   NOT_CURRENT_USER,
+  PUT_USER,
 } from "../actions/actionTypes";
 
 const initialState = {
@@ -36,7 +37,11 @@ function jwtUserRducers(state = initialState, action) {
         ...state,
         userDetail: {}
       };
-
+    case PUT_USER:
+      return {
+        ...state,
+        userDetail: action.data,
+      }
     // case CURRENT_CLIENT_USER:
     //   return {
     //     ...state,
@@ -53,7 +58,7 @@ function jwtUserRducers(state = initialState, action) {
     //     message: action.message,
     //   };
     case USER_LOGIN:
-      
+
     default:
       return state;
   }

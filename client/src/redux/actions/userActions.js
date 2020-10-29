@@ -49,10 +49,10 @@ export const editUser = (id, values, token) => dispatch => {
     headers: { Authorization: `Bearer ${token}` },
   };
   axios.put(url + `/users/${id}`, values, config)
-    .then((res) => {
+    .then(res => {
       dispatch({
         type: actionTypes.PUT_USER,
-        userDetail: res.data,
+        data: res.data,
       });
     })
     .catch((err) => console.log(err));
