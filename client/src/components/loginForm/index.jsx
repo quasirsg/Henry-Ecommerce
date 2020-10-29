@@ -42,10 +42,6 @@ const LoginForm = ({
             .required("Debes completar este campo"),
           password: Yup.string()
             .required("Please Enter your password")
-            .matches(
-              /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
-              "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character"
-            ),
         })}
         onSubmit={(values, { setSubmitting, resetForm }) => {
           //Request al backend
@@ -83,8 +79,8 @@ const LoginForm = ({
                     </Button>
                   </Row>
                 ) : (
-                  ""
-                )}
+                    ""
+                  )}
 
                 <Row className="d-block">
                   <PersonCircle className="mb-1 mr-2" size={40} />
@@ -121,12 +117,12 @@ const LoginForm = ({
                 {isSubmitting
                   ? "Iniciando sesón..."
                   : action === "put"
-                  ? "Actualizar usuario"
-                  : action === "delete"
-                  ? "Eliminar usuario"
-                  : action === "post"
-                  ? "Ingresar"
-                  : null}
+                    ? "Actualizar usuario"
+                    : action === "delete"
+                      ? "Eliminar usuario"
+                      : action === "post"
+                        ? "Ingresar"
+                        : null}
               </Button>
             </Form>
           );

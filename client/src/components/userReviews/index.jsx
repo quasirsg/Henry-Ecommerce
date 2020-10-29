@@ -18,8 +18,8 @@ const UserReviews = ({ id }) => {
             {reviews.map(review =>
                 <Review
                     key={review.id}
-                    userImage={review.user.name}
-                    userName={review.user.image}
+                    userImage={review.user.image}
+                    userName={review.user.name}
                     points={review.points}
                     description={review.description}
                 />

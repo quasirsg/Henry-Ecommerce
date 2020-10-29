@@ -191,40 +191,41 @@ const loadProductCategories = () => {
 };
 
 const loadUsers = () => {
+  //no borrar los usarios existentes o se rompera las reviews.
   User.bulkCreate([
     {
-      name: "admin",
+      name: "Natalia Cortez",
       email: "admin@gmail.com",
-      address: "admin 1234",
+      address: "Valentino 68Puerto",
       role: "admin",
       password: bcrypt.hashSync("Vsl@17477", 10),
       image: "1234",
       location_id: 21,
     },
     {
-      name: "client1",
+      name: "Facundo Nevárez",
       email: "client1@gmail.com",
-      address: "client1 1234",
+      address: "María Alejandra 2417 PB ALuciana del Este",
       role: "client",
       password: bcrypt.hashSync("Vsl@17477", 10),
       location_id: 21,
     },
     {
-      name: "client2",
+      name: "Regina Flórez",
       email: "client2@gmail.com",
-      address: "client2 1234",
+      address: "Rodrigo 19528 8 DTapia del Mar",
       role: "client",
       password: bcrypt.hashSync("Vsl@17477", 10),
       location_id: 21,
     },
-    // {
-    //   name: "client3",
-    //   email: "client3@gmail.com",
-    //   address: "client3 1234",
-    //   role: "client",
-    //   password: "client",
-    //   location_id: 21,
-    // },
+    {
+      name: "Simón Sauceda",
+      email: "client3@gmail.com",
+      address: "Colón 3 15 CSedillo del Mirador",
+      role: "client",
+      password: "client",
+      location_id: 21,
+    },
   ]);
 };
 

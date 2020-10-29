@@ -11,8 +11,7 @@ import UserPassword from '../components/userPassword';
 
 const UserPage = () => {
 
-    // const userId = useSelector(state => state.jwt.userDetail[0].id);
-
+    const userDetail = useSelector(state => state.session.userDetail);
     return (
         <Container
             fluid={true}
@@ -27,7 +26,6 @@ const UserPage = () => {
                                 <Link to="/user/account">
                                     <ButtonSquare
                                         icon={<Person size={20} />}
-                                        onClick={() => console.log('click ja')}
                                         Children={'Mi cuenta!'}
                                     />
                                 </Link>
@@ -36,7 +34,6 @@ const UserPage = () => {
                                 <Link to="/user/orders">
                                     <ButtonSquare
                                         icon={<BoxSeam size={20} />}
-                                        onClick={() => console.log('click xD')}
                                         Children={'Mis Pedidos!'}
                                     />
                                 </Link>
@@ -45,7 +42,6 @@ const UserPage = () => {
                                 <Link to="/user/reviews">
                                     <ButtonSquare
                                         icon={<ChatSquareText size={20} />}
-                                        onClick={() => console.log('click xD')}
                                         Children={'Mis Reviews!'}
                                     />
                                 </Link>
@@ -54,7 +50,6 @@ const UserPage = () => {
                                 <Link to="/user/change-password">
                                     <ButtonSquare
                                         icon={<Lock size={20} />}
-                                        onClick={() => console.log('click xD')}
                                         Children={'Cambiar Mi Contraseña'}
                                     />
                                 </Link>
@@ -66,7 +61,7 @@ const UserPage = () => {
                         style={{ border: '1px solid #ccc9c9', padding: '3rem 1rem', margin: '3rem 0' }}
                     >
                         <Route exact path='/user/account' component={() => <UserDetail id={1} />} />
-                        <Route exact path="/user/reviews" component={() => <UserReviews id={1} />} />
+                        <Route exact path="/user/reviews" component={() => <UserReviews id={userDetail.id} />} />
                         <Route exact path="/user/orders" component={() => <UserOrders id={1} />} />
                         <Route exact path="/user/change-password" component={() => <UserPassword id={1} />} />
                     </Col>
