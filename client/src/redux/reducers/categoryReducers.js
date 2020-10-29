@@ -35,7 +35,7 @@ function categoryReducers(state = initialState, action) {
     case POST_CATEGORY:
       return {
         ...state,
-        category: state.concat(action.category),
+        category: state.category.concat(action.category),
       };
 
     default:

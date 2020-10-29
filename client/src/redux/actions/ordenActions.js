@@ -47,7 +47,7 @@ export const getOneOrder = (userId) => (dispatch) => {
     .catch((err) => console.log(err));
 };
 
-export const updateStatusOrder = (id, status, userId) => (dispatch) => {
+export const updateStatusOrder = (id, status) => (dispatch) => {
   return axios
     .put(`${url}/order/${id}`, {
       status: status,
@@ -55,7 +55,7 @@ export const updateStatusOrder = (id, status, userId) => (dispatch) => {
     .then((res) => {
       dispatch({
         type: actionTypes.UPDATE_ORDER,
-        status: res.data.orderUpdate.status,
+        upOrder: res.data.orderUpdate,
       });
       dispatch({
         type: actionTypes.DELETE_ALL_CART,
@@ -65,7 +65,7 @@ export const updateStatusOrder = (id, status, userId) => (dispatch) => {
 
 // Line_order
 export const getOrderById = (orderId) => (dispatch) => {
-  axios.get(`${url}/order/${orderId}`).then((res) => {
+  return axios.get(`${url}/order/${orderId}`).then((res) => {
     dispatch({
       type: actionTypes.GET_ORDER_BY_ID,
       order: res.data[0],

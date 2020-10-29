@@ -7,6 +7,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { adminActions } from "../../redux/actions/adminActions";
 import { getUsers } from "../../redux/actions/userActions";
 import Toast from "../../components/alerts/toast";
+import { useLocation } from "react-router-dom";
 
 const TablaUsuarios = () => {
   const dispatch = useDispatch();
@@ -20,6 +21,10 @@ const TablaUsuarios = () => {
     e.preventDefault();
     if (item.role === "client") {
       dispatch(adminActions(id));
+      Toast.fire({
+        icon: "success",
+        title: "Usuario promovido",
+      });
     } else {
       Toast.fire({
         icon: "error",
@@ -27,6 +32,8 @@ const TablaUsuarios = () => {
       });
     }
   };
+
+  console.log(users);
 
   return (
     <Container>

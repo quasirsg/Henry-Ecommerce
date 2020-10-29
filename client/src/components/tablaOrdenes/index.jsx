@@ -1,13 +1,22 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Container, Table } from "reactstrap";
 import { GearFill, Trash, Tools } from "react-bootstrap-icons";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { deleteOrder, getOrders } from "../../redux/actions/ordenActions";
+import {
+  Dropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem,
+} from "reactstrap";
 
 const TablaOrdenes = () => {
-  const data = useSelector((state) => state.order.allOrders);
+  const allOrders = useSelector((state) => state.order.allOrders);
   const dispatch = useDispatch();
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const toggle = () => setDropdownOpen((prevState) => !prevState);
+  const [data, setData] = useState(allOrders);
 
   useEffect(() => {
     dispatch(getOrders());
@@ -18,46 +27,82 @@ const TablaOrdenes = () => {
     dispatch(deleteOrder(id, userId));
   };
 
+  /* ======== Filtrado por estado de la orden ======== */
+  const filt = (status) => {
+    let orderfilter = allOrders.filter((item) => item.status === status);
+    return orderfilter;
+  };
+  const setStatus = (status) => {
+    if (status !== "allOrders") {
+      let statusChanged = filt(status);
+      setData(statusChanged);
+    } else {
+      setData(allOrders);
+    }
+  };
+
   return (
-    <Container>
-      <Table hover responsive className="table-sm">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Status</th>
-            <th>Usuario</th>
-            <th>
-              <GearFill size={17} className="mr-2" />
-              Acciones
-            </th>
-          </tr>
-        </thead>
-        <tbody className="scroll">
-          {data.map((item, index) => (
-            <tr className="my-auto" key={index}>
-              <th>{item.id}</th>
-              <td>{item.status}</td>
-              <td>{item.userId}</td>
-              <td className="p-2">
-                <Link
-                  to={`/admin/ordenes/${item.id}`} //el id es el ID de Orden
-                  className="btn btn-default border btn-sm mr-3"
-                >
-                  <Tools size={17} />
-                </Link>
-                <Button
-                  color="default"
-                  onClick={(e) => handleClick(e, item.id, item.userId)}
-                  className="border btn-sm"
-                >
-                  <Trash id={item.id} size={17} />
-                </Button>
-              </td>
+    <>
+      <Dropdown isOpen={dropdownOpen} toggle={toggle}>
+        <DropdownToggle caret>Filtrar por estado</DropdownToggle>
+        <DropdownMenu>
+          <DropdownItem onClick={() => setStatus("shopping_cart")}>
+            Creada
+          </DropdownItem>
+          <DropdownItem onClick={() => setStatus("processing")}>
+            En proceso
+          </DropdownItem>
+          <DropdownItem onClick={() => setStatus("completed")}>
+            Completada
+          </DropdownItem>
+          <DropdownItem onClick={() => setStatus("canceled")}>
+            Cancelada
+          </DropdownItem>
+          <DropdownItem onClick={() => setStatus("allOrders")}>
+            Todas las ordenes
+          </DropdownItem>
+        </DropdownMenu>
+      </Dropdown>
+      <Container>
+        <Table hover responsive className="table-sm">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Status</th>
+              <th>Usuario</th>
+              <th>
+                <GearFill size={17} className="mr-2" />
+                Acciones
+              </th>
             </tr>
-          ))}
-        </tbody>
-      </Table>
-    </Container>
+          </thead>
+          <tbody className="scroll">
+            {data.map((item) => (
+              <tr className="my-auto" key={item.id}>
+                <th>{item.id}</th>
+                <td>{item.status}</td>
+                <td>{item.userId}</td>
+                <td className="p-2">
+                  <Link
+                    to={`/admin/ordenes/${item.id}`} //el id es el ID de Orden
+                    className="btn btn-default border btn-sm mr-3"
+                  >
+                    <Tools size={17} />
+                  </Link>
+                  <Button
+                    color="default"
+                    onClick={(e) => handleClick(e, item.id, item.userId)}
+                    className="border btn-sm"
+                  >
+                    <Trash id={item.id} size={17} />
+                  </Button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
+      </Container>
+    </>
   );
 };
 

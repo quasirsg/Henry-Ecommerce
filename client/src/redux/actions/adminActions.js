@@ -4,17 +4,13 @@ import Toast from "../../components/alerts/toast";
 
 const url = "http://localhost:3001";
 
-export const adminActions = (id) => (dispatch) => {
-  axios
+export const adminActions = (id) => async (dispatch) => {
+  return await axios
     .put(`${url}/users/${id}/promote`)
     .then((res) => {
       dispatch({
         type: actionTypes.PROM_USER,
-        user: id,
-      });
-      Toast.fire({
-        icon: "success",
-        title: "Usuario promovido",
+        id: id,
       });
     })
     .catch((err) => {

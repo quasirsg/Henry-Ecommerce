@@ -5,7 +5,7 @@ import {
   POST_CATEGORY,
   GET_CATEGORY,
   PUT_CATEGORY,
-  DELETE_CATEGORY 
+  DELETE_CATEGORY,
 } from "./actionTypes";
 
 const url = "http://localhost:3001";
@@ -24,10 +24,17 @@ export const getCategory = () => (dispatch) => {
     });
 };
 
+// export const postCategory=(id, value)=>{
+
+// }
+
 export const editCategory = (id, action, values) => (dispatch) => {
   if (action === "post") {
     axios
-      .post(url + `/category/${id ? id : ""}`, values)
+      .post(url + `/category/${id ? id : ""}`, {
+        name: values.name,
+        description: values.description,
+      })
       .then((res) => {
         dispatch({
           type: POST_CATEGORY,
