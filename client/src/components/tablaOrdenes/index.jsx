@@ -12,16 +12,20 @@ import {
 } from "reactstrap";
 
 const TablaOrdenes = () => {
-  const allOrders = useSelector((state) => state.order.allOrders);
   const dispatch = useDispatch();
-  const [dropdownOpen, setDropdownOpen] = useState(false);
-  const toggle = () => setDropdownOpen((prevState) => !prevState);
+  /* ==== Traemos todas las ordenes ====== */
+  const allOrders = useSelector((state) => state.order.allOrders);
   const [data, setData] = useState(allOrders);
 
   useEffect(() => {
     dispatch(getOrders());
   }, []);
 
+  /* ====DropDown Button filtrado por categoria ===== */
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const toggle = () => setDropdownOpen((prevState) => !prevState);
+
+  /* ====== Delete one order ======= */
   const handleClick = (e, id, userId) => {
     e.preventDefault();
     dispatch(deleteOrder(id, userId));
