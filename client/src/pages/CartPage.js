@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Container, Col, Row, Button } from "reactstrap";
+import { Link } from "react-router-dom";
 import ShoppingCart from "../components/shoppingCart";
 import ButtonBlock from "../components/custom/ButtonBlock";
 import { useSelector, useDispatch } from "react-redux";
@@ -69,7 +70,9 @@ const Cart = () => {
           <ShoppingCart items={productsCarts} userId={userId} />
         </Col>
         <Col lg="4">
-          <ButtonBlock children={"Siguiente"} />
+          <Link to='/checkout'>
+           <ButtonBlock children={"Siguiente"}/>
+          </Link>
           <Button children={"Eliminar Carrito"} onClick={deleteAll} />
         </Col>
       </Row>
