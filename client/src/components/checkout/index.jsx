@@ -5,6 +5,7 @@ import { Button, Row, Col } from "reactstrap";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import CustomInput from "../custom/input";
+import { useHistory } from "react-router-dom";
 
 // import {
 //   addNewProduct,
@@ -20,42 +21,19 @@ import CustomInput from "../custom/input";
 //   });
 // };
 
- const CheckoutForm = ({ action, history, id = 0 }) => {
-//   const dispatch = useDispatch();
+
+const CheckoutForm = ({ 
+  email= "",
+  direction= "" }) => {
+  const history = useHistory ();
+  const dispatch = useDispatch();
+
 //   const allCategories = useSelector((state) => state.category.category);
 //   const product = useSelectorProduct(id);
 //   // Filtrar categorias con ID
 //   const categoriesSelect = allCategories.map((item) => item.id);
 //   const categoryProduct =
 //     action === "put" ? product.categories.map((item) => item.id) : [];
-//   // Form inputs values
-//   let initialValuesForm = {
-//     name: action === "put" ? product.name : "",
-//     stock: action === "put" ? product.stock : "",
-//     description: action === "put" ? product.description : "",
-//     price: action === "put" ? product.price : "",
-//     category: action === "put" ? categoryProduct : [],
-//     image: action === "put" ? product.name : "",
-//   };
-
-//   const convertBase64 = (file) => {
-//     if (typeof file === "string") {
-//       return file;
-//     } else {
-//       return new Promise((resolve, reject) => {
-//         const fileReader = new FileReader();
-//         fileReader.readAsDataURL(file);
-
-//         fileReader.onload = () => {
-//           resolve(fileReader.result);
-//         };
-
-//         fileReader.onerror = (error) => {
-//           reject(error);
-//         };
-//       });
-//     }
-//   };
 
   return (
     <Col
@@ -65,16 +43,14 @@ import CustomInput from "../custom/input";
       className="card shadow pl-3 pr-3 pb-4 pt-2 mb-3 mx-auto"
     >
       <Formik
-        enableReinitialize={true}
-        //initialValues={initialValuesForm}
+        initialValues={{email, direction}}
         validationSchema={Yup.object({
-          direccion: Yup.string()
+          direction: Yup.string()
             .min(4, "Debe tener al menos 4 caracteres")
             .max(50, "Debe tener 50 caracteres o menos")
             .required("Debes completar este campo"),
-          email: Yup.number()
-            .min(1, "Debe tener un producto en stock")
-            .max(1000, "Debe tener 1000 productos o menos")
+          email: Yup.string()
+            .email("Introduzca un email valido por favor")
             .required("Debes completar este campo"),
         })}
         // onSubmit={async (values, { setSubmitting, resetForm }) => {
@@ -96,18 +72,16 @@ import CustomInput from "../custom/input";
           return (
             <Form>
               <Col className="rounded-lg text-center">
-                {action === "put" ? (
+
                   <Row>
                     <Button
                       className="btn btn-light text-secondary btn-sm float-left"
-                      //onClick={() => history.push("/admin/products")}
+                      onClick={() => history.push("/cart")}
                     >
-                      <ArrowLeftCircle size={20} />
+                      <ArrowLeftCircle size={30} />
                     </Button>
                   </Row>
-                ) : (
-                  ""
-                )}
+              
                 <Row className="d-block">
                   <BagCheck className="mb-1 mr-2" size={40} />
                   <h2>Confirma tu compra!</h2>
@@ -140,8 +114,8 @@ import CustomInput from "../custom/input";
               >
                 {isSubmitting
                   ? "Cargando..."
-                  : action === "post"
-                  ? "Compra confirmada"
+                  //: action === "post"
+                  //? "Compra confirmada"
                   : "Comprar"}
               </Button>
             </Form>
