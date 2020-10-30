@@ -174,10 +174,16 @@ function userReducers(state = initialState, action) {
         carrito: state.carrito.concat(action.products.productsCarts),
       };
     case PROM_USER:
-      const user = state.users.data.find((item) => item.id === action.user);
-      user.role = 'admin';
+      let upUsers = state.users.map((item) => {
+        if (item.id === action.id) {
+          item.role = "admin";
+        }
+        return item;
+      });
+
       return {
-        ...state
+        ...state,
+        users: upUsers,
       };
     case GET_REVIEWS_BY_ID:
       return {
