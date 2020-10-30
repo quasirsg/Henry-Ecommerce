@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
-import { Switch, Route } from "react-router-dom";
-import { useDispatch } from 'react-redux';
-import { getProducts, getBanners } from './redux/actions/productActions';
-import { getCategory } from './redux/actions/categoryActions';
-import { verifySession } from './redux/actions/jwtUsers';
+import { Switch, Route, Redirect } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { getProducts, getBanners } from "./redux/actions/productActions";
+import { getCategory } from "./redux/actions/categoryActions";
+import { verifySession } from "./redux/actions/jwtUsers";
 
 //Components
 import Navbar from "./components/navbar";
@@ -26,13 +26,14 @@ import UserPage from "./pages/UserPage";
 function App() {
   const dispatch = useDispatch();
 
-  // Obtener products ,categorias y banners 
+  const session = useSelector((state) => state.session.userDetail);
+  console.log(session);
+  // Obtener products ,categorias y banners
   useEffect(() => {
     dispatch(getCategory());
     dispatch(getProducts());
     dispatch(getBanners());
     dispatch(verifySession());
-
   }, []);
 
   return (
@@ -50,13 +51,20 @@ function App() {
         </Route>
         <Route exact path="/cart" component={CartPage} />
         <Route exact path="/ordenes" component={TablaOrdenes} />
-        <Route exact path="/admin/ordenes/:id" component={Orden} />
         <Route exact path="/usuarios" component={TablaUsuarios} />
+
         <Route exact path="/admin">
-          <AdminMenu />
+          {session.role === "admin" ? <AdminMenu /> : <Redirect to={"/"} />}
         </Route>
+
         <Route exact path="/checkout" component={CheckoutForm} />
-        <Route exact path='/user/account' component={UserPage} />
+        <Route exact path="/user/account">
+          {Object.keys(session).length > 0 ? (
+            <UserPage />
+          ) : (
+            <Redirect to={"/"} />
+          )}
+        </Route>
         <Route exact path="/user/register">
           <FormUser action="post" icon="success" message="Usuario agregado" />
         </Route>
