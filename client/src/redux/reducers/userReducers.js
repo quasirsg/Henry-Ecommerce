@@ -23,7 +23,7 @@ import {
 
 const initialState = {
   users: [],
-  userDetail: {},
+  userDetail: [],
   err: [],
   carrito: [],
   message: "",
@@ -55,13 +55,13 @@ function userReducers(state = initialState, action) {
         users: state.userDetail.concat(action.userDetail),
         err: state.userDetail.concat(action.error),
       };
-    // case PUT_USER:
-    //   return {
-    //     ...state,
-    //     users: state.users.map((item) => {
-    //       return item.id === action.userDetail.id ? action.userDetail : item;
-    //     }),
-    //   };
+    case PUT_USER:
+      return {
+        ...state,
+        users: state.users.map((item) => {
+          return item.id === action.userDetail.id ? action.userDetail : item;
+        }),
+      };
     case DELETE_USER:
       return {
         ...state,
@@ -197,7 +197,7 @@ function userReducers(state = initialState, action) {
       return {
         ...state,
         reviews: action.data,
-      }
+      };
     default:
       return state;
   }

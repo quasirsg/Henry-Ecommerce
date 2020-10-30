@@ -107,31 +107,31 @@ const FormUser = ({
           const imgBase64 = await convertBase64(values.image);
           //Request al backend
           let user = { ...values, image: imgBase64 };
-
           const data = action === "delete" ? null : user;
           //To lower case
           user.email = user.email.toLowerCase();
 
-          await dispatch(allActions.editUser(id, action, user))
-            .then((res) => {
-              resetForm();
-              setSubmitting(false);
-              Toast.fire({
-                icon,
-                title: `${message} Bienvenido ${values.name}`,
-              });
-              setTimeout(function () {
-                window.location.href = "/";
-              }, 3000);
-            })
-            .catch((error) => {
-              console.log(error);
-              setSubmitting(false);
-              Toast.fire({
-                icon: "error",
-                title: "Error: vuelve a intentarlo",
-              });
-            });
+          dispatch(allActions.editUser(id, action, user));
+
+          // .then((res) => {
+          //   resetForm();
+          //   setSubmitting(false);
+          //   Toast.fire({
+          //     icon,
+          //     title: `${message} Bienvenido ${values.name}`,
+          //   });
+          //   setTimeout(function () {
+          //     window.location.href = "/";
+          //   }, 3000);
+          // })
+          // .catch((error) => {
+          //   console.log(error);
+          //   setSubmitting(false);
+          //   Toast.fire({
+          //     icon: "error",
+          //     title: "Error: vuelve a intentarlo",
+          //   });
+          // });
         }}
       >
         {({ isValid, isSubmitting, setFieldValue }) => {
@@ -224,7 +224,7 @@ const FormUser = ({
                 block
                 className="bg-color-primary shadow-primary rounded-pill border-0"
                 type="submit"
-                disabled={!isValid}
+                // disabled={!isValid}
               >
                 {isSubmitting
                   ? "Cargando..."

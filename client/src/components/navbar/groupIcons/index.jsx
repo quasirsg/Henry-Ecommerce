@@ -33,6 +33,7 @@ export default ({ history }) => {
   // useEffect(() => {
   //   dispatch(getCurrentUser());
   // }, []);
+  console.log(userRole);
 
   const linkUser = (userRole) => {
     if (userRole === "client") {
