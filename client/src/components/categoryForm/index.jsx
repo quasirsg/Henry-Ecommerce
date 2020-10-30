@@ -48,8 +48,7 @@ const FormCategory = ({
             .required("Debes completar este campo"),
         })}
         onSubmit={(values, { setSubmitting, resetForm }) => {
-          // const url = `/category/${id ? id : ""}`;
-          // const data = action === "delete" ? null : values;
+          
 
           dispatch(editCategory(id, action, values)).then((response) => {
             resetForm();
