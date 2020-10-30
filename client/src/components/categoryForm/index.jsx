@@ -6,7 +6,6 @@ import * as Yup from "yup";
 import Swal from "sweetalert2";
 import CustomInput from "../custom/input";
 import { useDispatch } from "react-redux";
-//import allActions from "../../redux/actions/allActions";
 import { ArrowLeftCircle } from "react-bootstrap-icons";
 import { useHistory } from "react-router-dom";
 import { editCategory } from "../../redux/actions/categoryActions";
