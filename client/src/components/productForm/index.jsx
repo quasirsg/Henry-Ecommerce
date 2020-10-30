@@ -35,7 +35,7 @@ const FormProduct = ({ action, history, id = 0 }) => {
     description: action === "put" ? product.description : "",
     price: action === "put" ? product.price : "",
     category: action === "put" ? categoryProduct : [],
-    image: action === "put" ? product.name : "",
+    image: action === "put" ? product.image : "",
   };
 
   const convertBase64 = (file) => {
@@ -91,6 +91,8 @@ const FormProduct = ({ action, history, id = 0 }) => {
         onSubmit={async (values, { setSubmitting, resetForm }) => {
           // Convertir imagen en base64
           const imgBase64 = await convertBase64(values.image);
+
+          console.log(imgBase64);
           //Agregar img64 al obj producto
           let product = { ...values, image: imgBase64 };
           // Verificar tipo de accion enviada

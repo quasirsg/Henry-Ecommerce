@@ -29,51 +29,67 @@ export const getOneUser = (id) => (dispatch) => {
   });
 };
 
-export const editUser = (id, values, action) => (dispatch) => {
-  if (action === "post") {
-    return axios
-      .post(`${url}/users/`, {
-        name: values.name,
-        email: values.email,
-        address: values.address,
-        phoneNumber: values.phoneNumber,
-        password: values.password,
-        image: values.image,
-        location_id: values.location_id,
-      })
-      .then((res) => {
-        dispatch({
-          type: actionTypes.POST_USER,
-          userDetail: res.data,
-        });
-      })
-      .catch((err) => {
-        dispatch({
-          error: err,
-        });
+export const postUser = (user) => (dispatch) => {
+  axios
+    .post(`${url}/users/`, user)
+    .then((res) => {
+      dispatch({
+        type: actionTypes.POST_USER,
+        userDetail: res.data,
       });
-  } else if (action === "put") {
-    return axios
-      .put(url + `/users/${id}`, values)
-      .then((res) => {
-        dispatch({
-          type: actionTypes.PUT_USER,
-          data: res.data,
-        });
-      })
-      .catch((err) => console.log(err));
-  } else if (action === "delete") {
-    return axios
-      .delete(url + `/users/${id}`)
-      .then((res) => {
-        dispatch({
-          type: actionTypes.DELETE_USER,
-          userDetail: id,
-        });
-      })
-      .catch((err) => console.log(err));
-  }
+      Toast.fire({
+        icon: "success",
+        title: `Se registro el usuario: ${user.name}`,
+      });
+    })
+    .catch((err) => {
+      dispatch({
+        error: err,
+      });
+      Toast.fire({
+        icon: "error",
+        title: "Error al registrarse",
+      });
+    });
 };
+
+export const editUser = (id, values, action) => async (dispatch) => {};
+//   if (action === "post") {
+//     return axios
+//       .post(`${url}/users/`, values)
+//       .then((res) => {
+//         dispatch({
+//           type: actionTypes.POST_USER,
+//           userDetail: res.data,
+//         });
+//       })
+//       .catch((err) => {
+//         dispatch({
+//           error: err,
+//         });
+//       });
+//   } else if (action === "put") {
+//     return axios
+//       .put(url + `/users/${id}`, values)
+//       .then((res) => {
+//         dispatch({
+//           type: actionTypes.PUT_USER,
+//           data: res.data,
+//         });
+//       })
+//       .catch((err) => console.log(err));
+//   } else if (action === "delete") {
+//     return axios
+//       .delete(url + `/users/${id}`)
+//       .then((res) => {
+//         dispatch({
+//           type: actionTypes.DELETE_USER,
+//           userDetail: id,
+//         });
+//       })
+//       .catch((err) => console.log(err));
+//   }
+// };
 
 //un usuario puede añadir una review a un producto que haya comprado
 export const addReview = (productId, userId, points, description) => (
