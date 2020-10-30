@@ -26,7 +26,7 @@ const CheckoutForm = ({
   email= "",
   direction= "" }) => {
   const history = useHistory ();
-  const dispatch = useDispatch();
+ // const dispatch = useDispatch();
 
 //   const allCategories = useSelector((state) => state.category.category);
 //   const product = useSelectorProduct(id);
