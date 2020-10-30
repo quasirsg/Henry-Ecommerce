@@ -9,7 +9,8 @@ import { useDispatch } from "react-redux";
 import { loguinUser } from "../../redux/actions/jwtUsers";
 import { cartLoginListen } from "../custom/utils";
 import { addProducts } from "../../redux/actions/userActions";
-import Toast from '../alerts/toast'; 
+import Toast from "../alerts/toast";
+import Swal from "sweetalert2";
 
 const LoginForm = ({
   id,
@@ -19,7 +20,7 @@ const LoginForm = ({
   action,
   icon,
   message,
-  history
+  history,
 }) => {
   const dispatch = useDispatch();
 
@@ -41,12 +42,8 @@ const LoginForm = ({
             .required("Debes completar este campo"),
           password: Yup.string()
             .required("Please Enter your password")
-            .matches(
-              /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
-              "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character"
-            ),
         })}
-        onSubmit={async (values, { setSubmitting, resetForm }) => {
+        onSubmit={(values, { setSubmitting, resetForm }) => {
           //Request al backend
           let user = { ...values };
 
@@ -54,23 +51,19 @@ const LoginForm = ({
           //To lower case
           user.email = user.email.toLowerCase();
 
-          dispatch(loguinUser(user.email, user.password)) //Funciona loguin correcto e error al ingresar mal los datos
-            .then((res) => {
-              resetForm();
-              setSubmitting(false);
-              Toast.fire({
-                icon: 'info',
-                title: `¡Bienvenido de vuelta!`,
-              });
-              history.push('/');
-            })
-            .catch((error) => {
-              setSubmitting(false);
-              Toast.fire({
-                icon: "error",
-                title: "Error: vuelve a intentarlo",
-              });
-            });
+          console.log(user);
+
+          dispatch(loguinUser(user.email, user.password)); //Funciona loguin correcto e error al ingresar mal los datos
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title: `¡Bienvenido!`,
+            showConfirmButton: false,
+            timer: 2000,
+          });
+          resetForm();
+          setSubmitting(false);
+          history.push("/");
         }}
       >
         {({ isValid, isSubmitting }) => {
@@ -87,8 +80,8 @@ const LoginForm = ({
                     </Button>
                   </Row>
                 ) : (
-                  ""
-                )}
+                    ""
+                  )}
 
                 <Row className="d-block">
                   <PersonCircle className="mb-1 mr-2" size={40} />
@@ -125,12 +118,12 @@ const LoginForm = ({
                 {isSubmitting
                   ? "Iniciando sesón..."
                   : action === "put"
-                  ? "Actualizar usuario"
-                  : action === "delete"
-                  ? "Eliminar usuario"
-                  : action === "post"
-                  ? "Ingresar"
-                  : null}
+                    ? "Actualizar usuario"
+                    : action === "delete"
+                      ? "Eliminar usuario"
+                      : action === "post"
+                        ? "Ingresar"
+                        : null}
               </Button>
             </Form>
           );

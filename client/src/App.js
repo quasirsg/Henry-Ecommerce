@@ -1,28 +1,41 @@
-import React from "react";
-import { Switch, Route } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Switch, Route, Redirect } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { getProducts, getBanners } from "./redux/actions/productActions";
+import { getCategory } from "./redux/actions/categoryActions";
+import { verifySession } from "./redux/actions/jwtUsers";
 
 //Components
 import Navbar from "./components/navbar";
 import ProductDetail from "./components/productDetail";
 import FormCategory from "./components/categoryForm";
 import TablaUsuarios from "./components/tablaUsuarios";
+import Orden from "./components/tablaOrdenes/Orden";
+import TablaOrdenes from "./components/tablaOrdenes";
+import FormUser from "./components/userForm";
+import LoginForm from "./components/loginForm";
+import CheckoutForm from "./components/checkout";
 
 //Pages
 import SearchPage from "./pages/SearchPage";
 import AdminMenu from "./components/admin";
 import HomePage from "./pages/HomePage";
 import CartPage from "./pages/CartPage";
-import UserPage from './pages/UserPage';
-
-// Componente Orden-> probando
-import Orden from "./components/tablaOrdenes/Orden";
-import TablaOrdenes from "./components/tablaOrdenes";
-import FormUser from "./components/userForm";
-import LoginForm from "./components/loginForm";
-
-
+import UserPage from "./pages/UserPage";
 
 function App() {
+  const dispatch = useDispatch();
+
+  const session = useSelector((state) => state.session.userDetail);
+  console.log(session);
+  // Obtener products ,categorias y banners
+  useEffect(() => {
+    dispatch(getCategory());
+    dispatch(getProducts());
+    dispatch(getBanners());
+    dispatch(verifySession());
+  }, []);
+
   return (
     //No modifique ni elimine las rutas existentes
     <div className="col-lg-12">
@@ -38,18 +51,35 @@ function App() {
         </Route>
         <Route exact path="/cart" component={CartPage} />
         <Route exact path="/ordenes" component={TablaOrdenes} />
-        <Route exact path="/admin/ordenes/:id" component={Orden} />
         <Route exact path="/usuarios" component={TablaUsuarios} />
+
         <Route exact path="/admin">
-          <AdminMenu />
+          {session.role === "admin" ? <AdminMenu /> : <Redirect to={"/"} />}
         </Route>
-        <Route exact path='/user' component={UserPage} />
+
+        <Route exact path="/checkout" component={CheckoutForm} />
+        <Route exact path="/user/account">
+          {Object.keys(session).length > 0 ? (
+            <UserPage />
+          ) : (
+            <Redirect to={"/"} />
+          )}
+        </Route>
         <Route exact path="/user/register">
           <FormUser action="post" icon="success" message="Usuario agregado" />
         </Route>
-
-        <Route exact path="/user/login" render={({history}) => <LoginForm action="post" icon="success" message="Usuario agregado" history={history} />}>
-        </Route>
+        <Route
+          exact
+          path="/user/login"
+          render={({ history }) => (
+            <LoginForm
+              action="post"
+              icon="success"
+              message="Usuario agregado"
+              history={history}
+            />
+          )}
+        ></Route>
 
         <Route
           exact

@@ -1,23 +1,22 @@
 import axios from "axios";
 import * as actionTypes from "./actionTypes";
 import Toast from "../../components/alerts/toast";
- 
-const url= "http://localhost:3001"
 
-export const adminActions = (id) => (dispatch) => {
-    axios
-      .put(`${url}/users/${id}/promote`)
-      .then((res) => {
-        dispatch({
-          type: actionTypes.PROM_USER,
-          user: id
-        });
-        Toast.fire({
-          icon: 'success',
-          title: 'Usuario promovido'
-        });
-      })
-      .catch((err) => {
-        console.log(err);
+const url = "http://localhost:3001";
+
+export const adminActions = (id, newRole) => (dispatch) => {
+  return axios
+    .put(`${url}/users/${id}/promote`, {
+      role: newRole,
+    })
+    .then((res) => {
+      dispatch({
+        type: actionTypes.PROM_USER,
+        id: res.data,
+        role: newRole,
       });
-  }    
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};

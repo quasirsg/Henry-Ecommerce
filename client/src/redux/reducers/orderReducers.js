@@ -11,7 +11,6 @@ const initialState = {
   orderDetail: {},
 };
 function orderReducer(state = initialState, action) {
-  console.log(action);
   switch (action.type) {
     case GET_ORDERS:
       return {
@@ -19,11 +18,9 @@ function orderReducer(state = initialState, action) {
         allOrders: action.order,
       };
     case UPDATE_ORDER:
-      if (state.orderDetail.status === "shopping_cart") {
-        state.orderDetail.status = action.status;
-      }
       return {
         ...state,
+        orderDetail: action.upOrder,
       };
     case DELETE_ORDER:
       return {

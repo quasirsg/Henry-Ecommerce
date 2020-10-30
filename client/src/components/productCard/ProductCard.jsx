@@ -6,13 +6,19 @@ import { useDispatch } from "react-redux";
 import { getOneProduct } from "../../redux/actions/productActions";
 import { addProductCart } from "../../redux/actions/userActions";
 
-const ProductCard = ({ product }) => {
+const ProductCard = ({ product, userId }) => {
   const dispatch = useDispatch();
   const handleOnclick = () => {
     dispatch(getOneProduct(product.id));
   };
 
-  const userId = 1;
+  // if (localStorage.token) {
+  //   let user = localStorage.getItem("token");
+  //   var userId = user.id;
+  // } else {
+  //   var userId = 1;
+  // }
+
   product.quantity = 1;
   const handleClick = () => {
     dispatch(addProductCart(userId, product));

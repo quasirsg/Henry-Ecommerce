@@ -1,0 +1,5 @@
+.userDetail__buttons {
+    width: 50%;
+    display: flex;
+    justify-content: space-around;
+}

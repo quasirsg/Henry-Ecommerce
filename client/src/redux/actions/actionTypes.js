@@ -29,8 +29,8 @@ export const GET_USER_ORDERS = "GET_USER_ORDERS";
 export const GET_USERS_ORDERS = "GET_USERS_ORDERS";
 
 //Users loguin
-export const USER_LOGUIN = "USER_LOGUIN";
-export const USER_LOGUIN_ERROR = "USER_LOGUIN_ERROR";
+export const USER_LOGIN = "USER_LOGIN";
+export const USER_LOGIN_ERROR = "USER_LOGIN_ERROR";
 export const LOGOUT_USER = "LOGOUT_USER";
 export const CURRENT_USER = "CURRENT_USER";
 export const NOT_CURRENT_USER = "NOT_CURRENT_USER";
@@ -66,6 +66,7 @@ export const ADD_REVIEW = "ADD_REVIEW";
 export const DELETE_REVIEW = "DELETE_REVIEW";
 export const EDIT_REVIEW = "EDIT_REVIEW";
 export const GET_PRODUCT_REVIEWS = "GET_PRODUCT_REVIEWS";
+export const GET_REVIEWS_BY_ID = "GET_REVIEWS_BY_ID";
 
 export const GET_ORDER_BY_ID = "GET_ORDER_BY_ID";
 

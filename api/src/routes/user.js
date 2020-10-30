@@ -1,7 +1,7 @@
 const server = require("express").Router();
-const { User, Order, Product, Linea_order } = require("../db.js");
-const authorize = require('../helpers/auth')
-const userService = require('../controllers/userController');
+const { User, Order, Product, Linea_order, Reviews } = require("../db.js");
+const authorize = require("../helpers/auth");
+const userService = require("../controllers/userController");
 
 //Agregar un usuario
 server.post("/", (req, res, next) => {
@@ -14,6 +14,7 @@ server.post("/", (req, res, next) => {
     image,
     location_id,
   } = req.body;
+  console.log(name);
   if (!name || !email || !address || !password || !image)
     return res.status(400).json({
       message: "A parameter is missing",
@@ -37,7 +38,7 @@ server.post("/", (req, res, next) => {
 });
 
 //Actualizar un usuario
-server.put("/:id", (req, res, next) => {
+server.put("/:id", authorize(), (req, res, next) => {
   let { id } = req.params;
   let update = req.body;
 
@@ -85,22 +86,25 @@ server.delete("/:id", (req, res, next) => {
     .catch(next);
 });
 
-// Dar permisos de Admin a user 
-server.put('/:id/promote', (req,res,next) => {
-  const {id} = req.params;
+// Dar permisos de Admin a user
+server.put("/:id/promote", (req, res, next) => {
+  const { id } = req.params;
+  const { role } = req.body;
 
-  User.update({
-    role: 'admin'
-  }, {
-    where: {id}
-  })
-  .then(user => {
-    return res.json({
-      user
-    });
-  })
-  .catch(error => next(error.message))
-
+  User.update(
+    {
+      role: role,
+    },
+    {
+      where: { id },
+    }
+  )
+    .then((user) => {
+      return res.json({
+        user,
+      });
+    })
+    .catch((error) => next(error.message));
 });
 
 //obtener todos los usuarios
@@ -246,7 +250,7 @@ server.post("/:userId/cart/add", async (req, res, next) => {
   }
 });
 
-// Agregar los productos al carrito
+// Agregar los productos del carrito guest al carrito del user
 server.post("/:userId/cart", async (req, res, next) => {
   const { productsCarts, orderId } = req.body;
   const { userId } = req.params;
@@ -312,16 +316,20 @@ server.put("/:userId/cart/:productId", async (req, res) => {
     .then(async (orderline) => {
       if (!orderline) return res.sendStatus(404);
       if (amount === "addAmount") {
-        orderline.quantity += 1;
+        if (quantity < product.stock) {
+          orderline.quantity += 1;
+          orderline.total = orderline.quantity * product.price;
+        }
       } else if (amount === "deleteAmount") {
-        if (quantity !== 0) {
+        if (quantity > 1) {
           orderline.quantity -= 1;
+          orderline.total = orderline.total - product.price;
         } else if (quantity === 0) {
           orderline.quantity = quantity;
         }
       }
       await orderline.save();
-      return res.send({
+      return res.json({
         data: orderline,
       });
     })
@@ -421,13 +429,25 @@ server.get("/:userId/cart", (req, res) => {
     });
 });
 
-//AUTH{
+//ruta que retorna todas las reviews de un usuario
+server.get("/:id/reviews", (req, res) => {
+  const userId = req.params.id;
+
+  Reviews.findAll({
+    include: [{ model: User, attributes: ["name", "image"] }],
+    where: { userId },
+  })
+    .then((reviews) => res.status(200).json({ data: reviews }))
+    .catch((err) => console.log(err));
+});
+
+//AUTH
 //Login de un usuario
-server.post("/login",userService.login) ;
+server.post("/login", userService.login);
 //obtener "mis" detalles de usuario por id (client)
-server.get("/mi/:id",authorize(),userService.getByMyId) ;
+server.get("/me", authorize(), userService.getByMyId);
 //obtener detalles de usuario por id (admin)
-server.get("/:id",authorize(),userService.getById);
+server.get("/:id", authorize(), userService.getById);
 //}
 
 module.exports = server;

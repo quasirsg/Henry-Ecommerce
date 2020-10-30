@@ -27,12 +27,12 @@ const {
   loadReviews,
 } = require("./src/loadData.js");
 // Syncing all the models at once.
-conn.sync({ force: false }).then(() => {
+conn.sync({ force: true }).then(() => {
   loadProducts();
   loadCategories();
-  loadProductCategories();
+  // loadProductCategories();
   loadUsers();
-  loadReviews();
+  // loadReviews();
 
   console.log("\nSe han precargado los productos exitosamente!\n");
 

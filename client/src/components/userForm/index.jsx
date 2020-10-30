@@ -6,10 +6,11 @@ import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import Swal from "sweetalert2";
 import CustomInput from "../custom/input";
-
+import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
 import allActions from "../../redux/actions/allActions";
+import { postUser } from "../../redux/actions/userActions";
 
 const Toast = Swal.mixin({
   toast: true,
@@ -36,9 +37,9 @@ const FormUser = ({
   action,
   icon,
   message,
-  history,
 }) => {
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const convertBase64 = (file) => {
     if (typeof file === "string") return file;
@@ -107,31 +108,12 @@ const FormUser = ({
           const imgBase64 = await convertBase64(values.image);
           //Request al backend
           let user = { ...values, image: imgBase64 };
-
           const data = action === "delete" ? null : user;
           //To lower case
           user.email = user.email.toLowerCase();
 
-          await dispatch(allActions.editUser(id, action, user))
-            .then((res) => {
-              resetForm();
-              setSubmitting(false);
-              Toast.fire({
-                icon,
-                title: `${message} Bienvenido ${values.name}`,
-              });
-              setTimeout(function () {
-                window.location.href = "/";
-              }, 3000);
-            })
-            .catch((error) => {
-              console.log(error);
-              setSubmitting(false);
-              Toast.fire({
-                icon: "error",
-                title: "Error: vuelve a intentarlo",
-              });
-            });
+          dispatch(postUser(user));
+          history.push("/user/login");
         }}
       >
         {({ isValid, isSubmitting, setFieldValue }) => {
@@ -224,7 +206,7 @@ const FormUser = ({
                 block
                 className="bg-color-primary shadow-primary rounded-pill border-0"
                 type="submit"
-                disabled={!isValid}
+                // disabled={!isValid}
               >
                 {isSubmitting
                   ? "Cargando..."

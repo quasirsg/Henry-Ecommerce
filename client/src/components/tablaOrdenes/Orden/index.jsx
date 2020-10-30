@@ -15,8 +15,12 @@ import {
   updateStatusOrder,
 } from "../../../redux/actions/ordenActions";
 import Toast from "../../alerts/toast";
+import { ArrowLeftCircle } from "react-bootstrap-icons";
+import { Row, Button } from "reactstrap";
+import { useHistory } from "react-router-dom";
 
 const Orden = () => {
+  const history = useHistory();
   /* ===== Redux ====== */
   const dispatch = useDispatch();
   const orden = useSelector((state) => state.order.orderDetail);
@@ -57,6 +61,20 @@ const Orden = () => {
             title: `Error: No se pudo completar la orden "`,
           });
         });
+    } else if (status === "processing") {
+      dispatch(updateStatusOrder(id, status))
+        .then((res) => {
+          Toast.fire({
+            icon: "success",
+            title: `Orden en proceso`,
+          });
+        })
+        .catch((err) => {
+          Toast.fire({
+            icon: "error",
+            title: `Error: No se puede procesar la orden "`,
+          });
+        });
     }
   };
 
@@ -66,9 +84,60 @@ const Orden = () => {
     setOpen(!dropdownOpen);
   };
 
+  /* =========== Cambio de botones segun el estado==========*/
+
+  const changeStatus = (state) => {
+    if (state === "shopping_cart") {
+      return (
+        <>
+          <DropdownItem onClick={() => handleStatus("processing")}>
+            Procesar orden
+          </DropdownItem>
+        </>
+      );
+    } else if (state === "processing") {
+      return (
+        <>
+          <DropdownItem onClick={() => handleStatus("completed")}>
+            Completar orden
+          </DropdownItem>
+        </>
+      );
+    }
+  };
+
+
+  const statusButton = (state) => {
+    if (state !== "canceled" && state !== "completed") {
+      return (
+        <>
+          <ButtonDropdown isOpen={dropdownOpen} toggle={toggle}>
+            <DropdownToggle caret>Modificar el estado</DropdownToggle>
+            <DropdownMenu>
+              <DropdownItem onClick={() => handleStatus("canceled")}>
+                Cancelar orden
+              </DropdownItem>
+              {changeStatus(orden.status)}
+            </DropdownMenu>
+          </ButtonDropdown>
+        </>
+      );
+    }
+  };
+
+  console.log(orden);
+
   return (
     <div className="orden-cont">
       <div></div>
+      <Row>
+        <Button
+          className="btn btn-light text-secondary btn-sm float-left"
+          onClick={() => history.push("/admin/ordenes")}
+        >
+          <ArrowLeftCircle size={20} />
+        </Button>
+      </Row>
       <Container>
         <Table hover responsive className="table-sm">
           <thead>
@@ -107,17 +176,7 @@ const Orden = () => {
           <tbody></tbody>
         </Table>
       </Container>
-      <ButtonDropdown isOpen={dropdownOpen} toggle={toggle}>
-        <DropdownToggle caret>Modificar el estado</DropdownToggle>
-        <DropdownMenu>
-          <DropdownItem onClick={() => handleStatus("canceled")}>
-            Cancelar orden
-          </DropdownItem>
-          <DropdownItem onClick={() => handleStatus("completed")}>
-            Completar orden
-          </DropdownItem>
-        </DropdownMenu>
-      </ButtonDropdown>
+      {statusButton(orden.status)}
     </div>
   );
 };

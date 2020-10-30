@@ -11,7 +11,6 @@ module.exports = {
   login
 };
 
-
 //GetById (ADMINS)
 function getById(req, res, next) {
   const currentUser = req.user;
@@ -29,18 +28,20 @@ function getById(req, res, next) {
 
 //GetByMyId (USERS)
 function getByMyId(req, res, next) {
-  const id = parseInt(req.params.id);
-  const currentUser = req.user;
-  //Traer los datos solo si el id del usuario identificado coincide con el id pasado por post
-  if (id !== currentUser.sub) {
-    return res.status(401).json({
-      message: "Unauthorized",
-    });
-  }
+  // Traer ID del usuario que se encuentra dentro del token
+  const { userId } = req.user;
 
-  User.findByPk(id).then((user) => {
-    return res.status(200).json(user);
-  });
+  // Buscar usuario
+  User.findOne({
+    attributes: ['id', 'name', 'email', 'address', 'phoneNumber', 'image', 'role'],
+    where: {
+      id: userId
+    }
+  })
+    .then((user) => {
+      return res.status(200).json(user);
+    })
+    .catch(error => next(error.message))
 }
 
 //Login (GUEST)
@@ -50,25 +51,19 @@ function login(req, res, next) {
   var password = req.body.password;
 
   User.findOne({
-    attributes: [
-      "id",
-      "name",
-      "password",
-      "email",
-      "address",
-      "role",
-      "phoneNumber",
-    ],
     where: {
       email: email,
     },
   })
     .then((user) => {
+
       //Comparar el password que trae el request con el password del objeto user
-      bcrypt.compare(password, user.dataValues.password, (err, response) => {
-        if (err) {
-          console.log("error");
+      bcrypt.compare(password, user.dataValues.password, (error, response) => {
+
+        if (error) {
+          next(error.message);
         }
+
         if (response) {
           /*
           *Definir el token y guardar en el, tanto el id como el role del usuario (modificar si es necesario traer otros params) Esto sirve para no tener que hacer tanta logica
@@ -77,7 +72,7 @@ function login(req, res, next) {
           */
           var token = jwt.sign(
             {
-              sub: user.id,
+              userId: user.id,
               role: user.role,
             },
             config.secret,
@@ -85,19 +80,17 @@ function login(req, res, next) {
               expiresIn: 60 * 60 * 24, // expires in 24 hours
             }
           );
-          return res.status(200).send({
-            token,
-          });
+          return res.status(200).json({ token });
         } else {
-          return res.status(404).send({
-            error: "contraseña Erronea",
+          return res.status(404).json({
+            error: "email o contraseña invalidos"
           });
         }
       });
     })
     .catch((err) => {
-      return res.status(404).send({
-        error: "Email invalido",
+      return res.status(404).json({
+        error: "email o contraseña invalidos"
       });
     });
 }
