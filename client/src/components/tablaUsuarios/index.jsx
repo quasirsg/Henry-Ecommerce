@@ -1,13 +1,16 @@
 import React, { useEffect } from "react";
 import { Button, Container, Table } from "reactstrap";
-import { GearFill, Trash, Tools, PersonCheckFill } from "react-bootstrap-icons";
+import {
+  GearFill,
+  PersonCheckFill,
+  PersonDashFill,
+} from "react-bootstrap-icons";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 //import { deleteOrder } from "../../redux/actions/ordenActions";
 import { adminActions } from "../../redux/actions/adminActions";
 import { getUsers } from "../../redux/actions/userActions";
 import Toast from "../../components/alerts/toast";
-import { useLocation } from "react-router-dom";
 
 const TablaUsuarios = () => {
   const dispatch = useDispatch();
@@ -17,13 +20,22 @@ const TablaUsuarios = () => {
     dispatch(getUsers());
   }, []);
 
-  const handleClick = (e, id, item) => {
-    e.preventDefault();
-    if (item.role === "client") {
-      dispatch(adminActions(id));
-      Toast.fire({
-        icon: "success",
-        title: "Usuario promovido",
+  const handleClick = (id, role) => {
+    if (role === "client") {
+      let newRole = "admin";
+      dispatch(adminActions(id, newRole)).then((res) => {
+        Toast.fire({
+          icon: "success",
+          title: "Usuario promovido",
+        });
+      });
+    } else if (role === "admin") {
+      let newRole = "client";
+      dispatch(adminActions(id, newRole)).then((res) => {
+        Toast.fire({
+          icon: "success",
+          title: "Usuario degradado",
+        });
       });
     } else {
       Toast.fire({
@@ -32,8 +44,6 @@ const TablaUsuarios = () => {
       });
     }
   };
-
-  console.log(users);
 
   return (
     <Container>
@@ -59,10 +69,14 @@ const TablaUsuarios = () => {
                 <td className="p-2">
                   <Button
                     color="default"
-                    onClick={(e) => handleClick(e, item.id, item)}
+                    onClick={() => handleClick(item.id, item.role)}
                     className="border btn-sm"
                   >
-                    <PersonCheckFill id={item.id} size={17} />
+                    {item.role === "admin" ? (
+                      <PersonDashFill id={item.id} size={17} />
+                    ) : (
+                      <PersonCheckFill id={item.id} size={17} />
+                    )}
                   </Button>
                 </td>
               </tr>

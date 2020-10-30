@@ -39,19 +39,22 @@ const FormProduct = ({ action, history, id = 0 }) => {
   };
 
   const convertBase64 = (file) => {
-    if (typeof file === "string") return file;
-    return new Promise((resolve, reject) => {
-      const fileReader = new FileReader();
-      fileReader.readAsDataURL(file);
+    if (typeof file === "string") {
+      return file;
+    } else {
+      return new Promise((resolve, reject) => {
+        const fileReader = new FileReader();
+        fileReader.readAsDataURL(file);
 
-      fileReader.onload = () => {
-        resolve(fileReader.result);
-      };
+        fileReader.onload = () => {
+          resolve(fileReader.result);
+        };
 
-      fileReader.onerror = (error) => {
-        reject(error);
-      };
-    });
+        fileReader.onerror = (error) => {
+          reject(error);
+        };
+      });
+    }
   };
 
   return (
