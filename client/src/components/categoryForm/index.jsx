@@ -51,23 +51,10 @@ const FormCategory = ({
           // const url = `/category/${id ? id : ""}`;
           // const data = action === "delete" ? null : values;
 
-          console.log(values);
-          dispatch(editCategory(id, action, values))
-            .then((response) => {
-              resetForm();
-              setSubmitting(false);
-              Toast.fire({
-                icon,
-                title: `${message} ${values.name}`,
-              });
-            })
-            .catch((error) => {
-              setSubmitting(false);
-              Toast.fire({
-                icon: "error",
-                title: "Error: vuelve a intentarlo",
-              });
-            });
+          dispatch(editCategory(id, action, values)).then((response) => {
+            resetForm();
+            setSubmitting(false);
+          });
         }}
       >
         {({ isSubmitting }) => (

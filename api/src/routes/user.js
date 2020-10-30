@@ -88,10 +88,11 @@ server.delete("/:id", (req, res, next) => {
 // Dar permisos de Admin a user
 server.put("/:id/promote", (req, res, next) => {
   const { id } = req.params;
+  const { role } = req.body;
 
   User.update(
     {
-      role: "admin",
+      role: role,
     },
     {
       where: { id },

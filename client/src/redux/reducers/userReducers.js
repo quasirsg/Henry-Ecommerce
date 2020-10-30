@@ -174,16 +174,24 @@ function userReducers(state = initialState, action) {
         carrito: state.carrito.concat(action.products.productsCarts),
       };
     case PROM_USER:
-      let upUsers = state.users.map((item) => {
-        if (item.id === action.id) {
-          item.role = "admin";
-        }
-        return item;
-      });
-
+      console.log(action);
+      let user = state.userDetail;
+      if (action.role === "admin") {
+        user.role = action.role;
+      } else if (action.role === "client") {
+        user.role = action.role;
+      }
+      // state.users.map((item) => {
+      //   if (item.id === action.id) {
+      //     if (action.role === "admin") item.role = action.role;
+      //   } else if (action.role === "client") {
+      //     item.role = action.role;
+      //   }
+      //   return item;
+      // }),
       return {
         ...state,
-        users: upUsers,
+        userDetail: user,
       };
     case GET_REVIEWS_BY_ID:
       return {

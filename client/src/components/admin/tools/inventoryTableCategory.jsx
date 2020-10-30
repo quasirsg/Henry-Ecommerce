@@ -6,6 +6,7 @@ import Swal from "sweetalert2";
 import apiCall from "../../../redux/api";
 import { useSelector, useDispatch } from "react-redux";
 import allActions from "../../../redux/actions/allActions";
+import { editCategory } from "../../../redux/actions/categoryActions";
 
 const InventoryTableCategory = () => {
   const dispatch = useDispatch();
@@ -33,7 +34,8 @@ const InventoryTableCategory = () => {
       confirmButtonText: "Si, eliminar!",
     }).then((result) => {
       if (result.isConfirmed) {
-        apiCall(`/category/${id}`, null, null, "delete").then((response) => {
+        let action = "delete";
+        dispatch(editCategory(id, action)).then((response) => {
           Swal.fire("Eliminado!", "El registro fue eliminado.", "success");
         });
       }

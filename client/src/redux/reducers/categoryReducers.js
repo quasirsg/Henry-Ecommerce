@@ -24,12 +24,17 @@ function categoryReducers(state = initialState, action) {
     case PUT_CATEGORY:
       return {
         ...state,
-        category: action.category,
+        category: state.category.map((item) => {
+          if (item.id === action.category.id) {
+            item = action.category;
+          }
+          return item;
+        }),
       };
     case DELETE_CATEGORY:
       return {
         ...state,
-        category: action.category,
+        category: state.category.filter((item) => item.id !== action.id),
       };
 
     case POST_CATEGORY:

@@ -30,7 +30,7 @@ export const getCategory = () => (dispatch) => {
 
 export const editCategory = (id, action, values) => (dispatch) => {
   if (action === "post") {
-    axios
+    return axios
       .post(url + `/category/${id ? id : ""}`, {
         name: values.name,
         description: values.description,
@@ -49,24 +49,31 @@ export const editCategory = (id, action, values) => (dispatch) => {
         console.log(err);
       });
   } else if (action === "put") {
-    axios
-      .put(url + `/category/${id}`)
+    return axios
+      .put(url + `/category/${id}`, {
+        name: values.name,
+        description: values.description,
+      })
       .then((res) => {
         dispatch({
           type: PUT_CATEGORY,
           category: res.data,
+        });
+        Toast.fire({
+          icon: "success",
+          title: `Se editó la categoria: ${res.data.name}`,
         });
       })
       .catch((err) => {
         console.log(err);
       });
   } else if (action === "delete") {
-    axios
+    return axios
       .delete(url + `/category/${id}`)
       .then((res) => {
         dispatch({
           type: DELETE_CATEGORY,
-          category: null,
+          id: id,
         });
       })
       .catch((err) => {

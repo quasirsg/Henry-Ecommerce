@@ -90,13 +90,12 @@ const AdminMenu = () => {
                         <Files size={17} className="mr-1" />
                         Ordenes
                       </NavLink>
-                      
                     </NavItem>
                     <NavItem>
                       <NavLink tag={Link} to="/admin/usuarios">
                         <Files size={17} className="mr-1" />
                         Usuarios
-                      </NavLink> 
+                      </NavLink>
                     </NavItem>
                   </Nav>
                 </Collapse>
@@ -158,9 +157,10 @@ const AdminMenu = () => {
                     action="put"
                     icon="success"
                     message="Se edito categoría:"
-                    {...allCategories.find(
-                      (item) => item.id === parseInt(match.params.id)
-                    )}
+                    {...(allCategories &&
+                      allCategories.find(
+                        (item) => item.id === parseInt(match.params.id)
+                      ))}
                   />
                 )}
               />
