@@ -10,16 +10,18 @@ import {
   DropdownMenu,
   DropdownItem,
 } from "reactstrap";
+import { getOneUser } from "../../redux/actions/userActions";
 
 const TablaOrdenes = () => {
   const dispatch = useDispatch();
   /* ==== Traemos todas las ordenes ====== */
   const allOrders = useSelector((state) => state.order.allOrders);
+  const prueb = useSelector((state) => state);
+
   const [data, setData] = useState(allOrders);
   const [click, setClick] = useState(null);
-
   let orders;
-
+  console.log(prueb);
   useEffect(() => {
     dispatch(getOrders());
   }, []);
