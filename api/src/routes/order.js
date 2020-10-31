@@ -56,7 +56,18 @@ server.put("/:id", (req, res, next) => {
   let { id } = req.params;
   let currentOrder = req.body;
 
-  Order.findOne({ where: { id } })
+  console.log(currentOrder);
+
+  Order.findOne({
+    where: { id },
+    include: {
+      attributes: ["name", "price", "image", "id"],
+      model: Product,
+      through: {
+        attributes: ["id", "quantity", "total"],
+      },
+    },
+  })
     .then((order) => {
       if (!order)
         return res.status(404).json({ message: "Esa orden no existe" });
@@ -94,14 +105,16 @@ server.post("/:userId", (req, res, next) => {
           if (!user) {
             return res.sendStatus(404);
           }
-          Order.findOrCreate({ where: { status, userId }, raw: true }).then((order) => {
-            const numOrder = order[0].dataValues
-              ? order[0].dataValues.id
-              : order[0].id;
-            user.addOrder(numOrder).then(() => {
-              return res.status(201).json({ orderId: numOrder });
-            });
-          });
+          Order.findOrCreate({ where: { status, userId }, raw: true }).then(
+            (order) => {
+              const numOrder = order[0].dataValues
+                ? order[0].dataValues.id
+                : order[0].id;
+              user.addOrder(numOrder).then(() => {
+                return res.status(201).json({ orderId: numOrder });
+              });
+            }
+          );
         })
         .catch((err) => {
           return res.sendStatus(500);

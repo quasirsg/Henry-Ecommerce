@@ -11,6 +11,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import "./orden.css";
 import {
+  getOneOrder,
   getOrderById,
   updateStatusOrder,
 } from "../../../redux/actions/ordenActions";
@@ -61,6 +62,20 @@ const Orden = () => {
             title: `Error: No se pudo completar la orden "`,
           });
         });
+    } else if (status === "processing") {
+      dispatch(updateStatusOrder(id, status))
+        .then((res) => {
+          Toast.fire({
+            icon: "success",
+            title: `Orden en proceso`,
+          });
+        })
+        .catch((err) => {
+          Toast.fire({
+            icon: "error",
+            title: `Error: No se puede procesar la orden "`,
+          });
+        });
     }
   };
 
@@ -69,6 +84,48 @@ const Orden = () => {
   const toggle = (e) => {
     setOpen(!dropdownOpen);
   };
+
+  /* =========== Cambio de botones segun el estado==========*/
+
+  const changeStatus = (state) => {
+    if (state === "shopping_cart") {
+      return (
+        <>
+          <DropdownItem onClick={() => handleStatus("processing")}>
+            Procesar orden
+          </DropdownItem>
+        </>
+      );
+    } else if (state === "processing") {
+      return (
+        <>
+          <DropdownItem onClick={() => handleStatus("completed")}>
+            Completar orden
+          </DropdownItem>
+        </>
+      );
+    }
+  };
+
+  const statusButton = (state) => {
+    if (state !== "canceled" && state !== "completed") {
+      return (
+        <>
+          <ButtonDropdown isOpen={dropdownOpen} toggle={toggle}>
+            <DropdownToggle caret>Modificar el estado</DropdownToggle>
+            <DropdownMenu>
+              <DropdownItem onClick={() => handleStatus("canceled")}>
+                Cancelar orden
+              </DropdownItem>
+              {changeStatus(orden.status)}
+            </DropdownMenu>
+          </ButtonDropdown>
+        </>
+      );
+    }
+  };
+
+  console.log(orden);
 
   return (
     <div className="orden-cont">
@@ -119,17 +176,7 @@ const Orden = () => {
           <tbody></tbody>
         </Table>
       </Container>
-      <ButtonDropdown isOpen={dropdownOpen} toggle={toggle}>
-        <DropdownToggle caret>Modificar el estado</DropdownToggle>
-        <DropdownMenu>
-          <DropdownItem onClick={() => handleStatus("canceled")}>
-            Cancelar orden
-          </DropdownItem>
-          <DropdownItem onClick={() => handleStatus("completed")}>
-            Completar orden
-          </DropdownItem>
-        </DropdownMenu>
-      </ButtonDropdown>
+      {statusButton(orden.status)}
     </div>
   );
 };

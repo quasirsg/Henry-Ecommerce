@@ -3,7 +3,7 @@ import { Button, Container, Table } from "reactstrap";
 import { GearFill, Trash, Tools } from "react-bootstrap-icons";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { deleteProduct } from '../../../redux/actions/productActions';
+import { deleteProduct } from "../../../redux/actions/productActions";
 
 const InventoryTable = () => {
   const data = useSelector((state) => state.products.allProducts);
@@ -13,6 +13,12 @@ const InventoryTable = () => {
     e.preventDefault();
     dispatch(deleteProduct(id, name));
   };
+
+  data.map((item, index) => {
+    if (index === 0) {
+      console.log(item.image);
+    }
+  });
 
   return (
     <Container>
@@ -44,7 +50,7 @@ const InventoryTable = () => {
                 <img
                   src={item.image}
                   style={{ width: "3rem", height: "3rem" }}
-                  alt={item.name}
+                  // alt={item.name}
                 />
               </td>
               <td>{item.categories.map((item) => item.name).join(" , ")}</td>

@@ -30,9 +30,9 @@ const {
 conn.sync({ force: true }).then(() => {
   loadProducts();
   loadCategories();
-  loadProductCategories();
+  // loadProductCategories();
   loadUsers();
-  loadReviews();
+  // loadReviews();
 
   console.log("\nSe han precargado los productos exitosamente!\n");
 

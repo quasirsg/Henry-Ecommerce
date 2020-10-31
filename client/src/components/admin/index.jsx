@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { BrowserRouter as Router, Link, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Link,
+  Route,
+  Redirect,
+} from "react-router-dom";
 import {
   Container,
   Row,
@@ -39,7 +44,7 @@ const AdminMenu = () => {
   useEffect(() => {
     dispatch(getOrders());
   }, []);
-
+  const session = useSelector((state) => state.session.userDetail);
   const allCategories = useSelector((state) => state.category.category);
 
   return (
@@ -90,89 +95,88 @@ const AdminMenu = () => {
                         <Files size={17} className="mr-1" />
                         Ordenes
                       </NavLink>
-                      
                     </NavItem>
                     <NavItem>
                       <NavLink tag={Link} to="/admin/usuarios">
                         <Files size={17} className="mr-1" />
                         Usuarios
-                      </NavLink> 
+                      </NavLink>
                     </NavItem>
                   </Nav>
                 </Collapse>
               </Navbar>
             </Col>
             <Col md={9} lg={10}>
-              <Route exact path="/admin">
-                <div className="col-10 mx-auto">
-                  <Jumbotron>
-                    <h2 className="display-3">
-                      <PersonBadge /> ¡Bienvenido Admin!
-                    </h2>
-                    <hr className="my-2" />
-                    <p>
-                      Este es el panel del usuario administrador donde podrá
-                      controlar todo el inventario.
-                    </p>
-                  </Jumbotron>
-                </div>
-              </Route>
-
-              <Route exact path="/admin/product">
-                <FormProduct action="post" />
-              </Route>
-              <Route
-                exact
-                path="/admin/product/:id"
-                render={({ match, history }) => (
-                  <FormProduct
-                    history={history}
-                    id={match.params.id}
-                    action="put"
-                  />
-                )}
-              />
-
-              <Route exact path="/admin/category">
-                <FormCategory
-                  action="post"
-                  icon="success"
-                  message="Se agregó categoría:"
-                />
-              </Route>
-
-              <Route exact path="/admin/products">
-                <InventoryTable />
-              </Route>
-
-              <Route exact path="/admin/categories">
-                <InventoryTableCategory />
-              </Route>
-
-              <Route
-                exact
-                path="/admin/category/:id"
-                render={({ match, history }) => (
-                  <FormCategory
-                    history={history}
-                    action="put"
-                    icon="success"
-                    message="Se edito categoría:"
-                    {...allCategories.find(
-                      (item) => item.id === parseInt(match.params.id)
+              {
+                <>
+                  <Route exact path="/admin">
+                    <div className="col-10 mx-auto">
+                      <Jumbotron>
+                        <h2 className="display-3">
+                          <PersonBadge /> ¡Bienvenido Admin!
+                        </h2>
+                        <hr className="my-2" />
+                        <p>
+                          Este es el panel del usuario administrador donde podrá
+                          controlar todo el inventario.
+                        </p>
+                      </Jumbotron>
+                    </div>
+                  </Route>
+                  <Route exact path="/admin/product">
+                    <FormProduct action="post" />
+                  </Route>
+                  <Route
+                    exact
+                    path="/admin/product/:id"
+                    render={({ match, history }) => (
+                      <FormProduct
+                        history={history}
+                        id={match.params.id}
+                        action="put"
+                      />
                     )}
                   />
-                )}
-              />
-              <Route exact path="/admin/ordenes">
-                <TablaOrdenes />
-              </Route>
-              <Route exact path="/admin/ordenes/:id">
-                <Orden />
-              </Route>
-              <Route exact path="/admin/usuarios">
-                <TablaUsuarios />
-              </Route>
+                  <Route exact path="/admin/category">
+                    <FormCategory
+                      action="post"
+                      icon="success"
+                      message="Se agregó categoría:"
+                    />
+                  </Route>
+                  <Route exact path="/admin/products">
+                    <InventoryTable />
+                  </Route>
+                  <Route exact path="/admin/categories">
+                    <InventoryTableCategory />
+                  </Route>
+                  <Route
+                    exact
+                    path="/admin/category/:id"
+                    render={({ match, history }) => (
+                      <FormCategory
+                        history={history}
+                        action="put"
+                        icon="success"
+                        message="Se edito categoría:"
+                        {...(allCategories &&
+                          allCategories.find(
+                            (item) => item.id === parseInt(match.params.id)
+                          ))}
+                      />
+                    )}
+                  />
+                  <Route exact path="/admin/ordenes">
+                    <TablaOrdenes />
+                  </Route>
+                  <Route exact path="/admin/ordenes/:id">
+                    <Orden />
+                  </Route>
+                  <Route exact path="/admin/usuarios">
+                    <TablaUsuarios />
+                  </Route>{" "}
+                </>
+              }
             </Col>
           </Router>
         </Row>

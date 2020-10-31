@@ -6,7 +6,6 @@ import * as Yup from "yup";
 import Swal from "sweetalert2";
 import CustomInput from "../custom/input";
 import { useDispatch } from "react-redux";
-//import allActions from "../../redux/actions/allActions";
 import { ArrowLeftCircle } from "react-bootstrap-icons";
 import { useHistory } from "react-router-dom";
 import { editCategory } from "../../redux/actions/categoryActions";
@@ -49,26 +48,12 @@ const FormCategory = ({
             .required("Debes completar este campo"),
         })}
         onSubmit={(values, { setSubmitting, resetForm }) => {
-          // const url = `/category/${id ? id : ""}`;
-          // const data = action === "delete" ? null : values;
+          
 
-          console.log(values);
-          dispatch(editCategory(id, action, values))
-            .then((response) => {
-              resetForm();
-              setSubmitting(false);
-              Toast.fire({
-                icon,
-                title: `${message} ${values.name}`,
-              });
-            })
-            .catch((error) => {
-              setSubmitting(false);
-              Toast.fire({
-                icon: "error",
-                title: "Error: vuelve a intentarlo",
-              });
-            });
+          dispatch(editCategory(id, action, values)).then((response) => {
+            resetForm();
+            setSubmitting(false);
+          });
         }}
       >
         {({ isSubmitting }) => (

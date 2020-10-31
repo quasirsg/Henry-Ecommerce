@@ -40,13 +40,13 @@ export const loguinUser = (email, password) => (dispatch) => {
 };
 
 //obtener información del usuario logueado
-export const getCurrentUser = (token) => (dispatch) => {
+export const getCurrentUser = (token) => async (dispatch) => {
   //Headers con Token
   let config = {
     headers: { Authorization: `Bearer ${token}` },
   };
 
-  axios.get(`${url}/users/me/`, config).then((res) => {
+  await axios.get(`${url}/users/me/`, config).then((res) => {
     dispatch({
       type: actionTypes.CURRENT_USER,
       user: res.data,

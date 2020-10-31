@@ -1,9 +1,7 @@
 const server = require("express").Router();
 const { User, Order, Product, Linea_order, Reviews } = require("../db.js");
-const bcrypt = require("bcrypt");
-const authorize = require('../helpers/auth')
-const userService = require('../controllers/userController');
-const { response } = require("express");
+const authorize = require("../helpers/auth");
+const userService = require("../controllers/userController");
 
 //Agregar un usuario
 server.post("/", (req, res, next) => {
@@ -16,6 +14,7 @@ server.post("/", (req, res, next) => {
     image,
     location_id,
   } = req.body;
+  console.log(name);
   if (!name || !email || !address || !password || !image)
     return res.status(400).json({
       message: "A parameter is missing",
@@ -116,10 +115,11 @@ server.put('/:id/passwordChange', (req, res) => {
 // Dar permisos de Admin a user
 server.put("/:id/promote", (req, res, next) => {
   const { id } = req.params;
+  const { role } = req.body;
 
   User.update(
     {
-      role: "admin",
+      role: role,
     },
     {
       where: { id },
@@ -456,16 +456,16 @@ server.get("/:userId/cart", (req, res) => {
 });
 
 //ruta que retorna todas las reviews de un usuario
-server.get('/:id/reviews', (req, res) => {
+server.get("/:id/reviews", (req, res) => {
   const userId = req.params.id;
 
   Reviews.findAll({
     include: [{ model: User, attributes: ["name", "image"] }],
-    where: { userId, }
+    where: { userId },
   })
-    .then(reviews => res.status(200).json({ data: reviews }))
-    .catch(err => console.log(err));
-})
+    .then((reviews) => res.status(200).json({ data: reviews }))
+    .catch((err) => console.log(err));
+});
 
 //AUTH
 //Login de un usuario

@@ -51,12 +51,13 @@ const LoginForm = ({
           //To lower case
           user.email = user.email.toLowerCase();
 
-          dispatch(loguinUser(user.email, user.password)); //Funciona loguin correcto e error al ingresar mal los datos
+          console.log(user);
 
+          dispatch(loguinUser(user.email, user.password)); //Funciona loguin correcto e error al ingresar mal los datos
           Swal.fire({
             position: "center",
             icon: "success",
-            title: `¡Bienvenido de nuevo ${user.name}!`,
+            title: `¡Bienvenido!`,
             showConfirmButton: false,
             timer: 2000,
           });

@@ -3,7 +3,6 @@ import { Col, Row } from "reactstrap";
 import ItemCart from "./itemCart";
 
 const ShoppingCart = ({ items, userId }) => {
-  console.log(items);
   return (
     <Col lg="12">
       <Row>

@@ -23,7 +23,7 @@ import {
 
 const initialState = {
   users: [],
-  userDetail: {},
+  userDetail: [],
   err: [],
   carrito: [],
   message: "",
@@ -55,13 +55,13 @@ function userReducers(state = initialState, action) {
         users: state.userDetail.concat(action.userDetail),
         err: state.userDetail.concat(action.error),
       };
-    // case PUT_USER:
-    //   return {
-    //     ...state,
-    //     users: state.users.map((item) => {
-    //       return item.id === action.userDetail.id ? action.userDetail : item;
-    //     }),
-    //   };
+    case PUT_USER:
+      return {
+        ...state,
+        users: state.users.map((item) => {
+          return item.id === action.userDetail.id ? action.userDetail : item;
+        }),
+      };
     case DELETE_USER:
       return {
         ...state,
@@ -174,16 +174,30 @@ function userReducers(state = initialState, action) {
         carrito: state.carrito.concat(action.products.productsCarts),
       };
     case PROM_USER:
-      const user = state.users.data.find((item) => item.id === action.user);
-      user.role = 'admin';
+      console.log(action);
+      let user = state.userDetail;
+      if (action.role === "admin") {
+        user.role = action.role;
+      } else if (action.role === "client") {
+        user.role = action.role;
+      }
+      // state.users.map((item) => {
+      //   if (item.id === action.id) {
+      //     if (action.role === "admin") item.role = action.role;
+      //   } else if (action.role === "client") {
+      //     item.role = action.role;
+      //   }
+      //   return item;
+      // }),
       return {
-        ...state
+        ...state,
+        userDetail: user,
       };
     case GET_REVIEWS_BY_ID:
       return {
         ...state,
         reviews: action.data,
-      }
+      };
     default:
       return state;
   }

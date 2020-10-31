@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Container, Col, Row, Button } from "reactstrap";
+import { Link } from "react-router-dom";
 import ShoppingCart from "../components/shoppingCart";
 import ButtonBlock from "../components/custom/ButtonBlock";
 import { useSelector, useDispatch } from "react-redux";
@@ -21,8 +22,6 @@ const Cart = () => {
     var token = localStorage.getItem("token");
     var userId = user.id;
   }
-
-  console.log(user);
 
   useEffect(() => {
     dispatch(getCurrentUser(token));
@@ -62,6 +61,17 @@ const Cart = () => {
     }
   }
 
+  const totalCalc = () => {
+    let total = 0;
+    if (productsCarts.length > 0) {
+      productsCarts.forEach((product) => {
+        let subTotal = product.price * product.quantity;
+        return (total += subTotal);
+      });
+    }
+    return total;
+  };
+
   return (
     <Container fluid={true} className="mt-4">
       <Row>
@@ -69,8 +79,15 @@ const Cart = () => {
           <ShoppingCart items={productsCarts} userId={userId} />
         </Col>
         <Col lg="4">
-          <ButtonBlock children={"Siguiente"} />
-          <Button children={"Eliminar Carrito"} onClick={deleteAll} />
+          {productsCarts.length > 0 && (
+            <>
+              <Col>Total: $ {totalCalc()}</Col>
+              <Link to="/checkout">
+                <ButtonBlock children={"Siguiente"} />
+              </Link>
+              <Button children={"Eliminar Carrito"} onClick={deleteAll} />
+            </>
+          )}
         </Col>
       </Row>
     </Container>
