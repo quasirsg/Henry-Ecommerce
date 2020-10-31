@@ -171,8 +171,6 @@ const Orden = () => {
                   <td className="p-2"></td>
                 </tr>
               ))}
-          </tbody>
-          <tbody>
             <ResumeOreder orden={orden} id={id} />
           </tbody>
         </Table>

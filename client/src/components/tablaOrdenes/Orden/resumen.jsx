@@ -14,21 +14,21 @@ const ResumeOreder = ({ orden, id }) => {
   return (
     <div className="orden-cont">
       <Container>
-        <Table hover responsive className="table-sm">
+        <Table hover responsive>
           <thead>
             <tr>
               <th>N° Orden</th>
-              <th>Cantidad de productos</th>
+              <th>Estado</th>
+              <th>N° Productos</th>
               <th>Total</th>
-              <th>Estado de la orden</th>
             </tr>
           </thead>
-          <tbody className="scroll">
+          <tbody>
             <tr>
               <th>{id}</th>
+              <th>{orden.status}</th>
               <th>{totProducts}</th>
               <th>{total}</th>
-              <th>{orden.status}</th>
             </tr>
           </tbody>
         </Table>

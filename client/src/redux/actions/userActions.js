@@ -12,7 +12,7 @@ export const getUsers = () => (dispatch) => {
     .then((res) => {
       dispatch({
         type: actionTypes.GET_USERS,
-        users: res.data,
+        users: res.data.data,
       });
     })
     .catch((err) => {

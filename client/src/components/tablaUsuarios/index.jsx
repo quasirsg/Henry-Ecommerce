@@ -14,16 +14,16 @@ import Toast from "../../components/alerts/toast";
 
 const TablaUsuarios = () => {
   const dispatch = useDispatch();
-  const users = useSelector((state) => state.users.users.data);
+  const users = useSelector((state) => state.users.users);
 
   useEffect(() => {
     dispatch(getUsers());
   }, []);
 
-  const handleClick = (id, role) => {
+  const handleClick = (id, role, item) => {
     if (role === "client") {
       let newRole = "admin";
-      dispatch(adminActions(id, newRole)).then((res) => {
+      dispatch(adminActions(id, newRole, item)).then((res) => {
         Toast.fire({
           icon: "success",
           title: "Usuario promovido",
@@ -31,7 +31,7 @@ const TablaUsuarios = () => {
       });
     } else if (role === "admin") {
       let newRole = "client";
-      dispatch(adminActions(id, newRole)).then((res) => {
+      dispatch(adminActions(id, newRole, item)).then((res) => {
         Toast.fire({
           icon: "success",
           title: "Usuario degradado",
@@ -44,6 +44,8 @@ const TablaUsuarios = () => {
       });
     }
   };
+
+  console.log(users);
 
   return (
     <Container>
@@ -69,7 +71,7 @@ const TablaUsuarios = () => {
                 <td className="p-2">
                   <Button
                     color="default"
-                    onClick={() => handleClick(item.id, item.role)}
+                    onClick={() => handleClick(item.id, item.role, item)}
                     className="border btn-sm"
                   >
                     {item.role === "admin" ? (

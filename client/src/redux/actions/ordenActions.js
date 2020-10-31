@@ -62,9 +62,9 @@ export const updateStatusOrder = (id, status) => (dispatch) => {
         icon: "success",
         title: `Gracias por tu compra!`,
       });
-      // dispatch({
-      //   type: actionTypes.DELETE_ALL_CART,
-      // });
+      dispatch({
+        type: actionTypes.DELETE_ALL_CART,
+      });
     })
     .catch((err) => {
       console.log(err);
