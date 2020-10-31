@@ -35,6 +35,7 @@ import { getCategory } from "../../redux/actions/categoryActions";
 import { getProducts } from "../../redux/actions/productActions";
 import { getOrders } from "../../redux/actions/ordenActions";
 import Orden from "../tablaOrdenes/Orden";
+import UserPage from "../../pages/UserPage";
 
 /* desde aca llamar al userpage*/
 
@@ -56,11 +57,19 @@ const AdminMenu = () => {
           <Router>
             <Col md={3} lg={2} className="p-0">
               <Navbar light className="rounded-lg">
+              <ul class="navbar-nav">
+              <li class="nav-item">
+              <Navbar light className="rounded-lg" tag={Link} to="/user/account">
+                <h5 className="mx-auto">Usuario</h5>
+              </Navbar>
+              </li>
+              <li class="nav-item">
+              <Navbar light className="rounded-lg">
                 <NavbarToggler
                   onClick={toggleNavbar}
-                  className="mr-2 border-0"
+                  className="mx-auto border-0"
                 />
-                <h5 className="mr-auto">Menu</h5>
+                <h5 className="mx-auto">Administracion</h5>
                 <Collapse isOpen={!collapsed} navbar>
                   <Nav navbar>
                     <NavItem>
@@ -107,7 +116,11 @@ const AdminMenu = () => {
                   </Nav>
                 </Collapse>
               </Navbar>
+              </li>
+              </ul>
+              </Navbar>
             </Col>
+            
             <Col md={9} lg={10}>
               {
                 <>
@@ -120,7 +133,7 @@ const AdminMenu = () => {
                         <hr className="my-2" />
                         <p>
                           Este es el panel del usuario administrador donde podrá
-                          controlar todo el inventario.
+                          controlar todo.
                         </p>
                       </Jumbotron>
                     </div>
@@ -177,6 +190,9 @@ const AdminMenu = () => {
                   <Route exact path="/admin/usuarios">
                     <TablaUsuarios />
                   </Route>{" "}
+                  <Route exact path="/user/account">
+                    <UserPage />
+                  </Route>
                 </>
               }
             </Col>

@@ -33,7 +33,7 @@ function App() {
 
   const session = useSelector((state) => state.session.userDetail);
 
-  // Obtener products ,categorias y banners
+  /*Obtener products ,categorias y banners*/
   let log;
   if (session.role) {
     log = session.role;
@@ -161,5 +161,6 @@ function App() {
     </div>
   );
 }
+
 
 export default App;
