@@ -173,9 +173,6 @@ function userReducers(state = initialState, action) {
         carrito: state.carrito.concat(action.products.productsCarts),
       };
     case PROM_USER:
-      console.log(action.user);
-      console.log(state.users.data);
-
       return {
         ...state,
         users: state.users.map((user) => {
