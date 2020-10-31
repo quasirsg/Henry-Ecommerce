@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { Switch, Route, Redirect } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Switch, Route } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getProducts, getBanners } from "./redux/actions/productActions";
 import { getCategory } from "./redux/actions/categoryActions";
@@ -23,19 +23,22 @@ import HomePage from "./pages/HomePage";
 import CartPage from "./pages/CartPage";
 import UserPage from "./pages/UserPage";
 import ProtectedAdminRoute from "./components/protectedComponents/ProtectedAdminRoute";
-
-//Rutas Admin
+import ProtectedUserRoute from "./components/protectedComponents/ProtectedUserRoute";
+import InventoryTable from "./components/admin/tools/inventoryTable";
+import InventoryTableCategory from "./components/admin/tools/inventoryTableCategory";
+import FormProduct from "./components/productForm";
 
 function App() {
   const dispatch = useDispatch();
 
   const session = useSelector((state) => state.session.userDetail);
-  console.log(session);
 
   // Obtener products ,categorias y banners
   let log;
   if (session.role) {
     log = session.role;
+  } else {
+    log = "guest";
   }
 
   useEffect(() => {
@@ -50,6 +53,7 @@ function App() {
     <div className="col-lg-12">
       <Navbar />
       <Switch>
+        {/* =============== Unprotected Routes ============ */}
         <Route exact path="/" component={HomePage} />
         <Route path="/home" component={HomePage} />
         <Route path="/search/q/" component={SearchPage} />
@@ -59,28 +63,6 @@ function App() {
           <ProductDetail />
         </Route>
         <Route exact path="/cart" component={CartPage} />
-        <ProtectedAdminRoute
-          exact
-          path="/admin"
-          component={AdminMenu}
-          log={log}
-        />
-
-        {/* <Route exact path="/ordenes" component={TablaOrdenes} /> */}
-        {/* <Route exact path="/usuarios" component={TablaUsuarios} /> */}
-
-        {/* <Route exact path="/admin">
-          {session.role === "admin" ? <AdminMenu /> : <Redirect to={"/"} />}
-        </Route> */}
-
-        <Route exact path="/checkout" component={CheckoutForm} />
-        <Route exact path="/user/account">
-          {Object.keys(session).length > 0 ? (
-            <UserPage />
-          ) : (
-            <Redirect to={"/user/login"} />
-          )}
-        </Route>
         <Route exact path="/user/register">
           <FormUser action="post" icon="success" message="Usuario agregado" />
         </Route>
@@ -97,28 +79,84 @@ function App() {
           )}
         ></Route>
 
-        {/* <Route
+        {/* <Route path="*" render={() => "404 Not Found"} /> */}
+
+        {/* ========== Protected Routes ========== */}
+        {/* ### Admin ### */}
+        <ProtectedAdminRoute
           exact
-          path="/admin/category/add"
-          render={() => (
-            <FormCategory
-              action="post"
-              icon="success"
-              message="La categoria fue creada:"
-            />
-          )}
-        /> */}
-        {/* <Route
+          path="/admin"
+          component={AdminMenu}
+          log={log}
+        />
+        <ProtectedAdminRoute
+          exact
+          path="/ordenes"
+          component={TablaOrdenes}
+          log={log}
+        />
+        <ProtectedAdminRoute
+          exact
+          path="/admin/ordenes/:id"
+          component={TablaOrdenes}
+          log={log}
+        />
+        <ProtectedAdminRoute
+          exact
+          path="/admin/product"
+          component={FormProduct}
+          log={log}
+        />
+        <ProtectedAdminRoute
+          exact
+          path="/admin/products"
+          component={InventoryTable}
+          log={log}
+        />
+        <ProtectedAdminRoute
+          exact
+          path="/admin/categories"
+          component={InventoryTableCategory}
+          log={log}
+        />
+        <ProtectedAdminRoute
+          exact
+          path="/admin/usuarios"
+          component={TablaUsuarios}
+          log={log}
+        />
+
+        <ProtectedAdminRoute
           exact
           path="/admin/category/edit/:categoryId"
-          render={() => (
-            <FormCategory
-              action="put"
-              icon="success"
-              message="La categoria fue editada:"
-            />
-          )}
-        /> */}
+          component={FormCategory}
+          action={"put"}
+          icon={"success"}
+          message={"La categoria fue editada:"}
+          log={log}
+        />
+        <ProtectedAdminRoute
+          exact
+          path="/admin/category"
+          component={FormCategory}
+          action={"post"}
+          icon={"success"}
+          message={"La categoria fue creada:"}
+          log={log}
+        />
+        {/* ### User ### */}
+        <ProtectedUserRoute
+          exact
+          path="/user/account"
+          component={UserPage}
+          log={log}
+        />
+        <ProtectedUserRoute
+          exact
+          path="/checkout"
+          component={CheckoutForm}
+          log={log}
+        />
       </Switch>
     </div>
   );
