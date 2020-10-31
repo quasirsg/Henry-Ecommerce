@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getProducts, getBanners } from "./redux/actions/productActions";
@@ -22,13 +22,22 @@ import AdminMenu from "./components/admin";
 import HomePage from "./pages/HomePage";
 import CartPage from "./pages/CartPage";
 import UserPage from "./pages/UserPage";
+import ProtectedAdminRoute from "./components/protectedComponents/ProtectedAdminRoute";
+
+//Rutas Admin
 
 function App() {
   const dispatch = useDispatch();
 
   const session = useSelector((state) => state.session.userDetail);
   console.log(session);
+
   // Obtener products ,categorias y banners
+  let log;
+  if (session.role) {
+    log = session.role;
+  }
+
   useEffect(() => {
     dispatch(getCategory());
     dispatch(getProducts());
@@ -50,19 +59,26 @@ function App() {
           <ProductDetail />
         </Route>
         <Route exact path="/cart" component={CartPage} />
-        <Route exact path="/ordenes" component={TablaOrdenes} />
-        <Route exact path="/usuarios" component={TablaUsuarios} />
+        <ProtectedAdminRoute
+          exact
+          path="/admin"
+          component={AdminMenu}
+          log={log}
+        />
 
-        <Route exact path="/admin">
+        {/* <Route exact path="/ordenes" component={TablaOrdenes} /> */}
+        {/* <Route exact path="/usuarios" component={TablaUsuarios} /> */}
+
+        {/* <Route exact path="/admin">
           {session.role === "admin" ? <AdminMenu /> : <Redirect to={"/"} />}
-        </Route>
+        </Route> */}
 
         <Route exact path="/checkout" component={CheckoutForm} />
         <Route exact path="/user/account">
           {Object.keys(session).length > 0 ? (
             <UserPage />
           ) : (
-            <Redirect to={"/"} />
+            <Redirect to={"/user/login"} />
           )}
         </Route>
         <Route exact path="/user/register">
@@ -81,7 +97,7 @@ function App() {
           )}
         ></Route>
 
-        <Route
+        {/* <Route
           exact
           path="/admin/category/add"
           render={() => (
@@ -91,8 +107,8 @@ function App() {
               message="La categoria fue creada:"
             />
           )}
-        />
-        <Route
+        /> */}
+        {/* <Route
           exact
           path="/admin/category/edit/:categoryId"
           render={() => (
@@ -102,7 +118,7 @@ function App() {
               message="La categoria fue editada:"
             />
           )}
-        />
+        /> */}
       </Switch>
     </div>
   );
