@@ -36,6 +36,8 @@ import { getProducts } from "../../redux/actions/productActions";
 import { getOrders } from "../../redux/actions/ordenActions";
 import Orden from "../tablaOrdenes/Orden";
 
+/* desde aca llamar al userpage*/
+
 const AdminMenu = () => {
   const [collapsed, setCollapsed] = useState(true);
   const toggleNavbar = () => setCollapsed(!collapsed);
