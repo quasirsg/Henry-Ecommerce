@@ -8,7 +8,7 @@ import {
   deleteProductsCart,
 } from "../../../redux/actions/userActions";
 
-const ItemCart = ({ product, userId, quantity }) => {
+const ItemCart = ({ product, userId }) => {
   const dispatch = useDispatch();
 
   const handleOnClick = (e) => {
@@ -25,8 +25,6 @@ const ItemCart = ({ product, userId, quantity }) => {
     e.preventDefault();
     dispatch(deletAmount(userId, product.id, product.quantity));
   };
-  console.log(product);
-  console.log(userId);
 
   return (
     <Col lg="12">
@@ -44,6 +42,7 @@ const ItemCart = ({ product, userId, quantity }) => {
             </div>
           </Col>
           <Col lg="6">
+            <div className="itemCart-subtitle"> Stock {product.stock}</div>
             <div className="d-flex flex-row-reverse" value={product.id}>
               <button onClick={handleOnClick} className="itemCart-delete">
                 Remover
