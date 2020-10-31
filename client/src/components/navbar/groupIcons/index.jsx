@@ -53,7 +53,7 @@ export default ({ history }) => {
             Salir
           </Link>
 
-          <Link to={"/admin"} className="text-dark ">
+          <Link to={"/user/account"} className="text-dark ">
             <PersonSquare size={20} />
           </Link>
         </>

@@ -199,7 +199,6 @@ const loadUsers = () => {
       address: "Valentino 68Puerto",
       role: "admin",
       password: bcrypt.hashSync("Vsl@17477", 10),
-      image: "1234",
       location_id: 21,
     },
     {

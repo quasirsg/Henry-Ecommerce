@@ -1,7 +1,9 @@
 const server = require("express").Router();
 const { User, Order, Product, Linea_order, Reviews } = require("../db.js");
+const bcrypt = require("bcrypt");
 const authorize = require('../helpers/auth')
 const userService = require('../controllers/userController');
+const { response } = require("express");
 
 //Agregar un usuario
 server.post("/", (req, res, next) => {
@@ -83,6 +85,32 @@ server.delete("/:id", (req, res, next) => {
       });
     })
     .catch(next);
+});
+
+server.put('/:id/passwordChange', (req, res) => {
+  const id = req.params.id;
+  const { email, currentPassword, newPassword } = req.body;
+  console.log(newPassword);
+  User.findOne({
+    where: {
+      email,
+    }
+  })
+    .then(user => {
+      bcrypt.compare(currentPassword, user.dataValues.password, (error, response) => {
+        if (response) {
+          bcrypt
+            .hash(newPassword, 10)
+            .then((hash) => {
+              user.password = hash;
+              user.save()
+                .then(response => res.sendStatus(201));
+            })
+        } else {
+          res.sendStatus(404);
+        }
+      })
+    })
 });
 
 // Dar permisos de Admin a user

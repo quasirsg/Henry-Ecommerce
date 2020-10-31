@@ -24,7 +24,7 @@ const Toast = Swal.mixin({
 
 const UserDetail = () => {
     const dispatch = useDispatch();
-    const { id, name, email, address, phoneNumber, role } = useSelector(state => state.session.userDetail);
+    const { id, name, email, address, phoneNumber } = useSelector(state => state.session.userDetail);
     return (
         <Formik
             initialValues={{

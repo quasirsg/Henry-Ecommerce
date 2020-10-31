@@ -1,6 +1,6 @@
 import React from 'react'
 import { Container, Row, Col } from 'reactstrap'
-import { Person, Lock, BoxSeam, ChatSquareText } from 'react-bootstrap-icons'
+import { Person, Lock, BoxSeam, ChatSquareText, Tools } from 'react-bootstrap-icons'
 import { BrowserRouter as Router, Link, Route } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import ButtonSquare from '../components/custom/ButtonSquare';
@@ -53,6 +53,16 @@ const UserPage = () => {
                                     />
                                 </Link>
                             </li>
+                            {userDetail.role === 'admin' &&
+                                <li>
+                                    <Link onClick={() => window.location.href = "/admin"} >
+                                        <ButtonSquare
+                                            icon={<Tools size={20} />}
+                                            Children={'Administrar Sitio'}
+                                        />
+                                    </Link>
+                                </li>
+                            }
                         </ul>
                     </Col>
                     <Col
