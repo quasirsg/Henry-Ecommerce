@@ -45,7 +45,6 @@ const Cart = () => {
 
   /* cambio de guest-login */
   if (!userData && !localStorage.token) {
-    //??Guest
     if (localStorage.cart) {
       productsCarts = JSON.parse(localStorage.getItem("cart"));
     } else {
@@ -53,7 +52,6 @@ const Cart = () => {
     }
   } else if (userData || localStorage.token) {
     if (localStorage.cart) {
-      //?? Loguin
       productsCarts = JSON.parse(localStorage.getItem("cart"));
       dispatch(addProducts(userId, productsCarts));
       localStorage.removeItem("cart");
