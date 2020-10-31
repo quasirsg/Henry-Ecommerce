@@ -137,12 +137,10 @@ const Orden = () => {
           <ArrowLeftCircle size={20} />
         </Button>
       </Row>
+      <h4 className="text-center">Detalles de la orden</h4>
       <Container>
         <Table hover responsive className="table-sm">
           <thead>
-            <tr>
-              <p className="text-center">Estado de la Orden: {orden.status}</p>
-            </tr>
             <tr>
               <th>Id</th>
               <th>Nombre</th>
@@ -171,10 +169,10 @@ const Orden = () => {
                   <td className="p-2"></td>
                 </tr>
               ))}
-            <ResumeOreder orden={orden} id={id} />
           </tbody>
         </Table>
       </Container>
+      <ResumeOreder orden={orden} id={id} />
       {statusButton(orden.status)}
     </div>
   );
