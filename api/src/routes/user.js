@@ -455,6 +455,27 @@ server.get("/:userId/cart", (req, res) => {
     });
 });
 
+server.get("/:userId/ordersall", (req, res) => {
+  const userId = req.params.userId;
+
+  Order.findOne({
+    include: [User, { model: Product }],
+    where: {
+      userId,
+    },
+  })
+    .then((order) => {
+      if (!order) {
+        return res.sendStatus(404);
+      }
+      return res.send({
+        data: order,
+      });
+    })
+    .catch((err) => {
+      return res.sendStatus(500);
+    });
+});
 //ruta que retorna todas las reviews de un usuario
 server.get("/:id/reviews", (req, res) => {
   const userId = req.params.id;
