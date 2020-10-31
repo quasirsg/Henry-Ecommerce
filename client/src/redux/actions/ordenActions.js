@@ -1,4 +1,5 @@
 import axios from "axios";
+import Toast from "../../components/alerts/toast";
 import * as actionTypes from "./actionTypes";
 
 const url = `http://localhost:3001`;
@@ -57,9 +58,16 @@ export const updateStatusOrder = (id, status) => (dispatch) => {
         type: actionTypes.UPDATE_ORDER,
         upOrder: res.data.orderUpdate,
       });
-      dispatch({
-        type: actionTypes.DELETE_ALL_CART,
+      Toast.fire({
+        icon: "success",
+        title: `Gracias por tu compra!`,
       });
+      // dispatch({
+      //   type: actionTypes.DELETE_ALL_CART,
+      // });
+    })
+    .catch((err) => {
+      console.log(err);
     });
 };
 

@@ -25,14 +25,7 @@ export default ({ history }) => {
   };
 
   let userRole = useSelector((state) => state.session.userDetail.role);
-  // let userRole = userDetail && userDetail.role;
 
-  // console.log(userRole);
-  // userDetail && console.log(userRole);
-
-  // useEffect(() => {
-  //   dispatch(getCurrentUser());
-  // }, []);
   console.log(userRole);
 
   const linkUser = (userRole) => {

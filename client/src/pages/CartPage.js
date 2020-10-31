@@ -23,8 +23,6 @@ const Cart = () => {
     var userId = user.id;
   }
 
-  console.log(user);
-
   useEffect(() => {
     dispatch(getCurrentUser(token));
     dispatch(getProductCart(userId));
@@ -63,6 +61,17 @@ const Cart = () => {
     }
   }
 
+  const totalCalc = () => {
+    let total = 0;
+    if (productsCarts.length > 0) {
+      productsCarts.forEach((product) => {
+        let subTotal = product.price * product.quantity;
+        return (total += subTotal);
+      });
+    }
+    return total;
+  };
+
   return (
     <Container fluid={true} className="mt-4">
       <Row>
@@ -70,10 +79,15 @@ const Cart = () => {
           <ShoppingCart items={productsCarts} userId={userId} />
         </Col>
         <Col lg="4">
-          <Link to='/checkout'>
-           <ButtonBlock children={"Siguiente"}/>
-          </Link>
-          <Button children={"Eliminar Carrito"} onClick={deleteAll} />
+          {productsCarts.length > 0 && (
+            <>
+              <Col>Total: $ {totalCalc()}</Col>
+              <Link to="/checkout">
+                <ButtonBlock children={"Siguiente"} />
+              </Link>
+              <Button children={"Eliminar Carrito"} onClick={deleteAll} />
+            </>
+          )}
         </Col>
       </Row>
     </Container>

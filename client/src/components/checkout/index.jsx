@@ -1,61 +1,47 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { BagCheck, ArrowLeftCircle } from "react-bootstrap-icons";
 import { Button, Row, Col } from "reactstrap";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import CustomInput from "../custom/input";
+import { useHistory } from "react-router-dom";
+import { getOrders, updateStatusOrder, getOrderById } from "../../redux/actions/ordenActions";
+import Toast from "../alerts/toast";
+import Swal from "sweetalert2";
 
-// import {
-//   addNewProduct,
-//   updateProduct,
-// } from "../../redux/actions/productActions";
-// import "./product.css";
+// const Toast = Swal.mixin({
+//   toast: true,
+//   position: "top-end",
+//   showConfirmButton: false,
+//   timer: 3000,
+//   timerProgressBar: true,
+//   didOpen: (toast) => {
+//     toast.addEventListener("mouseenter", Swal.stopTimer);
+//     toast.addEventListener("mouseleave", Swal.resumeTimer);
+//   },
+// });
 
-// const useSelectorProduct = (id) => {
-//   return useSelector((state) => {
-//     const products = state.products.allProducts;
-//     if (!id) return {};
-//     return products.find((item) => item.id === parseInt(id));
-//   });
-// };
+const CheckoutForm = ({ direction= "" }) => {
+    const history = useHistory ();
+    const dispatch = useDispatch(); 
+    const userId= useSelector((state)=>state.session.userDetail.id)
+    useEffect(()=>{
+      dispatch(getOrders())
+    },[]); 
+    const orders = useSelector((state)=> state.order.allOrders)
+    
+      let userOrder = orders.filter((item) => item.userId === userId); /* trae todas las ordenes con sus distintos estados del mismo usuario*/
+      let orderStatus= userOrder.filter((item) => item.status === 'shopping_cart'); /*trae la orden con estado shopping_cart*/
+      let obj= orderStatus[0];
+      let id;
+      if (obj ) id = obj.id;
 
- const CheckoutForm = ({ action, history, id = 0 }) => {
-//   const dispatch = useDispatch();
-//   const allCategories = useSelector((state) => state.category.category);
-//   const product = useSelectorProduct(id);
-//   // Filtrar categorias con ID
-//   const categoriesSelect = allCategories.map((item) => item.id);
-//   const categoryProduct =
-//     action === "put" ? product.categories.map((item) => item.id) : [];
-//   // Form inputs values
-//   let initialValuesForm = {
-//     name: action === "put" ? product.name : "",
-//     stock: action === "put" ? product.stock : "",
-//     description: action === "put" ? product.description : "",
-//     price: action === "put" ? product.price : "",
-//     category: action === "put" ? categoryProduct : [],
-//     image: action === "put" ? product.name : "",
-//   };
-
-//   const convertBase64 = (file) => {
-//     if (typeof file === "string") {
-//       return file;
-//     } else {
-//       return new Promise((resolve, reject) => {
-//         const fileReader = new FileReader();
-//         fileReader.readAsDataURL(file);
-
-//         fileReader.onload = () => {
-//           resolve(fileReader.result);
-//         };
-
-//         fileReader.onerror = (error) => {
-//           reject(error);
-//         };
-//       });
-//     }
-//   };
+      let status= "processing";
+      const handleClick= ()=> {
+        dispatch(updateStatusOrder( id, status ));  
+      }
+      
 
   return (
     <Col
@@ -65,49 +51,29 @@ import CustomInput from "../custom/input";
       className="card shadow pl-3 pr-3 pb-4 pt-2 mb-3 mx-auto"
     >
       <Formik
-        enableReinitialize={true}
-        //initialValues={initialValuesForm}
+        initialValues={{ direction }}
         validationSchema={Yup.object({
-          direccion: Yup.string()
+          direction: Yup.string()
             .min(4, "Debe tener al menos 4 caracteres")
             .max(50, "Debe tener 50 caracteres o menos")
             .required("Debes completar este campo"),
-          email: Yup.number()
-            .min(1, "Debe tener un producto en stock")
-            .max(1000, "Debe tener 1000 productos o menos")
-            .required("Debes completar este campo"),
         })}
-        // onSubmit={async (values, { setSubmitting, resetForm }) => {
-        //   // Convertir imagen en base64
-        //   const imgBase64 = await convertBase64(values.image);
-        //   //Agregar img64 al obj producto
-        //   let product = { ...values, image: imgBase64 };
-        //   // Verificar tipo de accion enviada
-        //   action === "post" && dispatch(addNewProduct(product));
-        //   action === "put" &&
-        //     dispatch(updateProduct(id, product, categoryProduct));
-        //   // Resetear o no , el formulari dependiendo la accion
-        //   if (action === "put") initialValuesForm = product;
-        //   action === "post" && resetForm();
-        //   setSubmitting(false);
-        // }}
+        
       >
         {({ isSubmitting, setFieldValue }) => {
           return (
             <Form>
               <Col className="rounded-lg text-center">
-                {action === "put" ? (
+
                   <Row>
                     <Button
                       className="btn btn-light text-secondary btn-sm float-left"
-                      //onClick={() => history.push("/admin/products")}
+                      onClick={() => history.push("/cart")}
                     >
-                      <ArrowLeftCircle size={20} />
+                      <ArrowLeftCircle size={30} />
                     </Button>
                   </Row>
-                ) : (
-                  ""
-                )}
+              
                 <Row className="d-block">
                   <BagCheck className="mb-1 mr-2" size={40} />
                   <h2>Confirma tu compra!</h2>
@@ -124,24 +90,17 @@ import CustomInput from "../custom/input";
                     placeholder="Domicilio de envio"
                   />
                 </Col>
-                <Col>
-                  <CustomInput
-                    label="Email"
-                    name="email"
-                    type="email"
-                    placeholder= "email de confirmacion"
-                  />
-                </Col>
               </Row>
               <Button
                 block
                 className="bg-color-primary shadow-primary rounded-pill border-0"
                 type="submit"
+                onClick= {handleClick}
               >
                 {isSubmitting
                   ? "Cargando..."
-                  : action === "post"
-                  ? "Compra confirmada"
+                  //: action === "post"
+                  //? "Compra confirmada"
                   : "Comprar"}
               </Button>
             </Form>

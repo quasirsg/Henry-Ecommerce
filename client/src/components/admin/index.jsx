@@ -123,7 +123,6 @@ const AdminMenu = () => {
                       </Jumbotron>
                     </div>
                   </Route>
-                  <Route exact path="/admin/ordenes/:id" component={Orden} />
                   <Route exact path="/admin/product">
                     <FormProduct action="post" />
                   </Route>

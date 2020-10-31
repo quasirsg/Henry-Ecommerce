@@ -11,6 +11,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import "./orden.css";
 import {
+  getOneOrder,
   getOrderById,
   updateStatusOrder,
 } from "../../../redux/actions/ordenActions";
@@ -105,7 +106,6 @@ const Orden = () => {
       );
     }
   };
-
 
   const statusButton = (state) => {
     if (state !== "canceled" && state !== "completed") {
