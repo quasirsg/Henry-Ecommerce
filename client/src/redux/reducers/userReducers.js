@@ -12,7 +12,7 @@ import {
   DELETE_PRODUCT_CART_GUEST,
   DELETE_ALL_PRODUCTS_CART_GUEST,
   GET_ONE_USER,
-  GET_USER_ORDERS,
+  GET_USERS_ORDERS,
   DELETE_ALL_CART,
   DELETE_AMOUNT_GUEST,
   ADD_AMOUNT_GUEST,
@@ -34,7 +34,6 @@ const initialState = {
 
 function userReducers(state = initialState, action) {
   let products = state.carrito;
-  console.log(action);
   switch (action.type) {
     /* REDUCERS USUARIOS Y LOGUIN USUARIOS */
     case GET_USERS:
@@ -162,10 +161,10 @@ function userReducers(state = initialState, action) {
         ...state,
         carrito: products,
       };
-    case GET_USER_ORDERS:
+    case GET_USERS_ORDERS:
       return {
         ...state,
-        orders: action.orders,
+        orders: action.payload,
       };
 
     case ADD_ALL_PRODUCTS_CART_GUEST:

@@ -3,7 +3,7 @@ import Swal from "sweetalert2";
 import deleteDialog from "../../components/alerts/deleteDialog";
 import Toast from "../../components/alerts/toast";
 import * as actionTypes from "./actionTypes";
-
+import { GET_USERS_ORDERS } from './actionTypes';
 const url = `http://localhost:3001`;
 
 export const getUsers = () => (dispatch) => {
@@ -53,7 +53,7 @@ export const postUser = (user) => (dispatch) => {
     });
 };
 
-export const editUser = (id, values, action) => async (dispatch) => {};
+export const editUser = (id, values, action) => async (dispatch) => { };
 //   if (action === "post") {
 //     return axios
 //       .post(`${url}/users/`, values)
@@ -362,3 +362,13 @@ export const deleteAllCart = (userId) => (dispatch) => {
     });
   }
 };
+
+export const getUsersOrders = (userId) => dispatch => {
+  axios.get(url + '/users/' + userId + '/ordersall')
+    .then(res => {
+      dispatch({
+        type: GET_USERS_ORDERS,
+        payload: res.data.data,
+      })
+    })
+}

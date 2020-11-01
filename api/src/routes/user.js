@@ -458,7 +458,7 @@ server.get("/:userId/cart", (req, res) => {
 server.get("/:userId/ordersall", (req, res) => {
   const userId = req.params.userId;
 
-  Order.findOne({
+  Order.findAll({
     include: [User, { model: Product }],
     where: {
       userId,
