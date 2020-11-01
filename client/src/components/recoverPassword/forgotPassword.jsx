@@ -5,10 +5,10 @@ import { Button, Row, Col } from "reactstrap";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import CustomInput from "../custom/input";
-import { Link } from 'react-router-dom';
-import Toast from '../alerts/toast';
-import Swal from 'sweetalert2';
-import axios from 'axios';
+import { Link } from "react-router-dom";
+import Toast from "../alerts/toast";
+import Swal from "sweetalert2";
+import axios from "axios";
 
 const ForgotPasswordForm = () => {
   return (
@@ -21,35 +21,37 @@ const ForgotPasswordForm = () => {
       >
         <Formik
           initialValues={{
-            email: '',
+            email: "",
           }}
           validationSchema={Yup.object({
             email: Yup.string()
               .email("Introduzca un email valido por favor")
-              .required("Debes completar este campo")
+              .required("Debes completar este campo"),
           })}
           onSubmit={(values, { setSubmitting, resetForm }) => {
-            const url = 'http://localhost:3001/users/auth/forgot-password';
-            axios.put(url, values)
-              .then(response => {
+            const url = "http://localhost:3001/users/auth/forgot-password";
+
+            axios
+              .put(url, values)
+              .then((response) => {
                 resetForm();
                 setSubmitting(false);
                 Swal.fire({
                   position: "center",
                   icon: "success",
-                  width: '700px',
+                  width: "700px",
                   title: `<h4>${response.data.message}</h4>`,
                   showConfirmButton: false,
                   timer: 2500,
                 });
               })
-              .catch(error => {
+              .catch((error) => {
                 setSubmitting(false);
                 Toast.fire({
-                  icon: 'error',
-                  title: 'El email no se encuentra registrado.'
+                  icon: "error",
+                  title: "El email no se encuentra registrado.",
                 });
-              })
+              });
           }}
         >
           {({ isValid, isSubmitting }) => {
@@ -78,18 +80,20 @@ const ForgotPasswordForm = () => {
                   type="submit"
                   disabled={!isValid}
                 >
-                  {isSubmitting
-                    ? "Enviando..."
-                    : "Enviar correo electrónico"}
+                  {isSubmitting ? "Enviando..." : "Enviar correo electrónico"}
                 </Button>
               </Form>
             );
           }}
         </Formik>
       </Col>
-      <Col lg={5} className='mx-auto'>
-        <Link className='float-left' to={'/user/login'}>Iniciar sesión</Link>
-        <Link className='float-right' to={'/user/register'}>Registrarse</Link>
+      <Col lg={5} className="mx-auto">
+        <Link className="float-left" to={"/user/login"}>
+          Iniciar sesión
+        </Link>
+        <Link className="float-right" to={"/user/register"}>
+          Registrarse
+        </Link>
       </Col>
     </>
   );

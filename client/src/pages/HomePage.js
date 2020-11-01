@@ -16,9 +16,10 @@ const HomePage = () => {
 
   if (localStorage.token) {
     var userId = user.id;
+    console.log(userId);
     if (localStorage.cart) {
       let productsCarts = JSON.parse(localStorage.getItem("cart"));
-      console.log(productsCarts);
+      console.log(userId);
       dispatch(addProducts(userId, productsCarts));
       localStorage.removeItem("cart");
     }
