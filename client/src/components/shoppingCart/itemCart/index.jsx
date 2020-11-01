@@ -32,7 +32,7 @@ const ItemCart = ({ product, userId }) => {
         <Row>
           <Col lg="6">
             <div className="row-flex">
-              <div className="itemCart__image">
+              <div className="card-img-overlay">
                 <img src={product.image} className="img-fill" alt="" />
               </div>
               <div className="itemCart__content">
