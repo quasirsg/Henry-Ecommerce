@@ -102,8 +102,8 @@ const Order = ({ products, userId, status, hasReviews }) => {
                                         name="rating"
                                     />
                                     <FormGroup>
-                                        <Label for="exampleText">Cuentanos mas del producto</Label>
-                                        <Input type="textarea" name="text" id="exampleText" />
+                                        <Label for="labelReview">Cuentanos mas del producto</Label>
+                                        <Input type="textarea" name="textReview" id="textReview" />
                                     </FormGroup>
                                 </Col>
                             </Collapse>
