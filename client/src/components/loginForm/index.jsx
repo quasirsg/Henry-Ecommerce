@@ -5,12 +5,10 @@ import { Button, Row, Col } from "reactstrap";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import CustomInput from "../custom/input";
-import { useDispatch } from "react-redux";
-import { loguinUser } from "../../redux/actions/jwtUsers";
+import { useDispatch, useSelector } from "react-redux";
+import { loguinUser, verifySession } from "../../redux/actions/jwtUsers";
 import { cartLoginListen } from "../custom/utils";
-import { addProducts } from "../../redux/actions/userActions";
-import Toast from "../alerts/toast";
-import Swal from "sweetalert2";
+import { addProducts, getProductCart } from "../../redux/actions/userActions";
 
 const LoginForm = ({
   id,
@@ -40,8 +38,7 @@ const LoginForm = ({
           email: Yup.string()
             .email("Introduzca un email valido por favor")
             .required("Debes completar este campo"),
-          password: Yup.string()
-            .required("Please Enter your password")
+          password: Yup.string().required("Please Enter your password"),
         })}
         onSubmit={(values, { setSubmitting, resetForm }) => {
           //Request al backend
@@ -54,13 +51,6 @@ const LoginForm = ({
           console.log(user);
 
           dispatch(loguinUser(user.email, user.password)); //Funciona loguin correcto e error al ingresar mal los datos
-          Swal.fire({
-            position: "center",
-            icon: "success",
-            title: `¡Bienvenido!`,
-            showConfirmButton: false,
-            timer: 2000,
-          });
           resetForm();
           setSubmitting(false);
           history.push("/");
@@ -80,8 +70,8 @@ const LoginForm = ({
                     </Button>
                   </Row>
                 ) : (
-                    ""
-                  )}
+                  ""
+                )}
 
                 <Row className="d-block">
                   <PersonCircle className="mb-1 mr-2" size={40} />
@@ -118,12 +108,12 @@ const LoginForm = ({
                 {isSubmitting
                   ? "Iniciando sesón..."
                   : action === "put"
-                    ? "Actualizar usuario"
-                    : action === "delete"
-                      ? "Eliminar usuario"
-                      : action === "post"
-                        ? "Ingresar"
-                        : null}
+                  ? "Actualizar usuario"
+                  : action === "delete"
+                  ? "Eliminar usuario"
+                  : action === "post"
+                  ? "Ingresar"
+                  : null}
               </Button>
             </Form>
           );
