@@ -14,7 +14,7 @@ const HomePage = () => {
   const user = useSelector((state) => state.session.userDetail);
   const dispatch = useDispatch();
 
-  if (user) {
+  if (localStorage.token) {
     var userId = user.id;
     if (localStorage.cart) {
       let productsCarts = JSON.parse(localStorage.getItem("cart"));
