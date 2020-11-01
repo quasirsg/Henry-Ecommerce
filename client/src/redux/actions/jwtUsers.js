@@ -6,7 +6,7 @@ import * as actionTypes from "./actionTypes";
 const url = `http://localhost:3001`;
 
 //loguin  -> funciona loguin correcto e incorrecto.
-export const loguinUser = (email, password, history) => (dispatch) => {
+export const loguinUser = (email, password) => (dispatch) => {
   try {
     axios
       .post(`${url}/users/login`, {
@@ -28,7 +28,6 @@ export const loguinUser = (email, password, history) => (dispatch) => {
             showConfirmButton: false,
             timer: 2000,
           });
-          history.push("/");
         }
       })
       .catch((error) => {

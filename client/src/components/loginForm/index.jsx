@@ -49,9 +49,10 @@ const LoginForm = ({
             //To lower case (wtf?)
             user.email = user.email.toLowerCase();
 
-            dispatch(loguinUser(user.email, user.password, history)); //Funciona loguin correcto e error al ingresar mal los datos
+            dispatch(loguinUser(user.email, user.password)); //Funciona loguin correcto e error al ingresar mal los datos
             resetForm();
             setSubmitting(false);
+            history.push("/");
           }}
         >
           {({ isValid, isSubmitting }) => {

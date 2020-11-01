@@ -43,7 +43,10 @@ const ItemCart = ({ product, userId }) => {
                 <div className="itemCart-subtitle">
                   Sub-Total $ {product.quantity * product.price}
                 </div>
-                <div className="itemCart-subtitle"> Stock {product.stock}</div>
+                <div className="itemCart-subtitle">
+                  {" "}
+                  {product.stock > 0 ? "En stock" : "Sin stock"}
+                </div>
               </div>
             </div>
           </Col>
