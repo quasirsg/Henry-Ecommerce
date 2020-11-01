@@ -26,8 +26,6 @@ export default ({ history }) => {
 
   let userRole = useSelector((state) => state.session.userDetail.role);
 
-  console.log(userRole);
-
   const linkUser = (userRole) => {
     if (userRole === "client") {
       return (
