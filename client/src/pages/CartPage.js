@@ -17,7 +17,6 @@ const Cart = () => {
   let user = useSelector((state) => state.session.userDetail);
   const [userData, setUserData] = useState(null);
 
-  // TODO: utilizar redux
   if (localStorage.token) {
     var token = localStorage.getItem("token");
     var userId = user.id;
