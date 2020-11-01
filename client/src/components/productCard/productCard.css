@@ -2,7 +2,7 @@
 
 /* Estilos para componentes */
 p {
-  font-size: 1.2rem;
+  font-size: 1rem;
 }
 /* Estilos para Clases de reactstrap y clases propias */
 .card {
@@ -13,13 +13,17 @@ p {
   align-items: center;
   width: 14rem;
   margin: 0 0.5rem 2.3rem 0.5rem;
+
   /* text-decoration: none; */
 }
 
 .product-img {
+  max-width: 100%;
   height: 14rem;
   margin-bottom: 1rem;
-  margin-top: 1rem;
+  /* margin-top: 1rem;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem; */
 }
 
 .btn-add-cart {
@@ -64,7 +68,7 @@ p {
 .card-title {
   /* margin-bottom: 0.5rem; */
   text-align: center;
-  font-size: 1.2rem;
+  font-size: 1rem;
   font-weight: 600;
   text-decoration: none;
 }
