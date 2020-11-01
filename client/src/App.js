@@ -15,6 +15,8 @@ import TablaOrdenes from "./components/tablaOrdenes";
 import FormUser from "./components/userForm";
 import LoginForm from "./components/loginForm";
 import CheckoutForm from "./components/checkout";
+import ForgotPasswordForm from './components/recoverPassword/forgotPassword';
+import ResetPasswordForm from './components/recoverPassword/resetPassword';
 
 //Pages
 import SearchPage from "./pages/SearchPage";
@@ -25,9 +27,8 @@ import UserPage from "./pages/UserPage";
 
 function App() {
   const dispatch = useDispatch();
-
   const session = useSelector((state) => state.session.userDetail);
-  console.log(session);
+
   // Obtener products ,categorias y banners
   useEffect(() => {
     dispatch(getCategory());
@@ -41,6 +42,8 @@ function App() {
     <div className="col-lg-12">
       <Navbar />
       <Switch>
+        <Route exact path='/forgotpassword' component={ForgotPasswordForm} />
+        <Route exact path='/resetpassword/:token' component={ResetPasswordForm} />
         <Route exact path="/" component={HomePage} />
         <Route path="/home" component={HomePage} />
         <Route path="/search/q/" component={SearchPage} />
@@ -62,8 +65,8 @@ function App() {
           {Object.keys(session).length > 0 ? (
             <UserPage />
           ) : (
-            <Redirect to={"/"} />
-          )}
+              <Redirect to={"/"} />
+            )}
         </Route>
         <Route exact path="/user/register">
           <FormUser action="post" icon="success" message="Usuario agregado" />

@@ -7,7 +7,7 @@ import allActions from "./allActions";
 const url = `http://localhost:3001`;
 
 //loguin  -> funciona loguin correcto e incorrecto.
-export const loguinUser = (email, password) => (dispatch) => {
+export const loguinUser = (email, password, history) => (dispatch) => {
   try {
     axios
       .post(`${url}/users/login`, {
@@ -16,13 +16,20 @@ export const loguinUser = (email, password) => (dispatch) => {
       })
       .then((res) => {
         const token = res.data.token;
-        console.log(token);
         if (token) {
           localStorage.setItem("token", token);
           dispatch({
             type: actionTypes.USER_LOGIN,
           });
           dispatch(getCurrentUser(token));
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title: `¡Bienvenido!`,
+            showConfirmButton: false,
+            timer: 2000,
+          });
+          history.push("/");
         }
       })
       .catch((error) => {
@@ -67,7 +74,7 @@ export const verifySession = () => (dispatch) => {
 };
 
 //logout
-export const logoutUser = () => (dispatch) => {
+export const logoutUser = (path) => (dispatch) => {
   Swal.fire({
     html: `<h5>¿Deseas cerrar sesión?<h5/>`,
     width: "30%",
@@ -89,6 +96,7 @@ export const logoutUser = () => (dispatch) => {
       dispatch({
         type: actionTypes.DELETE_ALL_CART,
       });
+      path.push('/');
     }
   });
 };
