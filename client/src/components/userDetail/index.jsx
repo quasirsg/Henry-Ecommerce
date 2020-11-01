@@ -95,7 +95,7 @@ const UserDetail = () => {
                         </Col>
                         <Col lg="6" xs="6">
                             <CustomInput
-                                label="Numero de teléfono"
+                                label="Número de teléfono"
                                 name="phoneNumber"
                                 type="text"
                             />

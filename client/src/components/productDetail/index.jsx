@@ -72,8 +72,8 @@ const Product = () => {
             <p className="inforPrice">${product.price}</p>
             <h6 className="productStock">
               {product.stock > 0
-                ? "Stock Disponible: " + product.stock
-                : "Producto No Disponible"}
+                ? "Stock Disponible"
+                : "Producto sin Stock"}
             </h6>
             <div
               className={
@@ -94,7 +94,7 @@ const Product = () => {
         <p className="infoCardDescription">{product.description}</p>
       </Col>
       <Col lg="12">
-        <div className="infoCardDescriptionTitle">Reviews:</div>
+        <div className="infoCardDescriptionTitle">Opiniones:</div>
         {reviews.length > 0 ? (
           reviews.map((review) => (
             <Review
@@ -106,7 +106,7 @@ const Product = () => {
           ))
         ) : (
           <div className="warning-alert">
-            Lo sentimos este producto no cuenta con Reviews!
+            Lo sentimos este producto no cuenta con opiniones de otros usuarios!
           </div>
         )}
       </Col>

@@ -43,7 +43,7 @@ const InventoryTable = () => {
             <tr className="my-auto" key={index}>
               <th>{item.id}</th>
               <td>{item.name.slice(0, 15) + ".."}</td>
-              <td>{item.stock} uds.</td>
+              <td>{item.stock} u.</td>
               <td>{item.description.slice(0, 15) + ".."}</td>
               <td>$ {item.price}</td>
               <td>

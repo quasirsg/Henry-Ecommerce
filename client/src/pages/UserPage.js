@@ -44,7 +44,7 @@ const UserPage = () => {
                 <Link to="/user/reviews">
                   <ButtonSquare
                     icon={<ChatSquareText size={20} />}
-                    Children={"Mis Reviews"}
+                    Children={"Mis opiniones"}
                   />
                 </Link>
               </li>

@@ -52,8 +52,8 @@ const TablaUsuarios = () => {
       <Table hover responsive className="table-sm">
         <thead>
           <tr>
-            <th>id</th>
-            <th>nombre</th>
+            <th>ID</th>
+            <th>Nombre</th>
             <th>Role</th>
             <th>
               <GearFill size={17} className="mr-2" />

@@ -79,7 +79,7 @@ const TablaOrdenes = () => {
           <thead>
             <tr>
               <th>ID</th>
-              <th>Status</th>
+              <th>Estado</th>
               <th>Usuario</th>
               <th>
                 <GearFill size={17} className="mr-2" />

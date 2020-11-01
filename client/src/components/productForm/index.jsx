@@ -73,7 +73,7 @@ const FormProduct = ({ action, history, id = 0 }) => {
             .max(50, "Debe tener 50 caracteres o menos")
             .required("Debes completar este campo"),
           stock: Yup.number()
-            .min(1, "Debe tener un producto en stock")
+            .min(0, "Debe tener un numero positivo en stock")
             .max(1000, "Debe tener 1000 productos o menos")
             .required("Debes completar este campo"),
           description: Yup.string()

@@ -135,12 +135,11 @@ const AdminMenu = () => {
                     <div className="col-10 mx-auto">
                       <Jumbotron>
                         <h2 className="display-3">
-                          <PersonBadge /> ¡Bienvenido Admin!
+                          <PersonBadge /> ¡Bienvenido Administrador!
                         </h2>
                         <hr className="my-2" />
                         <p>
-                          Este es el panel del usuario administrador donde podrá
-                          controlar todo.
+                          Este es el panel desde donde podra tener el control de su E-commerce.
                         </p>
                       </Jumbotron>
                     </div>
