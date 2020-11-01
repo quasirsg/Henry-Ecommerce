@@ -27,6 +27,7 @@ export const POST_USER = "POST_USER";
 export const GET_ONE_USER = "GET_ONE_USER";
 export const GET_USER_ORDERS = "GET_USER_ORDERS";
 export const GET_USERS_ORDERS = "GET_USERS_ORDERS";
+export const USER_PUT_PASSWORD = "USER_PUT_PASSWORD";
 
 //Users loguin
 export const USER_LOGIN = "USER_LOGIN";

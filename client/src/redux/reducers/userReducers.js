@@ -19,6 +19,7 @@ import {
   ADD_ALL_PRODUCTS_CART_GUEST,
   PROM_USER,
   GET_REVIEWS_BY_ID,
+  USER_PUT_PASSWORD,
 } from "../actions/actionTypes";
 
 const initialState = {
@@ -34,6 +35,8 @@ const initialState = {
 
 function userReducers(state = initialState, action) {
   let products = state.carrito;
+
+  console.log(action);
   switch (action.type) {
     /* REDUCERS USUARIOS Y LOGUIN USUARIOS */
     case GET_USERS:
@@ -65,6 +68,10 @@ function userReducers(state = initialState, action) {
       return {
         ...state,
         users: state.users.filter((item) => item.id !== action.userDetail.id),
+      };
+    case USER_PUT_PASSWORD:
+      return {
+        ...state,
       };
 
     /* REDUCERS CARRITO DE USUARIOS */

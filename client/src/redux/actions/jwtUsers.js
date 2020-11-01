@@ -3,6 +3,7 @@ import Toast from "../../components/alerts/toast";
 import Swal from "sweetalert2";
 import * as actionTypes from "./actionTypes";
 import allActions from "./allActions";
+import toast from "../../components/alerts/toast";
 
 const url = `http://localhost:3001`;
 
@@ -91,4 +92,26 @@ export const logoutUser = () => (dispatch) => {
       });
     }
   });
+};
+
+export const passwordChange = (id, values) => (dispatch) => {
+  return axios
+    .put(`${url}/users/${id}/passwordChange`, values)
+    .then((res) => {
+      dispatch({
+        type: actionTypes.USER_PUT_PASSWORD,
+        pass: res.data,
+      });
+      toast.fire({
+        icon: "success",
+        title: "Ha modificado su contraseña con exito!",
+      });
+    })
+    .catch((error) => {
+      console.log(error);
+      Toast.fire({
+        icon: "error",
+        title: "Error: No se ha podido actualizar la contraseña",
+      });
+    });
 };
