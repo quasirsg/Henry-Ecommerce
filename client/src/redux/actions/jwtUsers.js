@@ -2,7 +2,6 @@ import axios from "axios";
 import Toast from "../../components/alerts/toast";
 import Swal from "sweetalert2";
 import * as actionTypes from "./actionTypes";
-import allActions from "./allActions";
 
 const url = `http://localhost:3001`;
 
@@ -23,6 +22,13 @@ export const loguinUser = (email, password) => (dispatch) => {
             type: actionTypes.USER_LOGIN,
           });
           dispatch(getCurrentUser(token));
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title: `¡Bienvenido!`,
+            showConfirmButton: false,
+            timer: 2000,
+          });
         }
       })
       .catch((error) => {

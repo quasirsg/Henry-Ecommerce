@@ -50,13 +50,6 @@ const Cart = () => {
     } else {
       localStorage.setItem("cart", JSON.stringify([]));
     }
-  } else if (userData || localStorage.token) {
-    if (localStorage.cart) {
-      productsCarts = JSON.parse(localStorage.getItem("cart"));
-      dispatch(addProducts(userId, productsCarts));
-      localStorage.removeItem("cart");
-      setUserData(null); //evitar un loop
-    }
   }
 
   const totalCalc = () => {
