@@ -1,22 +1,47 @@
 import React, { useState } from 'react';
-import { Col, Row, Modal, ModalHeader, ModalBody, Button, Collapse, FormGroup, Label, Input } from 'reactstrap';
+import { Form, Col, Row, Modal, ModalHeader, ModalBody, Button, Collapse, FormGroup, Label, Input } from 'reactstrap';
 import { Link } from 'react-router-dom';
-import StarRatings from 'react-star-ratings';
+import Swal from 'sweetalert2';
+import StarRatingComponent from 'react-star-rating-component';
+import { useDispatch } from 'react-redux';
+import { addReview } from '../../redux/actions/userActions';
 
 import './order.css';
 
-const Order = ({ products, userId, status, hasReviews }) => {
 
+const Order = ({ products, status, hasReviews }) => {
+
+    const dispatch = useDispatch();
     const [modal, setModal] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
     const [rating, setRating] = useState(0);
+    const [textReview, setTextReview] = useState('');
 
-    const changeRating = (newRating, name) => setRating({ rating: newRating });
     const toggleButton = () => setIsOpen(!isOpen);
     const toggle = () => setModal(!modal);
-
-    const closeBtn = <button className="close" onClick={toggle}>&times;</button>;
-
+    const handleOnChange = event => setTextReview(event.target.value);
+    const hanldeOnSubmit = event => {
+        dispatch(addReview(products[0].id, products[0].linea_order.userId, rating, textReview));
+        Toast.fire({
+            icon: 'success',
+            title: 'Ha Añadido una review!',
+        });
+        setTimeout(function () {
+            window.location.href = "/user/account";
+        }, 1000);
+        event.preventDefault();
+    }
+    const Toast = Swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+            toast.addEventListener("mouseenter", Swal.stopTimer);
+            toast.addEventListener("mouseleave", Swal.resumeTimer);
+        },
+    });
     const availableReviews = () => {
         if (status === 'completed') {
             if (hasReviews.length === []) {
@@ -33,6 +58,11 @@ const Order = ({ products, userId, status, hasReviews }) => {
             return false;
         }
     }
+    const onStarClick = (nextValue, prevValue, name) => {
+        setRating(nextValue);
+    }
+
+    const closeBtn = <button className="close" onClick={toggle}>&times;</button>;
 
     return (
         <Col lg="12">
@@ -83,7 +113,6 @@ const Order = ({ products, userId, status, hasReviews }) => {
                                 </Row>
                             }
                             <div className="order__buttons">
-
                                 <Button color="info" onClick={toggle}>Ver detalle</Button>
                                 {availableReviews()
                                     ? <Button color="warning" style={{ margin: '0 10px' }} onClick={toggleButton} >Opinar sobre el producto</Button>
@@ -91,21 +120,28 @@ const Order = ({ products, userId, status, hasReviews }) => {
                                 }
                             </div>
                             <Collapse isOpen={isOpen}>
-                                <Col lg="12" className="d-flex-justify-content-center">
-                                    <StarRatings
-                                        rating={rating}
-                                        starRatedColor="blue"
-                                        changeRating={() => changeRating}
-                                        starHoverColor="yellow"
-                                        starDimension="20px"
-                                        numberOfStars={5}
-                                        name="rating"
-                                    />
-                                    <FormGroup>
-                                        <Label for="labelReview">Cuentanos mas del producto</Label>
-                                        <Input type="textarea" name="textReview" id="textReview" />
-                                    </FormGroup>
-                                </Col>
+                                <Form onSubmit={hanldeOnSubmit}>
+                                    <Col lg="12">
+                                        <div className="d-flex justify-content-center mt-2">
+                                            <StarRatingComponent
+                                                name="rate1"
+                                                starCount={5}
+                                                emptyStarColor={'#ccc9c9'}
+                                                value={rating}
+                                                onStarClick={onStarClick}
+                                            />
+                                        </div>
+                                        <FormGroup>
+                                            <Label for="exampleText">Cuentanos mas acerca del producto</Label>
+                                            <Input
+                                                onChange={handleOnChange}
+                                                type="textarea"
+                                                name="text"
+                                                id="exampleText" />
+                                        </FormGroup>
+                                        <Button type="submit" color="primary" style={{ marginBottom: '2rem' }}>Enviar Opinion</Button>
+                                    </Col>
+                                </Form>
                             </Collapse>
                             <Modal isOpen={modal} toggle={toggle} className="order__modal">
                                 <ModalHeader toggle={toggle} close={closeBtn}>Productos Comprados</ModalHeader>

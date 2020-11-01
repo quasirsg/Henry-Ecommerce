@@ -92,6 +92,7 @@ export const editUser = (id, values, action) => async (dispatch) => { };
 // };
 
 //un usuario puede añadir una review a un producto que haya comprado
+
 export const addReview = (productId, userId, points, description) => (
   dispatch
 ) => {
@@ -108,6 +109,7 @@ export const addReview = (productId, userId, points, description) => (
     })
     .catch((err) => console.log(err));
 };
+
 //un usuario puede editar una review de un producto que haya comprado
 export const editReview = (productId, reviewId, points, description) => (
   dispatch
