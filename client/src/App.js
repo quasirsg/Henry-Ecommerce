@@ -15,6 +15,8 @@ import TablaOrdenes from "./components/tablaOrdenes";
 import FormUser from "./components/userForm";
 import LoginForm from "./components/loginForm";
 import CheckoutForm from "./components/checkout";
+import ForgotPasswordForm from "./components/recoverPassword/forgotPassword";
+import ResetPasswordForm from "./components/recoverPassword/resetPassword";
 
 //Pages
 import SearchPage from "./pages/SearchPage";
@@ -30,7 +32,6 @@ import FormProduct from "./components/productForm";
 
 function App() {
   const dispatch = useDispatch();
-
   const session = useSelector((state) => state.session.userDetail);
 
   /*Obtener products ,categorias y banners*/
@@ -53,7 +54,12 @@ function App() {
     <div className="col-lg-12">
       <Navbar />
       <Switch>
-        {/* =============== Unprotected Routes ============ */}
+        <Route exact path="/forgotpassword" component={ForgotPasswordForm} />
+        <Route
+          exact
+          path="/resetpassword/:token"
+          component={ResetPasswordForm}
+        />
         <Route exact path="/" component={HomePage} />
         <Route path="/home" component={HomePage} />
         <Route path="/search/q/" component={SearchPage} />
@@ -161,6 +167,5 @@ function App() {
     </div>
   );
 }
-
 
 export default App;

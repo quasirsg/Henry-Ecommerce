@@ -202,14 +202,14 @@ const loadUsers = () => {
       image: "1234",
       location_id: 21,
     },
-    // {
-    //   name: "Facundo Nevárez",
-    //   email: "client1@gmail.com",
-    //   address: "María Alejandra 2417 PB ALuciana del Este",
-    //   role: "client",
-    //   password: bcrypt.hashSync("Vsl@17477", 10),
-    //   location_id: 21,
-    // },
+    {
+      name: "Luciano",
+      email: "lucianooo222@gmail.com",
+      address: "María Alejandra 2417 PB ALuciana del Este",
+      role: "client",
+      password: bcrypt.hashSync("Lucho@1234", 10),
+      location_id: 21,
+    },
     // {
     //   name: "Regina Flórez",
     //   email: "client2@gmail.com",
