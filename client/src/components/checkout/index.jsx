@@ -9,6 +9,7 @@ import { useHistory } from "react-router-dom";
 import { getOrders, updateStatusOrder } from "../../redux/actions/ordenActions";
 
 
+
 const CheckoutForm = ({ direction= "" }) => {
     const history = useHistory ();
     const dispatch = useDispatch(); 
@@ -25,9 +26,25 @@ const CheckoutForm = ({ direction= "" }) => {
       if (obj ) id = obj.id;
 
       let status= "processing";
+
+      const bye= function (){
+        history.push("/products")
+      }
       const handleClick= ()=> {
+        setTimeout(bye, 2000);
         dispatch(updateStatusOrder( id, status ));  
+        
       };
+      
+//       var myVar;
+
+// function myFunction() {
+//   myVar = setTimeout(alertFunc, 3000);
+// }
+
+// function alertFunc() {
+//   alert("Hello!");
+// }
 
   return (
     <Col
