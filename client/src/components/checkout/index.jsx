@@ -6,21 +6,8 @@ import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import CustomInput from "../custom/input";
 import { useHistory } from "react-router-dom";
-import { getOrders, updateStatusOrder, getOrderById } from "../../redux/actions/ordenActions";
-import Toast from "../alerts/toast";
-import Swal from "sweetalert2";
+import { getOrders, updateStatusOrder } from "../../redux/actions/ordenActions";
 
-// const Toast = Swal.mixin({
-//   toast: true,
-//   position: "top-end",
-//   showConfirmButton: false,
-//   timer: 3000,
-//   timerProgressBar: true,
-//   didOpen: (toast) => {
-//     toast.addEventListener("mouseenter", Swal.stopTimer);
-//     toast.addEventListener("mouseleave", Swal.resumeTimer);
-//   },
-// });
 
 const CheckoutForm = ({ direction= "" }) => {
     const history = useHistory ();
@@ -40,8 +27,7 @@ const CheckoutForm = ({ direction= "" }) => {
       let status= "processing";
       const handleClick= ()=> {
         dispatch(updateStatusOrder( id, status ));  
-      }
-      
+      };
 
   return (
     <Col
@@ -80,7 +66,7 @@ const CheckoutForm = ({ direction= "" }) => {
                 </Row>
               </Col>
               <hr className="mt-0 mb-3" />
-              <h6>El total de tu compra es </h6>
+              {/* <h6>El total de tu compra es </h6> */}
               <Row>
                 <Col>
                   <CustomInput
@@ -98,10 +84,10 @@ const CheckoutForm = ({ direction= "" }) => {
                 onClick= {handleClick}
               >
                 {isSubmitting
-                  ? "Cargando..."
-                  //: action === "post"
-                  //? "Compra confirmada"
-                  : "Comprar"}
+                  ? "Gracias!"
+                  : status === "shopping_cart"
+                  ? "Gracias!"
+                  : "comprar"}
               </Button>
             </Form>
           );
