@@ -9,23 +9,8 @@ const ProtectedUserRoute = ({ component: Component, log, ...rest }) => {
       <Route
         {...rest}
         render={(props) => {
-          if (log === "client") {
+          if (log === "client" || log === "admin") {
             return <Component />;
-          } else if (log === "admin") {
-            toast.fire({
-              icon: "error",
-              title: `Error: Debes iniciar sesion`,
-            });
-            return (
-              <Redirect
-                to={{
-                  pathname: "/user/login",
-                  state: {
-                    from: props.location,
-                  },
-                }}
-              />
-            );
           }
         }}
       />

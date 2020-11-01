@@ -32,10 +32,10 @@ const {
 conn.sync({ force: true }).then(() => {
   loadProducts();
   loadCategories();
-  loadProductCategories();
+  // loadProductCategories();
   loadUsers();
-  loadReviews();
-  loadOrders();
+  // loadReviews();
+  // loadOrders();
 
   console.log("\nSe han precargado los productos exitosamente!\n");
 

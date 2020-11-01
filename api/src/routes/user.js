@@ -38,7 +38,7 @@ server.post("/", (req, res, next) => {
 });
 
 //Actualizar un usuario
-server.put("/:id", authorize(), (req, res, next) => {
+server.put("/:id", (req, res, next) => {
   let { id } = req.params;
   let update = req.body;
 
@@ -86,30 +86,30 @@ server.delete("/:id", (req, res, next) => {
     .catch(next);
 });
 
-server.put('/:id/passwordChange', (req, res) => {
+server.put("/:id/passwordChange", (req, res) => {
   const id = req.params.id;
   const { email, currentPassword, newPassword } = req.body;
   console.log(newPassword);
   User.findOne({
     where: {
       email,
-    }
-  })
-    .then(user => {
-      bcrypt.compare(currentPassword, user.dataValues.password, (error, response) => {
+    },
+  }).then((user) => {
+    bcrypt.compare(
+      currentPassword,
+      user.dataValues.password,
+      (error, response) => {
         if (response) {
-          bcrypt
-            .hash(newPassword, 10)
-            .then((hash) => {
-              user.password = hash;
-              user.save()
-                .then(response => res.sendStatus(201));
-            })
+          bcrypt.hash(newPassword, 10).then((hash) => {
+            user.password = hash;
+            user.save().then((response) => res.sendStatus(201));
+          });
         } else {
           res.sendStatus(404);
         }
-      })
-    })
+      }
+    );
+  });
 });
 
 // Dar permisos de Admin a user
