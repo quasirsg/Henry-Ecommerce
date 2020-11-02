@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Container, Col, Row, Button } from "reactstrap";
+import { Container, Col, Row, Button, Jumbotron } from "reactstrap";
 import { Link } from "react-router-dom";
 import ShoppingCart from "../components/shoppingCart";
 import ButtonBlock from "../components/custom/ButtonBlock";
@@ -10,6 +10,7 @@ import {
   getProductCart,
 } from "../redux/actions/userActions";
 import { getCurrentUser } from "../redux/actions/jwtUsers";
+import { CartX } from "react-bootstrap-icons";
 
 const Cart = () => {
   const dispatch = useDispatch();
@@ -62,25 +63,44 @@ const Cart = () => {
     return total;
   };
 
-  return (
+  return productsCarts.length > 0 ? (
     <Container fluid={true} className="mt-4">
       <Row>
         <Col lg="8">
-          <ShoppingCart items={productsCarts} userId={userId} />
+          <div className="overflow-y">
+            <ShoppingCart items={productsCarts} userId={userId} />
+          </div>
         </Col>
         <Col lg="4">
           {productsCarts.length > 0 && (
             <>
-              <Col>Total: $ {totalCalc()}</Col>
+              <Col className="mb-3">
+                <>
+                  <h3>Total de la compra: $ {totalCalc()}</h3>
+                  <hr />
+                </>
+              </Col>
               <Link to="/checkout">
-                <ButtonBlock children={"Siguiente"} />
+                <ButtonBlock className="siguiente" children={"Siguiente"} />
               </Link>
-              <Button children={"Eliminar Carrito"} onClick={deleteAll} />
+              <Button
+                className="mt-3"
+                children={"Eliminar Carrito"}
+                onClick={deleteAll}
+              />
             </>
           )}
         </Col>
       </Row>
     </Container>
+  ) : (
+    <div className="col-10 mx-auto mt-5">
+      <Jumbotron>
+        <h5 className="display-4 text-center">
+          <CartX size={90} /> No tiene productos en el carrito
+        </h5>
+      </Jumbotron>
+    </div>
   );
 };
 

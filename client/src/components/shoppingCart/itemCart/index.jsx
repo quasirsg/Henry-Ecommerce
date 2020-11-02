@@ -7,6 +7,7 @@ import {
   deletAmount,
   deleteProductsCart,
 } from "../../../redux/actions/userActions";
+import { Trash } from "react-bootstrap-icons";
 
 const ItemCart = ({ product, userId }) => {
   const dispatch = useDispatch();
@@ -30,38 +31,51 @@ const ItemCart = ({ product, userId }) => {
     <Col lg="12">
       <div className="itemCart">
         <Row>
-          <Col lg="6">
+          <Col lg="4" className="mx-auto">
+            <div className="itemCart-title">{product.name.slice(0, 20)}</div>
+            <div className="">
+              <img src={product.image} className="img-fill pl-4 pr-4" alt="" />
+            </div>
+          </Col>
+          <Col lg="5">
             <div className="row-flex">
-              <div className="card-img-overlay">
-                <img src={product.image} className="img-fill" alt="" />
-              </div>
               <div className="itemCart__content">
-                <div className="itemCart-title">{product.name}</div>
-                <div className="itemCart-subtitle">$ {product.price}</div>
-              </div>
-              <div className="itemCart__content">
-                <div className="itemCart-subtitle">
-                  Sub-Total $ {product.quantity * product.price}
+                <div className="itemCart-subtitle mb-3 mt-4">
+                  Precio: $ {product.price}
                 </div>
                 <div className="itemCart-subtitle">
-                  {" "}
-                  {product.stock > 0 ? "En stock" : "Sin stock"}
+                  Sub-total: $ {product.price * product.quantity}
+                </div>
+                <div className="mt-3">
+                  {product.stock > 0 ? (
+                    <span class="badge badge-pill badge-success">En stock</span>
+                  ) : (
+                    <span class="badge badge-pill badge-danger">Sin stock</span>
+                  )}
                 </div>
               </div>
             </div>
           </Col>
-          <Col lg="6">
+          <Col lg="3">
             <div className="d-flex flex-row-reverse" value={product.id}>
               <button onClick={handleOnClick} className="itemCart-delete">
-                Remover
+                <Trash className="trash" size={25} />
               </button>
             </div>
             <div className="d-flex flex-row-reverse" values={product.id}>
-              <Button children={"+"} onClick={handleIncrement} />
+              <Button
+                className="quantity-button"
+                children={"+"}
+                onClick={handleIncrement}
+              />
               <div className="itemCart-count" values={product.id}>
                 {product.quantity}
               </div>
-              <Button children={"-"} onClick={handleDecrement} />
+              <Button
+                className="quantity-button"
+                children={"-"}
+                onClick={handleDecrement}
+              />
             </div>
           </Col>
         </Row>

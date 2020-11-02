@@ -10,7 +10,7 @@ import { addProducts } from "../redux/actions/userActions";
 const HomePage = () => {
   const categorias = useSelector((state) => state.category.category);
   const productos = useSelector((state) => state.products.allProducts);
-  const productBanners = useSelector((state) => state.products.productBanner);
+  // const productBanners = useSelector((state) => state.products.productBanner);
   const user = useSelector((state) => state.session.userDetail);
   const dispatch = useDispatch();
 
@@ -32,10 +32,10 @@ const HomePage = () => {
   return (
     <Container fluid={true} className="mt-4">
       <Row>
-        <Col lg="10">
+        {/* <Col lg="10">
           <UncontrolledCarousel items={productBanners} className="my-5" />
-        </Col>
-        <Col lg="2 my-auto">
+        </Col> */}
+        {/* <Col lg="2 my-auto">
           <div
             style={{ border: "1px solid #CED4DA", borderRadius: "5px" }}
             className="py-3"
@@ -55,7 +55,7 @@ const HomePage = () => {
               </p>
             </div>
           </div>
-        </Col>
+        </Col> */}
       </Row>
       <Row>
         <Categoria categorys={categorias} />
