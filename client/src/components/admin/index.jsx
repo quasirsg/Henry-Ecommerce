@@ -24,6 +24,7 @@ import {
   Server,
   Files,
   CaretDown,
+  PersonCircle,
 } from "react-bootstrap-icons";
 import FormProduct from "../productForm";
 import FormCategory from "../categoryForm";
@@ -35,6 +36,9 @@ import { getCategory } from "../../redux/actions/categoryActions";
 import { getProducts } from "../../redux/actions/productActions";
 import { getOrders } from "../../redux/actions/ordenActions";
 import Orden from "../tablaOrdenes/Orden";
+import UserPage from "../../pages/UserPage";
+
+/* desde aca llamar al userpage*/
 
 const AdminMenu = () => {
   const [collapsed, setCollapsed] = useState(true);
@@ -54,58 +58,76 @@ const AdminMenu = () => {
           <Router>
             <Col md={3} lg={2} className="p-0">
               <Navbar light className="rounded-lg">
-                <NavbarToggler
-                  onClick={toggleNavbar}
-                  className="mr-2 border-0"
-                />
-                <h5 className="mr-auto">Menu</h5>
-                <Collapse isOpen={!collapsed} navbar>
-                  <Nav navbar>
-                    <NavItem>
-                      <NavLink tag={Link} to="/admin/product">
-                        <FileEarmarkPlus size={17} className="mr-1" />
-                        Nuevo Producto
-                      </NavLink>
-                    </NavItem>
-                    <NavItem className="pb-2 border-bottom">
-                      <NavLink tag={Link} to="/admin/category">
-                        <FileEarmarkPlus size={17} className="mr-1" />
-                        Nueva Categoría
-                      </NavLink>
-                    </NavItem>
-                    <p className="text-secondary m-0">
-                      <Server size={17} className="mr-1" />
-                      Inventario
-                      <CaretDown size={17} className="ml-1" />
-                    </p>
-                    <NavItem>
-                      <NavLink tag={Link} to="/admin/products">
-                        <Files size={17} className="mr-1" />
-                        Productos
-                      </NavLink>
-                    </NavItem>
-                    <NavItem>
-                      <NavLink tag={Link} to="/admin/categories">
-                        <Files size={17} className="mr-1" />
-                        Categorias
-                      </NavLink>
-                    </NavItem>
-                    <NavItem>
-                      <NavLink tag={Link} to="/admin/ordenes">
-                        <Files size={17} className="mr-1" />
-                        Ordenes
-                      </NavLink>
-                    </NavItem>
-                    <NavItem>
-                      <NavLink tag={Link} to="/admin/usuarios">
-                        <Files size={17} className="mr-1" />
-                        Usuarios
-                      </NavLink>
-                    </NavItem>
-                  </Nav>
-                </Collapse>
+                <ul class="navbar-nav">
+                  <li class="nav-item">
+                    <Navbar light className="rounded-lg">
+                      <NavbarToggler
+                        onClick={toggleNavbar}
+                        className="mx-auto border-0"
+                      />
+                      <h5 className="mx-auto">Administracion</h5>
+                      <Collapse isOpen={!collapsed} navbar>
+                        <Nav navbar>
+                          <NavItem>
+                            <NavLink tag={Link} to="/admin/product">
+                              <FileEarmarkPlus size={17} className="mr-1" />
+                              Nuevo Producto
+                            </NavLink>
+                          </NavItem>
+                          <NavItem className="pb-2 border-bottom">
+                            <NavLink tag={Link} to="/admin/category">
+                              <FileEarmarkPlus size={17} className="mr-1" />
+                              Nueva Categoría
+                            </NavLink>
+                          </NavItem>
+                          <p className="text-secondary m-0">
+                            <Server size={17} className="mr-1" />
+                            Inventario
+                            <CaretDown size={17} className="ml-1" />
+                          </p>
+                          <NavItem>
+                            <NavLink tag={Link} to="/admin/products">
+                              <Files size={17} className="mr-1" />
+                              Productos
+                            </NavLink>
+                          </NavItem>
+                          <NavItem>
+                            <NavLink tag={Link} to="/admin/categories">
+                              <Files size={17} className="mr-1" />
+                              Categorias
+                            </NavLink>
+                          </NavItem>
+                          <NavItem>
+                            <NavLink tag={Link} to="/admin/ordenes">
+                              <Files size={17} className="mr-1" />
+                              Ordenes
+                            </NavLink>
+                          </NavItem>
+                          <NavItem>
+                            <NavLink tag={Link} to="/admin/usuarios">
+                              <Files size={17} className="mr-1" />
+                              Usuarios
+                            </NavLink>
+                          </NavItem>
+                          <p className="text-secondary m-0">
+                            <PersonCircle size={17} className="mr-1" />
+                            Usuario
+                            <CaretDown size={17} className="ml-1" />
+                          </p>
+                          <NavItem>
+                            <NavLink tag={Link} to="/user/account">
+                              <Files size={17} className="mr-1" />
+                              Perfil
+                            </NavLink>
+                          </NavItem>
+                        </Nav>
+                      </Collapse>
+                    </Navbar>
+                  </li>
+                </ul>
               </Navbar>
             </Col>
+
             <Col md={9} lg={10}>
               {
                 <>
@@ -113,12 +135,11 @@ const AdminMenu = () => {
                     <div className="col-10 mx-auto">
                       <Jumbotron>
                         <h2 className="display-3">
-                          <PersonBadge /> ¡Bienvenido Admin!
+                          <PersonBadge /> ¡Bienvenido Administrador!
                         </h2>
                         <hr className="my-2" />
                         <p>
-                          Este es el panel del usuario administrador donde podrá
-                          controlar todo el inventario.
+                          Este es el panel desde donde podra tener el control de su E-commerce.
                         </p>
                       </Jumbotron>
                     </div>
@@ -175,6 +196,9 @@ const AdminMenu = () => {
                   <Route exact path="/admin/usuarios">
                     <TablaUsuarios />
                   </Route>{" "}
+                  <Route exact path="/user/account">
+                    <UserPage />
+                  </Route>
                 </>
               }
             </Col>

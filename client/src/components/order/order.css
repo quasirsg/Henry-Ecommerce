@@ -1,0 +1,43 @@
+.order__card {
+    border: 1px solid #ccc9c9;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+
+.order__status {
+    padding: 10px;
+}
+
+.order__buttons {
+    padding: 10px;
+    display: flex;
+    flex-direction: row-reverse;    
+}
+
+.order__images {
+    display: flex;
+    padding: 10px;
+}
+
+.order__image {
+    padding: 0 20px;
+    width: 100%;
+    height: 60px;
+    object-fit: cover;
+}
+
+.order__title {
+    color: #424242;
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.order__cuantity {
+    color: #424242;
+    font-size: 1.2rem;
+    padding: 10px 0;
+}
+
+.dv-star-rating {
+    font-size: 4rem;
+}

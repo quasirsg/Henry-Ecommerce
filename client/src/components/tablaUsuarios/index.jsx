@@ -5,43 +5,27 @@ import {
   PersonCheckFill,
   PersonDashFill,
 } from "react-bootstrap-icons";
-import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-//import { deleteOrder } from "../../redux/actions/ordenActions";
 import { adminActions } from "../../redux/actions/adminActions";
 import { getUsers } from "../../redux/actions/userActions";
-import Toast from "../../components/alerts/toast";
 
 const TablaUsuarios = () => {
   const dispatch = useDispatch();
-  const users = useSelector((state) => state.users.users.data);
+  const users = useSelector((state) => state.users.users);
 
   useEffect(() => {
     dispatch(getUsers());
   }, []);
 
-  const handleClick = (id, role) => {
+  const handleClick = (id, role, item) => {
     if (role === "client") {
       let newRole = "admin";
-      dispatch(adminActions(id, newRole)).then((res) => {
-        Toast.fire({
-          icon: "success",
-          title: "Usuario promovido",
-        });
-      });
+      let currentRole = "client";
+      dispatch(adminActions(id, currentRole, newRole, item));
     } else if (role === "admin") {
       let newRole = "client";
-      dispatch(adminActions(id, newRole)).then((res) => {
-        Toast.fire({
-          icon: "success",
-          title: "Usuario degradado",
-        });
-      });
-    } else {
-      Toast.fire({
-        icon: "error",
-        title: "Usuario ya es administrador",
-      });
+      let currentRole = "admin";
+      dispatch(adminActions(id, currentRole, newRole, item));
     }
   };
 
@@ -50,8 +34,8 @@ const TablaUsuarios = () => {
       <Table hover responsive className="table-sm">
         <thead>
           <tr>
-            <th>id</th>
-            <th>nombre</th>
+            <th>ID</th>
+            <th>Nombre</th>
             <th>Role</th>
             <th>
               <GearFill size={17} className="mr-2" />
@@ -69,7 +53,7 @@ const TablaUsuarios = () => {
                 <td className="p-2">
                   <Button
                     color="default"
-                    onClick={() => handleClick(item.id, item.role)}
+                    onClick={() => handleClick(item.id, item.role, item)}
                     className="border btn-sm"
                   >
                     {item.role === "admin" ? (

@@ -45,7 +45,18 @@ const InventoryTableCategory = () => {
   return (
     <Container>
       <Table hover responsive className="table-sm">
-        <thead>
+      <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Descripción</th>
+            <th>
+              <GearFill size={17} className="mr-2" />
+              Acciones
+            </th>
+          </tr>
+        </thead>
+        {/* <thead>
           <tr>
             {data.length
               ? Object.keys(data[0])
@@ -60,7 +71,7 @@ const InventoryTableCategory = () => {
               Acciones
             </th>
           </tr>
-        </thead>
+        </thead> */}
         <tbody className="scroll">
           {data.map((item, index) => (
             <tr className="my-auto" key={index}>

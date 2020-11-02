@@ -6,6 +6,7 @@ const categoryRouter = require("./category.js");
 const searchRouter = require("./search.js");
 const orderRouter = require("./order.js");
 const userRouter = require("./user.js");
+const recoverPassRouter = require("./recoverPassword");
 const orderlineRouter = require("./lineaOrder.js");
 
 
@@ -16,6 +17,7 @@ router.use("/category", categoryRouter);
 router.use("/search", searchRouter);
 router.use("/order", orderRouter);
 router.use("/users", userRouter);
+router.use("/users", recoverPassRouter);
 router.use("/orderline", orderlineRouter);
 
 module.exports = router;

@@ -25,6 +25,8 @@ const {
   loadProductCategories,
   loadUsers,
   loadReviews,
+  loadOrders,
+  loadLineaOrders,
 } = require("./src/loadData.js");
 // Syncing all the models at once.
 conn.sync({ force: true }).then(() => {
@@ -33,6 +35,7 @@ conn.sync({ force: true }).then(() => {
   // loadProductCategories();
   loadUsers();
   // loadReviews();
+  // loadOrders();
 
   console.log("\nSe han precargado los productos exitosamente!\n");
 

@@ -1,5 +1,10 @@
 const server = require("express").Router();
 const { Order, User, Product, Linea_order } = require("../db.js");
+const { APIKEY_MAILGUN, DOMAIN_MAILGUN } = process.env;
+const mailgun = require("mailgun-js")({
+  apiKey: APIKEY_MAILGUN,
+  domain: DOMAIN_MAILGUN,
+});
 
 server.post("/", (req, res, next) => {
   const { id, status, user_id } = req.body;
@@ -19,7 +24,12 @@ server.post("/", (req, res, next) => {
 
 //trae todas las ordenes de todos los usuarios
 server.get("/", (req, res, next) => {
-  Order.findAll()
+  Order.findAll({
+    include: {
+      attributes: ["name"],
+      model: User
+    },
+  })
     .then((order) => {
       if (order === null)
         return res.status(404).json({ message: "No hay ordenes" });
@@ -55,8 +65,6 @@ server.get("/:orderId", (req, res, next) => {
 server.put("/:id", (req, res, next) => {
   let { id } = req.params;
   let currentOrder = req.body;
-
-  console.log(currentOrder);
 
   Order.findOne({
     where: { id },
@@ -165,6 +173,55 @@ server.post("/:userId", (req, res, next) => {
         return res.sendStatus(500);
       });
   }
+});
+
+// Enviar email con facturacion de la compra
+server.post("/send/email", async (req, res) => {
+  // Obtener carrito y datos del usuario
+  const { cart, id } = req.body;
+
+  let sumTotal = 0;
+  // Calcular el total de la compra
+  cart.forEach((product) => {
+    sumTotal += product.total;
+  });
+
+  const { email, name } = await User.findOne({
+    where: {
+      id: id,
+    },
+  });
+
+  // Fecha actual, formato d/m/a y hora h:m:s
+  const date = new Date().toLocaleString().split(" ");
+
+  // Configuracion del mensaje y la plantilla
+  const data = {
+    from: "FitnessApp <me@samples.mailgun.org>",
+    to: `${email}`,
+    subject: "Facturación de compra",
+    template: "billing-details-ecommerce",
+    "h:X-Mailgun-Variables": JSON.stringify({
+      currentDate: date[0],
+      time: date[1],
+      username: name,
+      cart: cart,
+      sumTotal: sumTotal,
+    }),
+  };
+
+  // Enviar mensaje al correo
+  mailgun.messages().send(data, (error, body) => {
+    if (error) {
+      return res.status(500).json({
+        error: error.message,
+      });
+    }
+
+    return res.status(200).json({
+      message: "Se envio un correo con el detalle de la compra",
+    });
+  });
 });
 
 module.exports = server;

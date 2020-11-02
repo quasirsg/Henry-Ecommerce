@@ -1,15 +1,14 @@
-import React, { useEffect } from "react";
-import { Link } from "react-router-dom";
+import React from "react";
+import { Link, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Cart3, Collection, PersonSquare } from "react-bootstrap-icons";
-import { Col, CustomInput, Badge } from "reactstrap";
-//Components
-import Guest from "../../guestOptions";
-import { getCurrentUser, logoutUser } from "../../../redux/actions/jwtUsers";
+import { Col, Badge } from "reactstrap";
+import { logoutUser } from "../../../redux/actions/jwtUsers";
 
-export default ({ history }) => {
+export default () => {
   let cart = useSelector((state) => state.users.carrito);
   const notification = useSelector((state) => state.users.message);
+  const history = useHistory();
   const dispatch = useDispatch();
 
   if (!localStorage.token) {
@@ -21,12 +20,12 @@ export default ({ history }) => {
   }
 
   const handleClose = (e) => {
-    dispatch(logoutUser());
+    e.preventDefault();
+    dispatch(logoutUser(history));
   };
 
-  let userRole = useSelector((state) => state.session.userDetail.role);
-
-  console.log(userRole);
+  let user = useSelector((state) => state.session.userDetail);
+  const userRole = user ? user.role : null;
 
   const linkUser = (userRole) => {
     if (userRole === "client") {

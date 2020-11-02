@@ -44,7 +44,7 @@ const UserPage = () => {
                 <Link to="/user/reviews">
                   <ButtonSquare
                     icon={<ChatSquareText size={20} />}
-                    Children={"Mis Reviews"}
+                    Children={"Mis opiniones"}
                   />
                 </Link>
               </li>
@@ -79,12 +79,12 @@ const UserPage = () => {
             <Route
               exact
               path="/user/orders"
-              component={() => <UserOrders id={1} />}
+              component={() => <UserOrders id={userDetail.id} />}
             />
             <Route
               exact
               path="/user/change-password"
-              component={() => <UserPassword id={1} />}
+              component={() => <UserPassword id={userDetail.id} />}
             />
           </Col>
         </Row>

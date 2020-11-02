@@ -48,7 +48,9 @@ export const getOneOrder = (userId) => (dispatch) => {
     .catch((err) => console.log(err));
 };
 
-export const updateStatusOrder = (id, status) => (dispatch) => {
+export const updateStatusOrder = (id, status, productsCarts, userId) => (
+  dispatch
+) => {
   return axios
     .put(`${url}/order/${id}`, {
       status: status,
@@ -62,13 +64,25 @@ export const updateStatusOrder = (id, status) => (dispatch) => {
         icon: "success",
         title: `Gracias por tu compra!`,
       });
-      // dispatch({
-      //   type: actionTypes.DELETE_ALL_CART,
-      // });
+      dispatch({
+        type: actionTypes.DELETE_ALL_CART,
+      });
+      dispatch(sendEmailBilling(productsCarts, userId));
     })
     .catch((err) => {
       console.log(err);
     });
+};
+
+const sendEmailBilling = (cart, userId) => (dispatch) => {
+  const data = {
+    cart: cart,
+    id: userId,
+  };
+  axios
+    .post(`${url}/order/send/email`, data)
+    .then((response) => console.log(response.data))
+    .catch((error) => console.log(error.message));
 };
 
 // Line_order

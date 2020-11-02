@@ -17,7 +17,6 @@ const Cart = () => {
   let user = useSelector((state) => state.session.userDetail);
   const [userData, setUserData] = useState(null);
 
-  // TODO: utilizar redux
   if (localStorage.token) {
     var token = localStorage.getItem("token");
     var userId = user.id;
@@ -45,19 +44,10 @@ const Cart = () => {
 
   /* cambio de guest-login */
   if (!userData && !localStorage.token) {
-    //??Guest
     if (localStorage.cart) {
       productsCarts = JSON.parse(localStorage.getItem("cart"));
     } else {
       localStorage.setItem("cart", JSON.stringify([]));
-    }
-  } else if (userData || localStorage.token) {
-    if (localStorage.cart) {
-      //?? Loguin
-      productsCarts = JSON.parse(localStorage.getItem("cart"));
-      dispatch(addProducts(userId, productsCarts));
-      localStorage.removeItem("cart");
-      setUserData(null); //evitar un loop
     }
   }
 

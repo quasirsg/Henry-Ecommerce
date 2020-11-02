@@ -21,7 +21,6 @@ const TablaOrdenes = () => {
   const [data, setData] = useState(allOrders);
   const [click, setClick] = useState(null);
   let orders;
-  console.log(prueb);
   useEffect(() => {
     dispatch(getOrders());
   }, []);
@@ -51,6 +50,7 @@ const TablaOrdenes = () => {
       setClick(null);
     }
   };
+  
 
   return (
     <>
@@ -79,7 +79,7 @@ const TablaOrdenes = () => {
           <thead>
             <tr>
               <th>ID</th>
-              <th>Status</th>
+              <th>Estado</th>
               <th>Usuario</th>
               <th>
                 <GearFill size={17} className="mr-2" />
@@ -94,7 +94,7 @@ const TablaOrdenes = () => {
                 <tr className="my-auto" key={item.id}>
                   <th>{item.id}</th>
                   <td>{item.status}</td>
-                  <td>{item.userId}</td>
+                  <td>{item.user.name}</td>
                   <td className="p-2">
                     <Link
                       to={`/admin/ordenes/${item.id}`} //el id es el ID de Orden

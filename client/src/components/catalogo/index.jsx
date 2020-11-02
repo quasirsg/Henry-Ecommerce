@@ -1,7 +1,6 @@
 import React from "react";
 import ProductCard from "../productCard/ProductCard";
 import "./catalogo.css";
-import { motion } from "framer-motion";
 
 const Catalogue = ({ products, userId }) => {
   return (
@@ -11,17 +10,10 @@ const Catalogue = ({ products, userId }) => {
           <div className="catalogo">
             {products.map(
               (fit) =>
-                fit.stock !== 0 && (
-                  <motion.div
-                    key={fit.id}
-                    className="cont"
-                    whileHover={{ scale: 1.1, rotate: 5 }}
-                    whileTap={{ scale: 1, rotate: -5 }}
-                  >
-                    <li key={fit.id}>
-                      <ProductCard product={fit} userId={userId} />
-                    </li>
-                  </motion.div>
+                fit.stock >= 0 && (
+                  <li key={fit.id}>
+                    <ProductCard product={fit} userId={userId} />
+                  </li>
                 )
             )}
           </div>

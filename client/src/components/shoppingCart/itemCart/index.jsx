@@ -32,17 +32,25 @@ const ItemCart = ({ product, userId }) => {
         <Row>
           <Col lg="6">
             <div className="row-flex">
-              <div className="itemCart__image">
+              <div className="card-img-overlay">
                 <img src={product.image} className="img-fill" alt="" />
               </div>
               <div className="itemCart__content">
                 <div className="itemCart-title">{product.name}</div>
                 <div className="itemCart-subtitle">$ {product.price}</div>
               </div>
+              <div className="itemCart__content">
+                <div className="itemCart-subtitle">
+                  Sub-Total $ {product.quantity * product.price}
+                </div>
+                <div className="itemCart-subtitle">
+                  {" "}
+                  {product.stock > 0 ? "En stock" : "Sin stock"}
+                </div>
+              </div>
             </div>
           </Col>
           <Col lg="6">
-            <div className="itemCart-subtitle"> Stock {product.stock}</div>
             <div className="d-flex flex-row-reverse" value={product.id}>
               <button onClick={handleOnClick} className="itemCart-delete">
                 Remover

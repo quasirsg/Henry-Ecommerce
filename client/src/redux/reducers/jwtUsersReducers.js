@@ -40,7 +40,7 @@ function jwtUserRducers(state = initialState, action) {
     case PUT_USER:
       return {
         ...state,
-        userDetail: action.data,
+        userDetail: action.userDetail,
       };
     case USER_LOGIN:
 

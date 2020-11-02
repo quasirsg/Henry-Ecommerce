@@ -4,7 +4,8 @@ import { ShieldFillCheck, Percent, Truck } from "react-bootstrap-icons";
 import Categoria from "../components/categoria";
 import Catalogo from "../components/catalogo";
 import { useSelector, useDispatch } from "react-redux";
-import { getCurrentUser, verifySession } from "../redux/actions/jwtUsers";
+import { verifySession } from "../redux/actions/jwtUsers";
+import { addProducts } from "../redux/actions/userActions";
 
 const HomePage = () => {
   const categorias = useSelector((state) => state.category.category);
@@ -15,6 +16,13 @@ const HomePage = () => {
 
   if (localStorage.token) {
     var userId = user.id;
+
+    if (localStorage.cart) {
+      let productsCarts = JSON.parse(localStorage.getItem("cart"));
+
+      dispatch(addProducts(userId, productsCarts));
+      localStorage.removeItem("cart");
+    }
   }
 
   useEffect(() => {

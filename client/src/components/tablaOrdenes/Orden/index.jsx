@@ -19,6 +19,7 @@ import Toast from "../../alerts/toast";
 import { ArrowLeftCircle } from "react-bootstrap-icons";
 import { Row, Button } from "reactstrap";
 import { useHistory } from "react-router-dom";
+import ResumeOreder from "./resumen";
 
 const Orden = () => {
   const history = useHistory();
@@ -125,8 +126,6 @@ const Orden = () => {
     }
   };
 
-  console.log(orden);
-
   return (
     <div className="orden-cont">
       <div></div>
@@ -138,12 +137,10 @@ const Orden = () => {
           <ArrowLeftCircle size={20} />
         </Button>
       </Row>
+      <h4 className="text-center">Detalles de la orden</h4>
       <Container>
         <Table hover responsive className="table-sm">
           <thead>
-            <tr>
-              <p className="text-center">Estado de la Orden: {orden.status}</p>
-            </tr>
             <tr>
               <th>Id</th>
               <th>Nombre</th>
@@ -173,9 +170,9 @@ const Orden = () => {
                 </tr>
               ))}
           </tbody>
-          <tbody></tbody>
         </Table>
       </Container>
+      <ResumeOreder orden={orden} id={id} />
       {statusButton(orden.status)}
     </div>
   );

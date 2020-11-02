@@ -10,11 +10,12 @@ import Navbar from "./components/navbar";
 import ProductDetail from "./components/productDetail";
 import FormCategory from "./components/categoryForm";
 import TablaUsuarios from "./components/tablaUsuarios";
-import Orden from "./components/tablaOrdenes/Orden";
 import TablaOrdenes from "./components/tablaOrdenes";
 import FormUser from "./components/userForm";
 import LoginForm from "./components/loginForm";
 import CheckoutForm from "./components/checkout";
+import ForgotPasswordForm from "./components/recoverPassword/forgotPassword";
+import ResetPasswordForm from "./components/recoverPassword/resetPassword";
 
 //Pages
 import SearchPage from "./pages/SearchPage";
@@ -30,15 +31,16 @@ import FormProduct from "./components/productForm";
 
 function App() {
   const dispatch = useDispatch();
-
   const session = useSelector((state) => state.session.userDetail);
 
-  // Obtener products ,categorias y banners
+  /*Obtener products ,categorias y banners*/
   let log;
-  if (session.role) {
-    log = session.role;
-  } else {
-    log = "guest";
+  if (session) {
+    if (session.role) {
+      log = session.role;
+    } else {
+      log = "guest";
+    }
   }
 
   useEffect(() => {
@@ -53,7 +55,12 @@ function App() {
     <div className="col-lg-12">
       <Navbar />
       <Switch>
-        {/* =============== Unprotected Routes ============ */}
+        <Route exact path="/forgotpassword" component={ForgotPasswordForm} />
+        <Route
+          exact
+          path="/resetpassword/:token"
+          component={ResetPasswordForm}
+        />
         <Route exact path="/" component={HomePage} />
         <Route path="/home" component={HomePage} />
         <Route path="/search/q/" component={SearchPage} />
