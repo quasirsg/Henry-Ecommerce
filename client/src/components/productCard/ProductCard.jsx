@@ -12,6 +12,7 @@ const ProductCard = ({ product, userId }) => {
     dispatch(getOneProduct(product.id));
   };
 
+
   // if (localStorage.token) {
   //   let user = localStorage.getItem("token");
   //   var userId = user.id;
@@ -39,9 +40,12 @@ const ProductCard = ({ product, userId }) => {
       </Link>
       <CardTitle>{product.name.slice(0, 20) + ".."}</CardTitle>
       <CardSubtitle>$ {product.price}</CardSubtitle>
-      <Button className="btn-add-cart" size="sm" onClick={handleClick}>
+
+      <Button className="btn-add-cart " style={{ display: product.stock < 1 ? "none" : "inline-block" }} size="sm" onClick={handleClick}>
         Agregar a Carrito
       </Button>
+       {product.stock < 1 ? "Sin stock" : null}
+      
     </Card>
   );
 };

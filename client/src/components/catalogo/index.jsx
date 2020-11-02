@@ -11,7 +11,7 @@ const Catalogue = ({ products, userId }) => {
           <div className="catalogo">
             {products.map(
               (fit) =>
-                fit.stock !== 0 && (
+                fit.stock >= 0 && (
                   // <motion.div
                   //   key={fit.id}
                   //   className="cont"
