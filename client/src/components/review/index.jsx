@@ -32,6 +32,9 @@ dispatch(getOneProduct(productId));
                     </div>
                 </Col>
                 <Col lg="9">
+                    <div className="product__name">
+                        {product.name}
+                    </div>
                     <div className="reviews__stars">
                         <StarRatings
                             rating={points}
@@ -44,9 +47,6 @@ dispatch(getOneProduct(productId));
                     </div>
                     <div className="reviews__description">
                         {description}
-                    </div>
-                    <div className="product__name">
-                        {product.name}
                     </div>
                 </Col>
             </Row>

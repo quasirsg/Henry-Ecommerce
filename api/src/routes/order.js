@@ -24,7 +24,12 @@ server.post("/", (req, res, next) => {
 
 //trae todas las ordenes de todos los usuarios
 server.get("/", (req, res, next) => {
-  Order.findAll()
+  Order.findAll({
+    include: {
+      attributes: ["name"],
+      model: User
+    },
+  })
     .then((order) => {
       if (order === null)
         return res.status(404).json({ message: "No hay ordenes" });
