@@ -33,13 +33,8 @@ const CheckoutForm = ({ direction = "" }) => {
     history.push("/products");
   };
   const handleClick = () => {
-<<<<<<< HEAD
     setTimeout(bye, 1000);
     dispatch(updateStatusOrder(id, status, productsCarts));
-=======
-    setTimeout(bye, 2000);
-    dispatch(updateStatusOrder(id, status, productsCarts, userId));
->>>>>>> 449cade5f362769ee414e1b130d02764b6c7697d
   };
   return (
     <Col
