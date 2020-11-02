@@ -9,9 +9,9 @@ const UserReviews = ({ id }) => {
   useEffect(() => {
     dispatch(getReviewsById(id));
   }, []);
-  
+
   const reviews = useSelector((state) => state.users.reviews);
-  const reviewsProduct= useSelector((state)=>state.products.allProducts)
+  const reviewsProduct = useSelector((state) => state.products.allProducts);
   console.log(reviewsProduct); /*trae todos los products, product.image*/
   console.log(reviews); /*trae review.productId*/
 
@@ -24,14 +24,14 @@ const UserReviews = ({ id }) => {
       </h2>
       {reviews.map((review) => (
         <Review
-        key={review.id}
-        userImage={review.user.image}
-        userName={review.user.name}
-        points={review.points}
-        description={review.description}
-        productId= {review.productId}
+          key={review.id}
+          userImage={review.user.image}
+          userName={review.user.name}
+          points={review.points}
+          description={review.description}
+          productId={review.productId}
         />
-        ))}
+      ))}
     </Container>
   );
 };
