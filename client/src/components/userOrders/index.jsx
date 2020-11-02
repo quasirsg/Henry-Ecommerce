@@ -13,11 +13,19 @@ const UserOrders = ({ id }) => {
   useEffect(() => {
     dispatch(getUsersOrders(id));
     dispatch(getReviewsById(id));
-  }, [id]);
+  }, []);
 
   const orders = useSelector((state) => state.users.orders);
   const userReviews = useSelector((state) => state.users.reviews);
   console.log(orders);
+
+  let orderUser = [];
+  orders.forEach((orden) => {
+    if (id === orden.userId) {
+      orderUser.push(orden);
+    }
+  });
+
   return (
     <div className="userOrders">
       <Col>
@@ -27,8 +35,8 @@ const UserOrders = ({ id }) => {
           Mis Pedidos
         </h2>
       </Col>
-      {orders.length > 0 ? (
-        orders.map((orden) => (
+      {orderUser.length > 0 ? (
+        orderUser.map((orden) => (
           <Order
             key={orden.id}
             products={orden.products}
