@@ -33,20 +33,9 @@ const CheckoutForm = ({ direction = "" }) => {
     history.push("/products");
   };
   const handleClick = () => {
-    setTimeout(bye, 2000);
+    setTimeout(bye, 1000);
     dispatch(updateStatusOrder(id, status, productsCarts));
   };
-
-  //       var myVar;
-
-  // function myFunction() {
-  //   myVar = setTimeout(alertFunc, 3000);
-  // }
-
-  // function alertFunc() {
-  //   alert("Hello!");
-  // }
-
   return (
     <Col
       lg="6"
