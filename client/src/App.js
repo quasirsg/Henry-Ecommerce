@@ -10,7 +10,6 @@ import Navbar from "./components/navbar";
 import ProductDetail from "./components/productDetail";
 import FormCategory from "./components/categoryForm";
 import TablaUsuarios from "./components/tablaUsuarios";
-import Orden from "./components/tablaOrdenes/Orden";
 import TablaOrdenes from "./components/tablaOrdenes";
 import FormUser from "./components/userForm";
 import LoginForm from "./components/loginForm";

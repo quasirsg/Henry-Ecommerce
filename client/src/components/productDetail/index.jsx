@@ -34,6 +34,7 @@ const Product = () => {
   const { average, reviews } = useSelector(
     (state) => state.products.productReviews
   );
+
   product.quantity = 1; //agrego una cantidad por default
   if (localStorage.token) {
     var userId = user.id;
