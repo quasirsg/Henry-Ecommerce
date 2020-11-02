@@ -12,13 +12,15 @@ import {
   DELETE_PRODUCT_CART_GUEST,
   DELETE_ALL_PRODUCTS_CART_GUEST,
   GET_ONE_USER,
-  GET_USER_ORDERS,
+  GET_USERS_ORDERS,
   DELETE_ALL_CART,
   DELETE_AMOUNT_GUEST,
   ADD_AMOUNT_GUEST,
   ADD_ALL_PRODUCTS_CART_GUEST,
   PROM_USER,
   GET_REVIEWS_BY_ID,
+  USER_PUT_PASSWORD,
+  ADD_REVIEW,
 } from "../actions/actionTypes";
 
 const initialState = {
@@ -34,6 +36,7 @@ const initialState = {
 
 function userReducers(state = initialState, action) {
   let products = state.carrito;
+
   console.log(action);
   switch (action.type) {
     /* REDUCERS USUARIOS Y LOGUIN USUARIOS */
@@ -54,17 +57,21 @@ function userReducers(state = initialState, action) {
         users: state.userDetail.concat(action.userDetail),
         err: state.userDetail.concat(action.error),
       };
-    case PUT_USER:
-      return {
-        ...state,
-        users: state.users.map((item) => {
-          return item.id === action.userDetail.id ? action.userDetail : item;
-        }),
-      };
+    // case PUT_USER:
+    //   return {
+    //     ...state,
+    //     users: state.users.map((item) => {
+    //       return item.id === action.userDetail.id ? action.userDetail : item;
+    //     }),
+    //   };
     case DELETE_USER:
       return {
         ...state,
         users: state.users.filter((item) => item.id !== action.userDetail.id),
+      };
+    case USER_PUT_PASSWORD:
+      return {
+        ...state,
       };
 
     /* REDUCERS CARRITO DE USUARIOS */
@@ -161,10 +168,10 @@ function userReducers(state = initialState, action) {
         ...state,
         carrito: products,
       };
-    case GET_USER_ORDERS:
+    case GET_USERS_ORDERS:
       return {
         ...state,
-        orders: action.orders,
+        orders: action.payload,
       };
 
     case ADD_ALL_PRODUCTS_CART_GUEST:
@@ -186,6 +193,10 @@ function userReducers(state = initialState, action) {
       return {
         ...state,
         reviews: action.data,
+      };
+    case ADD_REVIEW:
+      return {
+        ...state,
       };
     default:
       return state;

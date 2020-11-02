@@ -3,7 +3,7 @@ import Swal from "sweetalert2";
 import deleteDialog from "../../components/alerts/deleteDialog";
 import Toast from "../../components/alerts/toast";
 import * as actionTypes from "./actionTypes";
-
+import { GET_USERS_ORDERS } from "./actionTypes";
 const url = `http://localhost:3001`;
 
 export const getUsers = () => (dispatch) => {
@@ -53,6 +53,19 @@ export const postUser = (user) => (dispatch) => {
     });
 };
 
+export const putUser = (id, values) => async (dispatch) => {
+  await axios
+    .put(`${url}/users/${id}`, values)
+    .then((res) => {
+      console.log(res.data);
+      dispatch({
+        type: actionTypes.PUT_USER,
+        userDetail: res.data,
+      });
+    })
+    .catch((err) => console.log(err));
+};
+
 export const editUser = (id, values, action) => async (dispatch) => {};
 //   if (action === "post") {
 //     return axios
@@ -92,6 +105,7 @@ export const editUser = (id, values, action) => async (dispatch) => {};
 // };
 
 //un usuario puede añadir una review a un producto que haya comprado
+
 export const addReview = (productId, userId, points, description) => (
   dispatch
 ) => {
@@ -105,9 +119,11 @@ export const addReview = (productId, userId, points, description) => (
         type: actionTypes.ADD_REVIEW,
         review,
       });
+      dispatch(getReviewsById(userId));
     })
     .catch((err) => console.log(err));
 };
+
 //un usuario puede editar una review de un producto que haya comprado
 export const editReview = (productId, reviewId, points, description) => (
   dispatch
@@ -129,7 +145,6 @@ export const getReviewsById = (userId) => (dispatch) => {
   axios
     .get(url + "/users/" + userId + "/reviews")
     .then((res) => {
-      console.log(res);
       dispatch({
         type: actionTypes.GET_REVIEWS_BY_ID,
         data: res.data.data,
@@ -361,4 +376,13 @@ export const deleteAllCart = (userId) => (dispatch) => {
       }
     });
   }
+};
+
+export const getUsersOrders = (userId) => (dispatch) => {
+  axios.get(url + "/users/" + userId + "/ordersall").then((res) => {
+    dispatch({
+      type: GET_USERS_ORDERS,
+      payload: res.data.data,
+    });
+  });
 };

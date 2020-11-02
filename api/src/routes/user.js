@@ -2,6 +2,8 @@ const server = require("express").Router();
 const { User, Order, Product, Linea_order, Reviews } = require("../db.js");
 const authorize = require("../helpers/auth");
 const userService = require("../controllers/userController");
+const bcrypt = require("bcrypt");
+const { Op } = require("sequelize");
 
 //Agregar un usuario
 server.post("/", (req, res, next) => {
@@ -38,7 +40,7 @@ server.post("/", (req, res, next) => {
 });
 
 //Actualizar un usuario
-server.put("/:id", authorize(), (req, res, next) => {
+server.put("/:id", (req, res, next) => {
   let { id } = req.params;
   let update = req.body;
 
@@ -84,6 +86,42 @@ server.delete("/:id", (req, res, next) => {
       });
     })
     .catch(next);
+});
+
+server.put("/:id/passwordChange", (req, res, next) => {
+  const id = req.params.id;
+  const { email, password, newPassword } = req.body;
+  console.log(id);
+  console.log(newPassword);
+  console.log(password);
+  console.log(email);
+  User.findOne({
+    where: {
+      email,
+    },
+  }).then((user) => {
+    if (!bcrypt.compareSync(password, user.dataValues.password)) {
+      return res.status(400).json({
+        message: "Error al actualizar contraseña",
+      });
+    }
+
+    User.update(
+      {
+        password: bcrypt.hashSync(newPassword, 10),
+      },
+      {
+        where: {
+          id: user.id,
+        },
+      }
+    )
+      .then((response) => {
+        console.log(response);
+        res.json(response);
+      })
+      .catch((error) => next(error.message));
+  });
 });
 
 // Dar permisos de Admin a user
@@ -429,6 +467,29 @@ server.get("/:userId/cart", (req, res) => {
     });
 });
 
+server.get("/:userId/ordersall", (req, res) => {
+  const userId = req.params.userId;
+
+  Order.findAll({
+    include: [User, { model: Product }],
+    where: {
+      status: {
+        [Op.or]: ["processing", "completed"],
+      },
+    },
+  })
+    .then((order) => {
+      if (!order) {
+        return res.sendStatus(404);
+      }
+      return res.send({
+        data: order,
+      });
+    })
+    .catch((err) => {
+      return res.sendStatus(500);
+    });
+});
 //ruta que retorna todas las reviews de un usuario
 server.get("/:id/reviews", (req, res) => {
   const userId = req.params.id;

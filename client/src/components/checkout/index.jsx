@@ -8,43 +8,44 @@ import CustomInput from "../custom/input";
 import { useHistory } from "react-router-dom";
 import { getOrders, updateStatusOrder } from "../../redux/actions/ordenActions";
 
+const CheckoutForm = ({ direction = "" }) => {
+  const history = useHistory();
+  const dispatch = useDispatch();
+  const userId = useSelector((state) => state.session.userDetail.id);
+  useEffect(() => {
+    dispatch(getOrders());
+  }, []);
+  const orders = useSelector((state) => state.order.allOrders);
+  let productsCarts = useSelector((state) => state.users.carrito);
+  let userOrder = orders.filter(
+    (item) => item.userId === userId
+  ); /* trae todas las ordenes con sus distintos estados del mismo usuario*/
+  let orderStatus = userOrder.filter(
+    (item) => item.status === "shopping_cart"
+  ); /*trae la orden con estado shopping_cart*/
+  let obj = orderStatus[0];
+  let id;
+  if (obj) id = obj.id;
 
+  let status = "processing";
 
-const CheckoutForm = ({ direction= "" }) => {
-    const history = useHistory ();
-    const dispatch = useDispatch(); 
-    const userId= useSelector((state)=>state.session.userDetail.id)
-    useEffect(()=>{
-      dispatch(getOrders())
-    },[]); 
-    const orders = useSelector((state)=> state.order.allOrders)
-    
-      let userOrder = orders.filter((item) => item.userId === userId); /* trae todas las ordenes con sus distintos estados del mismo usuario*/
-      let orderStatus= userOrder.filter((item) => item.status === 'shopping_cart'); /*trae la orden con estado shopping_cart*/
-      let obj= orderStatus[0];
-      let id;
-      if (obj ) id = obj.id;
+  const bye = function () {
+    history.push("/products");
+  };
+  const handleClick = () => {
+    setTimeout(bye, 2000);
+    dispatch(updateStatusOrder(id, status, productsCarts));
+  };
 
-      let status= "processing";
+  //       var myVar;
 
-      const bye= function (){
-        history.push("/products")
-      }
-      const handleClick= ()=> {
-        setTimeout(bye, 2000);
-        dispatch(updateStatusOrder( id, status ));  
-        
-      };
-      
-//       var myVar;
+  // function myFunction() {
+  //   myVar = setTimeout(alertFunc, 3000);
+  // }
 
-// function myFunction() {
-//   myVar = setTimeout(alertFunc, 3000);
-// }
-
-// function alertFunc() {
-//   alert("Hello!");
-// }
+  // function alertFunc() {
+  //   alert("Hello!");
+  // }
 
   return (
     <Col
@@ -61,22 +62,20 @@ const CheckoutForm = ({ direction= "" }) => {
             .max(50, "Debe tener 50 caracteres o menos")
             .required("Debes completar este campo"),
         })}
-        
       >
         {({ isSubmitting, setFieldValue }) => {
           return (
             <Form>
               <Col className="rounded-lg text-center">
+                <Row>
+                  <Button
+                    className="btn btn-light text-secondary btn-sm float-left"
+                    onClick={() => history.push("/cart")}
+                  >
+                    <ArrowLeftCircle size={30} />
+                  </Button>
+                </Row>
 
-                  <Row>
-                    <Button
-                      className="btn btn-light text-secondary btn-sm float-left"
-                      onClick={() => history.push("/cart")}
-                    >
-                      <ArrowLeftCircle size={30} />
-                    </Button>
-                  </Row>
-              
                 <Row className="d-block">
                   <BagCheck className="mb-1 mr-2" size={40} />
                   <h2>Confirma tu compra!</h2>
@@ -98,7 +97,7 @@ const CheckoutForm = ({ direction= "" }) => {
                 block
                 className="bg-color-primary shadow-primary rounded-pill border-0"
                 type="submit"
-                onClick= {handleClick}
+                onClick={handleClick}
               >
                 {isSubmitting
                   ? "Gracias!"

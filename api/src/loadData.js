@@ -4,6 +4,8 @@ const {
   User,
   product_category,
   Reviews,
+  Order,
+  Linea_order,
 } = require("./db.js");
 
 const bcrypt = require("bcrypt");
@@ -199,33 +201,32 @@ const loadUsers = () => {
       address: "Valentino 68Puerto",
       role: "admin",
       password: bcrypt.hashSync("Vsl@17477", 10),
-      image: "1234",
       location_id: 21,
     },
     {
-      name: "Luciano",
-      email: "lucianooo222@gmail.com",
+      name: "Facundo Nevárez",
+      email: "client1@gmail.com",
       address: "María Alejandra 2417 PB ALuciana del Este",
       role: "client",
-      password: bcrypt.hashSync("Lucho@1234", 10),
+      password: bcrypt.hashSync("Vsl@17477", 10),
       location_id: 21,
     },
-    // {
-    //   name: "Regina Flórez",
-    //   email: "client2@gmail.com",
-    //   address: "Rodrigo 19528 8 DTapia del Mar",
-    //   role: "client",
-    //   password: bcrypt.hashSync("Vsl@17477", 10),
-    //   location_id: 21,
-    // },
-    // {
-    //   name: "Simón Sauceda",
-    //   email: "client3@gmail.com",
-    //   address: "Colón 3 15 CSedillo del Mirador",
-    //   role: "client",
-    //   password: "client",
-    //   location_id: 21,
-    // },
+    {
+      name: "Regina Flórez",
+      email: "client2@gmail.com",
+      address: "Rodrigo 19528 8 DTapia del Mar",
+      role: "client",
+      password: bcrypt.hashSync("Vsl@17477", 10),
+      location_id: 21,
+    },
+    {
+      name: "Simón Sauceda",
+      email: "client3@gmail.com",
+      address: "Colón 3 15 CSedillo del Mirador",
+      role: "client",
+      password: "client",
+      location_id: 21,
+    },
   ]);
 };
 
@@ -276,10 +277,69 @@ const loadReviews = () => {
   ]);
 };
 
+const loadOrders = () => {
+  Order.bulkCreate([
+    {
+      order_id: 1,
+      status: "canceled",
+      userId: 2,
+    },
+    {
+      order_id: 2,
+      status: "completed",
+      userId: 2,
+    },
+    {
+      order_id: 3,
+      status: "completed",
+      userId: 2,
+    },
+  ]);
+
+  Linea_order.bulkCreate([
+    {
+      quantity: 2,
+      total: 1000,
+      product_id: 1,
+      orderId: 1,
+      userId: 2,
+    },
+    {
+      quantity: 2,
+      total: 1000,
+      product_id: 2,
+      orderId: 1,
+      userId: 2,
+    },
+    {
+      quantity: 1,
+      total: 500,
+      product_id: 3,
+      orderId: 1,
+      userId: 2,
+    },
+    {
+      quantity: 5,
+      total: 500,
+      product_id: 3,
+      orderId: 2,
+      userId: 2,
+    },
+    {
+      quantity: 2,
+      total: 1000,
+      product_id: 2,
+      orderId: 3,
+      userId: 3,
+    },
+  ]);
+};
+
 module.exports = {
   loadProducts,
   loadCategories,
   loadProductCategories,
   loadUsers,
   loadReviews,
+  loadOrders,
 };

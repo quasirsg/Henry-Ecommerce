@@ -36,10 +36,12 @@ function App() {
 
   /*Obtener products ,categorias y banners*/
   let log;
-  if (session.role) {
-    log = session.role;
-  } else {
-    log = "guest";
+  if (session) {
+    if (session.role) {
+      log = session.role;
+    } else {
+      log = "guest";
+    }
   }
 
   useEffect(() => {

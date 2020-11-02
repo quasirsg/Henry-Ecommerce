@@ -26,7 +26,10 @@ export default () => {
     dispatch(logoutUser(history));
   };
 
-  let userRole = useSelector((state) => state.session.userDetail.role);
+  let user = useSelector((state) => state.session.userDetail);
+  const userRole = user ? user.role : null;
+
+  console.log(userRole);
 
   const linkUser = (userRole) => {
     if (userRole === "client") {

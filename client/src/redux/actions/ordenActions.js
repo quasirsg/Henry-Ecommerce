@@ -48,7 +48,8 @@ export const getOneOrder = (userId) => (dispatch) => {
     .catch((err) => console.log(err));
 };
 
-export const updateStatusOrder = (id, status) => (dispatch) => {
+export const updateStatusOrder = (id, status, productsCarts) => (dispatch) => {
+  console.log(productsCarts);
   return axios
     .put(`${url}/order/${id}`, {
       status: status,
