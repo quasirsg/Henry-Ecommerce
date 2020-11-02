@@ -5,12 +5,9 @@ import {
   PersonCheckFill,
   PersonDashFill,
 } from "react-bootstrap-icons";
-import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-//import { deleteOrder } from "../../redux/actions/ordenActions";
 import { adminActions } from "../../redux/actions/adminActions";
 import { getUsers } from "../../redux/actions/userActions";
-import Toast from "../../components/alerts/toast";
 
 const TablaUsuarios = () => {
   const dispatch = useDispatch();
@@ -23,25 +20,12 @@ const TablaUsuarios = () => {
   const handleClick = (id, role, item) => {
     if (role === "client") {
       let newRole = "admin";
-      dispatch(adminActions(id, newRole, item)).then((res) => {
-        Toast.fire({
-          icon: "success",
-          title: "Usuario promovido",
-        });
-      });
+      let currentRole = "client";
+      dispatch(adminActions(id, currentRole, newRole, item));
     } else if (role === "admin") {
       let newRole = "client";
-      dispatch(adminActions(id, newRole, item)).then((res) => {
-        Toast.fire({
-          icon: "success",
-          title: "Usuario degradado",
-        });
-      });
-    } else {
-      Toast.fire({
-        icon: "error",
-        title: "Usuario ya es administrador",
-      });
+      let currentRole = "admin";
+      dispatch(adminActions(id, currentRole, newRole, item));
     }
   };
 
