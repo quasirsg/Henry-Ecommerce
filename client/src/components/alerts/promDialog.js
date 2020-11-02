@@ -2,7 +2,7 @@ import Swal from "sweetalert2";
 
 export default async (id) =>
   Swal.fire({
-    html: `<h5>¿Desea modificar el rol del usuario ${id}?<h5/>`,
+    html: `<h5>¿Desea modificar el rol del usuario ?<h5/>`,
     width: "30%",
     text: "No podrás revertir esta cambio!",
     icon: "warning",
