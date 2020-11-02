@@ -1,9 +1,17 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import { Col, Row } from 'reactstrap'
 import StarRatings from 'react-star-ratings'
 import './review.css';
+import {useDispatch, useSelector} from "react-redux"
+import {getOneProduct} from "../../redux/actions/productActions";
 
-const Review = ({ userImage, userName, points, description }) => {
+const Review = ({ userImage, userName, points, description , productId}) => {
+const dispatch= useDispatch();
+const product= useSelector((state)=> state.products.productDetail);
+useEffect (()=>{
+dispatch(getOneProduct(productId));
+},[]);
+
 
     return (
         <Col
@@ -36,6 +44,9 @@ const Review = ({ userImage, userName, points, description }) => {
                     </div>
                     <div className="reviews__description">
                         {description}
+                    </div>
+                    <div className="product__name">
+                        {product.name}
                     </div>
                 </Col>
             </Row>
