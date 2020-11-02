@@ -66,8 +66,6 @@ server.put("/:id", (req, res, next) => {
   let { id } = req.params;
   let currentOrder = req.body;
 
-  console.log(currentOrder);
-
   Order.findOne({
     where: { id },
     include: {
@@ -193,8 +191,6 @@ server.post("/send/email", async (req, res) => {
       id: id,
     },
   });
-
-  console.log(email);
 
   // Fecha actual, formato d/m/a y hora h:m:s
   const date = new Date().toLocaleString().split(" ");

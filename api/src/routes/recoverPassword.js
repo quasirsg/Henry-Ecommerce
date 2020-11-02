@@ -20,7 +20,7 @@ const { User } = require("../db");
 server.put("/auth/forgot-password", (req, res, next) => {
   const { email } = req.body;
   // Buscar user en la BD
-  console.log(email);
+
   User.findOne({
     where: {
       email,

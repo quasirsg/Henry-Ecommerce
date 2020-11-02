@@ -16,7 +16,7 @@ server.post("/", (req, res, next) => {
     image,
     location_id,
   } = req.body;
-  console.log(name);
+
   if (!name || !email || !address || !password || !image)
     return res.status(400).json({
       message: "A parameter is missing",
@@ -91,10 +91,7 @@ server.delete("/:id", (req, res, next) => {
 server.put("/:id/passwordChange", (req, res, next) => {
   const id = req.params.id;
   const { email, password, newPassword } = req.body;
-  console.log(id);
-  console.log(newPassword);
-  console.log(password);
-  console.log(email);
+
   User.findOne({
     where: {
       email,
@@ -117,7 +114,6 @@ server.put("/:id/passwordChange", (req, res, next) => {
       }
     )
       .then((response) => {
-        console.log(response);
         res.json(response);
       })
       .catch((error) => next(error.message));
@@ -425,7 +421,7 @@ server.delete("/:userId/cart/:productId", (req, res) => {
 //vacia el carrito
 server.delete("/:userId/cart", (req, res) => {
   const userId = req.params.userId;
-  console.log(userId);
+
   Order.findOne({
     where: {
       userId: userId,

@@ -31,8 +31,6 @@ const UserPassword = () => {
         }}
         validationSchema={formSchema}
         onSubmit={(values) => {
-          console.log(values);
-          console.log(user.email);
           values.email = user.email;
 
           dispatch(passwordChange(user.id, values));

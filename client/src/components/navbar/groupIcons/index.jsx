@@ -1,11 +1,8 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Link, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Cart3, Collection, PersonSquare } from "react-bootstrap-icons";
-import { Col, CustomInput, Badge } from "reactstrap";
-//Components
-import Guest from "../../guestOptions";
-import { getCurrentUser, logoutUser } from "../../../redux/actions/jwtUsers";
+import { Col, Badge } from "reactstrap";
 
 export default () => {
   let cart = useSelector((state) => state.users.carrito);
@@ -28,8 +25,6 @@ export default () => {
 
   let user = useSelector((state) => state.session.userDetail);
   const userRole = user ? user.role : null;
-
-  console.log(userRole);
 
   const linkUser = (userRole) => {
     if (userRole === "client") {

@@ -57,7 +57,6 @@ export const putUser = (id, values) => async (dispatch) => {
   await axios
     .put(`${url}/users/${id}`, values)
     .then((res) => {
-      console.log(res.data);
       dispatch({
         type: actionTypes.PUT_USER,
         userDetail: res.data,

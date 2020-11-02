@@ -12,8 +12,6 @@ const UserReviews = ({ id }) => {
 
   const reviews = useSelector((state) => state.users.reviews);
   const reviewsProduct = useSelector((state) => state.products.allProducts);
-  console.log(reviewsProduct); /*trae todos los products, product.image*/
-  console.log(reviews); /*trae review.productId*/
 
   return (
     <Container fluid={true}>

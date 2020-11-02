@@ -17,7 +17,6 @@ const UserOrders = ({ id }) => {
 
   const orders = useSelector((state) => state.users.orders);
   const userReviews = useSelector((state) => state.users.reviews);
-  console.log(orders);
 
   let orderUser = [];
   orders.forEach((orden) => {

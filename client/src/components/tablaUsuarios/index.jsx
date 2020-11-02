@@ -29,8 +29,6 @@ const TablaUsuarios = () => {
     }
   };
 
-  console.log(users);
-
   return (
     <Container>
       <Table hover responsive className="table-sm">

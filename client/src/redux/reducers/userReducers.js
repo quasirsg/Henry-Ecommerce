@@ -37,7 +37,6 @@ const initialState = {
 function userReducers(state = initialState, action) {
   let products = state.carrito;
 
-  console.log(action);
   switch (action.type) {
     /* REDUCERS USUARIOS Y LOGUIN USUARIOS */
     case GET_USERS:
@@ -151,7 +150,6 @@ function userReducers(state = initialState, action) {
         carrito: [],
       };
     case GET_CART_PRODUCTS:
-      console.log(action.products);
       let products = action.products.map((item) => {
         return {
           id: item.linea_order.product_id,
