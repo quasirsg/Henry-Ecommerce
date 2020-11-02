@@ -2,7 +2,6 @@ import axios from "axios";
 import Toast from "../../components/alerts/toast";
 import Swal from "sweetalert2";
 import * as actionTypes from "./actionTypes";
-import allActions from "./allActions";
 import toast from "../../components/alerts/toast";
 
 const url = `http://localhost:3001`;
@@ -89,13 +88,13 @@ export const logoutUser = (path) => (dispatch) => {
   }).then((res) => {
     if (res.isConfirmed) {
       Swal.fire("¡Has cerrado sesión!", `Hasta la proxima`, "info");
-      localStorage.removeItem("token");
       dispatch({
         type: actionTypes.LOGOUT_USER,
       });
       dispatch({
         type: actionTypes.DELETE_ALL_CART,
       });
+      localStorage.removeItem("token");
       path.push("/");
     }
   });
