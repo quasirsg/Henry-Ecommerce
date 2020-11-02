@@ -22,23 +22,15 @@ const Order = ({ products, status, hasReviews, key }) => {
     </button>
   );
 
-  const availableReviews = () => {
+  const availableReviews = (id) => {
     if (status === "completed" || status === "processing") {
-      if (hasReviews.length === 0) {
-        return true;
-      } else {
-        let value = true;
-        hasReviews.forEach((review) => {
-          products.forEach((product) => {
-            if (product.id === review.productId) {
-              value = false;
-            }
-          });
-        });
-        return value;
-      }
-    } else {
-      return false;
+      let value = true;
+      hasReviews.forEach((review) => {
+        if (id === review.productId) {
+          value = false;
+        }
+      });
+      return value;
     }
   };
 
@@ -108,7 +100,7 @@ const Order = ({ products, status, hasReviews, key }) => {
                         products={product}
                         status={status}
                       />
-                      {availableReviews() ? (
+                      {availableReviews(product.id) ? (
                         <>
                           <Button
                             color="warning"
@@ -123,7 +115,7 @@ const Order = ({ products, status, hasReviews, key }) => {
                         </>
                       ) : (
                         <Button color="secondary" style={{ margin: "0 10px" }}>
-                          Review Recibida
+                          Comentario Recibido
                         </Button>
                       )}
                     </>
