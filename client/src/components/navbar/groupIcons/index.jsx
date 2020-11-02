@@ -3,6 +3,7 @@ import { Link, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Cart3, Collection, PersonSquare } from "react-bootstrap-icons";
 import { Col, Badge } from "reactstrap";
+import { logoutUser } from "../../../redux/actions/jwtUsers";
 
 export default () => {
   let cart = useSelector((state) => state.users.carrito);
