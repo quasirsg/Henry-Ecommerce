@@ -204,11 +204,11 @@ const loadUsers = () => {
       location_id: 21,
     },
     {
-      name: "Facundo Nevárez",
-      email: "client1@gmail.com",
+      name: "Luciano",
+      email: "lucianooo222@gmail.com",
       address: "María Alejandra 2417 PB ALuciana del Este",
       role: "client",
-      password: bcrypt.hashSync("Vsl@17477", 10),
+      password: bcrypt.hashSync("Lucho@1234", 10),
       location_id: 21,
     },
     {

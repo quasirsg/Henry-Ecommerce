@@ -34,7 +34,7 @@ const CheckoutForm = ({ direction = "" }) => {
   };
   const handleClick = () => {
     setTimeout(bye, 2000);
-    dispatch(updateStatusOrder(id, status, productsCarts));
+    dispatch(updateStatusOrder(id, status, productsCarts, userId));
   };
 
   //       var myVar;
