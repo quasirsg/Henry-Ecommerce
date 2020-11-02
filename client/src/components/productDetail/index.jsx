@@ -2,7 +2,10 @@ import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import StarRatings from "react-star-ratings";
 import { useParams } from "react-router-dom";
-import { addProductCart } from "../../redux/actions/userActions";
+import {
+  addProductCart,
+  getProductCart,
+} from "../../redux/actions/userActions";
 import { getReviews } from "../../redux/actions/productActions";
 import Review from "../review/index";
 import { Col, Row, Container, Button } from "reactstrap";
@@ -11,17 +14,20 @@ import allActions from "../../redux/actions/allActions";
 import "./producto.css";
 import { useHistory } from "react-router-dom";
 import { verifySession } from "../../redux/actions/jwtUsers";
+import toast from "../alerts/toast";
 
 const Product = () => {
   const history = useHistory();
   let { id } = useParams();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.session.userDetail);
+  let productsCarts = useSelector((state) => state.users.carrito);
 
   useEffect(() => {
     dispatch(verifySession());
     dispatch(allActions.getOneProduct(id));
     dispatch(getReviews(id));
+    dispatch(getProductCart(userId));
   }, [id]);
 
   const product = useSelector((state) => state.products.productDetail);
@@ -34,7 +40,27 @@ const Product = () => {
   }
 
   const handleOnClick = () => {
-    dispatch(addProductCart(userId, product));
+    let value = true;
+    if (!localStorage.token) {
+      if (localStorage.cart) {
+        productsCarts = JSON.parse(localStorage.getItem("cart"));
+      }
+    }
+    if (productsCarts) {
+      productsCarts.forEach((item) => {
+        if (item.id === product.id) {
+          value = false;
+        }
+      });
+    }
+    if (value) {
+      dispatch(addProductCart(userId, product));
+    } else {
+      toast.fire({
+        icon: "error",
+        title: `El producto ya se encuentra en el carrito`,
+      });
+    }
   };
 
   return (
@@ -71,9 +97,7 @@ const Product = () => {
             </div>
             <p className="inforPrice">${product.price}</p>
             <h6 className="productStock">
-              {product.stock > 0
-                ? "Stock Disponible"
-                : "Producto sin Stock"}
+              {product.stock > 0 ? "Stock Disponible" : "Producto sin Stock"}
             </h6>
             <div
               className={
