@@ -46,7 +46,7 @@ function App() {
   useEffect(() => {
     dispatch(getCategory());
     dispatch(getProducts());
-    dispatch(getBanners());
+    // dispatch(getBanners());
     dispatch(verifySession());
   }, []);
 

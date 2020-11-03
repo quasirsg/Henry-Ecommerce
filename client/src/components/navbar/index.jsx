@@ -7,8 +7,8 @@ import "./navbar.css";
 const Navbar = () => {
   return (
     <div className="navbar">
-      <Link to="/" className="navbar__link">
-        <img src="/gym.png" width="40" height="40" alt="logo-icon"></img>
+      <Link to="/">
+        <img src="/GymLogo.gif" width="80" height="80" alt="logo-icon"></img>
       </Link>
       <SearchBar />
       <GroupIcons />
