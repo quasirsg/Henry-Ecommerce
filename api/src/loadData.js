@@ -20,14 +20,7 @@ const loadProducts = () => {
       image:
         "https://http2.mlstatic.com/D_NQ_NP_920114-MLA40362495956_012020-F.jpg",
     },
-    {
-      name: "3 Top Deportivo Algodon",
-      stock: 10,
-      description: "3 Top Deportivo Algodon Con Lycra Corpiño Fitness T Grande",
-      price: 900.0,
-      image:
-        "https://http2.mlstatic.com/D_NQ_NP_859507-MLA32792380829_112019-F.jpg",
-    },
+
     {
       name: "Remera De Entrenamiento",
       stock: 8,
