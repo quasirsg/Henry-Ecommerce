@@ -73,8 +73,13 @@ const LoginForm = ({
                   )}
 
                   <Row className="d-block">
-                    <PersonCircle className="mb-1 mr-2" size={40} />
-                    <h2>Ingresar</h2>
+                    <img
+                      src="/GymLogo.gif"
+                      width="150"
+                      height="150"
+                      alt="logo-icon"
+                    ></img>
+                    <h5>Ingresar</h5>
                   </Row>
                 </Col>
                 <hr className="mt-0 mb-3" />
